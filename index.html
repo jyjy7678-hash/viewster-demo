@@ -246,6 +246,19 @@
       overflow:hidden;
     }
 
+    /* watch 화면 하단 safe area는 홈과 같은 배경색으로 고정 */
+    #watchScreen.active::after{
+      content:"";
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      height:env(safe-area-inset-bottom, 0px);
+      background:var(--bg);
+      pointer-events:none;
+      z-index:6;
+    }
+
     .player-float-controls{
       position:absolute;
       top:10px;
