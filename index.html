@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>VIEWSTER Mobile Demo v5.7</title>
+  <style>
+    :root{
+      --bg:#f4f5f7;
+      --card:#ffffff;
+      --text:#111827;
+      --sub:#6b7280;
+      --line:#e5e7eb;
+      --primary:#2563eb;
+      --accent:#ff575d;
+      --green:#16a34a;
+      --pill:#eff2f6;
+      --shadow:0 8px 24px rgba(15,23,42,.06);
+      --header-h:56px;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --sheet-top:0px;
+      --scroll-top:0px;
+    }
+
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    html,body{margin:0;padding:0;background:#000;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;color:var(--text);}
+    body{height:100vh;overflow:hidden;}
+    button,input{font:inherit;}
+    img{display:block;max-width:100%;}
+    .hidden{display:none !important;}
+
+    .app{
+      width:100%;
+      max-width:430px;
+      height:100vh;
+      margin:0 auto;
+      background:var(--bg);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .screen{
+      position:absolute; inset:0;
+      display:none;
+      background:var(--bg);
+    }
+    .screen.active{display:flex; flex-direction:column;}
+
+    .header{
+      height:var(--header-h);
+      background:#fff;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 12px;
+      flex-shrink:0;
+      z-index:30;
+      gap:8px;
+    }
+    .header-left,.header-right{display:flex;align-items:center;gap:10px;min-width:0;}
+    .icon-btn{
+      width:32px;height:32px;border:none;background:#fff;border-radius:10px;
+      display:grid;place-items:center;cursor:pointer;flex-shrink:0;
+    }
+    .icon-btn svg{width:20px;height:20px;stroke:#111;}
+    .brand{
+      display:flex;align-items:center;gap:7px;font-weight:900;font-size:14px;
+      min-width:0;white-space:nowrap;
+    }
+    .brand img{width:24px;height:24px;object-fit:contain;flex-shrink:0;}
+
+    .header-test-tools{
+      display:flex;
+      align-items:center;
+      gap:4px;
+      margin-left:auto;
+      min-width:0;
+      overflow-x:auto;
+      -ms-overflow-style:none;
+      scrollbar-width:none;
+    }
+    .header-test-tools::-webkit-scrollbar{display:none;}
+
+    .tool-btn{
+      border:none;
+      background:#eef3ff;
+      color:#2457d6;
+      border-radius:10px;
+      padding:5px 7px;
+      font-size:11px;
+      font-weight:900;
+      white-space:nowrap;
+      cursor:pointer;
+      flex-shrink:0;
+      height:28px;
+      line-height:1;
+    }
+
+    .main-scroll{
+      flex:1;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      padding-bottom:calc(18px + var(--safe-bottom));
+    }
+
+    /* HOME */
+    .tabs-wrap{
+      background:#fff;
+      border-bottom:1px solid var(--line);
+      padding:10px 12px 12px;
+    }
+    .tabs{
+      display:flex;
+      gap:8px;
+      overflow:auto;
+    }
+    .tabs::-webkit-scrollbar{display:none;}
+    .tab{
+      border:none;
+      background:#f0f2f5;
+      color:#111;
+      padding:9px 13px;
+      border-radius:11px;
+      white-space:nowrap;
+      font-weight:800;
+      cursor:pointer;
+      font-size:13px;
+    }
+    .tab.active{background:#111827;color:#fff;}
+
+    .promo-banner{
+      margin:10px 12px 8px;
+      background:#ffd6e8;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    .promo-banner img{width:100%;height:76px;object-fit:cover;}
+
+    .list{padding:0 12px 10px;}
+    .video-card{
+      background:#fff;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      margin-bottom:14px;
+      cursor:pointer;
+    }
+    .thumb-wrap{
+      position:relative;
+      aspect-ratio:16/9;
+      background:#dcdfe5;
+    }
+    .thumb-wrap img{width:100%;height:100%;object-fit:cover;}
+    .info-dot{
+      position:absolute;right:10px;top:10px;width:26px;height:26px;border-radius:50%;
+      background:rgba(255,255,255,.93);display:grid;place-items:center;font-weight:900;color:#111;font-size:13px;
+    }
+    .reward-done{
+      position:absolute;right:10px;bottom:10px;background:#1fbf5b;color:#fff;
+      border-radius:10px;padding:4px 8px;font-size:11px;font-weight:900;
+    }
+    .card-body{padding:10px 12px 13px;}
+    .title{
+      font-size:15px;font-weight:900;line-height:1.34;margin:0 0 7px;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .meta-row{display:flex;align-items:center;gap:7px;color:var(--sub);font-size:12px;}
+    .avatar{width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#ddd;}
+
+    /* WATCH */
+    .watch-root{
+      flex:1;
+      overflow:hidden;
+      position:relative;
+      background:var(--bg);
+    }
+
+    .top-fixed{
+      position:absolute;
+      top:0; left:0; right:0;
+      z-index:20;
+      background:transparent;
+    }
+
+    .player-wrap{background:#000;}
+    .player{
+      width:100%;
+      aspect-ratio:16/9;
+      background:#000;
+      position:relative;
+    }
+    .player iframe{width:100%;height:100%;border:none;display:block;}
+
+    .paid-badge{
+      position:absolute;
+      left:10px;
+      top:10px;
+      background:rgba(0,0,0,.75);
+      color:#fff;
+      border-radius:10px;
+      padding:7px 10px;
+      font-size:12px;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      z-index:2;
+      transition:opacity .25s ease, transform .25s ease;
+    }
+    .paid-badge.hide-after{
+      opacity:0;
+      transform:translateY(-6px);
+      pointer-events:none;
+    }
+
+    #watchScreen > .header{
+      display:none;
+    }
+
+    .player-float-controls{
+      position:absolute;
+      top:10px;
+      left:10px;
+      right:10px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:8px;
+      z-index:50;
+      pointer-events:none;
+      
+    }
+/* 기본은 흐리게 */
+#watchScreen:not(.mini-mode) .player-float-controls{
+  opacity:.32;
+  transition:opacity .2s ease;
+}
+
+/* 활성화되면 선명하게 */
+#watchScreen:not(.mini-mode) .player-float-controls.controls-awake{
+  opacity:1;
+}
+    .player-left-controls,
+    .player-right-controls{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      pointer-events:auto;
+      position:relative;
+      z-index:51;
+    }
+
+    .player-right-controls{
+      margin-left:auto;
+      max-width:72%;
+      overflow:hidden;
+    }
+
+    #enterMiniBtn,
+    #toggleMiniSizeBtn,
+    .player-test-tools,
+    .player-test-tools .tool-btn{
+      position:relative;
+      z-index:51;
+      pointer-events:auto;
+    }
+
+    .player-fab{
+      height:34px;
+      min-width:34px;
+      padding:0 11px;
+      border:none;
+      border-radius:999px;
+      background:rgba(17,24,39,.78);
+      color:#fff;
+      font-size:12px;
+      font-weight:900;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:5px;
+      cursor:pointer;
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+      box-shadow:0 6px 18px rgba(0,0,0,.22);
+    }
+    .player-fab.icon-only{
+      width:34px;
+      padding:0;
+    }
+#enterMiniBtn{
+  font-size:22px;
+  font-weight:900;
+  line-height:1;
+  padding-top:1px;
+}
+
+    .player-test-tools{
+      display:flex;
+      gap:6px;
+      overflow-x:auto;
+      -ms-overflow-style:none;
+      scrollbar-width:none;
+    }
+    .player-test-tools::-webkit-scrollbar{display:none;}
+    .player-test-tools .tool-btn{
+      height:34px;
+      padding:0 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.92);
+      color:#2457d6;
+      font-size:12px;
+    }
+
+    .mini-close-btn,
+    .mini-restore-hit{
+      display:none;
+    }
+
+    .mini-ad-wrap{
+      display:none;
+    }
+    .mini-ad-wrap img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    #watchScreen.mini-mode{
+      display:flex;
+      flex-direction:column;
+      background:transparent;
+      pointer-events:none;
+      z-index:35;
+    }
+
+    #watchScreen.mini-mode .watch-root{
+      flex:1;
+      min-height:100%;
+      background:transparent;
+      overflow:visible;
+      pointer-events:none;
+    }
+
+    #watchScreen.mini-mode .watch-scroll{
+      display:none;
+    }
+
+    #watchScreen.mini-mode .watch-info-fixed{
+      display:none;
+    }
+
+    /* PIP 카드: 하나의 묶음처럼 보이게 */
+    #watchScreen.mini-mode .top-fixed{
+      position:absolute;
+      right:12px;
+      bottom:calc(74px + var(--safe-bottom));
+      left:auto;
+      top:auto;
+      width:170px;
+      z-index:60;
+      pointer-events:auto;
+
+      display:flex;
+      flex-direction:column;
+      gap:0;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 16px 40px rgba(2,6,23,.34);
+      background:#111827;
+    }
+
+    #watchScreen.mini-mode .player-wrap{
+      border-radius:0;
+      overflow:hidden;
+      box-shadow:none;
+      background:#000;
+    }
+
+    #watchScreen.mini-mode .player{
+      aspect-ratio:16/9;
+    }
+
+    /* 하단 띠배너 */
+    #watchScreen.mini-mode .mini-ad-wrap{
+      display:block;
+      width:100%;
+      height:36px;
+      background:#fff;
+      overflow:hidden;
+      border-top:1px solid rgba(0,0,0,.05);
+      pointer-events:auto;
+    }
+
+    /* 3단계 크기 */
+    #watchScreen.mini-mode.mini-size-1 .top-fixed{
+      width:170px;
+    }
+    #watchScreen.mini-mode.mini-size-1 .mini-ad-wrap{
+      height:36px;
+    }
+
+    #watchScreen.mini-mode.mini-size-2 .top-fixed{
+      width:230px;
+    }
+    #watchScreen.mini-mode.mini-size-2 .mini-ad-wrap{
+      height:40px;
+    }
+
+    #watchScreen.mini-mode.mini-size-3 .top-fixed{
+      width:calc(100% - 24px);
+    }
+    #watchScreen.mini-mode.mini-size-3 .mini-ad-wrap{
+      height:44px;
+    }
+
+    #watchScreen.mini-mode #toggleMiniSizeBtn{
+      display:inline-flex !important;
+    }
+
+    #watchScreen.mini-mode #enterMiniBtn{
+      display:none;
+    }
+
+    #watchScreen.mini-mode .paid-badge{
+      display:none;
+    }
+
+    #watchScreen.mini-mode .player-float-controls{
+      top:8px;
+      left:8px;
+      right:8px;
+    }
+
+    #watchScreen.mini-mode .player-test-tools{
+      display:none;
+    }
+
+    #watchScreen.mini-mode .mini-close-btn,
+    #watchScreen.mini-mode .mini-restore-hit{
+      display:block;
+    }
+
+    .mini-close-btn{
+      position:absolute;
+      top:8px;
+      right:8px;
+      width:28px;
+      height:28px;
+      border:none;
+      border-radius:999px;
+      background:rgba(17,24,39,.82);
+      color:#fff;
+      font-size:18px;
+      line-height:1;
+      cursor:pointer;
+      z-index:8;
+      box-shadow:0 6px 18px rgba(0,0,0,.25);
+    }
+
+    .mini-restore-hit{
+      position:absolute;
+      inset:0;
+      border:none;
+      background:transparent;
+      cursor:pointer;
+      z-index:7;
+    }
+
+    .watch-info-fixed{
+      background:#fff;
+      border-bottom:1px solid #edf0f4;
+      box-shadow:0 4px 18px rgba(15,23,42,.04);
+      overflow:hidden;
+    }
+
+    .watch-card{
+      background:#fff;
+      padding:7px 12px 2px;
+    }
+
+    .watch-title{
+      margin:0 0 3px;
+      font-size:15px;
+      font-weight:900;
+      line-height:1.35;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      cursor:pointer;
+    }
+    .watch-title.expanded{
+      white-space:normal;
+      overflow:visible;
+      text-overflow:unset;
+      display:block;
+    }
+
+    .watch-sub{
+      font-size:12px;
+      color:var(--sub);
+      margin-bottom:4px;
+    }
+
+    /* 제목/채널 아래만 접히는 영역 */
+    .watch-collapse-area{
+      overflow:hidden;
+      max-height:180px;
+      opacity:1;
+      transition:max-height .28s ease, opacity .22s ease;
+    }
+    .watch-collapse-area.collapsed{
+      max-height:0;
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .small-actions{
+      display:flex;
+      gap:6px;
+      margin-bottom:4px;
+      justify-content:flex-end;
+    }
+    .small-pill{
+      flex:0 0 auto;
+      padding:0 12px;
+    }
+
+    .small-pill{
+      flex:1;
+      height:28px;
+      border:none;
+      border-radius:999px;
+      background:var(--pill);
+      color:#222;
+      font-size:12px;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      cursor:pointer;
+      padding:0 10px;
+    }
+
+    .reward-inline{
+      position:relative;
+      min-height:32px;
+      margin-bottom:0;
+      border-radius:999px;
+    }
+    .reward-line-inner{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      width:100%;
+      min-height:32px;
+    }
+    .reward-inline .label{
+      font-size:13px;
+      font-weight:900;
+      white-space:nowrap;
+      flex-shrink:0;
+    }
+    .reward-inline .track{
+      flex:1;
+      height:7px;
+      background:#e7eaf0;
+      border-radius:999px;
+      overflow:hidden;
+      min-width:0;
+    }
+    .reward-inline .fill{
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg,#3b82f6,#22c55e);
+      border-radius:999px;
+      transition:width .35s ease;
+    }
+    .reward-inline .right{
+      min-width:52px;
+      text-align:right;
+      font-size:13px;
+      font-weight:800;
+      color:#4b5563;
+      flex-shrink:0;
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .reward-get-wrap{
+      display:none;
+      width:100%;
+    }
+    .reward-inline.reward-ready .reward-line-inner{
+      display:none;
+    }
+    .reward-inline.reward-ready .reward-get-wrap{
+      display:block;
+    }
+
+    .reward-wide-btn{
+      width:100%;
+      height:38px;
+      border:none;
+      border-radius:999px;
+      background:linear-gradient(180deg,#ff6a70,#ff4e57);
+      color:#fff;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(255,87,93,.22);
+    }
+
+    .big-banner{
+      margin:6px 12px 8px;
+      border-radius:14px;
+      overflow:hidden;
+      background:#111;
+      height:62px;
+      box-shadow:var(--shadow);
+    }
+    .big-banner img{width:100%;height:100%;object-fit:cover;}
+
+    .watch-scroll{
+      position:absolute;
+      top:var(--scroll-top);
+      left:0; right:0; bottom:0;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      background:var(--bg);
+      padding-bottom:calc(16px + var(--safe-bottom));
+    }
+
+    .section-title{
+      padding:0 12px 8px;
+      font-size:15px;
+      font-weight:900;
+      color:#111;
+      background:#fff;
+    }
+
+    .recommend-list{
+      padding:0 12px 12px;
+      background:#fff;
+    }
+    .recommend-item{
+      display:flex;
+      gap:10px;
+      padding:10px 0;
+      border-bottom:1px solid var(--line);
+      cursor:pointer;
+    }
+    .recommend-item:last-child{border-bottom:none;}
+    .recommend-thumb{
+      width:132px;
+      aspect-ratio:16/9;
+      border-radius:10px;
+      overflow:hidden;
+      background:#ddd;
+      flex-shrink:0;
+      position:relative;
+    }
+    .recommend-thumb img{width:100%;height:100%;object-fit:cover;}
+    .recommend-info{min-width:0;}
+    .recommend-title{
+      font-size:14px;
+      font-weight:800;
+      line-height:1.35;
+      margin:0 0 5px;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+    .recommend-sub{font-size:12px;color:var(--sub);}
+
+    /* Overlay / sheets */
+    .overlay{
+      position:absolute;
+      left:0; right:0; bottom:0;
+      top:var(--sheet-top);
+      background:rgba(0,0,0,.48);
+      z-index:40;
+      display:none;
+    }
+    .overlay.show{display:block;}
+
+    .sheet{
+      position:absolute;
+      left:0; right:0; bottom:0;
+      top:var(--sheet-top);
+      z-index:50;
+      background:#fff;
+      border-radius:24px 24px 0 0;
+      transform:translateY(100%);
+      transition:transform .28s ease;
+      display:flex;
+      flex-direction:column;
+      box-shadow:0 -12px 40px rgba(2,6,23,.18);
+      overflow:hidden;
+    }
+    .sheet.show{transform:translateY(0);}
+
+    .sheet-head{
+      height:48px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      flex-shrink:0;
+      background:#fff;
+      border-bottom:1px solid rgba(0,0,0,.04);
+    }
+    .sheet-head::before{
+      content:"";
+      position:absolute;
+      top:10px;
+      left:50%;
+      transform:translateX(-50%);
+      width:44px;height:5px;border-radius:999px;background:#d9dee7;
+    }
+    .sheet-close{
+      position:absolute;
+      right:10px;
+      top:8px;
+      width:32px;height:32px;
+      border:none;
+      border-radius:10px;
+      background:#f3f4f6;
+      color:#111;
+      font-size:18px;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+    }
+    .sheet-body{
+      overflow-y:auto;
+      padding:0 16px 20px;
+    }
+
+    .sheet-title{
+      font-size:18px;
+      font-weight:900;
+      margin:8px 0 14px;
+    }
+
+    .wallet-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .wallet-card{
+      background:#f5f7fb;
+      border-radius:16px;
+      padding:16px;
+      text-align:center;
+    }
+    .wallet-card.full{grid-column:1 / -1;}
+    .wallet-label{font-size:13px;color:#6b7280;font-weight:700;}
+    .wallet-value{font-size:22px;font-weight:900;color:var(--primary);margin-top:8px;}
+
+    .wallet-action-row{
+      display:flex;
+      gap:10px;
+      margin-top:8px;
+    }
+    .wallet-open-btn{
+      flex:1;
+      height:42px;
+      border:none;
+      border-radius:14px;
+      background:#111827;
+      color:#fff;
+      font-weight:900;
+      font-size:14px;
+      cursor:pointer;
+    }
+    .wallet-open-btn.gold{
+      background:linear-gradient(180deg,#f8d34e,#d9a911);
+      color:#2b2100;
+    }
+
+    .comment-tab{
+      display:flex;
+      gap:8px;
+      margin-bottom:12px;
+    }
+    .chip{
+      border:none;
+      background:#eef2f7;
+      color:#111;
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:800;
+    }
+    .chip.active{background:#111827;color:#fff;}
+    .comment-item{
+      display:flex;
+      gap:10px;
+      padding:14px 0;
+      border-bottom:1px solid #edf0f4;
+    }
+    .comment-avatar{
+      width:38px;height:38px;border-radius:50%;background:#ddd;object-fit:cover;flex-shrink:0;
+    }
+    .comment-name{font-size:13px;font-weight:900;margin-bottom:4px;}
+    .comment-text{
+      font-size:13px;
+      line-height:1.5;
+      color:#374151;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+
+    .ad-top{
+      padding:0 16px 10px;
+      font-size:18px;
+      font-weight:900;
+    }
+    .ad-desc{
+      padding:0 16px 14px;
+      color:#c8d0dd;
+      font-size:13px;
+      line-height:1.5;
+    }
+    .ad-frame{
+      margin:0 16px;
+      border-radius:18px;
+      overflow:hidden;
+      background:#111827;
+      aspect-ratio:16/9;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .ad-frame video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      background:#000;
+    }
+    .ad-progress-wrap{padding:14px 16px 8px;}
+    .ad-progress-track{
+      width:100%;
+      height:8px;
+      background:#273144;
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .ad-progress-fill{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,#60a5fa,#22c55e);
+    }
+    .ad-guide{
+      padding:8px 16px 0;
+      color:#d8dfeb;
+      font-size:13px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .ad-btn-wrap{padding:16px;}
+    .ad-btn{
+      width:100%;
+      height:52px;
+      border:none;
+      border-radius:16px;
+      font-size:16px;
+      font-weight:900;
+      background:#374151;
+      color:#aeb8c7;
+      cursor:not-allowed;
+    }
+    .ad-btn.ready{
+      background:linear-gradient(180deg,#3b82f6,#2563eb);
+      color:#fff;
+      cursor:pointer;
+    }
+
+    .box-hero{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:16px 16px 8px;
+    }
+    .box-icon{
+      width:92px;
+      height:92px;
+      display:grid;
+      place-items:center;
+      margin-bottom:12px;
+      position:relative;
+    }
+    .box-icon img.main{
+      width:76px;
+      height:76px;
+      object-fit:contain;
+      position:relative;
+      z-index:2;
+    }
+    .box-icon img.fx{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      opacity:.9;
+    }
+
+    .box-open-stage{
+      margin:0 16px 12px;
+      background:radial-gradient(circle at 50% 30%,rgba(59,130,246,.35),rgba(34,197,94,.06) 45%,transparent 70%),#111827;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:20px;
+      min-height:210px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:24px;
+      overflow:hidden;
+      position:relative;
+    }
+    .box-open-text{
+      font-size:16px;
+      font-weight:900;
+      color:#fff;
+      line-height:1.5;
+      position:relative;
+      z-index:2;
+    }
+
+    .box-pop{animation:boxPop .9s ease;}
+    @keyframes boxPop{
+      0%{transform:scale(.6) rotate(-8deg); opacity:.1;}
+      40%{transform:scale(1.12) rotate(6deg); opacity:1;}
+      70%{transform:scale(.96) rotate(-2deg);}
+      100%{transform:scale(1) rotate(0);}
+    }
+
+    .glow-burst{
+      position:absolute;
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,216,77,.45) 0%, rgba(59,130,246,.18) 45%, rgba(0,0,0,0) 72%);
+      filter:blur(8px);
+      animation:burstPulse 1s ease infinite alternate;
+    }
+    @keyframes burstPulse{
+      from{transform:scale(.92); opacity:.55;}
+      to{transform:scale(1.08); opacity:.95;}
+    }
+
+    .result-amount{
+      font-size:40px;
+      font-weight:1000;
+      color:#ffd84d;
+      letter-spacing:-1px;
+      text-shadow:0 0 20px rgba(255,216,77,.28);
+      margin-bottom:8px;
+      position:relative;
+      z-index:2;
+    }
+    .result-sub{
+      font-size:14px;
+      color:#d6e0ef;
+      position:relative;
+      z-index:2;
+    }
+
+    .toast{
+      position:absolute;
+      left:50%;
+      bottom:92px;
+      transform:translateX(-50%) translateY(20px);
+      min-width:220px;
+      max-width:85%;
+      background:rgba(17,24,39,.96);
+      color:#fff;
+      padding:13px 15px;
+      border-radius:16px;
+      z-index:70;
+      font-size:14px;
+      font-weight:800;
+      text-align:center;
+      opacity:0;
+      pointer-events:none;
+      transition:.25s ease;
+      box-shadow:0 10px 30px rgba(0,0,0,.22);
+    }
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    .loading{
+      padding:26px 16px;
+      color:#6b7280;
+      text-align:center;
+      font-size:14px;
+      font-weight:700;
+    }
+#watchScreen.mini-mode .player-float-controls,
+#watchScreen.mini-mode .mini-ad-wrap{
+  cursor:grab;
+  touch-action:none;
+}
+
+#watchScreen.mini-mode .top-fixed.dragging .player-float-controls,
+#watchScreen.mini-mode .top-fixed.dragging .mini-ad-wrap{
+  cursor:grabbing;
+}
+
+#watchScreen.mini-mode .top-fixed{
+  user-select:none;
+}
+#watchScreen.mini-mode .player-float-controls{
+  pointer-events:auto;
+}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section class="screen active" id="homeScreen">
+      <header class="header">
+        <div class="header-left">
+          <button class="icon-btn" aria-label="메뉴">
+            <svg fill="none" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <div class="brand">
+            <img src="assets/icon-reward.svg" alt="VIEWSTER" onerror="this.style.display='none'">
+            <span>VIEWSTER</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <button class="icon-btn" aria-label="검색">
+            <svg fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" stroke-width="2"/><path d="M16 16l4 4" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="tabs-wrap">
+        <div class="tabs">
+          <button class="tab active">전체</button>
+          <button class="tab">Live</button>
+          <button class="tab">동영상</button>
+          <button class="tab">숏폼</button>
+        </div>
+      </div>
+
+      <div class="main-scroll">
+        <div class="promo-banner">
+          <img src="assets/hero_banner_01.png" alt="배너" onerror="this.src='assets/hero_banner_02.png'">
+        </div>
+
+        <div class="list" id="homeList">
+          <div class="loading">유튜브 영상을 불러오는 중입니다...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="watchScreen">
+      <header class="header">
+        <div class="header-left">
+          <button class="icon-btn" aria-label="뒤로" id="backToHome">
+            <svg fill="none" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="brand">
+            <img src="assets/icon-reward.svg" alt="VIEWSTER" onerror="this.style.display='none'">
+            <span>VIEWSTER</span>
+          </div>
+        </div>
+
+        <div class="header-right header-test-tools">
+          <button class="tool-btn" data-add="60">+1분</button>
+          <button class="tool-btn" data-add="300">+5분</button>
+          <button class="tool-btn" data-add="600">+10분</button>
+          <button class="tool-btn" id="openBoxQuick">오픈</button>
+        </div>
+      </header>
+
+      <div class="watch-root">
+        <div class="top-fixed" id="topFixed">
+          <div class="player-wrap" id="playerWrap">
+            <div class="player">
+              <div class="player-float-controls">
+                <div class="player-left-controls">
+                  <button class="player-fab icon-only" id="enterMiniBtn" aria-label="PIP 열기">⌄</button>
+                  <button class="player-fab" id="toggleMiniSizeBtn" style="display:none;">확대</button>
+                </div>
+
+                <div class="player-right-controls">
+                  <div class="player-test-tools">
+                    <button class="tool-btn" data-add="60">+1분</button>
+                    <button class="tool-btn" data-add="300">+5분</button>
+                    <button class="tool-btn" data-add="600">+10분</button>
+                    <button class="tool-btn" id="openBoxQuickOverlay">오픈</button>
+                  </div>
+                </div>
+              </div>
+
+              <button class="mini-close-btn" id="miniCloseBtn" aria-label="미니플레이어 닫기">×</button>
+              <button class="mini-restore-hit" id="miniRestoreHit" aria-label="전체 보기로 복귀"></button>
+
+              <iframe
+                id="ytFrame"
+                src=""
+                title="YouTube player"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+
+          <div class="mini-ad-wrap" id="miniAdWrap" aria-label="PIP 광고배너">
+            <img src="assets/hero_banner_02.png" alt="광고 배너" onerror="this.src='assets/side_banner.png'">
+          </div>
+
+          <div class="watch-info-fixed" id="watchInfoFixed">
+            <div class="watch-card">
+              <h2 class="watch-title" id="watchTitle" title=""></h2>
+              <div class="watch-sub" id="watchSub"></div>
+
+              <div class="watch-collapse-area" id="watchCollapseArea">
+                <div class="small-actions">
+                  <button class="small-pill" id="openWalletBtn">🎁 지갑</button>
+                  <button class="small-pill" id="openCommentBtn">💬 댓글 <span id="commentCountText">0</span></button>
+                </div>
+
+                <div class="reward-inline" id="rewardInline">
+                  <div class="reward-line-inner">
+                    <span class="label">랜덤박스 지급까지</span>
+                    <div class="track"><div class="fill" id="rewardFill"></div></div>
+                    <div class="right" id="rewardRightText">10:00</div>
+                  </div>
+                  <div class="reward-get-wrap">
+                    <button class="reward-wide-btn" id="inlineGetBtnWide">🎁 랜덤박스 받기</button>
+                  </div>
+                </div>
+
+                <div class="big-banner">
+                  <img src="assets/hero_banner_02.png" alt="광고 배너" onerror="this.src='assets/side_banner.png'">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="watch-scroll" id="watchScroll">
+          <div class="section-title">추천 영상</div>
+          <div class="recommend-list" id="recommendList">
+            <div class="loading">추천 영상을 준비하는 중입니다...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="overlay" id="overlay"></div>
+
+    <section class="sheet" id="walletSheet">
+      <div class="sheet-head">
+        <button class="sheet-close" data-close="walletSheet">×</button>
+      </div>
+      <div class="sheet-body">
+        <div class="sheet-title">내 지갑</div>
+        <div class="wallet-grid">
+          <div class="wallet-card">
+            <div class="wallet-label">📦 랜덤박스</div>
+            <div class="wallet-value" id="boxCount">1개</div>
+          </div>
+          <div class="wallet-card">
+            <div class="wallet-label">🏆 황금박스</div>
+            <div class="wallet-value" id="goldBoxCount">0개</div>
+          </div>
+          <div class="wallet-card full">
+            <div class="wallet-label">💰 누적리워드</div>
+            <div class="wallet-value" id="rewardPoint">0 P</div>
+          </div>
+        </div>
+
+        <div class="wallet-action-row">
+          <button class="wallet-open-btn" id="walletOpenRandom">랜덤박스 열기</button>
+          <button class="wallet-open-btn gold" id="walletOpenGold">황금박스 열기</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet" id="commentSheet">
+      <div class="sheet-head">
+        <button class="sheet-close" data-close="commentSheet">×</button>
+      </div>
+      <div class="sheet-body">
+        <div class="sheet-title">댓글 <span id="sheetCommentCount">0개</span></div>
+        <div class="comment-tab">
+          <button class="chip active">인기순</button>
+          <button class="chip">최신순</button>
+        </div>
+        <div id="commentList"></div>
+      </div>
+    </section>
+
+    <section class="sheet" id="adSheet">
+      <div class="sheet-head" style="background:#0b0f19;">
+        <button class="sheet-close" data-close="adSheet" style="background:#1f2937;color:#fff;">×</button>
+      </div>
+      <div class="ad-top">광고 시청 후 랜덤박스를 받을 수 있어요</div>
+      <div class="ad-desc">
+        5초 후 직접 받을 수 있고, 누르지 않아도 15초 후 자동으로 지급됩니다.
+      </div>
+      <div class="ad-frame">
+        <video id="rewardAdVideo" muted playsinline webkit-playsinline>
+          <source src="assets/preroll.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="ad-progress-wrap">
+        <div class="ad-progress-track">
+          <div class="ad-progress-fill" id="rewardAdProgress"></div>
+        </div>
+      </div>
+      <div class="ad-guide">
+        <span id="rewardAdGuideLeft">광고 재생중...</span>
+        <span id="rewardAdGuideRight">15초 후 자동 지급</span>
+      </div>
+      <div class="ad-btn-wrap">
+        <button class="ad-btn" id="rewardAdBtn" disabled>받기 (5s)</button>
+      </div>
+    </section>
+
+    <section class="sheet" id="openSheet">
+      <div class="sheet-head" style="background:#0b0f19;">
+        <button class="sheet-close" data-close="openSheet" style="background:#1f2937;color:#fff;">×</button>
+      </div>
+      <div class="box-hero">
+        <div class="box-icon box-pop" id="boxIconStage">
+          <img class="fx" src="assets/fx-ring.svg" alt="" onerror="this.style.display='none'">
+          <img class="main" src="assets/icon-randombox.svg" alt="랜덤박스" onerror="this.style.display='none'">
+        </div>
+      </div>
+      <div class="ad-top" id="openSheetTitle">랜덤박스 오픈</div>
+      <div class="ad-desc" id="openSheetDesc">오픈 전 3초 광고가 재생됩니다.</div>
+      <div class="box-open-stage" id="openStage">
+        <div class="box-open-text" id="openStageText">오픈 버튼을 누르면 3초 광고 후 박스가 열립니다.</div>
+      </div>
+      <div class="ad-btn-wrap">
+        <button class="ad-btn ready" id="openBoxBtn">랜덤박스 오픈</button>
+      </div>
+    </section>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script>
+    const YT_API_KEY = "AIzaSyDJsG19IyawKlfAALJMIjcb2KGMk5hvX14";
+
+    const VIDEO_URL_POOL = [
+      "https://www.youtube.com/watch?v=-hh1iRtk4E8",
+      "https://www.youtube.com/watch?v=mFgAw3t91-E",
+      "https://www.youtube.com/watch?v=vBMrB873-Pk",
+      "https://www.youtube.com/watch?v=9PGim3h5Uz8",
+      "https://www.youtube.com/watch?v=ccgbANWUEOc",
+      "https://www.youtube.com/watch?v=iFI44wD0HDg",
+      "https://www.youtube.com/watch?v=i9sxWSHEoNg",
+      "https://www.youtube.com/watch?v=72Y_aGVf3Ms",
+      "https://www.youtube.com/watch?v=dKag1a6t2_I",
+      "https://www.youtube.com/watch?v=pz6Jv3o8_nU",
+      "https://www.youtube.com/watch?v=sWMLVArSiWo",
+      "https://www.youtube.com/watch?v=Z6oru_WK8uQ",
+      "https://www.youtube.com/watch?v=0w78sKSucUE",
+      "https://www.youtube.com/watch?v=O-xOEGLO7-E",
+      "https://www.youtube.com/watch?v=qPl9PceKVHk",
+      "https://www.youtube.com/watch?v=mz3swK7JsGM",
+      "https://www.youtube.com/watch?v=3QkNE0pZUp0",
+      "https://www.youtube.com/watch?v=Kmx2TPuIL9E",
+      "https://www.youtube.com/watch?v=k8F_qxbC0zE",
+      "https://www.youtube.com/watch?v=inZsde6VTNM",
+      "https://www.youtube.com/watch?v=7YeLRl-gbhs",
+      "https://www.youtube.com/watch?v=R4GRera7LRI",
+      "https://www.youtube.com/watch?v=ZPvVtQQr_Ds",
+      "https://www.youtube.com/watch?v=N7svI7jHu20",
+      "https://www.youtube.com/watch?v=fll5ItofMlQ",
+      "https://www.youtube.com/watch?v=oC-s1fiFfy4",
+      "https://www.youtube.com/watch?v=24Kp_5HWGF0",
+      "https://www.youtube.com/watch?v=vLMkGa4es64",
+      "https://www.youtube.com/watch?v=A47f5LTeGoI",
+      "https://www.youtube.com/watch?v=2UES8U6z4YU",
+      "https://www.youtube.com/watch?v=tdETE07_wZo",
+      "https://www.youtube.com/watch?v=MXtFhP0D1Wk",
+      "https://www.youtube.com/watch?v=ftmE4QjLDmk",
+      "https://www.youtube.com/watch?v=Gt8-liDl51M",
+      "https://www.youtube.com/watch?v=RFJlOvhvUZo",
+      "https://www.youtube.com/watch?v=XB_AXTMeFIM",
+      "https://www.youtube.com/watch?v=gKq8kERiP4U",
+      "https://www.youtube.com/watch?v=kUdGKBOI49o",
+      "https://www.youtube.com/watch?v=_X_02V4ZROE",
+      "https://www.youtube.com/watch?v=ZXlkt1jJw-A",
+      "https://www.youtube.com/watch?v=rQhdSQeWrQE",
+      "https://www.youtube.com/watch?v=OdfrgES12HM",
+      "https://www.youtube.com/watch?v=PnUkKkJZf_A",
+      "https://www.youtube.com/watch?v=fuEf_kn3bPg",
+      "https://www.youtube.com/watch?v=UmQBviQkx3s",
+      "https://www.youtube.com/watch?v=spT3aW-56mw",
+      "https://www.youtube.com/watch?v=FwnvA-SFNKQ",
+      "https://www.youtube.com/watch?v=KxwLBPNG3ZY",
+      "https://www.youtube.com/watch?v=FyQMnGdKMjs",
+      "https://www.youtube.com/watch?v=oacsbG0bnOk",
+      "https://www.youtube.com/watch?v=8BBYhWmAANg",
+      "https://www.youtube.com/watch?v=jzHmFOjrK6w",
+      "https://www.youtube.com/watch?v=KQ1KjiWeoOs",
+      "https://www.youtube.com/watch?v=tVj5RFyl5o4",
+      "https://www.youtube.com/watch?v=NLMfjwTrdDA",
+      "https://www.youtube.com/watch?v=C9Fczy4Fc4U",
+      "https://www.youtube.com/watch?v=qCmI_rsjsNI",
+      "https://www.youtube.com/watch?v=i8-l_WdKN9k",
+      "https://www.youtube.com/watch?v=xxs7npWudLc",
+      "https://www.youtube.com/watch?v=wJCnYIdmDmw",
+      "https://www.youtube.com/watch?v=emDON3MOhYU",
+      "https://www.youtube.com/watch?v=YY7UT52fKzM",
+      "https://www.youtube.com/watch?v=VqPheMbUOMk",
+      "https://www.youtube.com/watch?v=zmj1AsXOceA",
+      "https://www.youtube.com/watch?v=L604JFnoHD0",
+      "https://www.youtube.com/watch?v=S9qZ6lV9ljs",
+      "https://www.youtube.com/watch?v=8PDZUAQXfH4",
+      "https://www.youtube.com/watch?v=yw8j2Zrq6WU",
+      "https://www.youtube.com/watch?v=ScOYniOhy7s"
+    ];
+
+    const state = {
+      videos: [],
+      currentVideo: null,
+      integratedWatchSeconds: 0,
+      rewardGoalSeconds: 600,
+      rewardAvailable: false,
+      randomBoxCount: 1,
+      goldBoxCount: 0,
+      totalRewardPoint: 0,
+      rewardAdTimer: null,
+      rewardAdSeconds: 0,
+      openTimer: null,
+      openType: "random",
+    };
+
+    let autoWatchTimer = null;
+    let scrollIdleTimer = null;
+    let infoCollapsed = false;
+    let miniSizeLevel = 1;
+
+    let miniDragActive = false;
+    let miniDragOffsetX = 0;
+    let miniDragOffsetY = 0;
+
+    const boxTable = [
+      { value: 5, weight: 35 },
+      { value: 10, weight: 28 },
+      { value: 50, weight: 18 },
+      { value: 100, weight: 10 },
+      { value: 500, weight: 6 },
+      { value: 1000, weight: 3 }
+    ];
+
+    const goldBoxTable = [
+      { value: 5000, weight: 48 },
+      { value: 10000, weight: 28 },
+      { value: 50000, weight: 16 },
+      { value: 100000, weight: 7 },
+      { value: 1000000, weight: 1 }
+    ];
+
+    const homeScreen = document.getElementById("homeScreen");
+    const watchScreen = document.getElementById("watchScreen");
+    const homeList = document.getElementById("homeList");
+    const recommendList = document.getElementById("recommendList");
+    const ytFrame = document.getElementById("ytFrame");
+    const watchTitle = document.getElementById("watchTitle");
+    const watchSub = document.getElementById("watchSub");
+    const rewardFill = document.getElementById("rewardFill");
+    const rewardRightText = document.getElementById("rewardRightText");
+    const rewardInline = document.getElementById("rewardInline");
+    const inlineGetBtnWide = document.getElementById("inlineGetBtnWide");
+    const commentCountText = document.getElementById("commentCountText");
+    const sheetCommentCount = document.getElementById("sheetCommentCount");
+    const commentList = document.getElementById("commentList");
+    const overlay = document.getElementById("overlay");
+    const toast = document.getElementById("toast");
+    const boxCount = document.getElementById("boxCount");
+    const goldBoxCount = document.getElementById("goldBoxCount");
+    const rewardPoint = document.getElementById("rewardPoint");
+    const rewardAdVideo = document.getElementById("rewardAdVideo");
+    const rewardAdProgress = document.getElementById("rewardAdProgress");
+    const rewardAdBtn = document.getElementById("rewardAdBtn");
+    const rewardAdGuideLeft = document.getElementById("rewardAdGuideLeft");
+    const rewardAdGuideRight = document.getElementById("rewardAdGuideRight");
+    const openStageText = document.getElementById("openStageText");
+    const openSheetTitle = document.getElementById("openSheetTitle");
+    const openSheetDesc = document.getElementById("openSheetDesc");
+    const openBoxBtn = document.getElementById("openBoxBtn");
+    const topFixed = document.getElementById("topFixed");
+    const playerWrap = document.getElementById("playerWrap");
+    const boxIconStage = document.getElementById("boxIconStage");
+    const watchInfoFixed = document.getElementById("watchInfoFixed");
+    const watchCollapseArea = document.getElementById("watchCollapseArea");
+    const watchScroll = document.getElementById("watchScroll");
+    const enterMiniBtn = document.getElementById("enterMiniBtn");
+    const miniCloseBtn = document.getElementById("miniCloseBtn");
+    const miniRestoreHit = document.getElementById("miniRestoreHit");
+    const openBoxQuickOverlay = document.getElementById("openBoxQuickOverlay");
+    const toggleMiniSizeBtn = document.getElementById("toggleMiniSizeBtn");
+    const miniAdWrap = document.getElementById("miniAdWrap");
+    const paidBadge = document.getElementById("paidBadge");
+    const playerFloatControls = document.querySelector(".player-float-controls");
+
+    function extractVideoId(url){
+      try{
+        const u = new URL(url);
+        if(u.hostname.includes("youtu.be")) return u.pathname.replace("/","");
+        return u.searchParams.get("v");
+      }catch(e){
+        return null;
+      }
+    }
+
+    function formatTime(totalSeconds){
+      const m = Math.floor(totalSeconds / 60);
+      const s = totalSeconds % 60;
+      return `${m}:${String(s).padStart(2,"0")}`;
+    }
+
+    function formatViews(num){
+      const n = Number(num || 0);
+      if(n >= 100000000) return `조회수 ${(n / 100000000).toFixed(1)}억회`;
+      if(n >= 10000) return `조회수 ${Math.floor(n / 10000)}만회`;
+      return `조회수 ${n.toLocaleString()}회`;
+    }
+
+    function showToast(message){
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    function weightedRandom(items){
+      const total = items.reduce((sum, item) => sum + item.weight, 0);
+      let rnd = Math.random() * total;
+      for(const item of items){
+        rnd -= item.weight;
+        if(rnd <= 0) return item.value;
+      }
+      return items[items.length - 1].value;
+    }
+
+    function escapeHtml(str){
+      return String(str || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function resetPaidBadge(){
+      if(!paidBadge) return;
+      paidBadge.classList.remove("hide-after");
+
+      clearTimeout(resetPaidBadge._timer);
+      resetPaidBadge._timer = setTimeout(() => {
+        paidBadge.classList.add("hide-after");
+      }, 3000);
+    }
+function wakePlayerControls(){
+  if(!playerFloatControls) return;
+
+  playerFloatControls.classList.add("controls-awake");
+
+  clearTimeout(wakePlayerControls._timer);
+  wakePlayerControls._timer = setTimeout(() => {
+    if(!watchScreen.classList.contains("mini-mode")){
+      playerFloatControls.classList.remove("controls-awake");
+    }
+  }, 2500);
+}
+    function startAutoWatchTimer(){
+      clearInterval(autoWatchTimer);
+      autoWatchTimer = setInterval(() => {
+        if (!state.currentVideo) return;
+        if (state.rewardAvailable) return;
+        state.integratedWatchSeconds += 1;
+        updateRewardUI();
+      }, 1000);
+    }
+
+    function stopAutoWatchTimer(){
+      clearInterval(autoWatchTimer);
+    }
+
+    async function loadVideosFromYouTube(){
+      const ids = VIDEO_URL_POOL.map(extractVideoId).filter(Boolean);
+      if(!YT_API_KEY){
+        homeList.innerHTML = '<div class="loading">YT_API_KEY를 넣어주세요.</div>';
+        recommendList.innerHTML = '<div class="loading">YT_API_KEY를 넣어주세요.</div>';
+        return;
+      }
+
+      try{
+        const chunkSize = 50;
+        const results = [];
+
+        for(let i = 0; i < ids.length; i += chunkSize){
+          const chunk = ids.slice(i, i + chunkSize);
+          const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=${chunk.join(",")}&key=${YT_API_KEY}&maxResults=50`;
+          const res = await fetch(url);
+          const json = await res.json();
+
+          if(json.error){
+            throw new Error(json.error.message || "YouTube API 오류");
+          }
+
+          for(const item of (json.items || [])){
+            results.push({
+              id: item.id,
+              videoId: item.id,
+              title: item.snippet?.title || "제목 없음",
+              channel: item.snippet?.channelTitle || "채널명 없음",
+              views: formatViews(item.statistics?.viewCount || 0),
+              commentCount: Number(item.statistics?.commentCount || 0),
+              thumb: item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url || "",
+              avatar: "",
+              comments: []
+            });
+          }
+        }
+
+        state.videos = results;
+        renderHome();
+
+        if(state.videos.length > 0){
+          openWatch(state.videos[0].id);
+        }
+      }catch(err){
+        console.error(err);
+        homeList.innerHTML = `<div class="loading">영상 목록을 불러오지 못했습니다.<br>${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    async function loadComments(videoId){
+      if(!YT_API_KEY) return [];
+      try{
+        const url = `https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=${videoId}&maxResults=20&order=relevance&textFormat=plainText&key=${YT_API_KEY}`;
+        const res = await fetch(url);
+        const json = await res.json();
+        if(json.error) return [];
+        return (json.items || []).map(item => {
+          const sn = item.snippet?.topLevelComment?.snippet;
+          return {
+            name: sn?.authorDisplayName || "사용자",
+            avatar: sn?.authorProfileImageUrl || "",
+            text: sn?.textDisplay || ""
+          };
+        });
+      }catch(e){
+        return [];
+      }
+    }
+
+    function renderHome(){
+      if(!state.videos.length){
+        homeList.innerHTML = '<div class="loading">영상 데이터가 없습니다.</div>';
+        return;
+      }
+
+      homeList.innerHTML = state.videos.map(video => `
+        <article class="video-card" data-id="${video.id}">
+          <div class="thumb-wrap">
+            <img src="${video.thumb}" alt="${escapeHtml(video.title)}">
+            <div class="info-dot">i</div>
+            <div class="reward-done">지급 완료</div>
+          </div>
+          <div class="card-body">
+            <h3 class="title">${escapeHtml(video.title)}</h3>
+            <div class="meta-row">
+              <img class="avatar" src="${video.avatar || 'https://via.placeholder.com/48x48?text=%20'}" alt="">
+              <span>${escapeHtml(video.channel)}</span>
+              <span>·</span>
+              <span>${video.views}</span>
+            </div>
+          </div>
+        </article>
+      `).join("");
+
+      document.querySelectorAll(".video-card").forEach(card => {
+        card.addEventListener("click", () => openWatch(card.dataset.id));
+      });
+    }
+
+    function renderRecommend(currentId){
+      const list = state.videos.filter(v => v.id !== currentId);
+      recommendList.innerHTML = list.map(video => `
+        <div class="recommend-item" data-id="${video.id}">
+          <div class="recommend-thumb">
+            <img src="${video.thumb}" alt="${escapeHtml(video.title)}">
+          </div>
+          <div class="recommend-info">
+            <div class="recommend-title">${escapeHtml(video.title)}</div>
+            <div class="recommend-sub">${escapeHtml(video.channel)} · ${video.views}</div>
+          </div>
+        </div>
+      `).join("");
+
+      document.querySelectorAll(".recommend-item").forEach(item => {
+        item.addEventListener("click", () => openWatch(item.dataset.id));
+      });
+    }
+
+    async function renderComments(video){
+      commentCountText.textContent = Number(video.commentCount || 0).toLocaleString();
+      sheetCommentCount.textContent = `${Number(video.commentCount || 0).toLocaleString()}개`;
+      commentList.innerHTML = '<div class="loading">실제 댓글을 불러오는 중입니다...</div>';
+
+      if(!video.comments || !video.comments.length){
+        video.comments = await loadComments(video.videoId);
+      }
+
+      if(!video.comments.length){
+        commentList.innerHTML = '<div class="loading">댓글을 불러오지 못했거나 댓글이 없습니다.</div>';
+        return;
+      }
+
+      commentList.innerHTML = video.comments.map(comment => `
+        <div class="comment-item">
+          <img class="comment-avatar" src="${comment.avatar || 'https://via.placeholder.com/48x48?text=%20'}" alt="">
+          <div>
+            <div class="comment-name">${escapeHtml(comment.name)}</div>
+            <div class="comment-text">${escapeHtml(comment.text)}</div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function updateWallet(){
+      boxCount.textContent = `${state.randomBoxCount}개`;
+      goldBoxCount.textContent = `${state.goldBoxCount}개`;
+      rewardPoint.textContent = `${state.totalRewardPoint.toLocaleString()} P`;
+    }
+
+    function updateRewardUI(){
+      const watched = Math.min(state.integratedWatchSeconds, state.rewardGoalSeconds);
+      const remain = Math.max(state.rewardGoalSeconds - watched, 0);
+      const percent = Math.round((watched / state.rewardGoalSeconds) * 100);
+
+      rewardFill.style.width = `${percent}%`;
+
+      if(watched >= state.rewardGoalSeconds){
+        state.rewardAvailable = true;
+        rewardInline.classList.add("reward-ready");
+      } else {
+        state.rewardAvailable = false;
+        rewardInline.classList.remove("reward-ready");
+        rewardRightText.textContent = formatTime(remain);
+      }
+    }
+
+function updateFixedLayout(){
+  requestAnimationFrame(() => {
+    const rootRect = document.querySelector(".watch-root").getBoundingClientRect();
+    const subRect = document.getElementById("watchSub").getBoundingClientRect();
+    const topFixedRect = document.getElementById("topFixed").getBoundingClientRect();
+
+    const fullTop = infoCollapsed
+      ? (subRect.bottom - rootRect.top + 6)
+      : (topFixedRect.bottom - rootRect.top);
+
+    const sheetTop = subRect.bottom - rootRect.top;
+
+    document.documentElement.style.setProperty("--scroll-top", `${fullTop}px`);
+    document.documentElement.style.setProperty("--sheet-top", `${sheetTop}px`);
+  });
+}
+
+    function collapseInfoPanel(){
+      if (infoCollapsed) return;
+
+      watchCollapseArea.classList.add("collapsed");
+      infoCollapsed = true;
+      updateFixedLayout();
+    }
+
+    function expandInfoPanel(){
+      if (!infoCollapsed) return;
+
+      watchCollapseArea.classList.remove("collapsed");
+      infoCollapsed = false;
+
+
+    }
+
+    function setupWatchScrollBehavior(){
+      watchScroll.addEventListener("scroll", () => {
+        const y = watchScroll.scrollTop;
+        clearTimeout(scrollIdleTimer);
+
+        if (y > 20) {
+          collapseInfoPanel();
+        }
+
+        scrollIdleTimer = setTimeout(() => {
+          expandInfoPanel();
+        }, 5000);
+      });
+    }
+
+    async function openWatch(id){
+      const video = state.videos.find(v => v.id === id);
+      if(!video) return;
+
+      state.currentVideo = video;
+      watchTitle.textContent = video.title;
+      watchTitle.title = video.title;
+      watchTitle.classList.remove("expanded");
+      watchSub.textContent = `${video.channel} · ${video.views}`;
+      ytFrame.src = `https://www.youtube.com/embed/${video.videoId}?autoplay=1&mute=1&playsinline=1&rel=0`;
+
+      renderRecommend(video.id);
+      renderComments(video);
+      updateRewardUI();
+      wakePlayerControls();
+
+      homeScreen.classList.remove("active");
+      watchScreen.classList.add("active");
+      watchScreen.classList.remove("mini-mode", "mini-size-1", "mini-size-2", "mini-size-3");
+
+      miniSizeLevel = 1;
+      syncMiniSizeButton();
+
+      infoCollapsed = false;
+      watchCollapseArea.classList.remove("collapsed");
+
+      resetPaidBadge();
+
+      setTimeout(() => {
+        updateFixedLayout();
+        watchScroll.scrollTop = 0;
+      }, 80);
+
+      startAutoWatchTimer();
+    }
+
+    function applyMiniSizeClass(){
+      watchScreen.classList.remove("mini-size-1", "mini-size-2", "mini-size-3");
+      watchScreen.classList.add(`mini-size-${miniSizeLevel}`);
+    }
+
+    function syncMiniSizeButton(){
+      if(!toggleMiniSizeBtn) return;
+      if(miniSizeLevel === 1) toggleMiniSizeBtn.textContent = "확대";
+      else if(miniSizeLevel === 2) toggleMiniSizeBtn.textContent = "더 확대";
+      else toggleMiniSizeBtn.textContent = "축소";
+    }
+function clampMiniPosition(){
+  if(!watchScreen.classList.contains("mini-mode")) return;
+  if(!topFixed.style.left) return;
+
+  const rect = topFixed.getBoundingClientRect();
+
+  let left = parseFloat(topFixed.style.left) || 12;
+  let top = parseFloat(topFixed.style.top) || 12;
+
+  const maxLeft = Math.max(12, window.innerWidth - rect.width - 12);
+  const maxTop = Math.max(12, window.innerHeight - rect.height - 12);
+
+  left = Math.min(Math.max(12, left), maxLeft);
+  top = Math.min(Math.max(12, top), maxTop);
+
+  topFixed.style.left = `${left}px`;
+  topFixed.style.top = `${top}px`;
+  topFixed.style.right = "auto";
+  topFixed.style.bottom = "auto";
+}
+
+function startMiniDrag(e){
+  if(!watchScreen.classList.contains("mini-mode")) return;
+  if(e.button !== undefined && e.button !== 0) return;
+  if(e.target.closest('button')) return;
+
+  const rect = topFixed.getBoundingClientRect();
+
+  topFixed.style.left = `${rect.left}px`;
+  topFixed.style.top = `${rect.top}px`;
+  topFixed.style.right = "auto";
+  topFixed.style.bottom = "auto";
+
+  miniDragActive = true;
+  miniDragOffsetX = e.clientX - rect.left;
+  miniDragOffsetY = e.clientY - rect.top;
+
+  topFixed.classList.add("dragging");
+
+  document.addEventListener("pointermove", moveMiniDrag);
+  document.addEventListener("pointerup", endMiniDrag);
+
+  e.preventDefault();
+}
+
+function moveMiniDrag(e){
+  if(!miniDragActive) return;
+
+  const rect = topFixed.getBoundingClientRect();
+  const maxLeft = Math.max(12, window.innerWidth - rect.width - 12);
+  const maxTop = Math.max(12, window.innerHeight - rect.height - 12);
+
+  const nextLeft = Math.min(Math.max(12, e.clientX - miniDragOffsetX), maxLeft);
+  const nextTop = Math.min(Math.max(12, e.clientY - miniDragOffsetY), maxTop);
+
+  topFixed.style.left = `${nextLeft}px`;
+  topFixed.style.top = `${nextTop}px`;
+  topFixed.style.right = "auto";
+  topFixed.style.bottom = "auto";
+}
+
+function endMiniDrag(){
+  if(!miniDragActive) return;
+
+  miniDragActive = false;
+  topFixed.classList.remove("dragging");
+
+  document.removeEventListener("pointermove", moveMiniDrag);
+  document.removeEventListener("pointerup", endMiniDrag);
+}
+
+    function enterMiniMode(){
+      if(!state.currentVideo) return;
+
+      closeAllSheets();
+      clearTimeout(scrollIdleTimer);
+
+      watchScreen.classList.add("mini-mode");
+      homeScreen.classList.add("active");
+      watchScreen.classList.add("active");
+
+      miniSizeLevel = 1;
+      applyMiniSizeClass();
+      syncMiniSizeButton();
+    }
+
+    function toggleMiniSize(e){
+      if(e){
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      if(!watchScreen.classList.contains("mini-mode")) return;
+
+      miniSizeLevel += 1;
+      if(miniSizeLevel > 3) miniSizeLevel = 1;
+
+      applyMiniSizeClass();
+      syncMiniSizeButton();
+       requestAnimationFrame(clampMiniPosition);
+       if(playerFloatControls){
+  playerFloatControls.addEventListener("pointerdown", startMiniDrag);
+}
+
+if(miniAdWrap){
+  miniAdWrap.addEventListener("pointerdown", startMiniDrag);
+}
+
+window.addEventListener("resize", clampMiniPosition);
+    }
+
+    function exitMiniMode(){
+      watchScreen.classList.remove("mini-mode", "mini-size-1", "mini-size-2", "mini-size-3");
+      homeScreen.classList.remove("active");
+      watchScreen.classList.add("active");
+
+      miniSizeLevel = 1;
+      syncMiniSizeButton();
+      resetPaidBadge();
+
+      setTimeout(() => {
+        updateFixedLayout();
+      }, 80);
+    }
+
+    function backToHome(){
+      stopAutoWatchTimer();
+      clearTimeout(scrollIdleTimer);
+      watchScreen.classList.remove("mini-mode", "mini-size-1", "mini-size-2", "mini-size-3");
+      watchScreen.classList.remove("active");
+      homeScreen.classList.add("active");
+      ytFrame.src = "";
+      closeAllSheets();
+
+      miniSizeLevel = 1;
+      syncMiniSizeButton();
+    }
+
+    function openSheet(id){
+      overlay.classList.add("show");
+      document.getElementById(id).classList.add("show");
+    }
+
+    function closeAllSheets(){
+      overlay.classList.remove("show");
+      document.querySelectorAll(".sheet").forEach(sheet => sheet.classList.remove("show"));
+      clearInterval(state.rewardAdTimer);
+      clearInterval(state.openTimer);
+      rewardAdVideo.pause();
+      rewardAdVideo.currentTime = 0;
+      rewardAdProgress.style.width = "0%";
+      rewardAdBtn.disabled = true;
+      rewardAdBtn.classList.remove("ready");
+      rewardAdBtn.textContent = "받기 (5s)";
+      rewardAdGuideLeft.textContent = "광고 재생중...";
+      rewardAdGuideRight.textContent = "15초 후 자동 지급";
+      openSheetTitle.textContent = "랜덤박스 오픈";
+      openSheetDesc.textContent = "오픈 전 3초 광고가 재생됩니다.";
+      openStageText.innerHTML = "오픈 버튼을 누르면 3초 광고 후 박스가 열립니다.";
+      openBoxBtn.textContent = "랜덤박스 오픈";
+      openBoxBtn.disabled = false;
+      openBoxBtn.classList.add("ready");
+      openBoxBtn.onclick = () => startOpenFlow("random");
+      boxIconStage.classList.remove("box-pop");
+      void boxIconStage.offsetWidth;
+      boxIconStage.classList.add("box-pop");
+    }
+
+    function startRewardAdFlow(){
+      if(!state.rewardAvailable) return;
+      openSheet("adSheet");
+
+      state.rewardAdSeconds = 0;
+      rewardAdVideo.play().catch(() => {});
+      state.rewardAdTimer = setInterval(() => {
+        state.rewardAdSeconds += 1;
+        const percent = Math.min((state.rewardAdSeconds / 15) * 100, 100);
+        rewardAdProgress.style.width = `${percent}%`;
+
+        if(state.rewardAdSeconds < 5){
+          rewardAdBtn.textContent = `받기 (${5 - state.rewardAdSeconds}s)`;
+          rewardAdGuideLeft.textContent = "광고 재생중...";
+        } else {
+          rewardAdBtn.disabled = false;
+          rewardAdBtn.classList.add("ready");
+          rewardAdBtn.textContent = "랜덤박스 받기";
+          rewardAdGuideLeft.textContent = "지금 직접 받을 수 있어요";
+        }
+
+        rewardAdGuideRight.textContent = `${Math.max(15 - state.rewardAdSeconds, 0)}초 후 자동 지급`;
+
+        if(state.rewardAdSeconds >= 15){
+          clearInterval(state.rewardAdTimer);
+          finishRewardGrant("auto");
+        }
+      }, 1000);
+    }
+
+    function finishRewardGrant(type){
+      clearInterval(state.rewardAdTimer);
+      state.randomBoxCount += 1;
+      state.integratedWatchSeconds = 0;
+      state.rewardAvailable = false;
+      updateWallet();
+      updateRewardUI();
+      closeAllSheets();
+      startAutoWatchTimer();
+
+      showToast(
+        type === "auto"
+          ? "랜덤박스 1개가 자동 지급되었습니다."
+          : "랜덤박스 1개를 지급받았습니다."
+      );
+    }
+
+    function startOpenFlow(type){
+      state.openType = type || "random";
+
+      if(state.openType === "random" && state.randomBoxCount <= 0){
+        showToast("보유한 랜덤박스가 없습니다.");
+        return;
+      }
+      if(state.openType === "gold" && state.goldBoxCount <= 0){
+        showToast("보유한 황금박스가 없습니다.");
+        return;
+      }
+
+      openSheet("openSheet");
+      openBoxBtn.disabled = true;
+      openBoxBtn.classList.remove("ready");
+      openBoxBtn.textContent = "광고 재생중...";
+
+      openSheetTitle.textContent = state.openType === "gold" ? "황금박스 오픈" : "랜덤박스 오픈";
+      openSheetDesc.textContent = "오픈 전 3초 광고가 재생됩니다.";
+      openStageText.innerHTML = `광고 재생중...<br>3`;
+
+      let sec = 0;
+      state.openTimer = setInterval(() => {
+        sec += 1;
+        const remain = Math.max(3 - sec, 0);
+        openStageText.innerHTML = `광고 재생중...<br>${remain}`;
+        if(sec >= 3){
+          clearInterval(state.openTimer);
+          runBoxAnimation();
+        }
+      }, 1000);
+    }
+
+    function runBoxAnimation(){
+      openSheetTitle.textContent = state.openType === "gold" ? "황금박스 오픈 중" : "랜덤박스 오픈 중";
+      openSheetDesc.textContent = "당첨 결과를 확인하고 있습니다.";
+
+      let phase = 0;
+      const texts = [
+        "✨ 박스를 열고 있습니다...",
+        "⚡ 리워드를 계산 중입니다...",
+        "🎉 결과를 불러오는 중..."
+      ];
+
+      boxIconStage.classList.remove("box-pop");
+      void boxIconStage.offsetWidth;
+      boxIconStage.classList.add("box-pop");
+
+      state.openTimer = setInterval(() => {
+        openStageText.innerHTML = `
+          <div class="glow-burst"></div>
+          <div class="box-open-text box-pop">${texts[phase % texts.length]}</div>
+        `;
+        phase += 1;
+
+        if(phase >= 6){
+          clearInterval(state.openTimer);
+
+          let value;
+          if(state.openType === "gold"){
+            value = weightedRandom(goldBoxTable);
+            state.goldBoxCount -= 1;
+          } else {
+            value = weightedRandom(boxTable);
+            state.randomBoxCount -= 1;
+          }
+
+          state.totalRewardPoint += value;
+          updateWallet();
+
+          openSheetTitle.textContent = "당첨 완료";
+          openSheetDesc.textContent = state.openType === "gold" ? "황금박스 오픈 결과입니다." : "랜덤박스 오픈 결과입니다.";
+          openStageText.innerHTML = `
+            <div class="glow-burst"></div>
+            <div class="result-amount box-pop">${value.toLocaleString()} P</div>
+            <div class="result-sub">축하합니다! 리워드가 즉시 지급되었습니다.</div>
+          `;
+
+          openBoxBtn.disabled = false;
+          openBoxBtn.classList.add("ready");
+          openBoxBtn.textContent = "닫기";
+          openBoxBtn.onclick = closeAllSheets;
+        }
+      }, 700);
+    }
+
+    document.getElementById("backToHome").addEventListener("click", backToHome);
+    enterMiniBtn.addEventListener("click", enterMiniMode);
+    miniCloseBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      backToHome();
+    });
+    miniRestoreHit.addEventListener("click", exitMiniMode);
+    openBoxQuickOverlay.addEventListener("click", () => startOpenFlow("random"));
+    toggleMiniSizeBtn.addEventListener("click", toggleMiniSize);
+    playerWrap.addEventListener("click", wakePlayerControls);
+playerFloatControls.addEventListener("click", wakePlayerControls);
+playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive: true });
+
+
+    document.getElementById("openWalletBtn").addEventListener("click", () => openSheet("walletSheet"));
+    document.getElementById("openCommentBtn").addEventListener("click", () => openSheet("commentSheet"));
+    document.getElementById("openBoxQuick").addEventListener("click", () => startOpenFlow("random"));
+    document.getElementById("walletOpenRandom").addEventListener("click", () => startOpenFlow("random"));
+    document.getElementById("walletOpenGold").addEventListener("click", () => startOpenFlow("gold"));
+    inlineGetBtnWide.addEventListener("click", startRewardAdFlow);
+
+    rewardAdBtn.addEventListener("click", () => {
+      if(rewardAdBtn.disabled) return;
+      finishRewardGrant("manual");
+    });
+
+    openBoxBtn.addEventListener("click", () => startOpenFlow("random"));
+    overlay.addEventListener("click", closeAllSheets);
+
+    document.querySelectorAll(".tool-btn[data-add]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        state.integratedWatchSeconds += Number(btn.dataset.add);
+        updateRewardUI();
+      });
+    });
+
+    watchTitle.addEventListener("click", () => {
+      watchTitle.classList.toggle("expanded");
+      setTimeout(updateFixedLayout, 20);
+    });
+
+    document.querySelectorAll(".sheet-close").forEach(btn => {
+      btn.addEventListener("click", closeAllSheets);
+    });
+
+    window.addEventListener("resize", updateFixedLayout);
+
+    setupWatchScrollBehavior();
+    updateWallet();
+    updateRewardUI();
+    loadVideosFromYouTube();
+  </script>
+</body>
+</html>
