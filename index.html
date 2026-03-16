@@ -175,7 +175,8 @@
     /* WATCH */
     .watch-root{
       flex:1;
-      overflow:visible;
+      height:100%;
+      overflow:hidden;
       position:relative;
       background:var(--bg);
     }
@@ -230,9 +231,11 @@
     }
 
     #watchScreen.active{
-      position:relative;
-      inset:auto;
+      position:fixed;
+      inset:0;
+      height:100dvh;
       min-height:100vh;
+      overflow:hidden;
     }
 
     .player-float-controls{
@@ -652,8 +655,12 @@
 
     .watch-scroll{
       position:relative;
+      height:100%;
       margin-top:var(--scroll-top);
       background:var(--bg);
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      overscroll-behavior:contain;
       padding-bottom:calc(16px + var(--safe-bottom));
     }
 
