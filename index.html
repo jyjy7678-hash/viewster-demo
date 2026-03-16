@@ -1427,6 +1427,21 @@
       }
     }
 
+    // Always build a valid privacy-enhanced YouTube embed URL.
+    function buildYouTubeEmbedUrl(videoId){
+      const id = String(videoId || "").trim();
+      if(!id) return "";
+
+      const params = new URLSearchParams({
+        autoplay: "1",
+        mute: "1",
+        playsinline: "1",
+        rel: "0"
+      });
+
+      return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?${params.toString()}`;
+    }
+
     function formatTime(totalSeconds){
       const m = Math.floor(totalSeconds / 60);
       const s = totalSeconds % 60;
@@ -1725,7 +1740,7 @@ function updateFixedLayout(){
       watchTitle.title = video.title;
       watchTitle.classList.remove("expanded");
       watchSub.textContent = `${video.channel} · ${video.views}`;
-      ytFrame.src = `https://www.youtube.com/embed/${video.videoId}?autoplay=1&mute=1&playsinline=1&rel=0`;
+      ytFrame.src = buildYouTubeEmbedUrl(video.videoId);
 
       renderRecommend(video.id);
       renderComments(video);
