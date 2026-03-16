@@ -17,6 +17,7 @@
       --pill:#eff2f6;
       --shadow:0 8px 24px rgba(15,23,42,.06);
       --header-h:56px;
+      --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
       --sheet-top:0px;
       --scroll-top:0px;
@@ -179,7 +180,7 @@
 
     .top-fixed{
       position:absolute;
-      top:0; left:0; right:0;
+      top:var(--safe-top); left:0; right:0;
       z-index:20;
       background:transparent;
     }
@@ -243,10 +244,10 @@
 #watchScreen:not(.mini-mode) .player-float-controls{
   opacity:.32;
   transition:opacity .2s ease;
-  top:calc(100% + 8px);
+  top:10px;
   left:12px;
   right:12px;
-  z-index:1;
+  z-index:50;
 }
 
 /* 활성화되면 선명하게 */
