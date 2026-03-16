@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>VIEWSTER Mobile Demo v5.7</title>
   <style>
     :root{
@@ -25,7 +25,7 @@
 
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
     html,body{margin:0;padding:0;background:#000;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;color:var(--text);}
-    body{height:100vh;overflow:hidden;}
+    body{min-height:100vh;overflow-x:hidden;overflow-y:auto;}
     button,input{font:inherit;}
     img{display:block;max-width:100%;}
     .hidden{display:none !important;}
@@ -48,13 +48,13 @@
     .screen.active{display:flex; flex-direction:column;}
 
     .header{
-      height:var(--header-h);
+      height:calc(var(--header-h) + var(--safe-top));
       background:#fff;
       border-bottom:1px solid var(--line);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding:0 12px;
+      padding:var(--safe-top) 12px 0;
       flex-shrink:0;
       z-index:30;
       gap:8px;
@@ -173,7 +173,7 @@
     /* WATCH */
     .watch-root{
       flex:1;
-      overflow:hidden;
+      overflow:visible;
       position:relative;
       background:var(--bg);
     }
@@ -225,6 +225,12 @@
 
     #watchScreen > .header{
       display:none;
+    }
+
+    #watchScreen.active{
+      position:relative;
+      inset:auto;
+      min-height:100vh;
     }
 
     .player-float-controls{
@@ -342,6 +348,8 @@
     }
 
     #watchScreen.mini-mode{
+      position:fixed;
+      inset:0;
       display:flex;
       flex-direction:column;
       background:transparent;
@@ -641,11 +649,8 @@
     .big-banner img{width:100%;height:100%;object-fit:cover;}
 
     .watch-scroll{
-      position:absolute;
-      top:var(--scroll-top);
-      left:0; right:0; bottom:0;
-      overflow-y:auto;
-      -webkit-overflow-scrolling:touch;
+      position:relative;
+      margin-top:var(--scroll-top);
       background:var(--bg);
       padding-bottom:calc(16px + var(--safe-bottom));
     }
@@ -690,7 +695,7 @@
     .recommend-info{min-width:0;flex:1;}
     .recommend-title{
       font-size:14px;
-      font-weight:400;
+      font-weight:500;
       line-height:1.35;
       margin:0 0 5px;
       display:-webkit-box;
