@@ -19,7 +19,6 @@
       --shadow:0 8px 24px rgba(15,23,42,.06);
       --header-h:56px;
       --safe-top: env(safe-area-inset-top, 0px);
-      --safe-bottom: 0px;
       --sheet-top:0px;
       --scroll-top:0px;
     }
@@ -114,7 +113,7 @@
       flex:1;
       overflow-y:auto;
       -webkit-overflow-scrolling:touch;
-      padding-bottom:calc(18px + var(--safe-bottom));
+      padding-bottom:18px;
     }
 
     /* HOME */
@@ -392,7 +391,7 @@
     #watchScreen.mini-mode .top-fixed{
       position:absolute;
       right:12px;
-      bottom:calc(74px + var(--safe-bottom));
+      bottom:74px;
       left:auto;
       top:auto;
       width:170px;
@@ -671,7 +670,7 @@
       overflow-y:auto;
       -webkit-overflow-scrolling:touch;
       overscroll-behavior:contain;
-      padding-bottom:8px;
+      padding-bottom:0;
     }
 
     .section-title{
@@ -683,7 +682,7 @@
     }
 
     .recommend-list{
-      padding:0 12px 12px;
+      padding:0 12px 8px;
       background:#fff;
     }
     .recommend-item{
