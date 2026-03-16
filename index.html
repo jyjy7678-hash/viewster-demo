@@ -236,6 +236,9 @@
 #watchScreen:not(.mini-mode) .player-float-controls{
   opacity:.32;
   transition:opacity .2s ease;
+  top:calc(100% + 8px);
+  left:12px;
+  right:12px;
 }
 
 /* 활성화되면 선명하게 */
@@ -457,7 +460,8 @@
       font-size:18px;
       line-height:1;
       cursor:pointer;
-      z-index:8;
+      z-index:90;
+      pointer-events:auto;
       box-shadow:0 6px 18px rgba(0,0,0,.25);
     }
 
@@ -467,7 +471,7 @@
       border:none;
       background:transparent;
       cursor:pointer;
-      z-index:7;
+      z-index:70;
     }
 
     .watch-info-fixed{
@@ -1024,7 +1028,7 @@
   user-select:none;
 }
 #watchScreen.mini-mode .player-float-controls{
-  pointer-events:auto;
+  pointer-events:none;
 }
   </style>
 </head>
@@ -1434,7 +1438,7 @@
 
       const params = new URLSearchParams({
         autoplay: "1",
-        mute: "1",
+        mute: "0",
         playsinline: "1",
         rel: "0"
       });
