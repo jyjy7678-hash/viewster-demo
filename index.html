@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.30 -->
+<!-- Version: v0.1.31 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -247,14 +247,14 @@
       overflow:hidden;
     }
 
-    /* watch 화면 하단 safe area는 홈과 같은 배경색으로 고정 */
+    /* watch 화면 하단 여백/안전영역은 항상 앱 배경색으로 고정 */
     #watchScreen.active::after{
       content:"";
       position:fixed;
       left:0;
       right:0;
       bottom:0;
-      height:env(safe-area-inset-bottom, 0px);
+      height:calc(env(safe-area-inset-bottom, 0px) + 14px);
       background:var(--bg);
       pointer-events:none;
       z-index:6;
@@ -684,6 +684,12 @@
       -webkit-overflow-scrolling:touch;
       overscroll-behavior:contain;
       padding-bottom:0;
+    }
+    .watch-scroll::after{
+      content:"";
+      display:block;
+      height:14px;
+      background:var(--bg);
     }
 
     .section-title{
@@ -1150,7 +1156,7 @@
           <button class="tool-btn" data-add="300">+5분</button>
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" id="openBoxQuick">오픈</button>
-          <span class="dev-version-label">DEV v0.1.30</span>
+          <span class="dev-version-label">DEV v0.1.31</span>
         </div>
       </header>
 
@@ -1188,7 +1194,7 @@
             <button class="tool-btn" data-add="300">+5분</button>
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" id="openBoxQuickOverlay">오픈</button>
-            <span class="dev-version-label">DEV v0.1.30</span>
+            <span class="dev-version-label">DEV v0.1.31</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
