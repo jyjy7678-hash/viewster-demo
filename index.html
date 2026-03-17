@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.31 -->
+<!-- Version: v0.1.33 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -254,7 +254,7 @@
       left:0;
       right:0;
       bottom:0;
-      height:calc(env(safe-area-inset-bottom, 0px) + 14px);
+      height:env(safe-area-inset-bottom, 0px);
       background:var(--bg);
       pointer-events:none;
       z-index:6;
@@ -683,12 +683,12 @@
       overflow-y:auto;
       -webkit-overflow-scrolling:touch;
       overscroll-behavior:contain;
-      padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 88px);
+      padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 52px);
     }
     .watch-scroll::after{
       content:"";
       display:block;
-      height:24px;
+      height:8px;
       background:var(--bg);
     }
 
@@ -1156,7 +1156,7 @@
           <button class="tool-btn" data-add="300">+5분</button>
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" id="openBoxQuick">오픈</button>
-          <span class="dev-version-label">DEV v0.1.32</span>
+          <span class="dev-version-label">DEV v0.1.33</span>
         </div>
       </header>
 
@@ -1194,7 +1194,7 @@
             <button class="tool-btn" data-add="300">+5분</button>
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" id="openBoxQuickOverlay">오픈</button>
-            <span class="dev-version-label">DEV v0.1.32</span>
+            <span class="dev-version-label">DEV v0.1.33</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
