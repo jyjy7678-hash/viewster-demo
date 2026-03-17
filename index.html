@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.36 -->
+<!-- Version: v0.1.39 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1143,7 +1143,7 @@
           <button class="tool-btn" data-add="300">+5분</button>
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" id="openBoxQuick">오픈</button>
-          <span class="dev-version-label">DEV v0.1.38</span>
+          <span class="dev-version-label">DEV v0.1.39</span>
         </div>
       </header>
 
@@ -1181,7 +1181,7 @@
             <button class="tool-btn" data-add="300">+5분</button>
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" id="openBoxQuickOverlay">오픈</button>
-            <span class="dev-version-label">DEV v0.1.38</span>
+            <span class="dev-version-label">DEV v0.1.39</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -1792,6 +1792,7 @@ function updateFixedLayout(){
 
       watchCollapseArea.classList.remove("collapsed");
       infoCollapsed = false;
+      // 펼친 직후 sticky 기준점을 다시 계산해서 레이아웃이 즉시 맞게 반영되도록 유지
       updateFixedLayout();
     }
 
@@ -1805,11 +1806,17 @@ function updateFixedLayout(){
 
     function setupWatchScrollBehavior(){
       const onWatchScroll = () => {
-        const y = getWatchScrollTop();
+        if(!watchScreen.classList.contains("active") || watchScreen.classList.contains("mini-mode")){
+          return;
+        }
+
+        const y = window.scrollY || window.pageYOffset || 0;
         clearTimeout(scrollIdleTimer);
 
         if (y > 20) {
           collapseInfoPanel();
+        } else {
+          expandInfoPanel();
         }
 
         scrollIdleTimer = setTimeout(() => {
@@ -1817,6 +1824,7 @@ function updateFixedLayout(){
         }, 5000);
       };
 
+      // watch 화면 스크롤은 window 기준으로 처리
       window.addEventListener("scroll", onWatchScroll, { passive:true });
     }
 
