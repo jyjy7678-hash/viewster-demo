@@ -683,12 +683,12 @@
       overflow-y:auto;
       -webkit-overflow-scrolling:touch;
       overscroll-behavior:contain;
-      padding-bottom:0;
+      padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 88px);
     }
     .watch-scroll::after{
       content:"";
       display:block;
-      height:14px;
+      height:24px;
       background:var(--bg);
     }
 
@@ -1156,7 +1156,7 @@
           <button class="tool-btn" data-add="300">+5분</button>
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" id="openBoxQuick">오픈</button>
-          <span class="dev-version-label">DEV v0.1.31</span>
+          <span class="dev-version-label">DEV v0.1.32</span>
         </div>
       </header>
 
@@ -1194,7 +1194,7 @@
             <button class="tool-btn" data-add="300">+5분</button>
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" id="openBoxQuickOverlay">오픈</button>
-            <span class="dev-version-label">DEV v0.1.31</span>
+            <span class="dev-version-label">DEV v0.1.32</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
