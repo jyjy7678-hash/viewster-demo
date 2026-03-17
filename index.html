@@ -761,10 +761,13 @@
       transition:transform .28s ease;
       display:flex;
       flex-direction:column;
-      box-shadow:0 -12px 40px rgba(2,6,23,.18);
+      box-shadow:none;
       overflow:hidden;
     }
-    .sheet.show{transform:translateY(0);}
+    .sheet.show{
+      transform:translateY(0);
+      box-shadow:0 -12px 40px rgba(2,6,23,.18);
+    }
 
     .sheet-head{
       height:48px;
