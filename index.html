@@ -1796,20 +1796,22 @@ function updateFixedLayout(){
 
       watchCollapseArea.classList.remove("collapsed");
       infoCollapsed = false;
-
-
+      updateFixedLayout();
     }
 
     function getWatchScrollTop(){
       if(!watchScreen.classList.contains("active") || watchScreen.classList.contains("mini-mode")){
         return 0;
       }
-      const rootTop = watchScreen.getBoundingClientRect().top;
-      return Math.max(0, -rootTop);
+
+      const pageScroll = window.scrollY || window.pageYOffset || 0;
+      if(pageScroll > 0) return pageScroll;
+
+      return watchScroll ? watchScroll.scrollTop : 0;
     }
 
     function setupWatchScrollBehavior(){
-      window.addEventListener("scroll", () => {
+      const onWatchScroll = () => {
         const y = getWatchScrollTop();
         clearTimeout(scrollIdleTimer);
 
@@ -1820,7 +1822,12 @@ function updateFixedLayout(){
         scrollIdleTimer = setTimeout(() => {
           expandInfoPanel();
         }, 5000);
-      }, { passive:true });
+      };
+
+      window.addEventListener("scroll", onWatchScroll, { passive:true });
+      if(watchScroll){
+        watchScroll.addEventListener("scroll", onWatchScroll, { passive:true });
+      }
     }
 
     async function openWatch(id){
