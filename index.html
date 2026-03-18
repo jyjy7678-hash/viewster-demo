@@ -829,7 +829,8 @@
     .wallet-value{font-size:22px;font-weight:900;color:var(--primary);margin-top:8px;}
 
     .wallet-action-row{
-      display:flex;
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
       gap:10px;
       margin-top:8px;
     }
@@ -1250,7 +1251,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.46</span>
+          <span class="dev-version-label">DEV v0.1.47</span>
         </div>
       </header>
 
@@ -1289,7 +1290,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.46</span>
+            <span class="dev-version-label">DEV v0.1.47</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -1355,8 +1356,10 @@
         </div>
 
         <div class="wallet-action-row">
-          <button class="wallet-open-btn" id="walletOpenRandom">랜덤박스 열기</button>
-          <button class="wallet-open-btn gold" id="walletOpenGold">황금박스 열기</button>
+          <button class="wallet-open-btn" id="walletOpenRandom">랜덤</button>
+          <button class="wallet-open-btn" id="walletOpenRandomFail">랜덤X</button>
+          <button class="wallet-open-btn" id="walletOpenRandomGold">랜덤G</button>
+          <button class="wallet-open-btn gold" id="walletOpenGold">황금</button>
         </div>
       </div>
     </section>
@@ -1513,6 +1516,7 @@
       rewardAdSeconds: 0,
       openTimer: null,
       openType: "random",
+      openForcedResultType: null,
       openFromWallet: false,
       openAutoCloseTimer: null,
     };
@@ -2143,6 +2147,7 @@ window.addEventListener("resize", clampMiniPosition);
       clearTimeout(state.openAutoCloseTimer);
       document.getElementById("openSheet").classList.remove("show");
       resetOpenSheetFx();
+      state.openForcedResultType = null;
       state.openFromWallet = false;
       openSheetTitle.textContent = "랜덤박스 오픈";
       openSheetDesc.textContent = "오픈 전 1초 광고가 재생됩니다.";
@@ -2167,6 +2172,7 @@ window.addEventListener("resize", clampMiniPosition);
       clearInterval(state.openTimer);
       clearTimeout(state.openAutoCloseTimer);
       resetOpenSheetFx();
+      state.openForcedResultType = null;
       state.openFromWallet = false;
       rewardAdVideo.pause();
       rewardAdVideo.currentTime = 0;
@@ -2237,6 +2243,7 @@ window.addEventListener("resize", clampMiniPosition);
 
     function startOpenFlow(type, options = {}){
       state.openType = type || "random";
+      state.openForcedResultType = options.forcedResultType || null;
       state.openFromWallet = !!options.fromWallet;
       clearTimeout(state.openAutoCloseTimer);
       resetOpenSheetFx();
@@ -2304,7 +2311,12 @@ window.addEventListener("resize", clampMiniPosition);
             result = createBoxResult(goldBoxTable, [{ value: "normal", weight: 1 }]);
             state.goldBoxCount -= 1;
           } else {
-            result = createBoxResult(boxTable);
+            result = createBoxResult(
+              boxTable,
+              state.openForcedResultType
+                ? [{ value: state.openForcedResultType, weight: 1 }]
+                : boxResultTypeTable
+            );
             state.randomBoxCount -= 1;
           }
 
@@ -2379,7 +2391,9 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
 
     document.getElementById("openWalletBtn").addEventListener("click", () => openSheet("walletSheet"));
     document.getElementById("openCommentBtn").addEventListener("click", () => openSheet("commentSheet"));
-    document.getElementById("walletOpenRandom").addEventListener("click", () => startOpenFlow("random", { fromWallet: true }));
+    document.getElementById("walletOpenRandom").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "normal" }));
+    document.getElementById("walletOpenRandomFail").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "chance_fail" }));
+    document.getElementById("walletOpenRandomGold").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "chance_gold" }));
     document.getElementById("walletOpenGold").addEventListener("click", () => startOpenFlow("gold", { fromWallet: true }));
     inlineGetBtnWide.addEventListener("click", startRewardAdFlow);
 
