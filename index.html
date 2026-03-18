@@ -1149,7 +1149,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.44</span>
+          <span class="dev-version-label">DEV v0.1.45</span>
         </div>
       </header>
 
@@ -1188,7 +1188,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.44</span>
+            <span class="dev-version-label">DEV v0.1.45</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -1312,9 +1312,9 @@
         </div>
       </div>
       <div class="ad-top" id="openSheetTitle">랜덤박스 오픈</div>
-      <div class="ad-desc" id="openSheetDesc">오픈 전 3초 광고가 재생됩니다.</div>
+      <div class="ad-desc" id="openSheetDesc">오픈 전 1초 광고가 재생됩니다.</div>
       <div class="box-open-stage" id="openStage">
-        <div class="box-open-text" id="openStageText">오픈 버튼을 누르면 3초 광고 후 박스가 열립니다.</div>
+        <div class="box-open-text" id="openStageText">오픈 버튼을 누르면 1초 광고 후 박스가 열립니다.</div>
       </div>
       <div class="ad-btn-wrap">
         <button class="ad-btn ready" id="openBoxBtn">랜덤박스 오픈</button>
@@ -1545,10 +1545,10 @@
       return items[items.length - 1].value;
     }
 
-    function createBoxResult(items){
+    function createBoxResult(items, resultTypes = boxResultTypeTable){
       return {
         reward: weightedRandom(items),
-        type: weightedRandom(boxResultTypeTable)
+        type: weightedRandom(resultTypes)
       };
     }
 
@@ -2029,8 +2029,8 @@ window.addEventListener("resize", clampMiniPosition);
       document.getElementById("openSheet").classList.remove("show");
       state.openFromWallet = false;
       openSheetTitle.textContent = "랜덤박스 오픈";
-      openSheetDesc.textContent = "오픈 전 3초 광고가 재생됩니다.";
-      openStageText.innerHTML = "오픈 버튼을 누르면 3초 광고 후 박스가 열립니다.";
+      openSheetDesc.textContent = "오픈 전 1초 광고가 재생됩니다.";
+      openStageText.innerHTML = "오픈 버튼을 누르면 1초 광고 후 박스가 열립니다.";
       openBoxBtn.textContent = "랜덤박스 오픈";
       openBoxBtn.disabled = false;
       openBoxBtn.classList.add("ready");
@@ -2060,8 +2060,8 @@ window.addEventListener("resize", clampMiniPosition);
       rewardAdGuideLeft.textContent = "광고 재생중...";
       rewardAdGuideRight.textContent = "15초 후 자동 지급";
       openSheetTitle.textContent = "랜덤박스 오픈";
-      openSheetDesc.textContent = "오픈 전 3초 광고가 재생됩니다.";
-      openStageText.innerHTML = "오픈 버튼을 누르면 3초 광고 후 박스가 열립니다.";
+      openSheetDesc.textContent = "오픈 전 1초 광고가 재생됩니다.";
+      openStageText.innerHTML = "오픈 버튼을 누르면 1초 광고 후 박스가 열립니다.";
       openBoxBtn.textContent = "랜덤박스 오픈";
       openBoxBtn.disabled = false;
       openBoxBtn.classList.add("ready");
@@ -2138,15 +2138,15 @@ window.addEventListener("resize", clampMiniPosition);
       openBoxBtn.textContent = "광고 재생중...";
 
       openSheetTitle.textContent = state.openType === "gold" ? "황금박스 오픈" : "랜덤박스 오픈";
-      openSheetDesc.textContent = "오픈 전 3초 광고가 재생됩니다.";
-      openStageText.innerHTML = `광고 재생중...<br>3`;
+      openSheetDesc.textContent = "오픈 전 1초 광고가 재생됩니다.";
+      openStageText.innerHTML = `광고 재생중...<br>1`;
 
       let sec = 0;
       state.openTimer = setInterval(() => {
         sec += 1;
-        const remain = Math.max(3 - sec, 0);
+        const remain = Math.max(1 - sec, 0);
         openStageText.innerHTML = `광고 재생중...<br>${remain}`;
-        if(sec >= 3){
+        if(sec >= 1){
           clearInterval(state.openTimer);
           runBoxAnimation();
         }
@@ -2180,7 +2180,7 @@ window.addEventListener("resize", clampMiniPosition);
 
           let result;
           if(state.openType === "gold"){
-            result = createBoxResult(goldBoxTable);
+            result = createBoxResult(goldBoxTable, [{ value: "normal", weight: 1 }]);
             state.goldBoxCount -= 1;
           } else {
             result = createBoxResult(boxTable);
@@ -2188,21 +2188,21 @@ window.addEventListener("resize", clampMiniPosition);
           }
 
           state.totalRewardPoint += result.reward;
-          if(result.type === "chance_gold"){
+          if(state.openType === "random" && result.type === "chance_gold"){
             state.goldBoxCount += 1;
           }
           updateWallet();
 
           openSheetTitle.textContent = "당첨 완료";
           openSheetDesc.textContent = state.openType === "gold" ? "황금박스 오픈 결과입니다." : "랜덤박스 오픈 결과입니다.";
-          if(result.type === "chance_fail"){
+          if(state.openType === "random" && result.type === "chance_fail"){
             openStageText.innerHTML = `
               <div class="glow-burst"></div>
               <div class="result-amount box-pop">황금박스 기회</div>
               <div class="result-sub">아쉽게 놓쳤어요</div>
               <div class="result-sub">${result.reward.toLocaleString()} P 지급</div>
             `;
-          } else if(result.type === "chance_gold"){
+          } else if(state.openType === "random" && result.type === "chance_gold"){
             openStageText.innerHTML = `
               <div class="glow-burst"></div>
               <div class="result-amount box-pop">황금박스 획득!</div>
@@ -2223,7 +2223,7 @@ window.addEventListener("resize", clampMiniPosition);
             openBoxBtn.textContent = "지갑으로 돌아가는 중...";
             state.openAutoCloseTimer = setTimeout(() => {
               closeOpenSheetOnly();
-            }, 1200);
+            }, 2200);
           } else {
             openBoxBtn.disabled = false;
             openBoxBtn.classList.add("ready");
