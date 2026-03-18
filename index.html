@@ -1031,13 +1031,13 @@
       inset:0;
       opacity:0;
       pointer-events:none;
-      z-index:3;
+      z-index:1;
     }
     .open-stage-cloud{
       position:absolute;
       border-radius:999px;
       background:radial-gradient(circle, rgba(255,255,255,.88) 0%, rgba(215,228,255,.6) 38%, rgba(151,170,196,.18) 72%, transparent 100%);
-      filter:blur(12px);
+      filter:blur(8px);
       transform:translateY(24px) scale(.78);
       opacity:0;
     }
@@ -1057,6 +1057,7 @@
       opacity:0;
       pointer-events:none;
       z-index:4;
+      transition:opacity .18s ease .24s;
     }
     .box-open-stage.stage-show-result .open-stage-result{
       opacity:1;
@@ -1116,9 +1117,9 @@
     }
     @keyframes stageCloudCover{
       0%{opacity:0; transform:translateY(24px) scale(.78);}
-      26%{opacity:.92; transform:translateY(0) scale(1);}
-      58%{opacity:.96; transform:translateY(-2px) scale(1.06);}
-      100%{opacity:0; transform:translateY(-18px) scale(1.12);}
+      26%{opacity:.52; transform:translateY(0) scale(.98);}
+      58%{opacity:.56; transform:translateY(-2px) scale(1.02);}
+      100%{opacity:0; transform:translateY(-18px) scale(1.08);}
     }
     @keyframes stageCloudDrift{
       0%,100%{transform:translateX(0);}
@@ -1257,7 +1258,7 @@
     }
     #openSheet.fx-random-fail .open-stage-cloud,
     #openSheet.fx-random-gold .open-stage-cloud{
-      animation:stageCloudCover .92s ease-out forwards, stageCloudDrift .92s ease-in-out 1;
+      animation:stageCloudCover .72s ease-out forwards, stageCloudDrift .72s ease-in-out 1;
     }
     #openSheet.fx-random-fail .cloud-b,
     #openSheet.fx-random-gold .cloud-b{
@@ -1272,7 +1273,7 @@
       animation-delay:.2s, .2s;
     }
     #openSheet.fx-random-gold .result-gold-box{
-      animation:goldBoxReveal .54s cubic-bezier(.22,1,.36,1) 1.02s both;
+      animation:goldBoxReveal .54s cubic-bezier(.22,1,.36,1) 1.12s both;
     }
 
     .toast{
@@ -1384,7 +1385,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.51</span>
+          <span class="dev-version-label">DEV v0.1.52</span>
         </div>
       </header>
 
@@ -1423,7 +1424,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.51</span>
+            <span class="dev-version-label">DEV v0.1.52</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2327,13 +2328,16 @@ window.addEventListener("resize", clampMiniPosition);
       openBoxBtn.textContent = label || (mode === "close" ? "닫기" : (state.openType === "gold" ? "황금박스 오픈" : "랜덤박스 오픈"));
     }
 
-    function resetOpenSheetState(){
+    function resetOpenSheetState(options = {}){
+      const preserveFlowState = !!options.preserveFlowState;
       clearInterval(state.openTimer);
       clearTimeout(state.openAutoCloseTimer);
       resetOpenSheetFx();
-      state.openForcedResultType = null;
-      state.openFromWallet = false;
-      state.openType = "random";
+      if(!preserveFlowState){
+        state.openForcedResultType = null;
+        state.openFromWallet = false;
+        state.openType = "random";
+      }
       openSheetTitle.textContent = "랜덤박스 오픈";
       openSheetDesc.textContent = "오픈 전 1초 광고가 재생됩니다.";
       resetOpenStageState();
@@ -2346,6 +2350,7 @@ window.addEventListener("resize", clampMiniPosition);
 
     function closeAllSheets(options = {}){
       const keepWallet = !!options.keepWallet;
+      const preserveOpenFlowState = !!options.preserveOpenFlowState;
 
       managedSheetIds.forEach(id => {
         if(keepWallet && id === "walletSheet") return;
@@ -2353,7 +2358,7 @@ window.addEventListener("resize", clampMiniPosition);
       });
 
       resetRewardAdState();
-      resetOpenSheetState();
+      resetOpenSheetState({ preserveFlowState: preserveOpenFlowState });
 
       if(!keepWallet){
         resetSheetScroll("walletSheet");
@@ -2373,7 +2378,7 @@ window.addEventListener("resize", clampMiniPosition);
       const keepWallet = !!options.keepWallet;
       const shouldKeepWallet = keepWallet && id === "openSheet" && document.getElementById("walletSheet").classList.contains("show");
 
-      closeAllSheets({ keepWallet: shouldKeepWallet });
+      closeAllSheets({ keepWallet: shouldKeepWallet, preserveOpenFlowState: id === "openSheet" });
 
       overlay.classList.add("show");
       document.getElementById(id).classList.add("show");
@@ -2620,11 +2625,7 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     openBoxBtn.addEventListener("click", () => {
       if(state.openBoxBtnMode === "busy") return;
       if(state.openBoxBtnMode === "close"){
-        if(state.openFromWallet){
-          closeOpenSheetOnly();
-          return;
-        }
-        closeAllSheets();
+        closeOpenSheetOnly();
         return;
       }
       startOpenFlow(state.openType === "gold" ? "gold" : "random");
@@ -2673,7 +2674,7 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
 
     document.querySelectorAll(".sheet-close").forEach(btn => {
       btn.addEventListener("click", () => {
-        if(btn.dataset.close === "openSheet" && state.openFromWallet){
+        if(btn.dataset.close === "openSheet"){
           closeOpenSheetOnly();
           return;
         }
