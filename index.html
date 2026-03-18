@@ -1145,10 +1145,11 @@
 
         <div class="header-right header-test-tools">
           <button class="tool-btn" data-add="60">+1분</button>
-          <button class="tool-btn" data-add="300">+5분</button>
+          <button class="tool-btn" data-add="595">+9분55초</button>
           <button class="tool-btn" data-add="600">+10분</button>
-          <button class="tool-btn" id="openBoxQuick">오픈</button>
-          <span class="dev-version-label">DEV v0.1.40</span>
+          <button class="tool-btn" data-box-add="random">+랜덤박스</button>
+          <button class="tool-btn" data-box-add="gold">+황금박스</button>
+          <span class="dev-version-label">DEV v0.1.41</span>
         </div>
       </header>
 
@@ -1183,10 +1184,11 @@
 
           <div class="player-test-tools">
             <button class="tool-btn" data-add="60">+1분</button>
-            <button class="tool-btn" data-add="300">+5분</button>
+            <button class="tool-btn" data-add="595">+9분55초</button>
             <button class="tool-btn" data-add="600">+10분</button>
-            <button class="tool-btn" id="openBoxQuickOverlay">오픈</button>
-            <span class="dev-version-label">DEV v0.1.40</span>
+            <button class="tool-btn" data-box-add="random">+랜덤박스</button>
+            <button class="tool-btn" data-box-add="gold">+황금박스</button>
+            <span class="dev-version-label">DEV v0.1.41</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -1475,7 +1477,6 @@
     const enterMiniBtn = document.getElementById("enterMiniBtn");
     const miniCloseBtn = document.getElementById("miniCloseBtn");
     const miniRestoreHit = document.getElementById("miniRestoreHit");
-    const openBoxQuickOverlay = document.getElementById("openBoxQuickOverlay");
     const toggleMiniSizeBtn = document.getElementById("toggleMiniSizeBtn");
     const miniAdWrap = document.getElementById("miniAdWrap");
     const paidBadge = document.getElementById("paidBadge");
@@ -2172,7 +2173,6 @@ window.addEventListener("resize", clampMiniPosition);
       backToHome();
     });
     miniRestoreHit.addEventListener("click", exitMiniMode);
-    openBoxQuickOverlay.addEventListener("click", () => startOpenFlow("random"));
     toggleMiniSizeBtn.addEventListener("click", toggleMiniSize);
     playerWrap.addEventListener("click", wakePlayerControls);
 playerFloatControls.addEventListener("click", wakePlayerControls);
@@ -2181,7 +2181,6 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
 
     document.getElementById("openWalletBtn").addEventListener("click", () => openSheet("walletSheet"));
     document.getElementById("openCommentBtn").addEventListener("click", () => openSheet("commentSheet"));
-    document.getElementById("openBoxQuick").addEventListener("click", () => startOpenFlow("random"));
     document.getElementById("walletOpenRandom").addEventListener("click", () => startOpenFlow("random"));
     document.getElementById("walletOpenGold").addEventListener("click", () => startOpenFlow("gold"));
     inlineGetBtnWide.addEventListener("click", startRewardAdFlow);
@@ -2198,6 +2197,21 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       btn.addEventListener("click", () => {
         state.integratedWatchSeconds += Number(btn.dataset.add);
         updateRewardUI();
+      });
+    });
+
+    document.querySelectorAll(".tool-btn[data-box-add]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if(btn.dataset.boxAdd === "gold") {
+          state.goldBoxCount += 1;
+          updateWallet();
+          showToast("황금박스 +1");
+          return;
+        }
+
+        state.randomBoxCount += 1;
+        updateWallet();
+        showToast("랜덤박스 +1");
       });
     });
 
