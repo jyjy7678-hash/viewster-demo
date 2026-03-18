@@ -1366,7 +1366,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.48</span>
+          <span class="dev-version-label">DEV v0.1.49</span>
         </div>
       </header>
 
@@ -1405,7 +1405,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.48</span>
+            <span class="dev-version-label">DEV v0.1.49</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2257,12 +2257,94 @@ window.addEventListener("resize", clampMiniPosition);
       syncMiniSizeButton();
     }
 
-    function openSheet(id){
-      overlay.classList.add("show");
-      document.getElementById(id).classList.add("show");
+    const managedSheetIds = ["walletSheet", "openSheet", "adSheet", "commentSheet"];
+    const exclusiveSheetIds = ["walletSheet", "openSheet", "adSheet"];
+    const openSheetFxClasses = ["fx-random-normal", "fx-random-fail", "fx-random-gold", "fx-gold-open"];
+
+    function resetSheetScroll(id){
+      const sheet = document.getElementById(id);
+      if(!sheet) return;
+      sheet.scrollTop = 0;
+      const sheetBody = sheet.querySelector(".sheet-body");
+      if(sheetBody){
+        sheetBody.scrollTop = 0;
+      }
     }
 
-    const openSheetFxClasses = ["fx-random-normal", "fx-random-fail", "fx-random-gold", "fx-gold-open"];
+    function syncSheetScrollLock(){
+      const hasOpenSheet = !!document.querySelector(".sheet.show");
+      document.body.style.overflowY = hasOpenSheet ? "hidden" : "";
+      document.documentElement.style.overflowY = hasOpenSheet ? "hidden" : "";
+    }
+
+    function resetRewardAdState(){
+      clearInterval(state.rewardAdTimer);
+      rewardAdVideo.pause();
+      rewardAdVideo.currentTime = 0;
+      rewardAdProgress.style.width = "0%";
+      rewardAdBtn.disabled = true;
+      rewardAdBtn.classList.remove("ready");
+      rewardAdBtn.textContent = "받기 (5s)";
+      rewardAdGuideLeft.textContent = "광고 재생중...";
+      rewardAdGuideRight.textContent = "15초 후 자동 지급";
+      resetSheetScroll("adSheet");
+    }
+
+    function resetOpenSheetState(){
+      clearInterval(state.openTimer);
+      clearTimeout(state.openAutoCloseTimer);
+      resetOpenSheetFx();
+      state.openForcedResultType = null;
+      state.openFromWallet = false;
+      openSheetTitle.textContent = "랜덤박스 오픈";
+      openSheetDesc.textContent = "오픈 전 1초 광고가 재생됩니다.";
+      resetOpenStageState();
+      openBoxBtn.textContent = "랜덤박스 오픈";
+      openBoxBtn.disabled = false;
+      openBoxBtn.classList.add("ready");
+      openBoxBtn.onclick = () => startOpenFlow("random");
+      boxIconStage.classList.remove("box-pop");
+      void boxIconStage.offsetWidth;
+      boxIconStage.classList.add("box-pop");
+      resetSheetScroll("openSheet");
+    }
+
+    function closeAllSheets(options = {}){
+      const keepWallet = !!options.keepWallet;
+
+      managedSheetIds.forEach(id => {
+        if(keepWallet && id === "walletSheet") return;
+        document.getElementById(id).classList.remove("show");
+      });
+
+      resetRewardAdState();
+      resetOpenSheetState();
+
+      if(!keepWallet){
+        resetSheetScroll("walletSheet");
+        resetSheetScroll("commentSheet");
+      }
+
+      if(document.querySelector(".sheet.show")){
+        overlay.classList.add("show");
+      } else {
+        overlay.classList.remove("show");
+      }
+
+      syncSheetScrollLock();
+    }
+
+    function openSheet(id, options = {}){
+      const keepWallet = !!options.keepWallet;
+      const shouldKeepWallet = keepWallet && id === "openSheet" && document.getElementById("walletSheet").classList.contains("show");
+
+      closeAllSheets({ keepWallet: shouldKeepWallet });
+
+      overlay.classList.add("show");
+      document.getElementById(id).classList.add("show");
+      resetSheetScroll(id);
+      syncSheetScrollLock();
+    }
 
     function resetOpenSheetFx(){
       openSheetEl.classList.remove(...openSheetFxClasses);
@@ -2299,55 +2381,14 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     function closeOpenSheetOnly(){
-      clearInterval(state.openTimer);
-      clearTimeout(state.openAutoCloseTimer);
       document.getElementById("openSheet").classList.remove("show");
-      resetOpenSheetFx();
-      state.openForcedResultType = null;
-      state.openFromWallet = false;
-      openSheetTitle.textContent = "랜덤박스 오픈";
-      openSheetDesc.textContent = "오픈 전 1초 광고가 재생됩니다.";
-      resetOpenStageState();
-      openBoxBtn.textContent = "랜덤박스 오픈";
-      openBoxBtn.disabled = false;
-      openBoxBtn.classList.add("ready");
-      openBoxBtn.onclick = () => startOpenFlow("random");
-      boxIconStage.classList.remove("box-pop");
-      void boxIconStage.offsetWidth;
-      boxIconStage.classList.add("box-pop");
+      resetOpenSheetState();
 
       if(!document.querySelector(".sheet.show")){
         overlay.classList.remove("show");
       }
-    }
 
-    function closeAllSheets(){
-      overlay.classList.remove("show");
-      document.querySelectorAll(".sheet").forEach(sheet => sheet.classList.remove("show"));
-      clearInterval(state.rewardAdTimer);
-      clearInterval(state.openTimer);
-      clearTimeout(state.openAutoCloseTimer);
-      resetOpenSheetFx();
-      state.openForcedResultType = null;
-      state.openFromWallet = false;
-      rewardAdVideo.pause();
-      rewardAdVideo.currentTime = 0;
-      rewardAdProgress.style.width = "0%";
-      rewardAdBtn.disabled = true;
-      rewardAdBtn.classList.remove("ready");
-      rewardAdBtn.textContent = "받기 (5s)";
-      rewardAdGuideLeft.textContent = "광고 재생중...";
-      rewardAdGuideRight.textContent = "15초 후 자동 지급";
-      openSheetTitle.textContent = "랜덤박스 오픈";
-      openSheetDesc.textContent = "오픈 전 1초 광고가 재생됩니다.";
-      resetOpenStageState();
-      openBoxBtn.textContent = "랜덤박스 오픈";
-      openBoxBtn.disabled = false;
-      openBoxBtn.classList.add("ready");
-      openBoxBtn.onclick = () => startOpenFlow("random");
-      boxIconStage.classList.remove("box-pop");
-      void boxIconStage.offsetWidth;
-      boxIconStage.classList.add("box-pop");
+      syncSheetScrollLock();
     }
 
     function startRewardAdFlow(){
@@ -2413,7 +2454,7 @@ window.addEventListener("resize", clampMiniPosition);
         return;
       }
 
-      openSheet("openSheet");
+      openSheet("openSheet", { keepWallet: state.openFromWallet });
       openBoxBtn.disabled = true;
       openBoxBtn.classList.remove("ready");
       openBoxBtn.textContent = "광고 재생중...";
