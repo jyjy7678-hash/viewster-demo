@@ -959,19 +959,12 @@
       cursor:pointer;
     }
 
-    .box-hero{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      padding:16px 16px 8px;
-    }
+    .box-hero{display:none;}
     .box-icon{
-      width:92px;
-      height:92px;
+      width:112px;
+      height:112px;
       display:grid;
       place-items:center;
-      margin-bottom:12px;
       position:relative;
     }
     .box-icon img.main{
@@ -991,40 +984,101 @@
     }
 
     .box-open-stage{
-      margin:0 16px 12px;
-      background:radial-gradient(circle at 50% 30%,rgba(59,130,246,.35),rgba(34,197,94,.06) 45%,transparent 70%),#111827;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:20px;
-      min-height:210px;
+      margin:8px 16px 10px;
+      min-height:320px;
       display:flex;
       align-items:center;
       justify-content:center;
       text-align:center;
-      padding:24px;
+      padding:24px 20px 30px;
       overflow:hidden;
       position:relative;
+      border-radius:26px;
+      border:1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(circle at 50% 18%, rgba(96,165,250,.28), rgba(59,130,246,.08) 34%, transparent 62%),
+        radial-gradient(circle at 50% 100%, rgba(255,255,255,.1), transparent 44%),
+        linear-gradient(180deg,#050b16 0%,#101827 54%,#0b1220 100%);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 18px 36px rgba(2,6,23,.28);
       transition:background .28s ease, box-shadow .28s ease, border-color .28s ease;
+      isolation:isolate;
     }
-    .box-open-text{
-      font-size:16px;
-      font-weight:900;
-      color:#fff;
-      line-height:1.5;
+    .open-stage-backdrop{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 50% 22%, rgba(255,255,255,.12), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.04), transparent 28%, rgba(148,163,184,.08) 100%);
+      opacity:.9;
+      z-index:0;
+      pointer-events:none;
+    }
+    .open-stage-box-wrap{
       position:relative;
       z-index:2;
+      display:grid;
+      place-items:center;
+      width:176px;
+      height:176px;
+      border-radius:999px;
+      background:radial-gradient(circle, rgba(255,255,255,.08) 0%, rgba(59,130,246,.08) 38%, rgba(0,0,0,0) 72%);
+      transition:transform .34s ease, opacity .28s ease;
+    }
+    .open-stage-box-wrap::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      bottom:16px;
+      width:120px;
+      height:26px;
+      transform:translateX(-50%);
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(15,23,42,.7) 0%, rgba(15,23,42,0) 74%);
+      filter:blur(3px);
+      z-index:-1;
+    }
+    .box-open-stage.stage-show-result .open-stage-box-wrap{
+      opacity:.16;
+      transform:translateY(-18px) scale(.84);
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap{
+      transform:scale(1.04);
+    }
+    .box-open-text{
+      position:absolute;
+      left:50%;
+      bottom:22px;
+      transform:translateX(-50%);
+      min-height:18px;
+      padding:0 12px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:rgba(214,224,239,.74);
+      z-index:3;
       transition:opacity .22s ease, transform .22s ease;
+      white-space:nowrap;
+    }
+    .box-open-text:empty{
+      opacity:0;
     }
     .box-open-stage.stage-show-result .box-open-text{
       opacity:0;
-      transform:translateY(-8px) scale(.98);
+      transform:translateX(-50%) translateY(8px);
       pointer-events:none;
     }
     .box-open-stage.stage-animating .box-open-text{
-      font-size:12px;
-      font-weight:700;
-      color:rgba(214,224,239,.72);
-      letter-spacing:.02em;
-      transform:translateY(58px);
+      opacity:1;
+    }
+    .open-sheet-actions{
+      padding:8px 16px 16px;
+      transition:opacity .2s ease, transform .2s ease;
+    }
+    .open-sheet-actions.is-hidden{
+      opacity:0;
+      transform:translateY(8px);
+      pointer-events:none;
     }
     .open-stage-clouds{
       position:absolute;
@@ -1385,7 +1439,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.52</span>
+          <span class="dev-version-label">DEV v0.1.53</span>
         </div>
       </header>
 
@@ -1424,7 +1478,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.52</span>
+            <span class="dev-version-label">DEV v0.1.53</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -1546,16 +1600,15 @@
         <button class="sheet-close" data-close="openSheet" style="background:#1f2937;color:#fff;">×</button>
       </div>
       <div class="sheet-body sheet-body--plain">
-        <div class="box-hero">
-          <div class="box-icon box-pop" id="boxIconStage">
-            <img class="fx" src="assets/fx-ring.svg" alt="" onerror="this.style.display='none'">
-            <img class="main" src="assets/icon-randombox.svg" alt="랜덤박스" onerror="this.style.display='none'">
-          </div>
-        </div>
-        <div class="ad-top" id="openSheetTitle">랜덤박스 오픈</div>
-        <div class="ad-desc" id="openSheetDesc">오픈 전 1초 광고가 재생됩니다.</div>
         <div class="box-open-stage" id="openStage">
-          <div class="box-open-text" id="openStageText">오픈 버튼을 누르면 1초 광고 후 박스가 열립니다.</div>
+          <div class="open-stage-backdrop" aria-hidden="true"></div>
+          <div class="open-stage-box-wrap" id="openStageBoxWrap">
+            <div class="box-icon box-pop" id="boxIconStage">
+              <img class="fx" src="assets/fx-ring.svg" alt="" onerror="this.style.display='none'">
+              <img class="main" src="assets/icon-randombox.svg" alt="랜덤박스" onerror="this.style.display='none'">
+            </div>
+          </div>
+          <div class="box-open-text" id="openStageText"></div>
           <div class="open-stage-clouds" id="openStageClouds" aria-hidden="true">
             <span class="open-stage-cloud cloud-a"></span>
             <span class="open-stage-cloud cloud-b"></span>
@@ -1571,7 +1624,7 @@
             <div class="result-sub" id="openResultSub"></div>
           </div>
         </div>
-        <div class="ad-btn-wrap">
+        <div class="ad-btn-wrap open-sheet-actions" id="openSheetActions">
           <button class="ad-btn ready" id="openBoxBtn">랜덤박스 오픈</button>
         </div>
       </div>
@@ -1735,9 +1788,8 @@
     const openStageResult = document.getElementById("openStageResult");
     const openResultAmount = document.getElementById("openResultAmount");
     const openResultSub = document.getElementById("openResultSub");
-    const openSheetTitle = document.getElementById("openSheetTitle");
-    const openSheetDesc = document.getElementById("openSheetDesc");
     const openBoxBtn = document.getElementById("openBoxBtn");
+    const openSheetActions = document.getElementById("openSheetActions");
     const topFixed = document.getElementById("topFixed");
     const playerWrap = document.getElementById("playerWrap");
     const boxIconStage = document.getElementById("boxIconStage");
@@ -2314,13 +2366,23 @@ window.addEventListener("resize", clampMiniPosition);
       resetSheetScroll("adSheet");
     }
 
+    function syncOpenStageBoxAsset(){
+      const boxMainImage = boxIconStage.querySelector(".main");
+      if(!boxMainImage) return;
+
+      const isGold = state.openType === "gold";
+      boxMainImage.src = isGold ? "assets/icon-goldbox.svg" : "assets/icon-randombox.svg";
+      boxMainImage.alt = isGold ? "황금박스" : "랜덤박스";
+    }
+
     function setOpenBoxBtnMode(mode, label){
       state.openBoxBtnMode = mode;
       openBoxBtn.classList.toggle("ready", mode !== "busy");
+      openSheetActions.classList.toggle("is-hidden", mode === "busy");
 
       if(mode === "busy"){
         openBoxBtn.disabled = true;
-        openBoxBtn.textContent = label || "오픈 중...";
+        openBoxBtn.textContent = label || "진행 중";
         return;
       }
 
@@ -2338,8 +2400,6 @@ window.addEventListener("resize", clampMiniPosition);
         state.openFromWallet = false;
         state.openType = "random";
       }
-      openSheetTitle.textContent = "랜덤박스 오픈";
-      openSheetDesc.textContent = "오픈 전 1초 광고가 재생됩니다.";
       resetOpenStageState();
       setOpenBoxBtnMode("start");
       boxIconStage.classList.remove("box-pop");
@@ -2398,9 +2458,10 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     function resetOpenStageState(){
+      syncOpenStageBoxAsset();
       openStage.classList.remove("stage-show-result", "stage-animating");
       openStageResult.classList.remove("show-gold-box");
-      openStageText.innerHTML = "오픈 버튼을 누르면 1초 광고 후 박스가 열립니다.";
+      openStageText.textContent = "";
       openResultAmount.textContent = "";
       openResultSub.textContent = "";
     }
@@ -2409,7 +2470,7 @@ window.addEventListener("resize", clampMiniPosition);
       openStage.classList.remove("stage-show-result");
       openStage.classList.toggle("stage-animating", !!options.animating);
       openStageResult.classList.remove("show-gold-box");
-      openStageText.innerHTML = message;
+      openStageText.textContent = message || "";
       openResultAmount.textContent = "";
       openResultSub.textContent = "";
     }
@@ -2497,20 +2558,18 @@ window.addEventListener("resize", clampMiniPosition);
       }
 
       openSheet("openSheet", { keepWallet: state.openFromWallet });
-      setOpenBoxBtnMode("busy", "광고 재생중...");
+      setOpenBoxBtnMode("busy");
       if(state.openType === "gold"){
         applyOpenSheetFx("fx-gold-open");
       }
 
-      openSheetTitle.textContent = state.openType === "gold" ? "황금박스 오픈" : "랜덤박스 오픈";
-      openSheetDesc.textContent = "잠시 후 결과가 표시됩니다.";
-      setOpenStageMessage("광고 1초", { animating: true });
+      syncOpenStageBoxAsset();
+      setOpenStageMessage("", { animating: true });
 
       let sec = 0;
       state.openTimer = setInterval(() => {
         sec += 1;
-        const remain = Math.max(1 - sec, 0);
-        setOpenStageMessage(remain > 0 ? `광고 ${remain}초` : "박스 오픈", { animating: true });
+        setOpenStageMessage("", { animating: true });
         if(sec >= 1){
           clearInterval(state.openTimer);
           runBoxAnimation();
@@ -2519,15 +2578,12 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     function runBoxAnimation(){
-      openSheetTitle.textContent = state.openType === "gold" ? "황금박스 오픈 중" : "랜덤박스 오픈 중";
-      openSheetDesc.textContent = "CSS 연출 후 결과가 표시됩니다.";
-
       let phase = 0;
 
       boxIconStage.classList.remove("box-pop");
       void boxIconStage.offsetWidth;
       boxIconStage.classList.add("box-pop");
-      setOpenStageMessage("박스 오픈", { animating: true });
+      setOpenStageMessage("", { animating: true });
 
       state.openTimer = setInterval(() => {
         phase += 1;
@@ -2555,8 +2611,6 @@ window.addEventListener("resize", clampMiniPosition);
           }
           updateWallet();
 
-          openSheetTitle.textContent = "당첨 완료";
-          openSheetDesc.textContent = state.openType === "gold" ? "황금박스 결과" : "랜덤박스 결과";
           if(state.openType === "gold"){
             applyOpenSheetFx("fx-gold-open");
           } else if(result.type === "chance_fail"){
@@ -2574,18 +2628,18 @@ window.addEventListener("resize", clampMiniPosition);
           } else if(state.openType === "random" && result.type === "chance_gold"){
             showOpenStageResult({
               amountText: `${result.reward.toLocaleString()} P`,
-              subText: "황금박스 +1",
+              subText: "+1",
               showGoldBox: true
             });
           } else {
             showOpenStageResult({
               amountText: `${result.reward.toLocaleString()} P`,
-              subText: state.openType === "gold" ? "리워드 지급" : ""
+              subText: ""
             });
           }
 
           if(state.openFromWallet){
-            setOpenBoxBtnMode("busy", "지갑으로 돌아가는 중...");
+            setOpenBoxBtnMode("busy");
             state.openAutoCloseTimer = setTimeout(() => {
               closeOpenSheetOnly();
             }, 2200);
