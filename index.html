@@ -1145,11 +1145,11 @@
 
         <div class="header-right header-test-tools">
           <button class="tool-btn" data-add="60">+1분</button>
-          <button class="tool-btn" data-add="595">+9분55초</button>
+          <button class="tool-btn" data-reward-set="595">+보상</button>
           <button class="tool-btn" data-add="600">+10분</button>
-          <button class="tool-btn" data-box-add="random">+랜덤박스</button>
-          <button class="tool-btn" data-box-add="gold">+황금박스</button>
-          <span class="dev-version-label">DEV v0.1.41</span>
+          <button class="tool-btn" data-box-add="random">+랜덤</button>
+          <button class="tool-btn" data-box-add="gold">+황금</button>
+          <span class="dev-version-label">DEV v0.1.42</span>
         </div>
       </header>
 
@@ -1184,11 +1184,11 @@
 
           <div class="player-test-tools">
             <button class="tool-btn" data-add="60">+1분</button>
-            <button class="tool-btn" data-add="595">+9분55초</button>
+            <button class="tool-btn" data-reward-set="595">+보상</button>
             <button class="tool-btn" data-add="600">+10분</button>
-            <button class="tool-btn" data-box-add="random">+랜덤박스</button>
-            <button class="tool-btn" data-box-add="gold">+황금박스</button>
-            <span class="dev-version-label">DEV v0.1.41</span>
+            <button class="tool-btn" data-box-add="random">+랜덤</button>
+            <button class="tool-btn" data-box-add="gold">+황금</button>
+            <span class="dev-version-label">DEV v0.1.42</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2196,6 +2196,13 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     document.querySelectorAll(".tool-btn[data-add]").forEach(btn => {
       btn.addEventListener("click", () => {
         state.integratedWatchSeconds += Number(btn.dataset.add);
+        updateRewardUI();
+      });
+    });
+
+    document.querySelectorAll(".tool-btn[data-reward-set]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        state.integratedWatchSeconds = Number(btn.dataset.rewardSet);
         updateRewardUI();
       });
     });
