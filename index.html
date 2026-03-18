@@ -1149,7 +1149,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.42</span>
+          <span class="dev-version-label">DEV v0.1.43</span>
         </div>
       </header>
 
@@ -1188,7 +1188,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.42</span>
+            <span class="dev-version-label">DEV v0.1.43</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -1412,6 +1412,8 @@
       rewardAdSeconds: 0,
       openTimer: null,
       openType: "random",
+      openFromWallet: false,
+      openAutoCloseTimer: null,
     };
 
     let autoWatchTimer = null;
@@ -2008,11 +2010,34 @@ window.addEventListener("resize", clampMiniPosition);
       document.getElementById(id).classList.add("show");
     }
 
+    function closeOpenSheetOnly(){
+      clearInterval(state.openTimer);
+      clearTimeout(state.openAutoCloseTimer);
+      document.getElementById("openSheet").classList.remove("show");
+      state.openFromWallet = false;
+      openSheetTitle.textContent = "랜덤박스 오픈";
+      openSheetDesc.textContent = "오픈 전 3초 광고가 재생됩니다.";
+      openStageText.innerHTML = "오픈 버튼을 누르면 3초 광고 후 박스가 열립니다.";
+      openBoxBtn.textContent = "랜덤박스 오픈";
+      openBoxBtn.disabled = false;
+      openBoxBtn.classList.add("ready");
+      openBoxBtn.onclick = () => startOpenFlow("random");
+      boxIconStage.classList.remove("box-pop");
+      void boxIconStage.offsetWidth;
+      boxIconStage.classList.add("box-pop");
+
+      if(!document.querySelector(".sheet.show")){
+        overlay.classList.remove("show");
+      }
+    }
+
     function closeAllSheets(){
       overlay.classList.remove("show");
       document.querySelectorAll(".sheet").forEach(sheet => sheet.classList.remove("show"));
       clearInterval(state.rewardAdTimer);
       clearInterval(state.openTimer);
+      clearTimeout(state.openAutoCloseTimer);
+      state.openFromWallet = false;
       rewardAdVideo.pause();
       rewardAdVideo.currentTime = 0;
       rewardAdProgress.style.width = "0%";
@@ -2080,8 +2105,10 @@ window.addEventListener("resize", clampMiniPosition);
       );
     }
 
-    function startOpenFlow(type){
+    function startOpenFlow(type, options = {}){
       state.openType = type || "random";
+      state.openFromWallet = !!options.fromWallet;
+      clearTimeout(state.openAutoCloseTimer);
 
       if(state.openType === "random" && state.randomBoxCount <= 0){
         showToast("보유한 랜덤박스가 없습니다.");
@@ -2158,10 +2185,19 @@ window.addEventListener("resize", clampMiniPosition);
             <div class="result-sub">축하합니다! 리워드가 즉시 지급되었습니다.</div>
           `;
 
-          openBoxBtn.disabled = false;
-          openBoxBtn.classList.add("ready");
-          openBoxBtn.textContent = "닫기";
-          openBoxBtn.onclick = closeAllSheets;
+          if(state.openFromWallet){
+            openBoxBtn.disabled = true;
+            openBoxBtn.classList.remove("ready");
+            openBoxBtn.textContent = "지갑으로 돌아가는 중...";
+            state.openAutoCloseTimer = setTimeout(() => {
+              closeOpenSheetOnly();
+            }, 1200);
+          } else {
+            openBoxBtn.disabled = false;
+            openBoxBtn.classList.add("ready");
+            openBoxBtn.textContent = "닫기";
+            openBoxBtn.onclick = closeAllSheets;
+          }
         }
       }, 700);
     }
@@ -2181,8 +2217,8 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
 
     document.getElementById("openWalletBtn").addEventListener("click", () => openSheet("walletSheet"));
     document.getElementById("openCommentBtn").addEventListener("click", () => openSheet("commentSheet"));
-    document.getElementById("walletOpenRandom").addEventListener("click", () => startOpenFlow("random"));
-    document.getElementById("walletOpenGold").addEventListener("click", () => startOpenFlow("gold"));
+    document.getElementById("walletOpenRandom").addEventListener("click", () => startOpenFlow("random", { fromWallet: true }));
+    document.getElementById("walletOpenGold").addEventListener("click", () => startOpenFlow("gold", { fromWallet: true }));
     inlineGetBtnWide.addEventListener("click", startRewardAdFlow);
 
     rewardAdBtn.addEventListener("click", () => {
@@ -2191,7 +2227,13 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     });
 
     openBoxBtn.addEventListener("click", () => startOpenFlow("random"));
-    overlay.addEventListener("click", closeAllSheets);
+    overlay.addEventListener("click", () => {
+      if(state.openFromWallet && document.getElementById("openSheet").classList.contains("show")){
+        closeOpenSheetOnly();
+        return;
+      }
+      closeAllSheets();
+    });
 
     document.querySelectorAll(".tool-btn[data-add]").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -2228,7 +2270,13 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     });
 
     document.querySelectorAll(".sheet-close").forEach(btn => {
-      btn.addEventListener("click", closeAllSheets);
+      btn.addEventListener("click", () => {
+        if(btn.dataset.close === "openSheet" && state.openFromWallet){
+          closeOpenSheetOnly();
+          return;
+        }
+        closeAllSheets();
+      });
     });
 
     window.addEventListener("resize", updateFixedLayout);
