@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.55 -->
+<!-- Version: v0.1.56 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -961,26 +961,30 @@
 
     .box-hero{display:none;}
     .box-icon{
-      width:176px;
-      height:176px;
+      width:186px;
+      height:186px;
       display:grid;
       place-items:center;
       position:relative;
       transform-origin:center;
       isolation:isolate;
+      --box-glow-color:rgba(96,165,250,.24);
+      --box-glow-soft:rgba(191,219,254,.22);
+      --box-shadow-color:rgba(8,15,30,.44);
+      --box-ribbon-color:rgba(255,255,255,.9);
     }
     .box-icon::before{
       content:"";
       position:absolute;
       left:50%;
-      bottom:10px;
-      width:128px;
-      height:34px;
+      bottom:6px;
+      width:136px;
+      height:36px;
       transform:translateX(-50%);
       border-radius:50%;
-      background:radial-gradient(circle, rgba(10,15,27,.78) 0%, rgba(10,15,27,0) 72%);
-      filter:blur(6px);
-      opacity:.9;
+      background:radial-gradient(circle, rgba(6,10,18,.82) 0%, rgba(6,10,18,0) 72%);
+      filter:blur(7px);
+      opacity:.94;
       z-index:0;
     }
     .box-icon::after{
@@ -988,44 +992,58 @@
       position:absolute;
       inset:18px;
       border-radius:50%;
-      background:radial-gradient(circle, rgba(125,211,252,.22) 0%, rgba(37,99,235,.08) 42%, rgba(37,99,235,0) 72%);
-      opacity:.9;
+      background:radial-gradient(circle, var(--box-glow-soft) 0%, var(--box-glow-color) 34%, rgba(37,99,235,0) 74%);
+      opacity:.92;
       transform:scale(.82);
       z-index:1;
     }
     .box-icon img.main{
-      width:122px;
-      height:122px;
+      width:126px;
+      height:126px;
       object-fit:contain;
       position:relative;
       z-index:4;
-      filter:drop-shadow(0 18px 32px rgba(8,15,30,.42));
+      filter:drop-shadow(0 20px 30px var(--box-shadow-color));
+      transition:filter .3s ease, transform .3s ease, opacity .24s ease;
     }
     .box-core-glow,
+    .box-lid-light,
     .box-open-flash,
     .box-spark,
-    .box-burst-ring,
-    .box-burst-rays,
+    .box-celebration-ring,
+    .box-celebration-confetti,
     .result-sparkles{
       position:absolute;
       pointer-events:none;
     }
     .box-core-glow{
-      inset:28px;
+      inset:30px;
       border-radius:50%;
-      background:radial-gradient(circle, rgba(255,255,255,.22) 0%, rgba(96,165,250,.18) 22%, rgba(96,165,250,0) 68%);
-      opacity:.74;
+      background:radial-gradient(circle, rgba(255,255,255,.22) 0%, var(--box-glow-color) 22%, rgba(96,165,250,0) 68%);
+      opacity:.82;
       z-index:2;
-      filter:blur(4px);
+      filter:blur(6px);
+    }
+    .box-lid-light{
+      left:50%;
+      top:44px;
+      width:92px;
+      height:22px;
+      transform:translateX(-50%);
+      border-radius:999px;
+      background:linear-gradient(90deg, rgba(255,255,255,0) 0%, var(--box-ribbon-color) 48%, rgba(255,255,255,0) 100%);
+      opacity:.18;
+      z-index:5;
+      filter:blur(2px);
     }
     .box-open-flash{
       left:50%;
-      top:46px;
-      width:104px;
-      height:104px;
-      transform:translateX(-50%) scale(.42);
-      border-radius:50%;
-      background:radial-gradient(circle, rgba(255,255,255,.96) 0%, rgba(191,219,254,.58) 28%, rgba(96,165,250,0) 74%);
+      top:28px;
+      width:108px;
+      height:118px;
+      transform:translateX(-50%) scale(.46);
+      border-radius:50% 50% 46% 46%;
+      background:radial-gradient(circle at 50% 72%, rgba(255,255,255,.98) 0%, rgba(255,255,255,.68) 18%, rgba(191,219,254,.36) 36%, rgba(96,165,250,0) 76%);
       opacity:0;
       z-index:5;
       filter:blur(2px);
@@ -1034,18 +1052,51 @@
       width:14px;
       height:14px;
       border-radius:999px;
-      background:radial-gradient(circle, rgba(255,255,255,.98) 0%, rgba(191,219,254,.74) 42%, rgba(191,219,254,0) 74%);
+      background:radial-gradient(circle, rgba(255,255,255,.98) 0%, var(--box-glow-soft) 44%, rgba(191,219,254,0) 74%);
       opacity:0;
       z-index:5;
-      box-shadow:0 0 14px rgba(191,219,254,.4);
+      box-shadow:0 0 16px var(--box-glow-soft);
     }
-    .box-spark-a{left:26px;top:42px;}
+    .box-spark-a{left:28px;top:42px;}
     .box-spark-b{right:30px;top:34px;}
     .box-spark-c{left:34px;bottom:42px;}
-    .box-spark-d{right:26px;bottom:48px;}
-    .box-icon.is-gold-box::after,
-    .box-icon.is-gold-box .box-core-glow{
-      background:radial-gradient(circle, rgba(255,249,219,.28) 0%, rgba(253,224,71,.24) 24%, rgba(245,158,11,0) 70%);
+    .box-spark-d{right:28px;bottom:46px;}
+    .box-celebration-ring{
+      width:184px;
+      height:184px;
+      border-radius:50%;
+      border:1px solid rgba(253,224,71,.36);
+      opacity:0;
+      z-index:1;
+    }
+    .box-celebration-confetti{
+      inset:0;
+      opacity:0;
+      z-index:6;
+    }
+    .box-celebration-confetti span{
+      position:absolute;
+      width:10px;
+      height:16px;
+      border-radius:999px;
+      background:linear-gradient(180deg, rgba(253,224,71,.98), rgba(245,158,11,.54));
+      box-shadow:0 0 14px rgba(253,224,71,.24);
+    }
+    .box-celebration-confetti span:nth-child(1){left:26px;top:38px;transform:rotate(-18deg);}
+    .box-celebration-confetti span:nth-child(2){right:26px;top:48px;transform:rotate(18deg);}
+    .box-celebration-confetti span:nth-child(3){left:42px;bottom:40px;transform:rotate(28deg);}
+    .box-celebration-confetti span:nth-child(4){right:38px;bottom:34px;transform:rotate(-28deg);}
+    .box-icon.is-random-box{
+      --box-glow-color:rgba(96,165,250,.24);
+      --box-glow-soft:rgba(191,219,254,.28);
+      --box-shadow-color:rgba(8,15,30,.42);
+      --box-ribbon-color:rgba(255,255,255,.92);
+    }
+    .box-icon.is-gold-box{
+      --box-glow-color:rgba(250,204,21,.28);
+      --box-glow-soft:rgba(253,224,71,.28);
+      --box-shadow-color:rgba(120,53,15,.36);
+      --box-ribbon-color:rgba(255,249,219,.96);
     }
 
     .box-open-stage{
@@ -1097,46 +1148,96 @@
       height:46px;
       transform:translateX(-50%);
       border-radius:50%;
-      background:radial-gradient(circle, rgba(37,99,235,.24) 0%, rgba(37,99,235,0) 72%);
-      opacity:.7;
+      background:radial-gradient(circle, rgba(59,130,246,.22) 0%, rgba(59,130,246,0) 72%);
+      opacity:.72;
       filter:blur(10px);
+      transition:background .3s ease, opacity .3s ease;
     }
     .open-stage-box-wrap::after{
       content:"";
       position:absolute;
       left:50%;
-      top:54px;
-      width:154px;
-      height:154px;
+      top:48px;
+      width:160px;
+      height:160px;
       transform:translateX(-50%);
       border-radius:50%;
       border:1px solid rgba(148,163,184,.18);
-      opacity:.4;
+      opacity:.34;
       filter:blur(.3px);
+      transition:border-color .3s ease, opacity .3s ease;
     }
     .box-open-stage.stage-show-result .open-stage-box-wrap{
-      opacity:.18;
-      transform:translateY(-34px) scale(.8);
-      filter:saturate(.86);
+      opacity:.16;
+      transform:translateY(-38px) scale(.78);
+      filter:saturate(.82);
     }
     .box-open-stage.stage-animating .open-stage-box-wrap{
-      animation:boxStageRise .94s cubic-bezier(.22,1,.36,1) 1;
+      animation:boxStoryEntrance .72s cubic-bezier(.22,1,.36,1) both;
+    }
+    .box-open-stage.stage-animating #boxIconStage{
+      animation:boxStoryHover .9s ease-out .7s both;
     }
     .box-open-stage.stage-animating #boxIconStage img.main{
-      animation:boxBounce .6s cubic-bezier(.22,1,.36,1) .08s both, boxOpenTilt .32s ease-out .46s both;
+      animation:boxStorySettle .44s ease-out .2s both;
+    }
+    .box-open-stage.stage-animating #boxIconStage .box-lid-light{
+      animation:boxLidGlow 1.1s ease-in-out .86s both;
     }
     .box-open-stage.stage-animating #boxIconStage .box-open-flash{
-      animation:boxOpenFlash .42s ease-out .46s both;
+      animation:boxOpenFlash .46s ease-out 1.52s both;
     }
     .box-open-stage.stage-animating #boxIconStage .box-spark-a,
     .box-open-stage.stage-animating #boxIconStage .box-spark-b,
     .box-open-stage.stage-animating #boxIconStage .box-spark-c,
     .box-open-stage.stage-animating #boxIconStage .box-spark-d{
-      animation:boxSparkBurst .62s ease-out .5s both;
+      animation:boxSparkBurst .68s ease-out 1.54s both;
     }
-    .box-open-stage.stage-animating #boxIconStage .box-spark-b{animation-delay:.56s;}
-    .box-open-stage.stage-animating #boxIconStage .box-spark-c{animation-delay:.6s;}
-    .box-open-stage.stage-animating #boxIconStage .box-spark-d{animation-delay:.64s;}
+    .box-open-stage.stage-animating #boxIconStage .box-spark-b{animation-delay:1.6s;}
+    .box-open-stage.stage-animating #boxIconStage .box-spark-c{animation-delay:1.66s;}
+    .box-open-stage.stage-animating #boxIconStage .box-spark-d{animation-delay:1.72s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage{
+      animation:boxStoryHover 1s ease-out .66s both, boxRevealShake .62s ease-in-out 2.98s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage img.main{
+      animation:boxStorySettle .44s ease-out .2s both, boxRevealSwapRandom .44s ease-out 3.08s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-lid-light{
+      animation:boxLidGlow 1.14s ease-in-out .88s both, boxLidGlow .94s ease-in-out 3.16s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-open-flash{
+      animation:boxOpenFlash .46s ease-out 3.48s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-a,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-b,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-c,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-d{
+      animation:boxSparkBurst .7s ease-out 3.5s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-b{animation-delay:3.56s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-c{animation-delay:3.62s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-d{animation-delay:3.68s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage{
+      animation:boxStoryHover 1s ease-out .66s both, boxRevealShake .62s ease-in-out 2.98s both, goldBoxHeroPulse .88s ease-out 3.46s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage img.main{
+      animation:boxStorySettle .44s ease-out .2s both, goldBoxRevealSwap .48s ease-out 3.08s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .box-lid-light{
+      animation:boxLidGlow 1.14s ease-in-out .88s both, goldLidGlow 1.02s ease-in-out 3.18s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .box-open-flash{
+      animation:boxOpenFlash .52s ease-out 3.42s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .box-spark-a,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .box-spark-b,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .box-spark-c,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .box-spark-d{
+      animation:goldSparkBurst .72s ease-out 3.48s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .box-spark-b{animation-delay:3.54s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .box-spark-c{animation-delay:3.6s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .box-spark-d{animation-delay:3.66s;}
     .box-open-text{
       position:absolute;
       left:50%;
@@ -1238,31 +1339,69 @@
       76%{transform:translateY(4px) scale(.96);}
       100%{transform:translateY(0) scale(1); opacity:1;}
     }
-    @keyframes boxStageRise{
-      0%{transform:translateY(20px) scale(.9); opacity:.55;}
-      52%{transform:translateY(-6px) scale(1.02); opacity:1;}
+    @keyframes boxStoryEntrance{
+      0%{transform:translateY(36px) scale(.72); opacity:0;}
+      55%{transform:translateY(-10px) scale(1.04); opacity:1;}
       100%{transform:translateY(0) scale(1); opacity:1;}
     }
-    @keyframes boxBounce{
-      0%{transform:translateY(0) scale(.96);}
-      40%{transform:translateY(-14px) scale(1.04);}
-      65%{transform:translateY(4px) scale(.98);}
+    @keyframes boxStorySettle{
+      0%{transform:translateY(12px) scale(.9);}
+      60%{transform:translateY(-8px) scale(1.04);}
       100%{transform:translateY(0) scale(1);}
     }
-    @keyframes boxOpenTilt{
+    @keyframes boxStoryHover{
+      0%,18%{transform:translateY(0) scale(1) rotate(0deg);}
+      34%{transform:translateY(-5px) scale(1.01) rotate(-1.2deg);}
+      50%{transform:translateY(1px) scale(1.01) rotate(1deg);}
+      70%{transform:translateY(-3px) scale(1.02) rotate(-1.6deg);}
+      100%{transform:translateY(0) scale(1) rotate(0deg);}
+    }
+    @keyframes boxRevealShake{
       0%{transform:translateY(0) scale(1) rotate(0deg);}
-      50%{transform:translateY(-2px) scale(1.04) rotate(-3deg);}
-      100%{transform:translateY(0) scale(.98) rotate(0deg);}
+      20%{transform:translateY(-1px) scale(1.02) rotate(-2deg);}
+      42%{transform:translateY(1px) scale(1.01) rotate(2deg);}
+      64%{transform:translateY(-2px) scale(1.03) rotate(-1.4deg);}
+      100%{transform:translateY(0) scale(1) rotate(0deg);}
+    }
+    @keyframes boxLidGlow{
+      0%,14%{opacity:.12; transform:translateX(-50%) scaleX(.88);}
+      54%{opacity:.92; transform:translateX(-50%) scaleX(1.08);}
+      100%{opacity:.28; transform:translateX(-50%) scaleX(1);}
+    }
+    @keyframes goldLidGlow{
+      0%,14%{opacity:.18; transform:translateX(-50%) scaleX(.9);}
+      50%{opacity:1; transform:translateX(-50%) scaleX(1.14);}
+      100%{opacity:.42; transform:translateX(-50%) scaleX(1.02);}
     }
     @keyframes boxOpenFlash{
-      0%{opacity:0; transform:translateX(-50%) scale(.38);}
-      35%{opacity:.88; transform:translateX(-50%) scale(1.02);}
-      100%{opacity:0; transform:translateX(-50%) scale(1.28);}
+      0%{opacity:0; transform:translateX(-50%) scale(.4) translateY(10px);}
+      36%{opacity:.94; transform:translateX(-50%) scale(1.04) translateY(-6px);}
+      100%{opacity:0; transform:translateX(-50%) scale(1.32) translateY(-18px);}
     }
     @keyframes boxSparkBurst{
-      0%{opacity:0; transform:translate3d(0,0,0) scale(.3);}
-      32%{opacity:1; transform:translate3d(0,-6px,0) scale(1);}
-      100%{opacity:0; transform:translate3d(var(--spark-x, 0), var(--spark-y, -18px), 0) scale(.6);}
+      0%{opacity:0; transform:translate3d(0,0,0) scale(.24);}
+      34%{opacity:1; transform:translate3d(0,-6px,0) scale(1);}
+      100%{opacity:0; transform:translate3d(var(--spark-x, 0), var(--spark-y, -20px), 0) scale(.58);}
+    }
+    @keyframes goldSparkBurst{
+      0%{opacity:0; transform:translate3d(0,0,0) scale(.28);}
+      34%{opacity:1; transform:translate3d(0,-8px,0) scale(1.08);}
+      100%{opacity:0; transform:translate3d(var(--spark-x, 0), var(--spark-y, -22px), 0) scale(.72);}
+    }
+    @keyframes boxRevealSwapRandom{
+      0%{transform:translateY(0) scale(.98); filter:drop-shadow(0 20px 30px rgba(8,15,30,.42));}
+      52%{transform:translateY(-6px) scale(1.06); filter:drop-shadow(0 20px 34px rgba(59,130,246,.3));}
+      100%{transform:translateY(0) scale(1); filter:drop-shadow(0 20px 30px rgba(8,15,30,.42));}
+    }
+    @keyframes goldBoxRevealSwap{
+      0%{transform:translateY(0) scale(.92); filter:drop-shadow(0 20px 30px rgba(8,15,30,.42)) saturate(.9);}
+      52%{transform:translateY(-10px) scale(1.12); filter:drop-shadow(0 20px 34px rgba(245,158,11,.34)) saturate(1.1);}
+      100%{transform:translateY(0) scale(1); filter:drop-shadow(0 20px 30px rgba(120,53,15,.36)) saturate(1.05);}
+    }
+    @keyframes goldBoxHeroPulse{
+      0%{transform:translateY(0) scale(1);}
+      48%{transform:translateY(-5px) scale(1.06);}
+      100%{transform:translateY(0) scale(1);}
     }
     @keyframes resultAmountPop{
       0%{transform:translateY(20px) scale(.78); opacity:0;}
@@ -1280,9 +1419,20 @@
       100%{box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 18px 36px rgba(2,6,23,.34);}
     }
     @keyframes centerSmokeSweep{
-      0%{opacity:0; transform:translate(-50%, -50%) scale(.54) translateX(-20px);}
-      30%{opacity:.62; transform:translate(-50%, -50%) scale(.96) translateX(-4px);}
-      100%{opacity:0; transform:translate(-50%, -50%) scale(1.1) translateX(20px);}
+      0%{opacity:0; transform:translate(-50%, -50%) scale(.56) translateX(-18px);}
+      26%{opacity:.42; transform:translate(-50%, -50%) scale(.88) translateX(-8px);}
+      54%{opacity:.74; transform:translate(-50%, -50%) scale(1.02) translateX(0);}
+      100%{opacity:0; transform:translate(-50%, -50%) scale(1.12) translateX(18px);}
+    }
+    @keyframes goldCelebrateRing{
+      0%{opacity:0; transform:scale(.42);}
+      38%{opacity:.82; transform:scale(1);}
+      100%{opacity:0; transform:scale(1.32);}
+    }
+    @keyframes goldConfettiFloat{
+      0%{opacity:0; transform:translateY(12px) scale(.7) rotate(var(--confetti-rot, 0deg));}
+      26%{opacity:1; transform:translateY(0) scale(1) rotate(var(--confetti-rot, 0deg));}
+      100%{opacity:0; transform:translateY(-20px) scale(.74) rotate(calc(var(--confetti-rot, 0deg) + 12deg));}
     }
     @keyframes resultReveal{
       0%{opacity:0; transform:translateY(16px) scale(.92);}
@@ -1376,14 +1526,13 @@
     #openSheet.fx-random-normal .box-open-stage{
       border-color:rgba(96,165,250,.22);
       background:
-        radial-gradient(circle at 50% 20%, rgba(96,165,250,.2), transparent 28%),
-        radial-gradient(circle at 50% 84%, rgba(37,99,235,.14), transparent 38%),
+        radial-gradient(circle at 50% 18%, rgba(125,211,252,.18), transparent 24%),
+        radial-gradient(circle at 50% 66%, rgba(37,99,235,.14), transparent 38%),
         linear-gradient(180deg, rgba(15,23,42,.96) 0%, rgba(8,15,30,.98) 56%, rgba(2,6,23,1) 100%);
       animation:blueGlowPulse .9s ease 1;
     }
-    #openSheet.fx-random-normal .box-icon::after,
-    #openSheet.fx-random-normal .box-core-glow{
-      background:radial-gradient(circle, rgba(255,255,255,.22) 0%, rgba(96,165,250,.2) 24%, rgba(96,165,250,0) 70%);
+    #openSheet.fx-random-normal .open-stage-box-wrap::before{
+      background:radial-gradient(circle, rgba(59,130,246,.24) 0%, rgba(59,130,246,0) 72%);
     }
     #openSheet.fx-random-normal .glow-burst{
       background:radial-gradient(circle, rgba(96,165,250,.28) 0%, rgba(59,130,246,.16) 42%, rgba(0,0,0,0) 76%);
@@ -1397,12 +1546,14 @@
       animation:resultReveal .28s ease-out .06s both;
     }
 
-    #openSheet.fx-random-fail .box-open-stage{
+    #openSheet.fx-random-fail .box-open-stage,
+    #openSheet.fx-random-gold .box-open-stage{
       border-color:rgba(148,163,184,.22);
       background:
-        radial-gradient(circle at 50% 18%, rgba(148,163,184,.16), transparent 34%),
+        radial-gradient(circle at 50% 18%, rgba(148,163,184,.14), transparent 26%),
+        radial-gradient(circle at 50% 72%, rgba(30,41,59,.24), transparent 36%),
         linear-gradient(180deg, rgba(15,23,42,.96) 0%, rgba(8,15,30,.98) 56%, rgba(2,6,23,1) 100%);
-      animation:blueGlowPulse .64s ease 1;
+      animation:blueGlowPulse .72s ease 1;
     }
     #openSheet.fx-random-fail .box-open-stage.stage-animating .open-stage-clouds,
     #openSheet.fx-random-gold .box-open-stage.stage-animating .open-stage-clouds{
@@ -1410,24 +1561,16 @@
     }
     #openSheet.fx-random-fail .box-open-stage.stage-animating .open-stage-cloud,
     #openSheet.fx-random-gold .box-open-stage.stage-animating .open-stage-cloud{
-      animation:centerSmokeSweep .52s ease-out forwards;
+      animation:centerSmokeSweep .82s ease-out forwards;
     }
+    #openSheet.fx-random-fail .box-open-stage.stage-animating .cloud-a,
+    #openSheet.fx-random-gold .box-open-stage.stage-animating .cloud-a{animation-delay:1.98s;}
     #openSheet.fx-random-fail .box-open-stage.stage-animating .cloud-b,
-    #openSheet.fx-random-gold .box-open-stage.stage-animating .cloud-b{
-      animation-delay:.04s;
-    }
+    #openSheet.fx-random-gold .box-open-stage.stage-animating .cloud-b{animation-delay:2.08s;}
     #openSheet.fx-random-fail .box-open-stage.stage-animating .cloud-c,
-    #openSheet.fx-random-gold .box-open-stage.stage-animating .cloud-c{
-      animation-delay:.08s;
-    }
+    #openSheet.fx-random-gold .box-open-stage.stage-animating .cloud-c{animation-delay:2.18s;}
     #openSheet.fx-random-fail .box-open-stage.stage-animating .cloud-d,
-    #openSheet.fx-random-gold .box-open-stage.stage-animating .cloud-d{
-      animation-delay:.12s;
-    }
-    #openSheet.fx-random-fail .box-open-stage.stage-animating #boxIconStage img.main{
-      animation:boxBounce .56s cubic-bezier(.22,1,.36,1) .08s both, boxOpenTilt .28s ease-out .46s both;
-      filter:drop-shadow(0 18px 32px rgba(8,15,30,.44));
-    }
+    #openSheet.fx-random-gold .box-open-stage.stage-animating .cloud-d{animation-delay:2.28s;}
     #openSheet.fx-random-fail .glow-burst{
       background:radial-gradient(circle, rgba(226,232,240,.26) 0%, rgba(148,163,184,.12) 44%, rgba(0,0,0,0) 76%);
     }
@@ -1445,23 +1588,23 @@
       animation:resultReveal .32s ease-out .06s both;
     }
 
-    #openSheet.fx-random-gold .box-open-stage{
+    #openSheet.fx-random-gold .box-open-stage,
+    #openSheet.fx-gold-open .box-open-stage{
       border-color:rgba(250,204,21,.28);
       background:
-        radial-gradient(circle at 50% 20%, rgba(250,204,21,.2), transparent 28%),
-        radial-gradient(circle at 50% 84%, rgba(245,158,11,.16), transparent 38%),
+        radial-gradient(circle at 50% 18%, rgba(250,204,21,.18), transparent 26%),
+        radial-gradient(circle at 50% 72%, rgba(245,158,11,.16), transparent 36%),
         linear-gradient(180deg, rgba(24,20,10,.96) 0%, rgba(16,11,4,.98) 56%, rgba(9,6,2,1) 100%);
-      animation:goldGlowPulse .86s ease 1;
+      animation:goldGlowPulse .9s ease 1;
     }
-    #openSheet.fx-random-gold .box-open-stage.stage-animating #boxIconStage img.main,
-    #openSheet.fx-gold-open .box-open-stage.stage-animating #boxIconStage img.main{
-      animation:boxBounce .56s cubic-bezier(.22,1,.36,1) .08s both, boxOpenTilt .3s ease-out .46s both;
+    #openSheet.fx-random-gold .open-stage-box-wrap::before,
+    #openSheet.fx-gold-open .open-stage-box-wrap::before{
+      background:radial-gradient(circle, rgba(253,224,71,.24) 0%, rgba(245,158,11,0) 72%);
     }
-    #openSheet.fx-random-gold .box-icon::after,
-    #openSheet.fx-gold-open .box-icon::after,
-    #openSheet.fx-random-gold .box-core-glow,
-    #openSheet.fx-gold-open .box-core-glow{
-      background:radial-gradient(circle, rgba(255,249,219,.28) 0%, rgba(253,224,71,.24) 24%, rgba(245,158,11,0) 70%);
+    #openSheet.fx-random-gold .open-stage-box-wrap::after,
+    #openSheet.fx-gold-open .open-stage-box-wrap::after{
+      border-color:rgba(253,224,71,.24);
+      opacity:.44;
     }
     #openSheet.fx-random-gold .glow-burst,
     #openSheet.fx-gold-open .glow-burst{
@@ -1489,19 +1632,34 @@
     #openSheet.fx-gold-open .result-sub{
       animation:resultReveal .34s ease-out .06s both;
     }
-
-    #openSheet.fx-gold-open .box-open-stage{
-      border-color:rgba(250,204,21,.3);
-      background:
-        radial-gradient(circle at 50% 20%, rgba(250,204,21,.18), transparent 28%),
-        radial-gradient(circle at 50% 84%, rgba(245,158,11,.16), transparent 38%),
-        linear-gradient(180deg, rgba(24,20,10,.96) 0%, rgba(16,11,4,.98) 56%, rgba(9,6,2,1) 100%);
-      animation:goldGlowPulse .96s ease 1;
-    }
     #openSheet.fx-gold-open .box-open-stage.stage-animating .open-stage-box-wrap,
     #openSheet.fx-random-gold .box-open-stage.stage-animating .open-stage-box-wrap{
-      filter:drop-shadow(0 0 18px rgba(245,158,11,.16));
+      filter:drop-shadow(0 0 20px rgba(245,158,11,.16));
     }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box,
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .result-gold-box{
+      animation:goldBoxReveal .46s cubic-bezier(.22,1,.36,1) .04s both;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-ring,
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-ring{
+      animation:goldCelebrateRing .9s ease-out infinite;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti,
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti{
+      opacity:1;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span,
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span{
+      animation:goldConfettiFloat 1.12s ease-out infinite;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(1),
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(1){--confetti-rot:-18deg;animation-delay:.04s;}
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(2),
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(2){--confetti-rot:18deg;animation-delay:.16s;}
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(3),
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(3){--confetti-rot:28deg;animation-delay:.28s;}
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(4),
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(4){--confetti-rot:-28deg;animation-delay:.4s;}
     .result-sub{
       min-width:24px;
       font-size:13px;
@@ -1512,10 +1670,6 @@
     }
     .result-sub:empty{
       display:none;
-    }
-    #openSheet.fx-random-gold .result-gold-box,
-    #openSheet.fx-gold-open .result-gold-box{
-      animation:goldBoxReveal .46s cubic-bezier(.22,1,.36,1) .04s both;
     }
 
     .toast{
@@ -1627,7 +1781,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.55</span>
+          <span class="dev-version-label">DEV v0.1.56</span>
         </div>
       </header>
 
@@ -1666,7 +1820,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.55</span>
+            <span class="dev-version-label">DEV v0.1.56</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -1791,14 +1945,22 @@
         <div class="box-open-stage" id="openStage">
           <div class="open-stage-backdrop" aria-hidden="true"></div>
           <div class="open-stage-box-wrap" id="openStageBoxWrap">
-            <div class="box-icon box-pop" id="boxIconStage">
+            <div class="box-icon box-pop is-random-box" id="boxIconStage">
               <span class="box-core-glow" aria-hidden="true"></span>
+              <span class="box-lid-light" aria-hidden="true"></span>
               <span class="box-open-flash" aria-hidden="true"></span>
               <span class="box-spark box-spark-a" style="--spark-x:-20px;--spark-y:-26px;" aria-hidden="true"></span>
               <span class="box-spark box-spark-b" style="--spark-x:24px;--spark-y:-30px;" aria-hidden="true"></span>
               <span class="box-spark box-spark-c" style="--spark-x:-18px;--spark-y:18px;" aria-hidden="true"></span>
               <span class="box-spark box-spark-d" style="--spark-x:22px;--spark-y:14px;" aria-hidden="true"></span>
-              <img class="main" src="assets/icon-randombox.svg" alt="랜덤박스" onerror="this.style.display='none'">
+              <span class="box-celebration-ring" aria-hidden="true"></span>
+              <span class="box-celebration-confetti" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+              <img class="main" src="assets/icon-randombox.svg" alt="랜덤 선물상자" onerror="this.style.display='none'">
             </div>
           </div>
           <div class="box-open-text" id="openStageText"></div>
@@ -1986,6 +2148,7 @@
     const rewardAdGuideRight = document.getElementById("rewardAdGuideRight");
     const openStageText = document.getElementById("openStageText");
     const openStage = document.getElementById("openStage");
+    const openStageBoxWrap = document.getElementById("openStageBoxWrap");
     const openStageResult = document.getElementById("openStageResult");
     const openResultAmount = document.getElementById("openResultAmount");
     const openResultSub = document.getElementById("openResultSub");
@@ -2567,14 +2730,80 @@ window.addEventListener("resize", clampMiniPosition);
       resetSheetScroll("adSheet");
     }
 
-    function syncOpenStageBoxAsset(){
+    function syncOpenStageBoxAsset(variant = state.openType === "gold" ? "gold" : "random"){
       const boxMainImage = boxIconStage.querySelector(".main");
       if(!boxMainImage) return;
 
-      const isGold = state.openType === "gold";
+      const isGold = variant === "gold";
       boxMainImage.src = isGold ? "assets/icon-goldbox.svg" : "assets/icon-randombox.svg";
-      boxMainImage.alt = isGold ? "황금박스" : "랜덤박스";
+      boxMainImage.alt = isGold ? "황금 선물상자" : "랜덤 선물상자";
       boxIconStage.classList.toggle("is-gold-box", isGold);
+      boxIconStage.classList.toggle("is-random-box", !isGold);
+    }
+
+    function setOpenStageVariant(variant = "random"){
+      syncOpenStageBoxAsset(variant);
+      openStageBoxWrap.classList.remove("is-reveal-random", "is-reveal-gold");
+
+      if(variant === "reveal-random"){
+        openStageBoxWrap.classList.add("is-reveal-random");
+        syncOpenStageBoxAsset("random");
+        return;
+      }
+
+      if(variant === "reveal-gold"){
+        openStageBoxWrap.classList.add("is-reveal-gold");
+        syncOpenStageBoxAsset("random");
+        return;
+      }
+    }
+
+    function getOpenSequenceConfig({ openType, resultType }){
+      if(openType === "gold"){
+        return {
+          fxClass: "fx-gold-open",
+          stageVariant: "gold",
+          revealVariant: "gold",
+          busyLabel: "황금상자 준비 중",
+          duration: 3000,
+          revealDelay: 2200,
+          autoCloseDelay: 3000
+        };
+      }
+
+      if(resultType === "chance_fail"){
+        return {
+          fxClass: "fx-random-fail",
+          stageVariant: "random",
+          revealVariant: "reveal-random",
+          busyLabel: "랜덤박스 연출 중",
+          duration: 5000,
+          revealDelay: 4200,
+          autoCloseDelay: 5000
+        };
+      }
+
+      if(resultType === "chance_gold"){
+        return {
+          fxClass: "fx-random-gold",
+          stageVariant: "random",
+          revealVariant: "reveal-gold",
+          busyLabel: "황금상자 확인 중",
+          duration: 7000,
+          revealDelay: 4200,
+          autoCloseDelay: 7000
+        };
+      }
+
+      return {
+        fxClass: "fx-random-normal",
+        stageVariant: "random",
+        revealVariant: "random",
+        busyLabel: "랜덤박스 오픈 중",
+        duration: 3000,
+        revealDelay: 2200,
+        autoCloseDelay: 3000
+      };
     }
 
     function setOpenBoxBtnMode(mode, label){
@@ -2660,7 +2889,7 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     function resetOpenStageState(){
-      syncOpenStageBoxAsset();
+      setOpenStageVariant(state.openType === "gold" ? "gold" : "random");
       openStage.classList.remove("stage-show-result", "stage-animating");
       openStageResult.classList.remove("show-gold-box");
       openStageText.textContent = "";
@@ -2672,6 +2901,9 @@ window.addEventListener("resize", clampMiniPosition);
       openStage.classList.remove("stage-show-result");
       openStage.classList.toggle("stage-animating", !!options.animating);
       openStageResult.classList.remove("show-gold-box");
+      if(options.variant){
+        setOpenStageVariant(options.variant);
+      }
       openStageText.textContent = message || "";
       openResultAmount.textContent = "";
       openResultSub.textContent = "";
@@ -2766,8 +2998,10 @@ window.addEventListener("resize", clampMiniPosition);
         applyOpenSheetFx("fx-gold-open");
       }
 
-      syncOpenStageBoxAsset();
-      setOpenStageMessage("", { animating: true });
+      setOpenStageMessage("", {
+        animating: true,
+        variant: state.openType === "gold" ? "gold" : "random"
+      });
 
       state.openTimer = setTimeout(() => {
         runBoxAnimation();
@@ -2776,11 +3010,9 @@ window.addEventListener("resize", clampMiniPosition);
 
     function runBoxAnimation(){
       let result;
-      let previewFx = "fx-random-normal";
 
       if(state.openType === "gold"){
         result = createBoxResult(goldBoxTable, [{ value: "normal", weight: 1 }]);
-        previewFx = "fx-gold-open";
       } else {
         result = createBoxResult(
           boxTable,
@@ -2788,19 +3020,23 @@ window.addEventListener("resize", clampMiniPosition);
             ? [{ value: state.openForcedResultType, weight: 1 }]
             : boxResultTypeTable
         );
-
-        if(result.type === "chance_fail"){
-          previewFx = "fx-random-fail";
-        } else if(result.type === "chance_gold"){
-          previewFx = "fx-random-gold";
-        }
       }
 
-      applyOpenSheetFx(previewFx);
+      const sequence = getOpenSequenceConfig({
+        openType: state.openType,
+        resultType: result.type
+      });
+
+      applyOpenSheetFx(sequence.fxClass);
       boxIconStage.classList.remove("box-pop");
       void boxIconStage.offsetWidth;
       boxIconStage.classList.add("box-pop");
-      setOpenStageMessage("", { animating: true });
+      setOpenStageMessage("", {
+        animating: true,
+        variant: sequence.revealVariant === "gold" ? "gold" : sequence.stageVariant
+      });
+      setOpenStageVariant(sequence.revealVariant);
+      setOpenBoxBtnMode("busy", sequence.busyLabel);
 
       state.openTimer = setTimeout(() => {
         if(state.openType === "gold"){
@@ -2821,6 +3057,7 @@ window.addEventListener("resize", clampMiniPosition);
             subText: ""
           });
         } else if(state.openType === "random" && result.type === "chance_gold"){
+          syncOpenStageBoxAsset("gold");
           showOpenStageResult({
             amountText: `${result.reward.toLocaleString()} P`,
             subText: "+1",
@@ -2834,14 +3071,14 @@ window.addEventListener("resize", clampMiniPosition);
         }
 
         if(state.openFromWallet){
-          setOpenBoxBtnMode("busy");
+          setOpenBoxBtnMode("busy", sequence.busyLabel);
           state.openAutoCloseTimer = setTimeout(() => {
             closeOpenSheetOnly();
-          }, 2200);
+          }, Math.max(sequence.autoCloseDelay - sequence.revealDelay, 1200));
         } else {
           setOpenBoxBtnMode("close");
         }
-      }, 920);
+      }, sequence.revealDelay);
     }
 
     document.getElementById("backToHome").addEventListener("click", backToHome);
