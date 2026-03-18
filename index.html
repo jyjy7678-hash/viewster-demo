@@ -1149,7 +1149,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.43</span>
+          <span class="dev-version-label">DEV v0.1.44</span>
         </div>
       </header>
 
@@ -1188,7 +1188,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.43</span>
+            <span class="dev-version-label">DEV v0.1.44</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -1442,6 +1442,12 @@
       { value: 1000000, weight: 1 }
     ];
 
+    const boxResultTypeTable = [
+      { value: "normal", weight: 75 },
+      { value: "chance_fail", weight: 20 },
+      { value: "chance_gold", weight: 5 }
+    ];
+
     const homeScreen = document.getElementById("homeScreen");
     const watchScreen = document.getElementById("watchScreen");
     const homeList = document.getElementById("homeList");
@@ -1537,6 +1543,13 @@
         if(rnd <= 0) return item.value;
       }
       return items[items.length - 1].value;
+    }
+
+    function createBoxResult(items){
+      return {
+        reward: weightedRandom(items),
+        type: weightedRandom(boxResultTypeTable)
+      };
     }
 
     function escapeHtml(str){
@@ -2165,25 +2178,44 @@ window.addEventListener("resize", clampMiniPosition);
         if(phase >= 6){
           clearInterval(state.openTimer);
 
-          let value;
+          let result;
           if(state.openType === "gold"){
-            value = weightedRandom(goldBoxTable);
+            result = createBoxResult(goldBoxTable);
             state.goldBoxCount -= 1;
           } else {
-            value = weightedRandom(boxTable);
+            result = createBoxResult(boxTable);
             state.randomBoxCount -= 1;
           }
 
-          state.totalRewardPoint += value;
+          state.totalRewardPoint += result.reward;
+          if(result.type === "chance_gold"){
+            state.goldBoxCount += 1;
+          }
           updateWallet();
 
           openSheetTitle.textContent = "당첨 완료";
           openSheetDesc.textContent = state.openType === "gold" ? "황금박스 오픈 결과입니다." : "랜덤박스 오픈 결과입니다.";
-          openStageText.innerHTML = `
-            <div class="glow-burst"></div>
-            <div class="result-amount box-pop">${value.toLocaleString()} P</div>
-            <div class="result-sub">축하합니다! 리워드가 즉시 지급되었습니다.</div>
-          `;
+          if(result.type === "chance_fail"){
+            openStageText.innerHTML = `
+              <div class="glow-burst"></div>
+              <div class="result-amount box-pop">황금박스 기회</div>
+              <div class="result-sub">아쉽게 놓쳤어요</div>
+              <div class="result-sub">${result.reward.toLocaleString()} P 지급</div>
+            `;
+          } else if(result.type === "chance_gold"){
+            openStageText.innerHTML = `
+              <div class="glow-burst"></div>
+              <div class="result-amount box-pop">황금박스 획득!</div>
+              <div class="result-sub">${result.reward.toLocaleString()} P 지급</div>
+              <div class="result-sub">황금박스 +1</div>
+            `;
+          } else {
+            openStageText.innerHTML = `
+              <div class="glow-burst"></div>
+              <div class="result-amount box-pop">리워드 지급</div>
+              <div class="result-sub">${result.reward.toLocaleString()} P 획득</div>
+            `;
+          }
 
           if(state.openFromWallet){
             openBoxBtn.disabled = true;
