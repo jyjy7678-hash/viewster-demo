@@ -761,8 +761,11 @@
       transition:transform .28s ease;
       display:flex;
       flex-direction:column;
+      min-height:0;
       box-shadow:none;
       overflow:hidden;
+      isolation:isolate;
+      contain:layout paint;
     }
     .sheet.show{
       transform:translateY(0);
@@ -802,8 +805,16 @@
       place-items:center;
     }
     .sheet-body{
+      flex:1 1 auto;
+      min-height:0;
+      overflow-x:hidden;
       overflow-y:auto;
       padding:0 16px 20px;
+      overscroll-behavior:contain;
+      -webkit-overflow-scrolling:touch;
+    }
+    .sheet-body--plain{
+      padding:0 0 20px;
     }
 
     .sheet-title{
@@ -1366,7 +1377,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.49</span>
+          <span class="dev-version-label">DEV v0.1.50</span>
         </div>
       </header>
 
@@ -1405,7 +1416,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.49</span>
+            <span class="dev-version-label">DEV v0.1.50</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -1497,26 +1508,28 @@
       <div class="sheet-head" style="background:#0b0f19;">
         <button class="sheet-close" data-close="adSheet" style="background:#1f2937;color:#fff;">×</button>
       </div>
-      <div class="ad-top">광고 시청 후 랜덤박스를 받을 수 있어요</div>
-      <div class="ad-desc">
-        5초 후 직접 받을 수 있고, 누르지 않아도 15초 후 자동으로 지급됩니다.
-      </div>
-      <div class="ad-frame">
-        <video id="rewardAdVideo" muted playsinline webkit-playsinline>
-          <source src="assets/preroll.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <div class="ad-progress-wrap">
-        <div class="ad-progress-track">
-          <div class="ad-progress-fill" id="rewardAdProgress"></div>
+      <div class="sheet-body sheet-body--plain">
+        <div class="ad-top">광고 시청 후 랜덤박스를 받을 수 있어요</div>
+        <div class="ad-desc">
+          5초 후 직접 받을 수 있고, 누르지 않아도 15초 후 자동으로 지급됩니다.
         </div>
-      </div>
-      <div class="ad-guide">
-        <span id="rewardAdGuideLeft">광고 재생중...</span>
-        <span id="rewardAdGuideRight">15초 후 자동 지급</span>
-      </div>
-      <div class="ad-btn-wrap">
-        <button class="ad-btn" id="rewardAdBtn" disabled>받기 (5s)</button>
+        <div class="ad-frame">
+          <video id="rewardAdVideo" muted playsinline webkit-playsinline>
+            <source src="assets/preroll.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="ad-progress-wrap">
+          <div class="ad-progress-track">
+            <div class="ad-progress-fill" id="rewardAdProgress"></div>
+          </div>
+        </div>
+        <div class="ad-guide">
+          <span id="rewardAdGuideLeft">광고 재생중...</span>
+          <span id="rewardAdGuideRight">15초 후 자동 지급</span>
+        </div>
+        <div class="ad-btn-wrap">
+          <button class="ad-btn" id="rewardAdBtn" disabled>받기 (5s)</button>
+        </div>
       </div>
     </section>
 
@@ -1524,33 +1537,35 @@
       <div class="sheet-head" style="background:#0b0f19;">
         <button class="sheet-close" data-close="openSheet" style="background:#1f2937;color:#fff;">×</button>
       </div>
-      <div class="box-hero">
-        <div class="box-icon box-pop" id="boxIconStage">
-          <img class="fx" src="assets/fx-ring.svg" alt="" onerror="this.style.display='none'">
-          <img class="main" src="assets/icon-randombox.svg" alt="랜덤박스" onerror="this.style.display='none'">
-        </div>
-      </div>
-      <div class="ad-top" id="openSheetTitle">랜덤박스 오픈</div>
-      <div class="ad-desc" id="openSheetDesc">오픈 전 1초 광고가 재생됩니다.</div>
-      <div class="box-open-stage" id="openStage">
-        <div class="box-open-text" id="openStageText">오픈 버튼을 누르면 1초 광고 후 박스가 열립니다.</div>
-        <div class="open-stage-clouds" id="openStageClouds" aria-hidden="true">
-          <span class="open-stage-cloud cloud-a"></span>
-          <span class="open-stage-cloud cloud-b"></span>
-          <span class="open-stage-cloud cloud-c"></span>
-          <span class="open-stage-cloud cloud-d"></span>
-        </div>
-        <div class="open-stage-result" id="openStageResult" aria-live="polite">
-          <div class="glow-burst"></div>
-          <div class="result-gold-box" id="resultGoldBox">
-            <img src="assets/icon-goldbox.svg" alt="황금박스" onerror="this.style.display='none'">
+      <div class="sheet-body sheet-body--plain">
+        <div class="box-hero">
+          <div class="box-icon box-pop" id="boxIconStage">
+            <img class="fx" src="assets/fx-ring.svg" alt="" onerror="this.style.display='none'">
+            <img class="main" src="assets/icon-randombox.svg" alt="랜덤박스" onerror="this.style.display='none'">
           </div>
-          <div class="result-amount" id="openResultAmount"></div>
-          <div class="result-sub" id="openResultSub"></div>
         </div>
-      </div>
-      <div class="ad-btn-wrap">
-        <button class="ad-btn ready" id="openBoxBtn">랜덤박스 오픈</button>
+        <div class="ad-top" id="openSheetTitle">랜덤박스 오픈</div>
+        <div class="ad-desc" id="openSheetDesc">오픈 전 1초 광고가 재생됩니다.</div>
+        <div class="box-open-stage" id="openStage">
+          <div class="box-open-text" id="openStageText">오픈 버튼을 누르면 1초 광고 후 박스가 열립니다.</div>
+          <div class="open-stage-clouds" id="openStageClouds" aria-hidden="true">
+            <span class="open-stage-cloud cloud-a"></span>
+            <span class="open-stage-cloud cloud-b"></span>
+            <span class="open-stage-cloud cloud-c"></span>
+            <span class="open-stage-cloud cloud-d"></span>
+          </div>
+          <div class="open-stage-result" id="openStageResult" aria-live="polite">
+            <div class="glow-burst"></div>
+            <div class="result-gold-box" id="resultGoldBox">
+              <img src="assets/icon-goldbox.svg" alt="황금박스" onerror="this.style.display='none'">
+            </div>
+            <div class="result-amount" id="openResultAmount"></div>
+            <div class="result-sub" id="openResultSub"></div>
+          </div>
+        </div>
+        <div class="ad-btn-wrap">
+          <button class="ad-btn ready" id="openBoxBtn">랜덤박스 오픈</button>
+        </div>
       </div>
     </section>
 
