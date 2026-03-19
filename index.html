@@ -1063,6 +1063,29 @@
       filter:drop-shadow(0 20px 30px var(--box-shadow-color));
       transition:filter .3s ease, transform .3s ease, opacity .24s ease;
     }
+    .gift-box::before,
+    .gift-box::after{
+      content:"";
+      position:absolute;
+      inset:8px;
+      border-radius:20px;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .22s ease;
+    }
+    .gift-box::before{
+      inset:18px 10px 20px;
+      background:
+        linear-gradient(112deg, rgba(255,255,255,0) 18%, rgba(255,255,255,.18) 38%, rgba(255,255,255,.46) 50%, rgba(255,255,255,.14) 62%, rgba(255,255,255,0) 82%);
+      filter:blur(.4px);
+      mix-blend-mode:screen;
+      transform:translateX(-26px) rotate(-8deg);
+    }
+    .gift-box::after{
+      inset:16px 12px 14px;
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:inset 0 0 20px rgba(255,255,255,.06), 0 0 22px rgba(191,219,254,.06);
+    }
     .gift-box-part{
       position:absolute;
       left:50%;
@@ -1079,7 +1102,7 @@
       border-radius:50%;
       background:radial-gradient(circle, rgba(255,255,255,.72) 0%, rgba(191,219,254,.3) 34%, rgba(191,219,254,0) 76%);
       opacity:0;
-      filter:blur(2px);
+      filter:blur(3px);
       z-index:1;
     }
     .gift-lid{
@@ -1174,9 +1197,9 @@
       inset:30px;
       border-radius:50%;
       background:radial-gradient(circle, rgba(255,255,255,.22) 0%, var(--box-glow-color) 22%, rgba(96,165,250,0) 68%);
-      opacity:.82;
+      opacity:.74;
       z-index:2;
-      filter:blur(6px);
+      filter:blur(8px);
     }
     .box-lid-light{
       left:50%;
@@ -1305,7 +1328,16 @@
       filter:blur(10px);
       transition:background .3s ease, opacity .3s ease;
     }
-    .open-stage-box-wrap::after{content:none;}
+    .open-stage-box-wrap::after{
+      content:"";
+      position:absolute;
+      inset:18px;
+      border-radius:50%;
+      border:1px solid rgba(191,219,254,.12);
+      opacity:0;
+      transform:scale(.82);
+      transition:border-color .3s ease, opacity .3s ease;
+    }
     .box-open-stage.stage-show-result .open-stage-box-wrap{
       opacity:.16;
       transform:translateY(-38px) scale(.78);
@@ -1365,11 +1397,11 @@
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-d{animation-delay:1.4s;}
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage{
-      animation:boxStoryHover 1s ease-out .66s both, boxRevealShake .56s ease-in-out 1.18s both;
+      animation:boxStoryHover 1s ease-out .66s both, boxRevealShake .56s ease-in-out 1.18s both, boxSuspenseHover 1.66s ease-in-out 1.64s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .gift-box,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .gift-box{
-      animation:boxStorySettle .44s ease-out .2s both;
+      animation:boxStorySettle .44s ease-out .2s both, boxMysteryBodyPulse 1.6s ease-in-out 1.72s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .gift-lid,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .gift-lid{
@@ -1383,11 +1415,46 @@
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .gift-box-glow,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .box-lid-light,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .gift-box-glow{
-      animation:boxLidGlow 1.1s ease-in-out .84s both, boxMysteryGlow 1.54s ease-in-out 1.78s both;
+      animation:boxLidGlow 1.1s ease-in-out .84s both, boxMysteryGlow 1.78s ease-in-out 1.72s both;
     }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .gift-box,
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .gift-box{
-      animation:boxStorySettle .44s ease-out .2s both;
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase::before{
+      animation:suspenseFloorGlow 1.18s ease-in-out infinite;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase::after{
+      animation:suspenseHaloPulse 1.26s ease-in-out infinite;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .gift-box::before{
+      animation:mysteryShimmerSweep 1.28s cubic-bezier(.4,0,.2,1) infinite;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .gift-box::after{
+      animation:mysteryEdgeBlink 1.28s ease-in-out infinite;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-open-flash{
+      animation:mysteryFlashPulse 1.18s ease-in-out infinite;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-a,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-b,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-c,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-d{
+      animation:mysterySparkleFloat 1.1s ease-in-out infinite;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-b{animation-delay:.12s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-c{animation-delay:.24s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-d{animation-delay:.36s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-final-gold::before{
+      animation:suspenseFloorGlowGold .82s ease-in-out infinite;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-final-gold::after{
+      animation:suspenseHaloPulseGold .88s ease-in-out infinite;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-final-gold #boxIconStage .gift-box::before{
+      animation:mysteryShimmerSweepGold .82s cubic-bezier(.4,0,.2,1) infinite;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-final-gold #boxIconStage .gift-box::after{
+      animation:mysteryEdgeBlinkGold .82s ease-in-out infinite;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-final-gold #boxIconStage .box-open-flash{
+      animation:mysteryFlashPulseGold .8s ease-in-out infinite;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .gift-lid{
       animation:giftBoxLidResolveOpen .72s cubic-bezier(.22,1,.36,1) both;
@@ -1610,25 +1677,109 @@
       100%{transform:translateX(-50%) translateY(-14px) scale(.94);}
     }
     @keyframes boxMysteryGlow{
-      0%,12%{opacity:.16; transform:translateX(-50%) scaleX(.9);}
-      20%{opacity:.34; transform:translateX(-50%) scaleX(1.04);}
-      32%{opacity:.16; transform:translateX(-50%) scaleX(.94);}
-      44%{opacity:.42; transform:translateX(-50%) scaleX(1.08);}
-      56%{opacity:.16; transform:translateX(-50%) scaleX(.94);}
-      68%{opacity:.48; transform:translateX(-50%) scaleX(1.12);}
-      100%{opacity:.24; transform:translateX(-50%) scaleX(1);}
+      0%,10%{opacity:.12; transform:translateX(-50%) scaleX(.86);}
+      18%{opacity:.2; transform:translateX(-50%) scaleX(.94);}
+      28%{opacity:.48; transform:translateX(-50%) scaleX(1.06);}
+      36%{opacity:.14; transform:translateX(-50%) scaleX(.9);}
+      48%{opacity:.2; transform:translateX(-50%) scaleX(.96);}
+      60%{opacity:.58; transform:translateX(-50%) scaleX(1.12);}
+      72%{opacity:.16; transform:translateX(-50%) scaleX(.92);}
+      82%{opacity:.74; transform:translateX(-50%) scaleX(1.18);}
+      100%{opacity:.2; transform:translateX(-50%) scaleX(1);}
     }
     @keyframes giftBoxLidTease{
-      0%,26%{transform:translateX(-50%) translateY(0) rotate(0deg);}
-      42%{transform:translateX(-50%) translateY(-4px) rotate(-10deg);}
-      58%{transform:translateX(-50%) translateY(-6px) rotate(-14deg);}
+      0%,18%{transform:translateX(-50%) translateY(0) rotate(0deg);}
+      28%{transform:translateX(-50%) translateY(-2px) rotate(-5deg);}
+      36%{transform:translateX(-50%) translateY(-7px) rotate(-13deg);}
+      46%{transform:translateX(-50%) translateY(-4px) rotate(-8deg);}
+      58%{transform:translateX(-50%) translateY(-10px) rotate(-17deg);}
+      72%{transform:translateX(-50%) translateY(-5px) rotate(-9deg);}
       100%{transform:translateX(-50%) translateY(-2px) rotate(-7deg);}
     }
     @keyframes giftRibbonTease{
-      0%,26%{transform:translateX(-50%) translateY(0) scale(1);}
-      42%{transform:translateX(-50%) translateY(-3px) scale(1.03);}
-      58%{transform:translateX(-50%) translateY(-4px) scale(1.02);}
+      0%,18%{transform:translateX(-50%) translateY(0) scale(1);}
+      28%{transform:translateX(-50%) translateY(-1px) scale(1.01);}
+      36%{transform:translateX(-50%) translateY(-4px) scale(1.04);}
+      46%{transform:translateX(-50%) translateY(-2px) scale(1.01);}
+      58%{transform:translateX(-50%) translateY(-5px) scale(1.05);}
+      72%{transform:translateX(-50%) translateY(-3px) scale(1.02);}
       100%{transform:translateX(-50%) translateY(-1px) scale(.98);}
+    }
+    @keyframes boxSuspenseHover{
+      0%,18%{transform:translateY(0) scale(1) rotate(0deg);}
+      28%{transform:translateY(-4px) scale(1.02) rotate(-1.4deg);}
+      38%{transform:translateY(-1px) scale(1.01) rotate(.8deg);}
+      50%{transform:translateY(-6px) scale(1.03) rotate(-2.2deg);}
+      64%{transform:translateY(1px) scale(1) rotate(1deg);}
+      78%{transform:translateY(-4px) scale(1.02) rotate(-1.8deg);}
+      100%{transform:translateY(-1px) scale(1.01) rotate(-.4deg);}
+    }
+    @keyframes boxMysteryBodyPulse{
+      0%,14%{filter:drop-shadow(0 20px 30px var(--box-shadow-color));}
+      30%{filter:drop-shadow(0 22px 32px var(--box-shadow-color)) drop-shadow(0 0 12px rgba(253,224,71,.06));}
+      44%{filter:drop-shadow(0 20px 30px var(--box-shadow-color));}
+      62%{filter:drop-shadow(0 22px 34px var(--box-shadow-color)) drop-shadow(0 0 18px rgba(253,224,71,.16));}
+      100%{filter:drop-shadow(0 20px 30px var(--box-shadow-color));}
+    }
+    @keyframes suspenseFloorGlow{
+      0%,100%{opacity:.4; transform:translateX(-50%) scale(.92);}
+      46%{opacity:.88; transform:translateX(-50%) scale(1.08);}
+      60%{opacity:.54; transform:translateX(-50%) scale(.98);}
+    }
+    @keyframes suspenseHaloPulse{
+      0%,100%{opacity:0; transform:scale(.8);}
+      26%{opacity:.12; transform:scale(.9);}
+      54%{opacity:.42; transform:scale(1.02);}
+      72%{opacity:.08; transform:scale(1.08);}
+    }
+    @keyframes suspenseFloorGlowGold{
+      0%,100%{opacity:.58; transform:translateX(-50%) scale(.98);}
+      50%{opacity:1; transform:translateX(-50%) scale(1.14);}
+    }
+    @keyframes suspenseHaloPulseGold{
+      0%,100%{opacity:.08; transform:scale(.88);}
+      44%{opacity:.52; transform:scale(1.04);}
+      72%{opacity:.24; transform:scale(1.12);}
+    }
+    @keyframes mysteryShimmerSweep{
+      0%,14%{opacity:0; transform:translateX(-34px) rotate(-10deg);}
+      26%{opacity:.18; transform:translateX(-18px) rotate(-8deg);}
+      42%{opacity:.7; transform:translateX(6px) rotate(-4deg);}
+      54%{opacity:.12; transform:translateX(18px) rotate(-2deg);}
+      100%{opacity:0; transform:translateX(30px) rotate(0deg);}
+    }
+    @keyframes mysteryShimmerSweepGold{
+      0%,10%{opacity:.04; transform:translateX(-30px) rotate(-10deg);}
+      36%{opacity:.86; transform:translateX(10px) rotate(-2deg);}
+      58%{opacity:.24; transform:translateX(22px) rotate(0deg);}
+      100%{opacity:0; transform:translateX(34px) rotate(2deg);}
+    }
+    @keyframes mysteryEdgeBlink{
+      0%,100%{opacity:.04; box-shadow:inset 0 0 18px rgba(255,255,255,.04), 0 0 18px rgba(191,219,254,.04);}
+      34%{opacity:.22; box-shadow:inset 0 0 20px rgba(255,255,255,.08), 0 0 20px rgba(191,219,254,.08);}
+      48%{opacity:.08; box-shadow:inset 0 0 18px rgba(255,255,255,.05), 0 0 18px rgba(191,219,254,.05);}
+      66%{opacity:.34; box-shadow:inset 0 0 24px rgba(255,244,214,.14), 0 0 24px rgba(250,204,21,.14);}
+    }
+    @keyframes mysteryEdgeBlinkGold{
+      0%,100%{opacity:.12; box-shadow:inset 0 0 20px rgba(255,250,220,.1), 0 0 20px rgba(250,204,21,.08);}
+      50%{opacity:.46; box-shadow:inset 0 0 26px rgba(255,250,220,.2), 0 0 28px rgba(250,204,21,.2);}
+    }
+    @keyframes mysteryFlashPulse{
+      0%,100%{opacity:0; transform:translateX(-50%) scale(.42) translateY(8px);}
+      30%{opacity:.08; transform:translateX(-50%) scale(.66) translateY(2px);}
+      48%{opacity:.38; transform:translateX(-50%) scale(.94) translateY(-4px);}
+      64%{opacity:.04; transform:translateX(-50%) scale(.88) translateY(-8px);}
+    }
+    @keyframes mysteryFlashPulseGold{
+      0%,100%{opacity:.02; transform:translateX(-50%) scale(.58) translateY(6px);}
+      42%{opacity:.54; transform:translateX(-50%) scale(1.02) translateY(-6px);}
+      68%{opacity:.12; transform:translateX(-50%) scale(1.08) translateY(-12px);}
+    }
+    @keyframes mysterySparkleFloat{
+      0%,100%{opacity:0; transform:translate3d(0,0,0) scale(.2);}
+      34%{opacity:.18; transform:translate3d(0,-3px,0) scale(.72);}
+      56%{opacity:.72; transform:translate3d(calc(var(--spark-x, 0) * .28), calc(var(--spark-y, -20px) * .18), 0) scale(.92);}
+      82%{opacity:0; transform:translate3d(calc(var(--spark-x, 0) * .56), calc(var(--spark-y, -20px) * .4), 0) scale(.46);}
     }
     @keyframes goldBoxHeroPulse{
       0%{transform:translateY(0) scale(1);}
@@ -2038,7 +2189,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.63</span>
+          <span class="dev-version-label">DEV v0.1.64</span>
         </div>
       </header>
 
@@ -2077,7 +2228,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.63</span>
+            <span class="dev-version-label">DEV v0.1.64</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3026,7 +3177,7 @@ window.addEventListener("resize", clampMiniPosition);
 
     function setOpenStageVariant(variant = "random"){
       syncOpenStageBoxAsset(variant === "gold" ? "gold" : "random");
-      openStageBoxWrap.classList.remove("is-reveal-random", "is-reveal-fail", "is-reveal-gold", "is-opening-final", "is-final-gold");
+      openStageBoxWrap.classList.remove("is-reveal-random", "is-reveal-fail", "is-reveal-gold", "is-opening-final", "is-final-gold", "is-suspense-phase");
 
       if(variant === "reveal-random"){
         openStageBoxWrap.classList.add("is-reveal-random");
@@ -3050,6 +3201,10 @@ window.addEventListener("resize", clampMiniPosition);
       const finalConfirmAt = Math.max(finalOpenAt - sequence.suspenseConfirmLead, 0);
       const suspenseStartAt = Math.max(finalConfirmAt - (sequence.suspenseCount * sequence.suspenseInterval), 0);
 
+      scheduleOpenStageTimer(() => {
+        openStageBoxWrap.classList.add("is-suspense-phase");
+      }, suspenseStartAt);
+
       for(let index = 0; index < sequence.suspenseCount; index += 1){
         scheduleOpenStageTimer(() => {
           syncOpenStageBoxAsset(index % 2 === 0 ? "gold" : "random");
@@ -3063,6 +3218,7 @@ window.addEventListener("resize", clampMiniPosition);
       }, finalConfirmAt);
 
       scheduleOpenStageTimer(() => {
+        openStageBoxWrap.classList.remove("is-suspense-phase");
         openStageBoxWrap.classList.add("is-opening-final");
       }, finalOpenAt);
     }
@@ -3089,10 +3245,10 @@ window.addEventListener("resize", clampMiniPosition);
           duration: 7000,
           revealDelay: 7000,
           autoCloseDelay: 7000,
-          suspenseCount: randomInt(3, 5),
-          suspenseInterval: 300,
-          suspenseOpenLead: 1100,
-          suspenseConfirmLead: 380
+          suspenseCount: randomInt(4, 6),
+          suspenseInterval: 360,
+          suspenseOpenLead: 1380,
+          suspenseConfirmLead: 520
         };
       }
 
@@ -3105,10 +3261,10 @@ window.addEventListener("resize", clampMiniPosition);
           duration: 10000,
           revealDelay: 10000,
           autoCloseDelay: 10000,
-          suspenseCount: randomInt(4, 7),
-          suspenseInterval: 300,
-          suspenseOpenLead: 1300,
-          suspenseConfirmLead: 420
+          suspenseCount: randomInt(5, 8),
+          suspenseInterval: 340,
+          suspenseOpenLead: 1540,
+          suspenseConfirmLead: 620
         };
       }
 
@@ -3355,7 +3511,7 @@ window.addEventListener("resize", clampMiniPosition);
         variant: sequence.revealVariant === "gold" ? "gold" : sequence.stageVariant
       });
       setOpenStageVariant(sequence.revealVariant);
-      openStageBoxWrap.classList.remove("is-opening-final", "is-final-gold");
+      openStageBoxWrap.classList.remove("is-opening-final", "is-final-gold", "is-suspense-phase");
       setOpenBoxBtnMode("busy", sequence.busyLabel);
 
       if(sequence.suspenseCount){
