@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.57 -->
+<!-- Version: v0.1.58 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -741,19 +741,30 @@
 
     /* Overlay / sheets */
     .overlay{
-      position:absolute;
-      left:0; right:0; bottom:0;
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
       top:var(--sheet-top);
+      width:100%;
+      max-width:430px;
+      margin:0 auto;
       background:rgba(0,0,0,.48);
       z-index:40;
       display:none;
+      overflow:hidden;
     }
     .overlay.show{display:block;}
 
     .sheet{
-      position:absolute;
-      left:0; right:0; bottom:0;
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
       top:var(--sheet-top);
+      width:100%;
+      max-width:430px;
+      margin:0 auto;
       z-index:50;
       background:#fff;
       border-radius:24px 24px 0 0;
@@ -845,6 +856,11 @@
     #commentSheet .sheet-body{
       overflow-y:auto;
     }
+
+    #commentSheet{z-index:50;}
+    #walletSheet{z-index:51;}
+    #adSheet{z-index:52;}
+    #openSheet{z-index:53;}
 
     #walletSheet,
     #adSheet,
@@ -1840,7 +1856,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.57</span>
+          <span class="dev-version-label">DEV v0.1.58</span>
         </div>
       </header>
 
@@ -1879,7 +1895,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.57</span>
+            <span class="dev-version-label">DEV v0.1.58</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -1921,139 +1937,139 @@
       </div>
     </section>
 
-    <div class="overlay" id="overlay"></div>
-
-    <section class="sheet sheet--action" id="walletSheet">
-      <div class="sheet-head">
-        <button class="sheet-close" data-close="walletSheet">×</button>
-      </div>
-      <div class="sheet-body">
-        <div class="sheet-title">내 지갑</div>
-        <div class="wallet-grid">
-          <div class="wallet-card">
-            <div class="wallet-label">📦 랜덤박스</div>
-            <div class="wallet-value" id="boxCount">1개</div>
-          </div>
-          <div class="wallet-card">
-            <div class="wallet-label">🏆 황금박스</div>
-            <div class="wallet-value" id="goldBoxCount">0개</div>
-          </div>
-          <div class="wallet-card full">
-            <div class="wallet-label">💰 누적리워드</div>
-            <div class="wallet-value" id="rewardPoint">0 P</div>
-          </div>
-        </div>
-
-        <div class="wallet-action-row">
-          <button class="wallet-open-btn" id="walletOpenRandom">랜덤</button>
-          <button class="wallet-open-btn" id="walletOpenRandomFail">랜덤X</button>
-          <button class="wallet-open-btn" id="walletOpenRandomGold">랜덤G</button>
-          <button class="wallet-open-btn gold" id="walletOpenGold">황금</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="sheet sheet--scroll" id="commentSheet">
-      <div class="sheet-head">
-        <button class="sheet-close" data-close="commentSheet">×</button>
-      </div>
-      <div class="sheet-body">
-        <div class="sheet-title">댓글 <span id="sheetCommentCount">0개</span></div>
-        <div class="comment-tab">
-          <button class="chip active">인기순</button>
-          <button class="chip">최신순</button>
-        </div>
-        <div id="commentList"></div>
-      </div>
-    </section>
-
-    <section class="sheet sheet--action" id="adSheet">
-      <div class="sheet-head" style="background:#0b0f19;">
-        <button class="sheet-close" data-close="adSheet" style="background:#1f2937;color:#fff;">×</button>
-      </div>
-      <div class="sheet-body sheet-body--plain">
-        <div class="ad-top">광고 시청 후 랜덤박스를 받을 수 있어요</div>
-        <div class="ad-desc">
-          5초 후 직접 받을 수 있고, 누르지 않아도 15초 후 자동으로 지급됩니다.
-        </div>
-        <div class="ad-frame">
-          <video id="rewardAdVideo" muted playsinline webkit-playsinline>
-            <source src="assets/preroll.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <div class="ad-progress-wrap">
-          <div class="ad-progress-track">
-            <div class="ad-progress-fill" id="rewardAdProgress"></div>
-          </div>
-        </div>
-        <div class="ad-guide">
-          <span id="rewardAdGuideLeft">광고 재생중...</span>
-          <span id="rewardAdGuideRight">15초 후 자동 지급</span>
-        </div>
-        <div class="ad-btn-wrap">
-          <button class="ad-btn" id="rewardAdBtn" disabled>받기 (5s)</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="sheet sheet--action" id="openSheet">
-      <div class="sheet-head" style="background:#0b0f19;">
-        <button class="sheet-close" data-close="openSheet" style="background:#1f2937;color:#fff;">×</button>
-      </div>
-      <div class="sheet-body sheet-body--plain">
-        <div class="box-open-stage" id="openStage">
-          <div class="open-stage-backdrop" aria-hidden="true"></div>
-          <div class="open-stage-box-wrap" id="openStageBoxWrap">
-            <div class="box-icon box-pop is-random-box" id="boxIconStage">
-              <span class="box-core-glow" aria-hidden="true"></span>
-              <span class="box-lid-light" aria-hidden="true"></span>
-              <span class="box-open-flash" aria-hidden="true"></span>
-              <span class="box-spark box-spark-a" style="--spark-x:-20px;--spark-y:-26px;" aria-hidden="true"></span>
-              <span class="box-spark box-spark-b" style="--spark-x:24px;--spark-y:-30px;" aria-hidden="true"></span>
-              <span class="box-spark box-spark-c" style="--spark-x:-18px;--spark-y:18px;" aria-hidden="true"></span>
-              <span class="box-spark box-spark-d" style="--spark-x:22px;--spark-y:14px;" aria-hidden="true"></span>
-              <span class="box-celebration-ring" aria-hidden="true"></span>
-              <span class="box-celebration-confetti" aria-hidden="true">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </span>
-              <img class="main" src="assets/icon-randombox.svg" alt="랜덤 선물상자" onerror="this.style.display='none'">
-            </div>
-          </div>
-          <div class="box-open-text" id="openStageText"></div>
-          <div class="open-stage-clouds" id="openStageClouds" aria-hidden="true">
-            <span class="open-stage-cloud cloud-a"></span>
-            <span class="open-stage-cloud cloud-b"></span>
-            <span class="open-stage-cloud cloud-c"></span>
-            <span class="open-stage-cloud cloud-d"></span>
-          </div>
-          <div class="open-stage-result" id="openStageResult" aria-live="polite">
-            <div class="glow-burst"></div>
-            <div class="burst-ring" aria-hidden="true"></div>
-            <div class="burst-rays" aria-hidden="true"></div>
-            <div class="result-sparkles" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div class="result-gold-box" id="resultGoldBox">
-              <img src="assets/icon-goldbox.svg" alt="황금박스" onerror="this.style.display='none'">
-            </div>
-            <div class="result-amount" id="openResultAmount"></div>
-            <div class="result-sub" id="openResultSub"></div>
-          </div>
-        </div>
-        <div class="ad-btn-wrap open-sheet-actions" id="openSheetActions">
-          <button class="ad-btn ready" id="openBoxBtn">랜덤박스 오픈</button>
-        </div>
-      </div>
-    </section>
-
     <div class="toast" id="toast"></div>
   </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <section class="sheet sheet--action" id="walletSheet">
+    <div class="sheet-head">
+      <button class="sheet-close" data-close="walletSheet">×</button>
+    </div>
+    <div class="sheet-body">
+      <div class="sheet-title">내 지갑</div>
+      <div class="wallet-grid">
+        <div class="wallet-card">
+          <div class="wallet-label">📦 랜덤박스</div>
+          <div class="wallet-value" id="boxCount">1개</div>
+        </div>
+        <div class="wallet-card">
+          <div class="wallet-label">🏆 황금박스</div>
+          <div class="wallet-value" id="goldBoxCount">0개</div>
+        </div>
+        <div class="wallet-card full">
+          <div class="wallet-label">💰 누적리워드</div>
+          <div class="wallet-value" id="rewardPoint">0 P</div>
+        </div>
+      </div>
+
+      <div class="wallet-action-row">
+        <button class="wallet-open-btn" id="walletOpenRandom">랜덤</button>
+        <button class="wallet-open-btn" id="walletOpenRandomFail">랜덤X</button>
+        <button class="wallet-open-btn" id="walletOpenRandomGold">랜덤G</button>
+        <button class="wallet-open-btn gold" id="walletOpenGold">황금</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet sheet--scroll" id="commentSheet">
+    <div class="sheet-head">
+      <button class="sheet-close" data-close="commentSheet">×</button>
+    </div>
+    <div class="sheet-body">
+      <div class="sheet-title">댓글 <span id="sheetCommentCount">0개</span></div>
+      <div class="comment-tab">
+        <button class="chip active">인기순</button>
+        <button class="chip">최신순</button>
+      </div>
+      <div id="commentList"></div>
+    </div>
+  </section>
+
+  <section class="sheet sheet--action" id="adSheet">
+    <div class="sheet-head" style="background:#0b0f19;">
+      <button class="sheet-close" data-close="adSheet" style="background:#1f2937;color:#fff;">×</button>
+    </div>
+    <div class="sheet-body sheet-body--plain">
+      <div class="ad-top">광고 시청 후 랜덤박스를 받을 수 있어요</div>
+      <div class="ad-desc">
+        5초 후 직접 받을 수 있고, 누르지 않아도 15초 후 자동으로 지급됩니다.
+      </div>
+      <div class="ad-frame">
+        <video id="rewardAdVideo" muted playsinline webkit-playsinline>
+          <source src="assets/preroll.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div class="ad-progress-wrap">
+        <div class="ad-progress-track">
+          <div class="ad-progress-fill" id="rewardAdProgress"></div>
+        </div>
+      </div>
+      <div class="ad-guide">
+        <span id="rewardAdGuideLeft">광고 재생중...</span>
+        <span id="rewardAdGuideRight">15초 후 자동 지급</span>
+      </div>
+      <div class="ad-btn-wrap">
+        <button class="ad-btn" id="rewardAdBtn" disabled>받기 (5s)</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet sheet--action" id="openSheet">
+    <div class="sheet-head" style="background:#0b0f19;">
+      <button class="sheet-close" data-close="openSheet" style="background:#1f2937;color:#fff;">×</button>
+    </div>
+    <div class="sheet-body sheet-body--plain">
+      <div class="box-open-stage" id="openStage">
+        <div class="open-stage-backdrop" aria-hidden="true"></div>
+        <div class="open-stage-box-wrap" id="openStageBoxWrap">
+          <div class="box-icon box-pop is-random-box" id="boxIconStage">
+            <span class="box-core-glow" aria-hidden="true"></span>
+            <span class="box-lid-light" aria-hidden="true"></span>
+            <span class="box-open-flash" aria-hidden="true"></span>
+            <span class="box-spark box-spark-a" style="--spark-x:-20px;--spark-y:-26px;" aria-hidden="true"></span>
+            <span class="box-spark box-spark-b" style="--spark-x:24px;--spark-y:-30px;" aria-hidden="true"></span>
+            <span class="box-spark box-spark-c" style="--spark-x:-18px;--spark-y:18px;" aria-hidden="true"></span>
+            <span class="box-spark box-spark-d" style="--spark-x:22px;--spark-y:14px;" aria-hidden="true"></span>
+            <span class="box-celebration-ring" aria-hidden="true"></span>
+            <span class="box-celebration-confetti" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+            <img class="main" src="assets/icon-randombox.svg" alt="랜덤 선물상자" onerror="this.style.display='none'">
+          </div>
+        </div>
+        <div class="box-open-text" id="openStageText"></div>
+        <div class="open-stage-clouds" id="openStageClouds" aria-hidden="true">
+          <span class="open-stage-cloud cloud-a"></span>
+          <span class="open-stage-cloud cloud-b"></span>
+          <span class="open-stage-cloud cloud-c"></span>
+          <span class="open-stage-cloud cloud-d"></span>
+        </div>
+        <div class="open-stage-result" id="openStageResult" aria-live="polite">
+          <div class="glow-burst"></div>
+          <div class="burst-ring" aria-hidden="true"></div>
+          <div class="burst-rays" aria-hidden="true"></div>
+          <div class="result-sparkles" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="result-gold-box" id="resultGoldBox">
+            <img src="assets/icon-goldbox.svg" alt="황금박스" onerror="this.style.display='none'">
+          </div>
+          <div class="result-amount" id="openResultAmount"></div>
+          <div class="result-sub" id="openResultSub"></div>
+        </div>
+      </div>
+      <div class="ad-btn-wrap open-sheet-actions" id="openSheetActions">
+        <button class="ad-btn ready" id="openBoxBtn">랜덤박스 오픈</button>
+      </div>
+    </div>
+  </section>
 
   <script>
     const YT_API_KEY = "AIzaSyDJsG19IyawKlfAALJMIjcb2KGMk5hvX14";
