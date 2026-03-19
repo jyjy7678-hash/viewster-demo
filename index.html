@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.58 -->
+<!-- Version: v0.1.60 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1386,6 +1386,68 @@
       filter:drop-shadow(0 16px 28px rgba(245,158,11,.32));
     }
 
+    /* Golden box reward reel */
+    .gold-reel-wrap{
+      display:none;
+      width:min(100%, 220px);
+      padding:10px 14px;
+      border-radius:18px;
+      border:1px solid rgba(253,224,71,.28);
+      background:linear-gradient(180deg, rgba(255,248,220,.14), rgba(120,53,15,.16));
+      box-shadow:0 12px 30px rgba(120,53,15,.18), inset 0 1px 0 rgba(255,255,255,.14);
+      position:relative;
+      overflow:hidden;
+      z-index:2;
+    }
+    .gold-reel-wrap::before,
+    .gold-reel-wrap::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      height:26px;
+      pointer-events:none;
+      z-index:2;
+    }
+    .gold-reel-wrap::before{
+      top:0;
+      background:linear-gradient(180deg, rgba(16,11,4,.78), rgba(16,11,4,0));
+    }
+    .gold-reel-wrap::after{
+      bottom:0;
+      background:linear-gradient(180deg, rgba(16,11,4,0), rgba(16,11,4,.78));
+    }
+    .gold-reel-viewport{
+      height:56px;
+      overflow:hidden;
+      position:relative;
+    }
+    .gold-reel-track{
+      display:flex;
+      flex-direction:column;
+      transform:translateY(0);
+      will-change:transform;
+    }
+    .gold-reel-item{
+      height:56px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:30px;
+      font-weight:1000;
+      letter-spacing:-1px;
+      color:#fde68a;
+      text-shadow:0 0 18px rgba(251,191,36,.22);
+      white-space:nowrap;
+    }
+    .open-stage-result.show-gold-reel .gold-reel-wrap{
+      display:block;
+      animation:resultReveal .28s ease-out both;
+    }
+    .open-stage-result.show-gold-reel .result-amount{
+      display:none;
+    }
+
     .box-pop{animation:boxPop .7s cubic-bezier(.22,1,.36,1);}
     @keyframes boxPop{
       0%{transform:translateY(24px) scale(.68); opacity:0;}
@@ -1858,7 +1920,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.59</span>
+          <span class="dev-version-label">DEV v0.1.60</span>
         </div>
       </header>
 
@@ -1897,7 +1959,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.59</span>
+            <span class="dev-version-label">DEV v0.1.60</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2063,6 +2125,11 @@
           <div class="result-gold-box" id="resultGoldBox">
             <img src="assets/icon-goldbox.svg" alt="황금박스" onerror="this.style.display='none'">
           </div>
+          <div class="gold-reel-wrap" id="goldReelWrap" aria-hidden="true">
+            <div class="gold-reel-viewport">
+              <div class="gold-reel-track" id="goldReelTrack"></div>
+            </div>
+          </div>
           <div class="result-amount" id="openResultAmount"></div>
           <div class="result-sub" id="openResultSub"></div>
         </div>
@@ -2165,6 +2232,7 @@
       openFromWallet: false,
       openAutoCloseTimer: null,
       openBoxBtnMode: "start",
+      goldReelFrame: null,
     };
 
     let autoWatchTimer = null;
@@ -2229,6 +2297,8 @@
     const openStageResult = document.getElementById("openStageResult");
     const openResultAmount = document.getElementById("openResultAmount");
     const openResultSub = document.getElementById("openResultSub");
+    const goldReelWrap = document.getElementById("goldReelWrap");
+    const goldReelTrack = document.getElementById("goldReelTrack");
     const openBoxBtn = document.getElementById("openBoxBtn");
     const openSheetActions = document.getElementById("openSheetActions");
     const topFixed = document.getElementById("topFixed");
@@ -2968,8 +3038,9 @@ window.addEventListener("resize", clampMiniPosition);
     function resetOpenStageState(){
       setOpenStageVariant(state.openType === "gold" ? "gold" : "random");
       openStage.classList.remove("stage-show-result", "stage-animating");
-      openStageResult.classList.remove("show-gold-box");
+      openStageResult.classList.remove("show-gold-box", "show-gold-reel");
       openStageText.textContent = "";
+      resetGoldReel();
       openResultAmount.textContent = "";
       openResultSub.textContent = "";
     }
@@ -2977,7 +3048,8 @@ window.addEventListener("resize", clampMiniPosition);
     function setOpenStageMessage(message, options = {}){
       openStage.classList.remove("stage-show-result");
       openStage.classList.toggle("stage-animating", !!options.animating);
-      openStageResult.classList.remove("show-gold-box");
+      openStageResult.classList.remove("show-gold-box", "show-gold-reel");
+      resetGoldReel();
       if(options.variant){
         setOpenStageVariant(options.variant);
       }
@@ -2986,12 +3058,70 @@ window.addEventListener("resize", clampMiniPosition);
       openResultSub.textContent = "";
     }
 
-    function showOpenStageResult({ amountText, subText = "", showGoldBox = false }){
+    function resetGoldReel(){
+      cancelAnimationFrame(state.goldReelFrame);
+      state.goldReelFrame = null;
+      goldReelTrack.innerHTML = "";
+      goldReelTrack.style.transform = "translateY(0)";
+      goldReelWrap.setAttribute("aria-hidden", "true");
+      openStageResult.classList.remove("show-gold-reel");
+    }
+
+    function buildGoldReelItems(finalReward){
+      const reelValues = [10, 50, 100, 500, 5, 1000, 50, 500, 100, finalReward];
+      goldReelTrack.innerHTML = reelValues.map(value => `<div class="gold-reel-item">${value.toLocaleString()} P</div>`).join("");
+      return reelValues.length - 1;
+    }
+
+    function startGoldRewardReel(finalReward){
+      const finalIndex = buildGoldReelItems(finalReward);
+      const itemHeight = 56;
+      const finalOffset = finalIndex * itemHeight;
+      const duration = 2400;
+      const startTime = performance.now();
+
+      goldReelWrap.setAttribute("aria-hidden", "false");
+      openStageResult.classList.add("show-gold-reel");
+
+      cancelAnimationFrame(state.goldReelFrame);
+
+      function animate(now){
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const bounceProgress = progress > 0.84 ? (progress - 0.84) / 0.16 : 0;
+        const bounceOffset = bounceProgress > 0
+          ? Math.sin(bounceProgress * Math.PI * 2.6) * (1 - bounceProgress) * 10
+          : 0;
+        const currentOffset = (finalOffset * eased) - bounceOffset;
+
+        goldReelTrack.style.transform = `translateY(${-currentOffset}px)`;
+
+        if(progress < 1){
+          state.goldReelFrame = requestAnimationFrame(animate);
+          return;
+        }
+
+        goldReelTrack.style.transform = `translateY(${-finalOffset}px)`;
+        state.goldReelFrame = null;
+      }
+
+      state.goldReelFrame = requestAnimationFrame(animate);
+    }
+
+    function showOpenStageResult({ amountText, subText = "", showGoldBox = false, useGoldReel = false, rewardValue = 0 }){
       openResultAmount.textContent = amountText;
       openResultSub.textContent = subText;
       openStage.classList.remove("stage-animating");
       openStageResult.classList.toggle("show-gold-box", showGoldBox);
       openStage.classList.add("stage-show-result");
+
+      if(useGoldReel){
+        openResultAmount.textContent = "";
+        startGoldRewardReel(rewardValue);
+        return;
+      }
+
+      resetGoldReel();
     }
 
     function closeOpenSheetOnly(){
@@ -3138,7 +3268,9 @@ window.addEventListener("resize", clampMiniPosition);
           showOpenStageResult({
             amountText: `${result.reward.toLocaleString()} P`,
             subText: "+1",
-            showGoldBox: true
+            showGoldBox: true,
+            useGoldReel: true,
+            rewardValue: result.reward
           });
         } else {
           showOpenStageResult({
