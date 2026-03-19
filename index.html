@@ -1344,142 +1344,163 @@
       filter:saturate(.82);
     }
     .box-open-stage.stage-animating .open-stage-box-wrap{
-      animation:boxStoryEntrance .72s cubic-bezier(.22,1,.36,1) both;
+      animation:boxStoryEntrance .76s cubic-bezier(.22,1,.36,1) both;
     }
     .box-open-stage.stage-animating #boxIconStage{
-      animation:boxStoryHover .9s ease-out .7s both;
+      animation:boxStoryStart .98s cubic-bezier(.22,1,.36,1) both;
     }
     .box-open-stage.stage-animating #boxIconStage .gift-box{
-      animation:boxStorySettle .44s ease-out .2s both;
+      animation:boxStorySettle .54s ease-out .18s both;
     }
-    .box-open-stage.stage-animating #boxIconStage .box-lid-light{
-      animation:boxLidGlow 1.1s ease-in-out .86s both;
+    .box-open-stage.stage-animating #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating #boxIconStage .gift-box-glow{
+      animation:boxSoftCharge .88s ease-out .68s both;
     }
-    .box-open-stage.stage-animating #boxIconStage .box-open-flash{
-      animation:boxOpenFlash .46s ease-out 1.52s both;
-    }
-    .box-open-stage.stage-animating #boxIconStage .box-spark-a,
-    .box-open-stage.stage-animating #boxIconStage .box-spark-b,
-    .box-open-stage.stage-animating #boxIconStage .box-spark-c,
-    .box-open-stage.stage-animating #boxIconStage .box-spark-d{
-      animation:boxSparkBurst .68s ease-out 1.54s both;
-    }
-    .box-open-stage.stage-animating #boxIconStage .box-spark-b{animation-delay:1.6s;}
-    .box-open-stage.stage-animating #boxIconStage .box-spark-c{animation-delay:1.66s;}
-    .box-open-stage.stage-animating #boxIconStage .box-spark-d{animation-delay:1.72s;}
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage{
-      animation:boxStoryHover 1s ease-out .66s both, boxRevealShake .48s ease-in-out 1.24s both;
+      animation:boxStoryStart .92s cubic-bezier(.22,1,.36,1) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-box{
-      animation:boxStorySettle .44s ease-out .2s both;
-    }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-lid{
-      animation:giftBoxLidOpen .72s cubic-bezier(.22,1,.36,1) 1.04s both;
-    }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-ribbon-knot{
-      animation:giftRibbonLift .72s cubic-bezier(.22,1,.36,1) 1.04s both;
+      animation:boxStorySettle .52s ease-out .18s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-lid-light,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-box-glow{
-      animation:boxLidGlow 1.02s ease-in-out .82s both;
+      animation:boxSoftCharge .86s ease-out .54s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-lid{
+      animation:giftBoxLidQuickOpen .54s cubic-bezier(.22,1,.36,1) .92s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-ribbon-knot{
+      animation:giftRibbonQuickLift .54s cubic-bezier(.22,1,.36,1) .92s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-open-flash{
-      animation:boxOpenFlash .46s ease-out 1.18s both;
+      animation:boxOpenFlash .4s ease-out .96s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-a,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-b,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-c,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-d{
-      animation:boxSparkBurst .64s ease-out 1.22s both;
+      animation:boxSparkBurst .56s ease-out 1.02s both;
     }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-b{animation-delay:1.28s;}
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-c{animation-delay:1.34s;}
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-d{animation-delay:1.4s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-b{animation-delay:1.08s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-c{animation-delay:1.14s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-d{animation-delay:1.2s;}
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage{
-      animation:boxStoryHover 1s ease-out .66s both, boxRevealShake .56s ease-in-out 1.18s both, boxSuspenseHover 1.66s ease-in-out 1.64s both;
+      animation:
+        boxStoryStart .98s cubic-bezier(.22,1,.36,1) both,
+        boxTensionShake .84s ease-in-out 1s both,
+        boxSuspenseDrift var(--mystery-total, 1800ms) ease-in-out 1.84s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .gift-box,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .gift-box{
-      animation:boxStorySettle .44s ease-out .2s both, boxMysteryBodyPulse 1.6s ease-in-out 1.72s both;
+      animation:boxStorySettle .54s ease-out .18s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .gift-lid,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .gift-lid{
-      animation:giftBoxLidTease 1.34s cubic-bezier(.22,1,.36,1) 1.04s both;
+      animation:giftBoxLidTease 1.02s cubic-bezier(.22,1,.36,1) 1s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .gift-ribbon-knot,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .gift-ribbon-knot{
-      animation:giftRibbonTease 1.34s cubic-bezier(.22,1,.36,1) 1.04s both;
+      animation:giftRibbonTease 1.02s cubic-bezier(.22,1,.36,1) 1s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .box-lid-light,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .gift-box-glow,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .box-lid-light,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .gift-box-glow{
-      animation:boxLidGlow 1.1s ease-in-out .84s both, boxMysteryGlow 1.78s ease-in-out 1.72s both;
+      animation:boxSoftCharge .9s ease-out .68s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase::before{
-      animation:suspenseFloorGlow 1.18s ease-in-out infinite;
+      animation:suspenseFloorGlow var(--mystery-cycle, 380ms) ease-in-out 0s var(--mystery-count, 4) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase::after{
-      animation:suspenseHaloPulse 1.26s ease-in-out infinite;
+      animation:suspenseHaloPulse var(--mystery-cycle, 380ms) ease-in-out 0s var(--mystery-count, 4) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .gift-box::before{
-      animation:mysteryShimmerSweep 1.28s cubic-bezier(.4,0,.2,1) infinite;
+      animation:mysteryShimmerSweep var(--mystery-cycle, 380ms) cubic-bezier(.4,0,.2,1) 0s var(--mystery-count, 4) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .gift-box::after{
-      animation:mysteryEdgeBlink 1.28s ease-in-out infinite;
+      animation:mysteryEdgeBlink var(--mystery-cycle, 380ms) ease-in-out 0s var(--mystery-count, 4) both;
     }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-open-flash{
-      animation:mysteryFlashPulse 1.18s ease-in-out infinite;
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .gift-box-glow{
+      animation:mysteryGlowBreath var(--mystery-cycle, 380ms) ease-in-out 0s var(--mystery-count, 4) both;
     }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-a,
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-b,
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-c,
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-d{
-      animation:mysterySparkleFloat 1.1s ease-in-out infinite;
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-suspense-gold #boxIconStage .gift-box::before{
+      animation:mysteryShimmerSweepGold var(--mystery-cycle, 360ms) cubic-bezier(.35,0,.2,1) 0s var(--mystery-count, 5) both;
     }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-b{animation-delay:.12s;}
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-c{animation-delay:.24s;}
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-spark-d{animation-delay:.36s;}
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-final-gold::before{
-      animation:suspenseFloorGlowGold .82s ease-in-out infinite;
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-suspense-gold #boxIconStage .gift-box::after{
+      animation:mysteryEdgeBlinkGold var(--mystery-cycle, 360ms) ease-in-out 0s var(--mystery-count, 5) both;
     }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-final-gold::after{
-      animation:suspenseHaloPulseGold .88s ease-in-out infinite;
-    }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-final-gold #boxIconStage .gift-box::before{
-      animation:mysteryShimmerSweepGold .82s cubic-bezier(.4,0,.2,1) infinite;
-    }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-final-gold #boxIconStage .gift-box::after{
-      animation:mysteryEdgeBlinkGold .82s ease-in-out infinite;
-    }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-final-gold #boxIconStage .box-open-flash{
-      animation:mysteryFlashPulseGold .8s ease-in-out infinite;
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-suspense-gold #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-suspense-gold #boxIconStage .gift-box-glow{
+      animation:mysteryGlowBreathGold var(--mystery-cycle, 360ms) ease-in-out 0s var(--mystery-count, 5) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .gift-lid{
-      animation:giftBoxLidResolveOpen .72s cubic-bezier(.22,1,.36,1) both;
+      animation:giftBoxLidResolveOpen .66s cubic-bezier(.22,1,.36,1) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .gift-ribbon-knot{
-      animation:giftRibbonResolveOpen .72s cubic-bezier(.22,1,.36,1) both;
+      animation:giftRibbonResolveOpen .66s cubic-bezier(.22,1,.36,1) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-lid-light,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .gift-box-glow{
-      animation:boxLidGlow .92s ease-in-out both;
+      animation:boxResolveGlow .78s ease-out both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-open-flash{
-      animation:boxOpenFlash .46s ease-out .08s both;
+      animation:boxOpenFlash .38s ease-out .06s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-a,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-b,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-c,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-d{
-      animation:boxSparkBurst .64s ease-out .12s both;
+      animation:boxSparkBurst .58s ease-out .1s both;
     }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-b{animation-delay:.18s;}
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-c{animation-delay:.24s;}
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-d{animation-delay:.3s;}
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-final-gold #boxIconStage{
-      animation:goldBoxHeroPulse .82s ease-out both;
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-b{animation-delay:.16s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-c{animation-delay:.22s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-d{animation-delay:.28s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage{
+      animation:boxFailDeflate .36s ease-out both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .gift-lid{
+      animation:giftBoxLidFailOpen .48s cubic-bezier(.24,.92,.38,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .gift-ribbon-knot{
+      animation:giftRibbonFailLift .48s cubic-bezier(.24,.92,.38,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-open-flash{
+      animation:boxFailFlash .26s ease-out both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-spark-a,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-spark-b,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-spark-c,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-spark-d{
+      animation:boxFailSpark .38s ease-out both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold #boxIconStage{
+      animation:goldBoxHeroPulse .72s ease-out both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage{
+      animation:boxConfirmPulse .48s cubic-bezier(.2,.9,.28,1.2) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .gift-lid{
+      animation:giftBoxLidGoldOpen .56s cubic-bezier(.18,1,.34,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .gift-ribbon-knot{
+      animation:giftRibbonGoldLift .56s cubic-bezier(.18,1,.34,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-open-flash{
+      animation:boxConfirmFlash .42s ease-out both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-a,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-b,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-c,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-d{
+      animation:goldSparkBurst .62s ease-out .08s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-b{animation-delay:.14s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-c{animation-delay:.2s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-d{animation-delay:.26s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-final-gold::before{
+      background:radial-gradient(circle, rgba(253,224,71,.26) 0%, rgba(245,158,11,0) 72%);
     }
     .box-open-text{
       position:absolute;
@@ -1613,173 +1634,176 @@
       100%{transform:translateY(0) scale(1); opacity:1;}
     }
     @keyframes boxStoryEntrance{
-      0%{transform:translateY(36px) scale(.72); opacity:0;}
-      55%{transform:translateY(-10px) scale(1.04); opacity:1;}
+      0%{transform:translateY(34px) scale(.78); opacity:0;}
+      52%{transform:translateY(-8px) scale(1.02); opacity:1;}
       100%{transform:translateY(0) scale(1); opacity:1;}
     }
     @keyframes boxStorySettle{
-      0%{transform:translateY(12px) scale(.9);}
-      60%{transform:translateY(-8px) scale(1.04);}
+      0%{transform:translateY(10px) scale(.95);}
+      56%{transform:translateY(-5px) scale(1.02);}
       100%{transform:translateY(0) scale(1);}
     }
-    @keyframes boxStoryHover{
-      0%,18%{transform:translateY(0) scale(1) rotate(0deg);}
-      34%{transform:translateY(-5px) scale(1.01) rotate(-1.2deg);}
-      50%{transform:translateY(1px) scale(1.01) rotate(1deg);}
-      70%{transform:translateY(-3px) scale(1.02) rotate(-1.6deg);}
+    @keyframes boxStoryStart{
+      0%{transform:translateY(0) scale(.95) rotate(0deg);}
+      42%{transform:translateY(-3px) scale(1) rotate(0deg);}
       100%{transform:translateY(0) scale(1) rotate(0deg);}
     }
-    @keyframes boxRevealShake{
-      0%{transform:translateY(0) scale(1) rotate(0deg);}
-      20%{transform:translateY(-1px) scale(1.02) rotate(-2deg);}
-      42%{transform:translateY(1px) scale(1.01) rotate(2deg);}
-      64%{transform:translateY(-2px) scale(1.03) rotate(-1.4deg);}
-      100%{transform:translateY(0) scale(1) rotate(0deg);}
+    @keyframes boxTensionShake{
+      0%,18%,100%{transform:translateY(0) rotate(0deg);}
+      30%{transform:translateY(-1px) rotate(-1deg);}
+      46%{transform:translateY(1px) rotate(1deg);}
+      62%{transform:translateY(-2px) rotate(-1.3deg);}
+      78%{transform:translateY(0) rotate(.7deg);}
     }
-    @keyframes boxLidGlow{
-      0%,14%{opacity:.12; transform:translateX(-50%) scaleX(.88);}
-      54%{opacity:.92; transform:translateX(-50%) scaleX(1.08);}
-      100%{opacity:.28; transform:translateX(-50%) scaleX(1);}
+    @keyframes boxSuspenseDrift{
+      0%,100%{transform:translateY(0) scale(1) rotate(0deg);}
+      35%{transform:translateY(-2px) scale(1.01) rotate(-.6deg);}
+      60%{transform:translateY(1px) scale(1) rotate(.4deg);}
+      82%{transform:translateY(-1px) scale(1.01) rotate(-.5deg);}
+    }
+    @keyframes boxSoftCharge{
+      0%{opacity:0; transform:translateX(-50%) scaleX(.82);}
+      56%{opacity:.5; transform:translateX(-50%) scaleX(1.04);}
+      100%{opacity:.18; transform:translateX(-50%) scaleX(.96);}
+    }
+    @keyframes boxResolveGlow{
+      0%{opacity:.12; transform:translateX(-50%) scaleX(.92);}
+      42%{opacity:.9; transform:translateX(-50%) scaleX(1.12);}
+      100%{opacity:0; transform:translateX(-50%) scaleX(1.2);}
     }
     @keyframes boxOpenFlash{
-      0%{opacity:0; transform:translateX(-50%) scale(.4) translateY(10px);}
-      36%{opacity:.94; transform:translateX(-50%) scale(1.04) translateY(-6px);}
-      100%{opacity:0; transform:translateX(-50%) scale(1.32) translateY(-18px);}
+      0%{opacity:0; transform:translateX(-50%) scale(.46) translateY(8px);}
+      38%{opacity:.72; transform:translateX(-50%) scale(.96) translateY(-4px);}
+      100%{opacity:0; transform:translateX(-50%) scale(1.2) translateY(-14px);}
+    }
+    @keyframes boxConfirmFlash{
+      0%{opacity:0; transform:translateX(-50%) scale(.5) translateY(8px); filter:blur(2px);}
+      34%{opacity:1; transform:translateX(-50%) scale(1.12) translateY(-6px); filter:blur(0);}
+      100%{opacity:0; transform:translateX(-50%) scale(1.38) translateY(-18px); filter:blur(1px);}
+    }
+    @keyframes boxFailFlash{
+      0%,100%{opacity:0; transform:translateX(-50%) scale(.44) translateY(6px);}
+      40%{opacity:.24; transform:translateX(-50%) scale(.72) translateY(-2px);}
     }
     @keyframes boxSparkBurst{
       0%{opacity:0; transform:translate3d(0,0,0) scale(.24);}
-      34%{opacity:1; transform:translate3d(0,-6px,0) scale(1);}
-      100%{opacity:0; transform:translate3d(var(--spark-x, 0), var(--spark-y, -20px), 0) scale(.58);}
+      32%{opacity:.82; transform:translate3d(0,-6px,0) scale(.92);}
+      100%{opacity:0; transform:translate3d(var(--spark-x, 0), var(--spark-y, -20px), 0) scale(.52);}
     }
     @keyframes goldSparkBurst{
       0%{opacity:0; transform:translate3d(0,0,0) scale(.28);}
-      34%{opacity:1; transform:translate3d(0,-8px,0) scale(1.08);}
-      100%{opacity:0; transform:translate3d(var(--spark-x, 0), var(--spark-y, -22px), 0) scale(.72);}
+      32%{opacity:1; transform:translate3d(0,-9px,0) scale(1.12);}
+      100%{opacity:0; transform:translate3d(var(--spark-x, 0), var(--spark-y, -24px), 0) scale(.78);}
     }
-    @keyframes giftBoxLidOpen{
-      0%,28%{transform:translateX(-50%) translateY(0) rotate(0deg);}
-      42%{transform:translateX(-50%) translateY(-4px) rotate(-10deg);}
-      100%{transform:translateX(-50%) translateY(-20px) rotate(-24deg);}
+    @keyframes boxFailSpark{
+      0%{opacity:0; transform:translate3d(0,0,0) scale(.2);}
+      36%{opacity:.32; transform:translate3d(0,-2px,0) scale(.48);}
+      100%{opacity:0; transform:translate3d(calc(var(--spark-x, 0) * .34), calc(var(--spark-y, -20px) * .22), 0) scale(.24);}
     }
-    @keyframes giftRibbonLift{
-      0%,28%{transform:translateX(-50%) translateY(0) scale(1);}
-      42%{transform:translateX(-50%) translateY(-4px) scale(1.04);}
-      100%{transform:translateX(-50%) translateY(-14px) scale(.94);}
+    @keyframes giftBoxLidQuickOpen{
+      0%,24%{transform:translateX(-50%) translateY(0) rotate(0deg);}
+      44%{transform:translateX(-50%) translateY(-4px) rotate(-10deg);}
+      100%{transform:translateX(-50%) translateY(-18px) rotate(-22deg);}
+    }
+    @keyframes giftRibbonQuickLift{
+      0%,24%{transform:translateX(-50%) translateY(0) scale(1);}
+      44%{transform:translateX(-50%) translateY(-4px) scale(1.04);}
+      100%{transform:translateX(-50%) translateY(-13px) scale(.94);}
     }
     @keyframes giftBoxLidResolveOpen{
       0%{transform:translateX(-50%) translateY(-2px) rotate(-7deg);}
-      32%{transform:translateX(-50%) translateY(-7px) rotate(-14deg);}
+      36%{transform:translateX(-50%) translateY(-8px) rotate(-14deg);}
       100%{transform:translateX(-50%) translateY(-20px) rotate(-24deg);}
     }
     @keyframes giftRibbonResolveOpen{
       0%{transform:translateX(-50%) translateY(-1px) scale(.98);}
-      32%{transform:translateX(-50%) translateY(-5px) scale(1.02);}
+      36%{transform:translateX(-50%) translateY(-5px) scale(1.02);}
       100%{transform:translateX(-50%) translateY(-14px) scale(.94);}
     }
-    @keyframes boxMysteryGlow{
-      0%,10%{opacity:.12; transform:translateX(-50%) scaleX(.86);}
-      18%{opacity:.2; transform:translateX(-50%) scaleX(.94);}
-      28%{opacity:.48; transform:translateX(-50%) scaleX(1.06);}
-      36%{opacity:.14; transform:translateX(-50%) scaleX(.9);}
-      48%{opacity:.2; transform:translateX(-50%) scaleX(.96);}
-      60%{opacity:.58; transform:translateX(-50%) scaleX(1.12);}
-      72%{opacity:.16; transform:translateX(-50%) scaleX(.92);}
-      82%{opacity:.74; transform:translateX(-50%) scaleX(1.18);}
-      100%{opacity:.2; transform:translateX(-50%) scaleX(1);}
+    @keyframes giftBoxLidFailOpen{
+      0%{transform:translateX(-50%) translateY(-2px) rotate(-6deg);}
+      42%{transform:translateX(-50%) translateY(-5px) rotate(-10deg);}
+      100%{transform:translateX(-50%) translateY(-10px) rotate(-13deg);}
+    }
+    @keyframes giftRibbonFailLift{
+      0%{transform:translateX(-50%) translateY(-1px) scale(.99);}
+      42%{transform:translateX(-50%) translateY(-3px) scale(1.01);}
+      100%{transform:translateX(-50%) translateY(-7px) scale(.97);}
+    }
+    @keyframes giftBoxLidGoldOpen{
+      0%{transform:translateX(-50%) translateY(-2px) rotate(-8deg);}
+      36%{transform:translateX(-50%) translateY(-10px) rotate(-18deg);}
+      100%{transform:translateX(-50%) translateY(-22px) rotate(-28deg);}
+    }
+    @keyframes giftRibbonGoldLift{
+      0%{transform:translateX(-50%) translateY(-1px) scale(.99);}
+      36%{transform:translateX(-50%) translateY(-6px) scale(1.04);}
+      100%{transform:translateX(-50%) translateY(-15px) scale(.92);}
     }
     @keyframes giftBoxLidTease{
-      0%,18%{transform:translateX(-50%) translateY(0) rotate(0deg);}
-      28%{transform:translateX(-50%) translateY(-2px) rotate(-5deg);}
-      36%{transform:translateX(-50%) translateY(-7px) rotate(-13deg);}
-      46%{transform:translateX(-50%) translateY(-4px) rotate(-8deg);}
-      58%{transform:translateX(-50%) translateY(-10px) rotate(-17deg);}
-      72%{transform:translateX(-50%) translateY(-5px) rotate(-9deg);}
-      100%{transform:translateX(-50%) translateY(-2px) rotate(-7deg);}
+      0%,24%{transform:translateX(-50%) translateY(0) rotate(0deg);}
+      40%{transform:translateX(-50%) translateY(-3px) rotate(-7deg);}
+      58%{transform:translateX(-50%) translateY(-1px) rotate(-3deg);}
+      76%{transform:translateX(-50%) translateY(-5px) rotate(-10deg);}
+      100%{transform:translateX(-50%) translateY(-2px) rotate(-6deg);}
     }
     @keyframes giftRibbonTease{
-      0%,18%{transform:translateX(-50%) translateY(0) scale(1);}
-      28%{transform:translateX(-50%) translateY(-1px) scale(1.01);}
-      36%{transform:translateX(-50%) translateY(-4px) scale(1.04);}
-      46%{transform:translateX(-50%) translateY(-2px) scale(1.01);}
-      58%{transform:translateX(-50%) translateY(-5px) scale(1.05);}
-      72%{transform:translateX(-50%) translateY(-3px) scale(1.02);}
-      100%{transform:translateX(-50%) translateY(-1px) scale(.98);}
+      0%,24%{transform:translateX(-50%) translateY(0) scale(1);}
+      40%{transform:translateX(-50%) translateY(-2px) scale(1.02);}
+      58%{transform:translateX(-50%) translateY(-1px) scale(1);}
+      76%{transform:translateX(-50%) translateY(-3px) scale(1.03);}
+      100%{transform:translateX(-50%) translateY(-1px) scale(.99);}
     }
-    @keyframes boxSuspenseHover{
-      0%,18%{transform:translateY(0) scale(1) rotate(0deg);}
-      28%{transform:translateY(-4px) scale(1.02) rotate(-1.4deg);}
-      38%{transform:translateY(-1px) scale(1.01) rotate(.8deg);}
-      50%{transform:translateY(-6px) scale(1.03) rotate(-2.2deg);}
-      64%{transform:translateY(1px) scale(1) rotate(1deg);}
-      78%{transform:translateY(-4px) scale(1.02) rotate(-1.8deg);}
-      100%{transform:translateY(-1px) scale(1.01) rotate(-.4deg);}
+    @keyframes mysteryGlowBreath{
+      0%,100%{opacity:.08; transform:translateX(-50%) scaleX(.86);}
+      40%{opacity:.32; transform:translateX(-50%) scaleX(1.04);}
+      64%{opacity:.14; transform:translateX(-50%) scaleX(.94);}
     }
-    @keyframes boxMysteryBodyPulse{
-      0%,14%{filter:drop-shadow(0 20px 30px var(--box-shadow-color));}
-      30%{filter:drop-shadow(0 22px 32px var(--box-shadow-color)) drop-shadow(0 0 12px rgba(253,224,71,.06));}
-      44%{filter:drop-shadow(0 20px 30px var(--box-shadow-color));}
-      62%{filter:drop-shadow(0 22px 34px var(--box-shadow-color)) drop-shadow(0 0 18px rgba(253,224,71,.16));}
-      100%{filter:drop-shadow(0 20px 30px var(--box-shadow-color));}
+    @keyframes mysteryGlowBreathGold{
+      0%,100%{opacity:.12; transform:translateX(-50%) scaleX(.88);}
+      52%{opacity:.62; transform:translateX(-50%) scaleX(1.12);}
+      74%{opacity:.22; transform:translateX(-50%) scaleX(.98);}
     }
     @keyframes suspenseFloorGlow{
-      0%,100%{opacity:.4; transform:translateX(-50%) scale(.92);}
-      46%{opacity:.88; transform:translateX(-50%) scale(1.08);}
-      60%{opacity:.54; transform:translateX(-50%) scale(.98);}
+      0%,100%{opacity:.28; transform:translateX(-50%) scale(.92);}
+      52%{opacity:.64; transform:translateX(-50%) scale(1.04);}
     }
     @keyframes suspenseHaloPulse{
-      0%,100%{opacity:0; transform:scale(.8);}
-      26%{opacity:.12; transform:scale(.9);}
-      54%{opacity:.42; transform:scale(1.02);}
-      72%{opacity:.08; transform:scale(1.08);}
-    }
-    @keyframes suspenseFloorGlowGold{
-      0%,100%{opacity:.58; transform:translateX(-50%) scale(.98);}
-      50%{opacity:1; transform:translateX(-50%) scale(1.14);}
-    }
-    @keyframes suspenseHaloPulseGold{
-      0%,100%{opacity:.08; transform:scale(.88);}
-      44%{opacity:.52; transform:scale(1.04);}
-      72%{opacity:.24; transform:scale(1.12);}
+      0%,100%{opacity:0; transform:scale(.82);}
+      52%{opacity:.24; transform:scale(1.02);}
     }
     @keyframes mysteryShimmerSweep{
-      0%,14%{opacity:0; transform:translateX(-34px) rotate(-10deg);}
-      26%{opacity:.18; transform:translateX(-18px) rotate(-8deg);}
-      42%{opacity:.7; transform:translateX(6px) rotate(-4deg);}
-      54%{opacity:.12; transform:translateX(18px) rotate(-2deg);}
-      100%{opacity:0; transform:translateX(30px) rotate(0deg);}
+      0%,18%{opacity:0; transform:translateX(-30px) rotate(-9deg);}
+      34%{opacity:.18; transform:translateX(-12px) rotate(-7deg);}
+      52%{opacity:.76; transform:translateX(8px) rotate(-3deg);}
+      70%{opacity:.12; transform:translateX(18px) rotate(-1deg);}
+      100%{opacity:0; transform:translateX(26px) rotate(0deg);}
     }
     @keyframes mysteryShimmerSweepGold{
-      0%,10%{opacity:.04; transform:translateX(-30px) rotate(-10deg);}
-      36%{opacity:.86; transform:translateX(10px) rotate(-2deg);}
-      58%{opacity:.24; transform:translateX(22px) rotate(0deg);}
-      100%{opacity:0; transform:translateX(34px) rotate(2deg);}
+      0%,14%{opacity:0; transform:translateX(-28px) rotate(-9deg);}
+      34%{opacity:.28; transform:translateX(-8px) rotate(-6deg);}
+      56%{opacity:.96; transform:translateX(12px) rotate(-2deg);}
+      72%{opacity:.22; transform:translateX(22px) rotate(0deg);}
+      100%{opacity:0; transform:translateX(30px) rotate(2deg);}
     }
     @keyframes mysteryEdgeBlink{
-      0%,100%{opacity:.04; box-shadow:inset 0 0 18px rgba(255,255,255,.04), 0 0 18px rgba(191,219,254,.04);}
-      34%{opacity:.22; box-shadow:inset 0 0 20px rgba(255,255,255,.08), 0 0 20px rgba(191,219,254,.08);}
-      48%{opacity:.08; box-shadow:inset 0 0 18px rgba(255,255,255,.05), 0 0 18px rgba(191,219,254,.05);}
-      66%{opacity:.34; box-shadow:inset 0 0 24px rgba(255,244,214,.14), 0 0 24px rgba(250,204,21,.14);}
+      0%,100%{opacity:.04; box-shadow:inset 0 0 18px rgba(255,255,255,.04), 0 0 14px rgba(191,219,254,.03);}
+      44%{opacity:.18; box-shadow:inset 0 0 18px rgba(255,255,255,.06), 0 0 18px rgba(191,219,254,.08);}
+      62%{opacity:.08; box-shadow:inset 0 0 14px rgba(255,255,255,.04), 0 0 12px rgba(191,219,254,.04);}
     }
     @keyframes mysteryEdgeBlinkGold{
-      0%,100%{opacity:.12; box-shadow:inset 0 0 20px rgba(255,250,220,.1), 0 0 20px rgba(250,204,21,.08);}
-      50%{opacity:.46; box-shadow:inset 0 0 26px rgba(255,250,220,.2), 0 0 28px rgba(250,204,21,.2);}
+      0%,100%{opacity:.06; box-shadow:inset 0 0 18px rgba(255,248,220,.08), 0 0 16px rgba(250,204,21,.06);}
+      46%{opacity:.34; box-shadow:inset 0 0 24px rgba(255,249,219,.18), 0 0 28px rgba(250,204,21,.18);}
+      68%{opacity:.14; box-shadow:inset 0 0 18px rgba(255,248,220,.1), 0 0 18px rgba(250,204,21,.1);}
     }
-    @keyframes mysteryFlashPulse{
-      0%,100%{opacity:0; transform:translateX(-50%) scale(.42) translateY(8px);}
-      30%{opacity:.08; transform:translateX(-50%) scale(.66) translateY(2px);}
-      48%{opacity:.38; transform:translateX(-50%) scale(.94) translateY(-4px);}
-      64%{opacity:.04; transform:translateX(-50%) scale(.88) translateY(-8px);}
+    @keyframes boxFailDeflate{
+      0%{transform:translateY(0) scale(1); filter:saturate(1);}
+      100%{transform:translateY(2px) scale(.98); filter:saturate(.82);}
     }
-    @keyframes mysteryFlashPulseGold{
-      0%,100%{opacity:.02; transform:translateX(-50%) scale(.58) translateY(6px);}
-      42%{opacity:.54; transform:translateX(-50%) scale(1.02) translateY(-6px);}
-      68%{opacity:.12; transform:translateX(-50%) scale(1.08) translateY(-12px);}
-    }
-    @keyframes mysterySparkleFloat{
-      0%,100%{opacity:0; transform:translate3d(0,0,0) scale(.2);}
-      34%{opacity:.18; transform:translate3d(0,-3px,0) scale(.72);}
-      56%{opacity:.72; transform:translate3d(calc(var(--spark-x, 0) * .28), calc(var(--spark-y, -20px) * .18), 0) scale(.92);}
-      82%{opacity:0; transform:translate3d(calc(var(--spark-x, 0) * .56), calc(var(--spark-y, -20px) * .4), 0) scale(.46);}
+    @keyframes boxConfirmPulse{
+      0%{transform:translateY(0) scale(1);}
+      48%{transform:translateY(-4px) scale(1.05);}
+      100%{transform:translateY(0) scale(1);}
     }
     @keyframes goldBoxHeroPulse{
       0%{transform:translateY(0) scale(1);}
@@ -2189,7 +2213,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.64</span>
+          <span class="dev-version-label">DEV v0.1.65</span>
         </div>
       </header>
 
@@ -2228,7 +2252,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.64</span>
+            <span class="dev-version-label">DEV v0.1.65</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3177,7 +3201,10 @@ window.addEventListener("resize", clampMiniPosition);
 
     function setOpenStageVariant(variant = "random"){
       syncOpenStageBoxAsset(variant === "gold" ? "gold" : "random");
-      openStageBoxWrap.classList.remove("is-reveal-random", "is-reveal-fail", "is-reveal-gold", "is-opening-final", "is-final-gold", "is-suspense-phase");
+      openStageBoxWrap.classList.remove("is-reveal-random", "is-reveal-fail", "is-reveal-gold", "is-opening-final", "is-final-gold", "is-suspense-phase", "is-suspense-gold");
+      openStageBoxWrap.style.removeProperty("--mystery-count");
+      openStageBoxWrap.style.removeProperty("--mystery-cycle");
+      openStageBoxWrap.style.removeProperty("--mystery-total");
 
       if(variant === "reveal-random"){
         openStageBoxWrap.classList.add("is-reveal-random");
@@ -3197,27 +3224,32 @@ window.addEventListener("resize", clampMiniPosition);
     function startMysterySuspense(sequence){
       if(!sequence.suspenseCount || !sequence.suspenseInterval) return;
 
+      const suspenseWindow = sequence.suspenseCount * sequence.suspenseInterval;
       const finalOpenAt = Math.max(sequence.revealDelay - sequence.suspenseOpenLead, 0);
       const finalConfirmAt = Math.max(finalOpenAt - sequence.suspenseConfirmLead, 0);
-      const suspenseStartAt = Math.max(finalConfirmAt - (sequence.suspenseCount * sequence.suspenseInterval), 0);
+      const suspenseStartAt = Math.max(finalConfirmAt - suspenseWindow, 0);
+      const suspenseTotal = Math.max(finalConfirmAt - suspenseStartAt, sequence.suspenseInterval);
+      const isGoldResult = sequence.revealVariant === "reveal-gold";
 
       scheduleOpenStageTimer(() => {
+        openStageBoxWrap.style.setProperty("--mystery-count", sequence.suspenseCount);
+        openStageBoxWrap.style.setProperty("--mystery-cycle", `${sequence.suspenseInterval}ms`);
+        openStageBoxWrap.style.setProperty("--mystery-total", `${suspenseTotal}ms`);
         openStageBoxWrap.classList.add("is-suspense-phase");
+        openStageBoxWrap.classList.toggle("is-suspense-gold", isGoldResult);
       }, suspenseStartAt);
 
-      for(let index = 0; index < sequence.suspenseCount; index += 1){
-        scheduleOpenStageTimer(() => {
-          syncOpenStageBoxAsset(index % 2 === 0 ? "gold" : "random");
-        }, suspenseStartAt + (index * sequence.suspenseInterval));
-      }
-
       scheduleOpenStageTimer(() => {
-        const isGoldResult = sequence.revealVariant === "reveal-gold";
-        syncOpenStageBoxAsset(isGoldResult ? "gold" : "random");
         openStageBoxWrap.classList.toggle("is-final-gold", isGoldResult);
+        if(isGoldResult){
+          syncOpenStageBoxAsset("gold");
+        }
       }, finalConfirmAt);
 
       scheduleOpenStageTimer(() => {
+        if(!isGoldResult){
+          syncOpenStageBoxAsset("random");
+        }
         openStageBoxWrap.classList.remove("is-suspense-phase");
         openStageBoxWrap.classList.add("is-opening-final");
       }, finalOpenAt);
@@ -3242,13 +3274,13 @@ window.addEventListener("resize", clampMiniPosition);
           stageVariant: "random",
           revealVariant: "reveal-fail",
           busyLabel: "랜덤박스 연출 중",
-          duration: 7000,
-          revealDelay: 7000,
-          autoCloseDelay: 7000,
-          suspenseCount: randomInt(4, 6),
-          suspenseInterval: 360,
-          suspenseOpenLead: 1380,
-          suspenseConfirmLead: 520
+          duration: 4200,
+          revealDelay: 4200,
+          autoCloseDelay: 4200,
+          suspenseCount: randomInt(3, 5),
+          suspenseInterval: 380,
+          suspenseOpenLead: 820,
+          suspenseConfirmLead: 220
         };
       }
 
@@ -3258,13 +3290,13 @@ window.addEventListener("resize", clampMiniPosition);
           stageVariant: "random",
           revealVariant: "reveal-gold",
           busyLabel: "황금상자 확인 중",
-          duration: 10000,
-          revealDelay: 10000,
-          autoCloseDelay: 10000,
-          suspenseCount: randomInt(5, 8),
-          suspenseInterval: 340,
-          suspenseOpenLead: 1540,
-          suspenseConfirmLead: 620
+          duration: 4800,
+          revealDelay: 4800,
+          autoCloseDelay: 4800,
+          suspenseCount: randomInt(4, 7),
+          suspenseInterval: 360,
+          suspenseOpenLead: 940,
+          suspenseConfirmLead: 150
         };
       }
 
