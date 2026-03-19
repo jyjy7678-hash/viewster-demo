@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.63 -->
+<!-- Version: v0.1.66 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1458,16 +1458,20 @@
     .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-c{animation-delay:.22s;}
     .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-d{animation-delay:.28s;}
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage{
-      animation:boxFailDeflate .36s ease-out both;
+      animation:boxFailDeflate .48s cubic-bezier(.2,.76,.32,1) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .gift-lid{
-      animation:giftBoxLidFailOpen .48s cubic-bezier(.24,.92,.38,1) both;
+      animation:giftBoxLidFailOpen .52s cubic-bezier(.24,.92,.38,1) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .gift-ribbon-knot{
-      animation:giftRibbonFailLift .48s cubic-bezier(.24,.92,.38,1) both;
+      animation:giftRibbonFailLift .52s cubic-bezier(.24,.92,.38,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .gift-box-glow{
+      animation:boxFailResolveGlow .68s ease-out both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-open-flash{
-      animation:boxFailFlash .26s ease-out both;
+      animation:boxFailFlash .3s ease-out both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-spark-a,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-spark-b,
@@ -1476,19 +1480,23 @@
       animation:boxFailSpark .38s ease-out both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold #boxIconStage{
-      animation:goldBoxHeroPulse .72s ease-out both;
+      animation:goldBoxHeroPulse .78s ease-out both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage{
-      animation:boxConfirmPulse .48s cubic-bezier(.2,.9,.28,1.2) both;
+      animation:boxConfirmPulse .6s cubic-bezier(.18,.94,.24,1.24) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .gift-lid{
-      animation:giftBoxLidGoldOpen .56s cubic-bezier(.18,1,.34,1) both;
+      animation:giftBoxLidGoldOpen .52s cubic-bezier(.16,1,.3,1) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .gift-ribbon-knot{
-      animation:giftRibbonGoldLift .56s cubic-bezier(.18,1,.34,1) both;
+      animation:giftRibbonGoldLift .52s cubic-bezier(.16,1,.3,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .gift-box-glow{
+      animation:boxConfirmResolveGlow .9s cubic-bezier(.18,.9,.24,1) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-open-flash{
-      animation:boxConfirmFlash .42s ease-out both;
+      animation:boxConfirmFlash .5s cubic-bezier(.18,.92,.24,1) both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-a,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-b,
@@ -1671,19 +1679,32 @@
       42%{opacity:.9; transform:translateX(-50%) scaleX(1.12);}
       100%{opacity:0; transform:translateX(-50%) scaleX(1.2);}
     }
+    @keyframes boxFailResolveGlow{
+      0%{opacity:.18; transform:translateX(-50%) scaleX(.96);}
+      28%{opacity:.34; transform:translateX(-50%) scaleX(1);}
+      100%{opacity:0; transform:translateX(-50%) scaleX(.88);}
+    }
+    @keyframes boxConfirmResolveGlow{
+      0%{opacity:.2; transform:translateX(-50%) scaleX(.96);}
+      26%{opacity:1; transform:translateX(-50%) scaleX(1.18);}
+      54%{opacity:.68; transform:translateX(-50%) scaleX(1.08);}
+      100%{opacity:0; transform:translateX(-50%) scaleX(1.34);}
+    }
     @keyframes boxOpenFlash{
       0%{opacity:0; transform:translateX(-50%) scale(.46) translateY(8px);}
       38%{opacity:.72; transform:translateX(-50%) scale(.96) translateY(-4px);}
       100%{opacity:0; transform:translateX(-50%) scale(1.2) translateY(-14px);}
     }
     @keyframes boxConfirmFlash{
-      0%{opacity:0; transform:translateX(-50%) scale(.5) translateY(8px); filter:blur(2px);}
-      34%{opacity:1; transform:translateX(-50%) scale(1.12) translateY(-6px); filter:blur(0);}
-      100%{opacity:0; transform:translateX(-50%) scale(1.38) translateY(-18px); filter:blur(1px);}
+      0%{opacity:0; transform:translateX(-50%) scale(.46) translateY(10px); filter:blur(3px);}
+      28%{opacity:1; transform:translateX(-50%) scale(1.22) translateY(-8px); filter:blur(0);}
+      54%{opacity:.64; transform:translateX(-50%) scale(1.08) translateY(-14px); filter:blur(.4px);}
+      100%{opacity:0; transform:translateX(-50%) scale(1.56) translateY(-22px); filter:blur(1px);}
     }
     @keyframes boxFailFlash{
-      0%,100%{opacity:0; transform:translateX(-50%) scale(.44) translateY(6px);}
-      40%{opacity:.24; transform:translateX(-50%) scale(.72) translateY(-2px);}
+      0%,100%{opacity:0; transform:translateX(-50%) scale(.42) translateY(8px);}
+      34%{opacity:.18; transform:translateX(-50%) scale(.62) translateY(-1px);}
+      100%{opacity:0; transform:translateX(-50%) scale(.7) translateY(2px);}
     }
     @keyframes boxSparkBurst{
       0%{opacity:0; transform:translate3d(0,0,0) scale(.24);}
@@ -1697,8 +1718,8 @@
     }
     @keyframes boxFailSpark{
       0%{opacity:0; transform:translate3d(0,0,0) scale(.2);}
-      36%{opacity:.32; transform:translate3d(0,-2px,0) scale(.48);}
-      100%{opacity:0; transform:translate3d(calc(var(--spark-x, 0) * .34), calc(var(--spark-y, -20px) * .22), 0) scale(.24);}
+      30%{opacity:.24; transform:translate3d(0,-1px,0) scale(.42);}
+      100%{opacity:0; transform:translate3d(calc(var(--spark-x, 0) * .22), calc(var(--spark-y, -20px) * .16), 0) scale(.18);}
     }
     @keyframes giftBoxLidQuickOpen{
       0%,24%{transform:translateX(-50%) translateY(0) rotate(0deg);}
@@ -1722,23 +1743,27 @@
     }
     @keyframes giftBoxLidFailOpen{
       0%{transform:translateX(-50%) translateY(-2px) rotate(-6deg);}
-      42%{transform:translateX(-50%) translateY(-5px) rotate(-10deg);}
-      100%{transform:translateX(-50%) translateY(-10px) rotate(-13deg);}
+      38%{transform:translateX(-50%) translateY(-4px) rotate(-8deg);}
+      70%{transform:translateX(-50%) translateY(-8px) rotate(-11deg);}
+      100%{transform:translateX(-50%) translateY(-9px) rotate(-12deg);}
     }
     @keyframes giftRibbonFailLift{
       0%{transform:translateX(-50%) translateY(-1px) scale(.99);}
-      42%{transform:translateX(-50%) translateY(-3px) scale(1.01);}
-      100%{transform:translateX(-50%) translateY(-7px) scale(.97);}
+      38%{transform:translateX(-50%) translateY(-2px) scale(1);}
+      70%{transform:translateX(-50%) translateY(-5px) scale(.98);}
+      100%{transform:translateX(-50%) translateY(-6px) scale(.96);}
     }
     @keyframes giftBoxLidGoldOpen{
       0%{transform:translateX(-50%) translateY(-2px) rotate(-8deg);}
-      36%{transform:translateX(-50%) translateY(-10px) rotate(-18deg);}
-      100%{transform:translateX(-50%) translateY(-22px) rotate(-28deg);}
+      26%{transform:translateX(-50%) translateY(-12px) rotate(-20deg);}
+      62%{transform:translateX(-50%) translateY(-20px) rotate(-30deg);}
+      100%{transform:translateX(-50%) translateY(-24px) rotate(-33deg);}
     }
     @keyframes giftRibbonGoldLift{
       0%{transform:translateX(-50%) translateY(-1px) scale(.99);}
-      36%{transform:translateX(-50%) translateY(-6px) scale(1.04);}
-      100%{transform:translateX(-50%) translateY(-15px) scale(.92);}
+      26%{transform:translateX(-50%) translateY(-7px) scale(1.06);}
+      62%{transform:translateX(-50%) translateY(-13px) scale(.98);}
+      100%{transform:translateX(-50%) translateY(-16px) scale(.9);}
     }
     @keyframes giftBoxLidTease{
       0%,24%{transform:translateX(-50%) translateY(0) rotate(0deg);}
@@ -1798,17 +1823,19 @@
     }
     @keyframes boxFailDeflate{
       0%{transform:translateY(0) scale(1); filter:saturate(1);}
-      100%{transform:translateY(2px) scale(.98); filter:saturate(.82);}
+      42%{transform:translateY(1px) scale(.986); filter:saturate(.9);}
+      100%{transform:translateY(4px) scale(.95); filter:saturate(.72);}
     }
     @keyframes boxConfirmPulse{
       0%{transform:translateY(0) scale(1);}
-      48%{transform:translateY(-4px) scale(1.05);}
-      100%{transform:translateY(0) scale(1);}
+      32%{transform:translateY(-6px) scale(1.1);}
+      62%{transform:translateY(-2px) scale(1.04);}
+      100%{transform:translateY(0) scale(1.06);}
     }
     @keyframes goldBoxHeroPulse{
       0%{transform:translateY(0) scale(1);}
-      48%{transform:translateY(-5px) scale(1.06);}
-      100%{transform:translateY(0) scale(1);}
+      48%{transform:translateY(-6px) scale(1.08);}
+      100%{transform:translateY(0) scale(1.02);}
     }
     @keyframes resultAmountPop{
       0%{transform:translateY(20px) scale(.78); opacity:0;}
@@ -2213,7 +2240,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.65</span>
+          <span class="dev-version-label">DEV v0.1.66</span>
         </div>
       </header>
 
@@ -2252,7 +2279,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.65</span>
+            <span class="dev-version-label">DEV v0.1.66</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
