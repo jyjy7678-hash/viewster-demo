@@ -1025,30 +1025,140 @@
       --box-glow-soft:rgba(191,219,254,.22);
       --box-shadow-color:rgba(8,15,30,.44);
       --box-ribbon-color:rgba(255,255,255,.9);
+      --gift-body-top:#60a5fa;
+      --gift-body-bottom:#2563eb;
+      --gift-lid-top:#93c5fd;
+      --gift-lid-bottom:#3b82f6;
+      --gift-ribbon:#eff6ff;
     }
     .box-icon::before{
       content:"";
       position:absolute;
       left:50%;
-      bottom:6px;
-      width:136px;
-      height:36px;
+      bottom:8px;
+      width:134px;
+      height:30px;
       transform:translateX(-50%);
       border-radius:50%;
-      background:radial-gradient(circle, rgba(6,10,18,.82) 0%, rgba(6,10,18,0) 72%);
-      filter:blur(7px);
-      opacity:.94;
+      background:radial-gradient(circle, rgba(6,10,18,.72) 0%, rgba(6,10,18,0) 72%);
+      filter:blur(9px);
+      opacity:.8;
       z-index:0;
     }
     .box-icon::after{
       content:"";
       position:absolute;
-      inset:18px;
+      inset:28px;
       border-radius:50%;
-      background:radial-gradient(circle, var(--box-glow-soft) 0%, var(--box-glow-color) 34%, rgba(37,99,235,0) 74%);
-      opacity:.92;
-      transform:scale(.82);
+      background:radial-gradient(circle, var(--box-glow-soft) 0%, var(--box-glow-color) 38%, rgba(37,99,235,0) 76%);
+      opacity:.8;
+      transform:scale(.9);
       z-index:1;
+    }
+    .gift-box{
+      width:132px;
+      height:132px;
+      position:relative;
+      z-index:4;
+      filter:drop-shadow(0 20px 30px var(--box-shadow-color));
+      transition:filter .3s ease, transform .3s ease, opacity .24s ease;
+    }
+    .gift-box-part{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      border-radius:18px;
+    }
+    .gift-box-glow{
+      position:absolute;
+      left:50%;
+      top:24px;
+      width:84px;
+      height:84px;
+      transform:translateX(-50%) scale(.72);
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.72) 0%, rgba(191,219,254,.3) 34%, rgba(191,219,254,0) 76%);
+      opacity:0;
+      filter:blur(2px);
+      z-index:1;
+    }
+    .gift-lid{
+      top:18px;
+      width:120px;
+      height:34px;
+      background:linear-gradient(180deg, var(--gift-lid-top) 0%, var(--gift-lid-bottom) 100%);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 8px 16px rgba(30,64,175,.18);
+      transform-origin:22px 26px;
+      z-index:5;
+    }
+    .gift-lid::before,
+    .gift-lid::after,
+    .gift-body::before,
+    .gift-body::after{
+      content:"";
+      position:absolute;
+      background:linear-gradient(180deg, rgba(255,255,255,.98), var(--gift-ribbon));
+      box-shadow:0 0 0 1px rgba(191,219,254,.16);
+    }
+    .gift-lid::before,
+    .gift-body::before{
+      left:50%;
+      top:0;
+      bottom:0;
+      width:16px;
+      transform:translateX(-50%);
+      border-radius:999px;
+    }
+    .gift-lid::after,
+    .gift-body::after{
+      left:0;
+      right:0;
+      top:50%;
+      height:12px;
+      transform:translateY(-50%);
+      border-radius:999px;
+    }
+    .gift-body{
+      top:48px;
+      width:112px;
+      height:76px;
+      background:linear-gradient(180deg, var(--gift-body-top) 0%, var(--gift-body-bottom) 100%);
+      border-radius:16px 16px 20px 20px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.24), 0 16px 26px rgba(30,64,175,.22);
+      overflow:hidden;
+      z-index:3;
+    }
+    .gift-body::after{
+      top:26px;
+      transform:none;
+    }
+    .gift-ribbon-knot{
+      position:absolute;
+      left:50%;
+      top:8px;
+      width:30px;
+      height:16px;
+      transform:translateX(-50%);
+      z-index:6;
+    }
+    .gift-ribbon-knot::before,
+    .gift-ribbon-knot::after{
+      content:"";
+      position:absolute;
+      top:0;
+      width:16px;
+      height:14px;
+      border:3px solid rgba(255,255,255,.96);
+      border-radius:16px 16px 4px 16px;
+      background:rgba(255,255,255,.16);
+    }
+    .gift-ribbon-knot::before{
+      left:0;
+      transform:rotate(-26deg);
+    }
+    .gift-ribbon-knot::after{
+      right:0;
+      transform:scaleX(-1) rotate(-26deg);
     }
     .box-icon img.main{
       width:126px;
@@ -1059,6 +1169,8 @@
       filter:drop-shadow(0 20px 30px var(--box-shadow-color));
       transition:filter .3s ease, transform .3s ease, opacity .24s ease;
     }
+    .box-icon.is-random-box img.main{display:none;}
+    .box-icon.is-gold-box .gift-box{display:none;}
     .box-core-glow,
     .box-lid-light,
     .box-open-flash,
@@ -1163,12 +1275,12 @@
       overflow:hidden;
       position:relative;
       border-radius:26px;
-      border:1px solid rgba(148,163,184,.12);
+      border:none;
       background:
-        radial-gradient(circle at 50% 24%, rgba(96,165,250,.14), transparent 30%),
-        radial-gradient(circle at 50% 86%, rgba(15,23,42,.54), transparent 42%),
-        linear-gradient(180deg, rgba(15,23,42,.96) 0%, rgba(8,15,30,.98) 56%, rgba(2,6,23,1) 100%);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 18px 36px rgba(2,6,23,.34);
+        radial-gradient(circle at 50% 30%, rgba(96,165,250,.14), transparent 24%),
+        radial-gradient(circle at 50% 78%, rgba(15,23,42,.34), transparent 34%),
+        linear-gradient(180deg, rgba(8,12,24,.94) 0%, rgba(4,8,20,.98) 100%);
+      box-shadow:none;
       transition:background .28s ease, box-shadow .28s ease, border-color .28s ease;
       isolation:isolate;
     }
@@ -1176,10 +1288,9 @@
       position:absolute;
       inset:0;
       background:
-        radial-gradient(circle at 50% 26%, rgba(255,255,255,.06), transparent 18%),
-        radial-gradient(circle at 50% 76%, rgba(37,99,235,.08), transparent 28%),
-        linear-gradient(180deg, rgba(255,255,255,.04), transparent 26%, rgba(15,23,42,.16) 100%);
-      opacity:.92;
+        radial-gradient(circle at 50% 32%, rgba(255,255,255,.04), transparent 16%),
+        radial-gradient(circle at 50% 82%, rgba(37,99,235,.06), transparent 24%);
+      opacity:.8;
       z-index:0;
       pointer-events:none;
     }
@@ -1206,20 +1317,7 @@
       filter:blur(10px);
       transition:background .3s ease, opacity .3s ease;
     }
-    .open-stage-box-wrap::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      top:48px;
-      width:160px;
-      height:160px;
-      transform:translateX(-50%);
-      border-radius:50%;
-      border:1px solid rgba(148,163,184,.18);
-      opacity:.34;
-      filter:blur(.3px);
-      transition:border-color .3s ease, opacity .3s ease;
-    }
+    .open-stage-box-wrap::after{content:none;}
     .box-open-stage.stage-show-result .open-stage-box-wrap{
       opacity:.16;
       transform:translateY(-38px) scale(.78);
@@ -1231,6 +1329,7 @@
     .box-open-stage.stage-animating #boxIconStage{
       animation:boxStoryHover .9s ease-out .7s both;
     }
+    .box-open-stage.stage-animating #boxIconStage .gift-box,
     .box-open-stage.stage-animating #boxIconStage img.main{
       animation:boxStorySettle .44s ease-out .2s both;
     }
@@ -1252,24 +1351,31 @@
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage{
       animation:boxStoryHover 1s ease-out .66s both, boxRevealShake .62s ease-in-out 2.98s both;
     }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage img.main{
-      animation:boxStorySettle .44s ease-out .2s both, boxRevealSwapRandom .44s ease-out 3.08s both;
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-box{
+      animation:boxStorySettle .44s ease-out .2s both;
     }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-lid-light{
-      animation:boxLidGlow 1.14s ease-in-out .88s both, boxLidGlow .94s ease-in-out 3.16s both;
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-lid{
+      animation:giftBoxLidOpen .72s cubic-bezier(.22,1,.36,1) 1.08s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-ribbon-knot{
+      animation:giftRibbonLift .72s cubic-bezier(.22,1,.36,1) 1.08s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-box-glow{
+      animation:boxLidGlow 1.14s ease-in-out .88s both, boxLidGlow .94s ease-in-out 1.14s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-open-flash{
-      animation:boxOpenFlash .46s ease-out 3.48s both;
+      animation:boxOpenFlash .46s ease-out 1.22s both;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-a,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-b,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-c,
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-d{
-      animation:boxSparkBurst .7s ease-out 3.5s both;
+      animation:boxSparkBurst .7s ease-out 1.28s both;
     }
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-b{animation-delay:3.56s;}
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-c{animation-delay:3.62s;}
-    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-d{animation-delay:3.68s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-b{animation-delay:1.34s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-c{animation-delay:1.4s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-d{animation-delay:1.46s;}
     .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage{
       animation:boxStoryHover 1s ease-out .66s both, boxRevealShake .62s ease-in-out 2.98s both, goldBoxHeroPulse .88s ease-out 3.46s both;
     }
@@ -1508,6 +1614,16 @@
       0%{transform:translateY(0) scale(.98); filter:drop-shadow(0 20px 30px rgba(8,15,30,.42));}
       52%{transform:translateY(-6px) scale(1.06); filter:drop-shadow(0 20px 34px rgba(59,130,246,.3));}
       100%{transform:translateY(0) scale(1); filter:drop-shadow(0 20px 30px rgba(8,15,30,.42));}
+    }
+    @keyframes giftBoxLidOpen{
+      0%,28%{transform:translateX(-50%) translateY(0) rotate(0deg);}
+      42%{transform:translateX(-50%) translateY(-4px) rotate(-10deg);}
+      100%{transform:translateX(-50%) translateY(-20px) rotate(-24deg);}
+    }
+    @keyframes giftRibbonLift{
+      0%,28%{transform:translateX(-50%) translateY(0) scale(1);}
+      42%{transform:translateX(-50%) translateY(-4px) scale(1.04);}
+      100%{transform:translateX(-50%) translateY(-14px) scale(.94);}
     }
     @keyframes goldBoxRevealSwap{
       0%{transform:translateY(0) scale(.92); filter:drop-shadow(0 20px 30px rgba(8,15,30,.42)) saturate(.9);}
@@ -1920,7 +2036,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.60</span>
+          <span class="dev-version-label">DEV v0.1.61</span>
         </div>
       </header>
 
@@ -1959,7 +2075,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.60</span>
+            <span class="dev-version-label">DEV v0.1.61</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2102,7 +2218,13 @@
               <span></span>
               <span></span>
             </span>
-            <img class="main" src="assets/icon-randombox.svg" alt="랜덤 선물상자" onerror="this.style.display='none'">
+            <div class="gift-box" aria-hidden="true">
+              <span class="gift-box-glow"></span>
+              <span class="gift-ribbon-knot"></span>
+              <span class="gift-box-part gift-lid"></span>
+              <span class="gift-box-part gift-body"></span>
+            </div>
+            <img class="main" alt="황금 선물상자" onerror="this.style.display='none'">
           </div>
         </div>
         <div class="box-open-text" id="openStageText"></div>
@@ -2882,8 +3004,13 @@ window.addEventListener("resize", clampMiniPosition);
       if(!boxMainImage) return;
 
       const isGold = variant === "gold";
-      boxMainImage.src = isGold ? "assets/icon-goldbox.svg" : "assets/icon-randombox.svg";
-      boxMainImage.alt = isGold ? "황금 선물상자" : "랜덤 선물상자";
+      if(isGold){
+        boxMainImage.src = "assets/icon-goldbox.svg";
+        boxMainImage.alt = "황금 선물상자";
+      } else {
+        boxMainImage.removeAttribute("src");
+        boxMainImage.alt = "";
+      }
       boxIconStage.classList.toggle("is-gold-box", isGold);
       boxIconStage.classList.toggle("is-random-box", !isGold);
     }
