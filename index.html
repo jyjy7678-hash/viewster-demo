@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.71 -->
+<!-- Version: v0.1.73 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -108,6 +108,10 @@
       flex-shrink:0;
       height:28px;
       line-height:1;
+    }
+    .tool-btn.active-speed{
+      background:#2457d6;
+      color:#fff;
     }
 
     .main-scroll{
@@ -2499,9 +2503,10 @@
           <button class="tool-btn" data-add="60">+1분</button>
           <button class="tool-btn" data-reward-set="595">+보상</button>
           <button class="tool-btn" data-add="600">+10분</button>
-          <button class="tool-btn" data-box-add="random">+랜덤</button>
-          <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.72</span>
+          <button class="tool-btn" data-open-speed="0.8">x0.8</button>
+          <button class="tool-btn" data-open-speed="0.9">x0.9</button>
+          <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
+          <span class="dev-version-label">DEV v0.1.73</span>
         </div>
       </header>
 
@@ -2538,9 +2543,10 @@
             <button class="tool-btn" data-add="60">+1분</button>
             <button class="tool-btn" data-reward-set="595">+보상</button>
             <button class="tool-btn" data-add="600">+10분</button>
-            <button class="tool-btn" data-box-add="random">+랜덤</button>
-            <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.72</span>
+            <button class="tool-btn" data-open-speed="0.8">x0.8</button>
+            <button class="tool-btn" data-open-speed="0.9">x0.9</button>
+            <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
+            <span class="dev-version-label">DEV v0.1.73</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2822,6 +2828,7 @@
       openAutoCloseTimer: null,
       openBoxBtnMode: "start",
       openStageTimers: [],
+      openStageMidPlaybackRate: 1,
     };
 
     let autoWatchTimer = null;
@@ -3509,23 +3516,34 @@ window.addEventListener("resize", clampMiniPosition);
 
       let done = false;
       const isRandomGoldVideo = src === RANDOM_G_VIDEO_SRC;
+      const isRandomXVideo = src === RANDOM_X_VIDEO_SRC;
       let slowFxShown = false;
       const handleTimeUpdate = () => {
-        if(!isRandomGoldVideo){
+        if(!isRandomGoldVideo && !isRandomXVideo){
           return;
         }
+        if(openStageVideo.currentTime <= 1.5){
+          openStageVideo.playbackRate = 1;
+          return;
+        }
+
+        if(isRandomXVideo){
+          openStageVideo.playbackRate = state.openStageMidPlaybackRate;
+          return;
+        }
+
         if(!Number.isFinite(openStageVideo.duration) || openStageVideo.duration <= 0){
           return;
         }
         const remaining = openStageVideo.duration - openStageVideo.currentTime;
         if(remaining <= 0.6){
           openStageVideo.playbackRate = 0.68;
-          if(!slowFxShown){
-            slowFxShown = true;
-            openStage.classList.add("is-random-gold-slowfx");
-          }
-        } else {
-          openStageVideo.playbackRate = 1;
+        if(!slowFxShown){
+          slowFxShown = true;
+          openStage.classList.add("is-random-gold-slowfx");
+        }
+      } else {
+          openStageVideo.playbackRate = state.openStageMidPlaybackRate;
         }
       };
       const finish = () => {
@@ -4037,18 +4055,16 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       });
     });
 
-    document.querySelectorAll(".tool-btn[data-box-add]").forEach(btn => {
+    document.querySelectorAll(".tool-btn[data-open-speed]").forEach(btn => {
       btn.addEventListener("click", () => {
-        if(btn.dataset.boxAdd === "gold") {
-          state.goldBoxCount += 1;
-          updateWallet();
-          showToast("황금박스 +1");
+        const nextSpeed = Number(btn.dataset.openSpeed);
+        if(!Number.isFinite(nextSpeed) || nextSpeed <= 0){
           return;
         }
-
-        state.randomBoxCount += 1;
-        updateWallet();
-        showToast("랜덤박스 +1");
+        state.openStageMidPlaybackRate = nextSpeed;
+        document.querySelectorAll(".tool-btn[data-open-speed]").forEach(speedBtn => {
+          speedBtn.classList.toggle("active-speed", speedBtn.dataset.openSpeed === btn.dataset.openSpeed);
+        });
       });
     });
 
