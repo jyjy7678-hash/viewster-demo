@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.76 -->
+<!-- Version: v0.1.77 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2522,7 +2522,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.76</span>
+          <span class="dev-version-label">DEV v0.1.77</span>
         </div>
       </header>
 
@@ -2563,7 +2563,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.76</span>
+            <span class="dev-version-label">DEV v0.1.77</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3011,7 +3011,9 @@
     }
 
     window.addEventListener("message", (event) => {
-      if(!event.origin.includes("youtube.com")) return;
+      const origin = String(event.origin || "");
+      const isYouTubeOrigin = origin.includes("youtube.com") || origin.includes("youtube-nocookie.com");
+      if(!isYouTubeOrigin) return;
 
       let data = event.data;
       if(typeof data === "string"){
