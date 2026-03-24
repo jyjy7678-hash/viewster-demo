@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.79 -->
+<!-- Version: v0.1.80 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1716,6 +1716,16 @@
       position:relative;
       z-index:5;
     }
+    .box-open-stage.stage-show-result .open-stage-result.show-gold-box .result-gold-box{
+      opacity:1;
+      transform:translateY(0) scale(1);
+      filter:none;
+      z-index:6;
+    }
+    .box-open-stage.stage-show-result .open-stage-result.show-gold-box .result-gold-box .gift-box{
+      opacity:1;
+      filter:drop-shadow(0 10px 24px rgba(0,0,0,.32));
+    }
     .open-stage-result:not(.show-gold-box) .result-gold-box{
       display:none;
     }
@@ -2361,15 +2371,7 @@
       letter-spacing:-.01em;
     }
     .box-open-stage.stage-video-playing.is-random-gold-slowfx .result-amount{
-      position:absolute;
-      left:50%;
-      bottom:24px;
-      transform:translateX(-50%);
-      color:#dbeafe;
-      text-shadow:0 0 18px rgba(96,165,250,.2);
-      font-size:34px;
-      margin:0;
-      z-index:7;
+      display:none;
     }
     .box-open-stage.stage-video-playing.is-random-gold-slowfx .burst-ring,
     .box-open-stage.stage-video-playing.is-random-gold-slowfx .burst-rays,
@@ -2521,7 +2523,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.79</span>
+          <span class="dev-version-label">DEV v0.1.80</span>
         </div>
       </header>
 
@@ -2562,7 +2564,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.79</span>
+            <span class="dev-version-label">DEV v0.1.80</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4099,7 +4101,7 @@ window.addEventListener("resize", clampMiniPosition);
           showOpenStageResult({
             amountText: `+${result.reward.toLocaleString()} P`,
             subText: "황금박스 획득",
-            showGoldBox: false,
+            showGoldBox: true,
             showGoldWin: true
           });
         } else {
@@ -4123,7 +4125,7 @@ window.addEventListener("resize", clampMiniPosition);
         if(state.openType === "random" && result.type === "chance_gold"){
           openStageResult.classList.add("show-gold-box", "gold-win");
           openResultSub.textContent = "황금박스 획득";
-          openResultAmount.textContent = `+${result.reward.toLocaleString()} P`;
+          openResultAmount.textContent = "";
         }
         playOpenStageVideo(sequence.videoSrc, () => {
           if(state.openType === "random" && result.type === "chance_gold"){
