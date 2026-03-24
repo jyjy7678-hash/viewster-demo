@@ -1362,13 +1362,36 @@
       position:relative;
       border-radius:26px;
       border:none;
-      background:
-        radial-gradient(circle at 50% 30%, rgba(96,165,250,.14), transparent 24%),
-        radial-gradient(circle at 50% 78%, rgba(15,23,42,.34), transparent 34%),
-        linear-gradient(180deg, rgba(8,12,24,.94) 0%, rgba(4,8,20,.98) 100%);
       box-shadow:none;
       transition:background .28s ease, box-shadow .28s ease, border-color .28s ease;
       isolation:isolate;
+    }
+    .box-open-bg{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(180deg, #6f5cff 0%, #8f6bff 35%, #c77dff 65%, #f3a6ff 100%);
+    }
+    .box-open-bg::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at center, rgba(255,255,255,.35) 0%, rgba(255,255,255,.2) 25%, rgba(255,255,255,.08) 45%, rgba(255,255,255,.02) 60%, transparent 70%);
+      filter:blur(40px);
+      pointer-events:none;
+      z-index:1;
+    }
+    .box-open-bg::after{
+      content:"";
+      position:absolute;
+      top:-10%;
+      left:50%;
+      transform:translateX(-50%);
+      width:120%;
+      height:40%;
+      background:radial-gradient(ellipse at center, rgba(255,255,255,.25), rgba(255,255,255,.08), transparent 70%);
+      filter:blur(30px);
+      pointer-events:none;
+      z-index:1;
     }
     .open-stage-backdrop{
       position:absolute;
@@ -1382,7 +1405,7 @@
     }
     .open-stage-box-wrap{
       position:relative;
-      z-index:2;
+      z-index:5;
       display:grid;
       place-items:center;
       width:216px;
@@ -1618,7 +1641,7 @@
       letter-spacing:.16em;
       text-transform:uppercase;
       color:rgba(214,224,239,.72);
-      z-index:3;
+      z-index:6;
       transition:opacity .22s ease, transform .22s ease;
       white-space:nowrap;
     }
@@ -1696,7 +1719,7 @@
       padding:24px;
       opacity:0;
       pointer-events:none;
-      z-index:4;
+      z-index:6;
       transition:opacity .18s ease .16s;
     }
     .box-open-stage.stage-show-result .open-stage-result{
@@ -2147,10 +2170,7 @@
     /* Open sheet result effect states */
     #openSheet.fx-random-normal .box-open-stage{
       border-color:rgba(96,165,250,.22);
-      background:
-        radial-gradient(circle at 50% 18%, rgba(125,211,252,.18), transparent 24%),
-        radial-gradient(circle at 50% 66%, rgba(37,99,235,.14), transparent 38%),
-        linear-gradient(180deg, rgba(15,23,42,.96) 0%, rgba(8,15,30,.98) 56%, rgba(2,6,23,1) 100%);
+      background:linear-gradient(180deg, #6f5cff 0%, #8f6bff 35%, #c77dff 65%, #f3a6ff 100%);
       animation:blueGlowPulse .9s ease 1;
     }
     #openSheet.fx-random-normal .open-stage-box-wrap::before{
@@ -2171,10 +2191,7 @@
     #openSheet.fx-random-fail .box-open-stage,
     #openSheet.fx-random-gold .box-open-stage{
       border-color:rgba(148,163,184,.22);
-      background:
-        radial-gradient(circle at 50% 18%, rgba(148,163,184,.14), transparent 26%),
-        radial-gradient(circle at 50% 72%, rgba(30,41,59,.24), transparent 36%),
-        linear-gradient(180deg, rgba(15,23,42,.96) 0%, rgba(8,15,30,.98) 56%, rgba(2,6,23,1) 100%);
+      background:linear-gradient(180deg, #6f5cff 0%, #8f6bff 35%, #c77dff 65%, #f3a6ff 100%);
       animation:blueGlowPulse .72s ease 1;
     }
     #openSheet.fx-random-fail .box-open-stage.stage-animating .open-stage-clouds,
@@ -2213,10 +2230,7 @@
     #openSheet.fx-gold-open .box-open-stage,
     #openSheet.fx-random-gold .box-open-stage.stage-show-result{
       border-color:rgba(250,204,21,.28);
-      background:
-        radial-gradient(circle at 50% 18%, rgba(250,204,21,.18), transparent 26%),
-        radial-gradient(circle at 50% 72%, rgba(245,158,11,.16), transparent 36%),
-        linear-gradient(180deg, rgba(24,20,10,.96) 0%, rgba(16,11,4,.98) 56%, rgba(9,6,2,1) 100%);
+      background:linear-gradient(180deg, #6f5cff 0%, #8f6bff 35%, #c77dff 65%, #f3a6ff 100%);
       animation:goldGlowPulse .9s ease 1;
     }
     #openSheet.fx-random-gold .open-stage-box-wrap::before{
@@ -2524,7 +2538,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.81</span>
+          <span class="dev-version-label">DEV v0.1.82</span>
         </div>
       </header>
 
@@ -2565,7 +2579,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.81</span>
+            <span class="dev-version-label">DEV v0.1.82</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2690,7 +2704,7 @@
       <button class="sheet-close" data-close="openSheet" style="background:#1f2937;color:#fff;">×</button>
     </div>
     <div class="sheet-body sheet-body--plain">
-      <div class="box-open-stage" id="openStage">
+      <div class="box-open-stage box-open-bg" id="openStage">
         <div class="open-stage-backdrop" aria-hidden="true"></div>
         <video class="open-stage-video" id="openStageVideo" autoplay muted playsinline webkit-playsinline preload="auto" aria-hidden="true">
           <source id="openStageVideoSource" src="" type="video/mp4" />
