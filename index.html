@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.66 -->
+<!-- Version: v0.1.68 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1275,37 +1275,76 @@
       --gift-ribbon:#fff7d6;
     }
     .box-icon.is-random-box{
-      --box-glow-color:rgba(139,92,246,.32);
-      --box-glow-soft:rgba(236,72,153,.24);
-      --box-shadow-color:rgba(49,46,129,.46);
-      --box-ribbon-color:rgba(255,255,255,.94);
-      --gift-ribbon:#f8fafc;
+      --box-glow-color:rgba(168,85,247,.34);
+      --box-glow-soft:rgba(236,72,153,.3);
+      --box-shadow-color:rgba(49,46,129,.52);
+      --box-ribbon-color:rgba(255,255,255,.96);
+      --gift-ribbon:transparent;
     }
-    .box-icon.is-random-box .gift-body,
+    .box-icon.is-random-box .gift-box{
+      transform:translateY(4px) rotate(-5deg);
+      filter:drop-shadow(0 24px 34px rgba(49,46,129,.48));
+    }
+    .box-icon.is-random-box .gift-ribbon-knot{
+      opacity:0;
+    }
     .box-icon.is-random-box .gift-lid{
-      background:
-        linear-gradient(145deg, rgba(255,255,255,.26), rgba(255,255,255,0) 38%),
-        repeating-linear-gradient(122deg,
-          #ff335f 0 8px,
-          #ff8a00 8px 16px,
-          #ffe600 16px 24px,
-          #29e27a 24px 32px,
-          #26b3ff 32px 40px,
-          #7559ff 40px 48px,
-          #ca42ff 48px 56px),
-        linear-gradient(132deg,
-          #ff2a54 0%,
-          #ff8f1f 18%,
-          #ffe15a 34%,
-          #3ae088 50%,
-          #35b8ff 66%,
-          #7f63ff 82%,
-          #d64fff 100%);
-      background-blend-mode:screen,normal,normal;
+      top:12px;
+      width:124px;
+      height:40px;
+      border-radius:16px 16px 12px 12px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.42), 0 12px 18px rgba(49,46,129,.3);
+      transform-origin:20px 30px;
+      overflow:visible;
+      background:linear-gradient(168deg, rgba(255,255,255,.22), rgba(255,255,255,0) 46%);
     }
-    .box-icon.is-random-box .gift-body::after,
-    .box-icon.is-random-box .gift-lid::after{
-      background:linear-gradient(90deg, rgba(255,255,255,.95), rgba(226,232,240,.86));
+    .box-icon.is-random-box .gift-body{
+      top:48px;
+      width:114px;
+      height:80px;
+      border-radius:14px 14px 20px 18px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 18px 30px rgba(49,46,129,.34);
+      background:linear-gradient(172deg, rgba(255,255,255,.14), rgba(255,255,255,0) 44%);
+      overflow:visible;
+    }
+    .box-icon.is-random-box .gift-lid::before,
+    .box-icon.is-random-box .gift-body::before{
+      inset:0;
+      width:auto;
+      transform:none;
+      border-radius:inherit;
+      box-shadow:none;
+      background:
+        linear-gradient(156deg, rgba(255,255,255,.38) 0%, rgba(255,255,255,0) 42%),
+        repeating-linear-gradient(128deg,
+          #ff335f 0 10px,
+          #ff8a00 10px 20px,
+          #ffe600 20px 30px,
+          #2de48a 30px 40px,
+          #2cb7ff 40px 50px,
+          #6b63ff 50px 60px,
+          #d54bff 60px 70px);
+    }
+    .box-icon.is-random-box .gift-lid::after,
+    .box-icon.is-random-box .gift-body::after{
+      left:auto;
+      top:6px;
+      right:-12px;
+      width:24px;
+      height:calc(100% - 10px);
+      transform:skewY(-30deg);
+      border-radius:9px 8px 12px 4px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.24);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,0) 48%),
+        repeating-linear-gradient(128deg,
+          #c8284f 0 10px,
+          #d96604 10px 20px,
+          #d2b100 20px 30px,
+          #1ea45f 30px 40px,
+          #1e84b9 40px 50px,
+          #4742bf 50px 60px,
+          #9630b7 60px 70px);
     }
 
     .box-open-stage{
@@ -2373,7 +2412,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.67</span>
+          <span class="dev-version-label">DEV v0.1.68</span>
         </div>
       </header>
 
@@ -2412,7 +2451,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.67</span>
+            <span class="dev-version-label">DEV v0.1.68</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2539,7 +2578,9 @@
     <div class="sheet-body sheet-body--plain">
       <div class="box-open-stage" id="openStage">
         <div class="open-stage-backdrop" aria-hidden="true"></div>
-        <video class="open-stage-video" id="openStageVideo" muted playsinline webkit-playsinline preload="auto" aria-hidden="true"></video>
+        <video class="open-stage-video" id="openStageVideo" autoplay muted playsinline webkit-playsinline preload="auto" aria-hidden="true">
+          <source id="openStageVideoSource" src="" type="video/mp4" />
+        </video>
         <div class="open-stage-box-wrap" id="openStageBoxWrap">
           <div class="box-icon box-pop is-random-box" id="boxIconStage">
             <span class="box-core-glow" aria-hidden="true"></span>
@@ -2753,6 +2794,7 @@
     const openStageText = document.getElementById("openStageText");
     const openStage = document.getElementById("openStage");
     const openStageVideo = document.getElementById("openStageVideo");
+    const openStageVideoSource = document.getElementById("openStageVideoSource");
     const openStageBoxWrap = document.getElementById("openStageBoxWrap");
     const openStageResult = document.getElementById("openStageResult");
     const openResultAmount = document.getElementById("openResultAmount");
@@ -3324,6 +3366,8 @@ window.addEventListener("resize", clampMiniPosition);
     const managedSheetIds = ["walletSheet", "openSheet", "adSheet", "commentSheet"];
     const exclusiveSheetIds = ["walletSheet", "openSheet", "adSheet"];
     const openSheetFxClasses = ["fx-random-normal", "fx-random-fail", "fx-random-gold", "fx-gold-open"];
+    const RANDOM_X_VIDEO_SRC = "./assets/X_view.mp4";
+    const RANDOM_G_VIDEO_SRC = "./assets/G_view.mp4";
 
     function resetSheetScroll(id){
       const sheet = document.getElementById(id);
@@ -3357,6 +3401,9 @@ window.addEventListener("resize", clampMiniPosition);
     function stopOpenStageVideo(){
       openStage.classList.remove("stage-video-playing");
       openStageVideo.pause();
+      if(openStageVideoSource){
+        openStageVideoSource.removeAttribute("src");
+      }
       openStageVideo.removeAttribute("src");
       openStageVideo.load();
       openStageVideo.onended = null;
@@ -3369,12 +3416,33 @@ window.addEventListener("resize", clampMiniPosition);
         return;
       }
 
+      let done = false;
+      const finish = () => {
+        if(done) return;
+        done = true;
+        openStageVideo.onended = null;
+        openStageVideo.onerror = null;
+        onDone();
+      };
+
       openStage.classList.add("stage-video-playing");
-      openStageVideo.onended = () => onDone();
-      openStageVideo.onerror = () => onDone();
+      openStageVideo.muted = true;
+      openStageVideo.autoplay = true;
+      openStageVideo.playsInline = true;
+      openStageVideo.setAttribute("muted", "");
+      openStageVideo.setAttribute("autoplay", "");
+      openStageVideo.setAttribute("playsinline", "");
+      openStageVideo.setAttribute("webkit-playsinline", "");
+      openStageVideo.onended = finish;
+      openStageVideo.onerror = finish;
+
+      if(openStageVideoSource){
+        openStageVideoSource.src = src;
+      }
       openStageVideo.src = src;
+      openStageVideo.load();
       openStageVideo.currentTime = 0;
-      openStageVideo.play().catch(() => onDone());
+      openStageVideo.play().catch(() => finish());
     }
 
     function syncOpenStageBoxAsset(variant = state.openType === "gold" ? "gold" : "random"){
@@ -3461,7 +3529,7 @@ window.addEventListener("resize", clampMiniPosition);
           busyLabel: "랜덤X 재생 중",
           revealDelay: 0,
           autoCloseDelay: 2400,
-          videoSrc: "assets/X_view.mp4"
+          videoSrc: RANDOM_X_VIDEO_SRC
         };
       }
 
@@ -3473,7 +3541,7 @@ window.addEventListener("resize", clampMiniPosition);
           busyLabel: "랜덤G 재생 중",
           revealDelay: 0,
           autoCloseDelay: 2600,
-          videoSrc: "assets/G_view.mp4"
+          videoSrc: RANDOM_G_VIDEO_SRC
         };
       }
 
