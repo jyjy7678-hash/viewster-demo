@@ -2711,7 +2711,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.89</span>
+          <span class="dev-version-label">DEV v0.1.90</span>
         </div>
       </header>
 
@@ -2752,7 +2752,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.89</span>
+            <span class="dev-version-label">DEV v0.1.90</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3860,6 +3860,7 @@ window.addEventListener("resize", clampMiniPosition);
       const isRandomGoldVideo = src === RANDOM_G_VIDEO_SRC;
       const isRandomXVideo = src === RANDOM_X_VIDEO_SRC;
       let slowFxShown = false;
+      let goldLeadTextShown = false;
       const handleTimeUpdate = () => {
         if(!isRandomGoldVideo){
           return;
@@ -3868,9 +3869,15 @@ window.addEventListener("resize", clampMiniPosition);
           return;
         }
         const remaining = openStageVideo.duration - openStageVideo.currentTime;
-        if(remaining <= 1.6 && !slowFxShown){
+        if(remaining <= 1.5 && !slowFxShown){
           slowFxShown = true;
           openStage.classList.add("is-random-gold-slowfx");
+        }
+        if(remaining <= 1.5 && !goldLeadTextShown){
+          goldLeadTextShown = true;
+          openResultAmount.textContent = "";
+          openResultSub.textContent = "황금박스 획득";
+          openStageResult.classList.remove("show-gold-box", "gold-win");
         }
       };
       const finish = () => {
