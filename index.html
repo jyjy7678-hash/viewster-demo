@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.74 -->
+<!-- Version: v0.1.76 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -218,6 +218,20 @@
       display:block;
       position:relative;
       z-index:2;
+    }
+    .timer-overlay{
+      position:absolute;
+      bottom:12px;
+      left:50%;
+      transform:translateX(-50%);
+      background:rgba(0,0,0,0.6);
+      color:#fff;
+      font-size:12px;
+      padding:4px 10px;
+      border-radius:999px;
+      z-index:10;
+      pointer-events:none;
+      font-weight:700;
     }
 
     .paid-badge{
@@ -2508,7 +2522,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.75</span>
+          <span class="dev-version-label">DEV v0.1.76</span>
         </div>
       </header>
 
@@ -2534,6 +2548,7 @@
                 allow="autoplay; encrypted-media; picture-in-picture"
                 allowfullscreen
               ></iframe>
+              <div class="timer-overlay" id="watchTimerOverlay">00:00</div>
             </div>
           </div>
 
@@ -2548,7 +2563,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.75</span>
+            <span class="dev-version-label">DEV v0.1.76</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2872,6 +2887,7 @@
     const ytFrame = document.getElementById("ytFrame");
     const watchTitle = document.getElementById("watchTitle");
     const watchSub = document.getElementById("watchSub");
+    const watchTimerOverlay = document.getElementById("watchTimerOverlay");
     const rewardFill = document.getElementById("rewardFill");
     const rewardRightText = document.getElementById("rewardRightText");
     const rewardInline = document.getElementById("rewardInline");
@@ -2913,6 +2929,8 @@
     const miniAdWrap = document.getElementById("miniAdWrap");
     const paidBadge = document.getElementById("paidBadge");
     const playerFloatControls = document.querySelector(".player-float-controls");
+    let watchTimerPolling = null;
+    let watchTimerRunning = false;
 
     function extractVideoId(url){
       try{
@@ -2933,11 +2951,86 @@
         autoplay: "1",
         mute: "0",
         playsinline: "1",
-        rel: "0"
+        rel: "0",
+        enablejsapi: "1"
       });
 
       return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?${params.toString()}`;
     }
+
+    function formatTimerClock(seconds){
+      const safeSeconds = Math.max(Number(seconds) || 0, 0);
+      const min = Math.floor(safeSeconds / 60).toString().padStart(2, "0");
+      const sec = Math.floor(safeSeconds % 60).toString().padStart(2, "0");
+      return `${min}:${sec}`;
+    }
+
+    function setWatchTimer(seconds){
+      watchTimerOverlay.textContent = formatTimerClock(seconds);
+    }
+
+    function resetWatchTimer(){
+      watchTimerRunning = false;
+      setWatchTimer(0);
+    }
+
+    function requestYouTubePlaybackInfo(){
+      if(!ytFrame || !ytFrame.contentWindow) return;
+      ytFrame.contentWindow.postMessage(JSON.stringify({
+        event: "command",
+        func: "getCurrentTime",
+        args: []
+      }), "*");
+      ytFrame.contentWindow.postMessage(JSON.stringify({
+        event: "command",
+        func: "getPlayerState",
+        args: []
+      }), "*");
+    }
+
+    function startWatchTimerPolling(){
+      if(watchTimerPolling) return;
+      watchTimerPolling = setInterval(() => {
+        requestYouTubePlaybackInfo();
+      }, 300);
+    }
+
+    function stopWatchTimerPolling(){
+      clearInterval(watchTimerPolling);
+      watchTimerPolling = null;
+    }
+
+    function handleWatchTimerActivation(){
+      startWatchTimerPolling();
+      if(!ytFrame || !ytFrame.contentWindow) return;
+      ytFrame.contentWindow.postMessage(JSON.stringify({
+        event: "command",
+        func: "playVideo",
+        args: []
+      }), "*");
+    }
+
+    window.addEventListener("message", (event) => {
+      if(!event.origin.includes("youtube.com")) return;
+
+      let data = event.data;
+      if(typeof data === "string"){
+        try{
+          data = JSON.parse(data);
+        }catch(e){
+          return;
+        }
+      }
+
+      if(!data || data.event !== "infoDelivery" || !data.info) return;
+      if(typeof data.info.playerState === "number"){
+        watchTimerRunning = data.info.playerState === 1;
+      }
+
+      if(typeof data.info.currentTime === "number" && watchTimerRunning){
+        setWatchTimer(data.info.currentTime);
+      }
+    });
 
     function formatTime(totalSeconds){
       const m = Math.floor(totalSeconds / 60);
@@ -3280,6 +3373,8 @@ function updateFixedLayout(){
       const video = state.videos.find(v => v.id === id);
       if(!video) return;
 
+      resetWatchTimer();
+      stopWatchTimerPolling();
       state.currentVideo = video;
       watchTitle.textContent = video.title;
       watchTitle.title = video.title;
@@ -3310,6 +3405,7 @@ function updateFixedLayout(){
       }, 80);
 
       startAutoWatchTimer();
+      startWatchTimerPolling();
     }
 
     function applyMiniSizeClass(){
@@ -3450,6 +3546,8 @@ window.addEventListener("resize", clampMiniPosition);
 
     function backToHome(){
       stopAutoWatchTimer();
+      stopWatchTimerPolling();
+      resetWatchTimer();
       clearTimeout(scrollIdleTimer);
       watchScreen.classList.remove("mini-mode", "mini-size-1", "mini-size-2", "mini-size-3");
       watchScreen.classList.remove("active");
@@ -3995,6 +4093,7 @@ window.addEventListener("resize", clampMiniPosition);
     miniRestoreHit.addEventListener("click", exitMiniMode);
     toggleMiniSizeBtn.addEventListener("click", toggleMiniSize);
     playerWrap.addEventListener("click", wakePlayerControls);
+    playerWrap.addEventListener("click", handleWatchTimerActivation);
 playerFloatControls.addEventListener("click", wakePlayerControls);
 playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive: true });
 
