@@ -2352,9 +2352,17 @@
       margin:0;
       z-index:7;
     }
+    .box-open-stage.stage-video-playing.is-random-gold-slowfx .burst-ring,
+    .box-open-stage.stage-video-playing.is-random-gold-slowfx .burst-rays,
+    .box-open-stage.stage-video-playing.is-random-gold-slowfx .result-sparkles{
+      display:none;
+    }
     #openSheet.fx-random-gold .box-open-stage.stage-show-result .open-stage-box-wrap,
     #openSheet.fx-random-gold .box-open-stage.stage-show-result .open-stage-clouds,
-    #openSheet.fx-random-gold .box-open-stage.stage-show-result .glow-burst{
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .glow-burst,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .burst-ring,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .burst-rays,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-sparkles{
       display:none;
     }
     #openSheet.fx-random-gold .box-open-stage.stage-show-result .open-stage-result{
@@ -2493,7 +2501,7 @@
           <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-box-add="random">+랜덤</button>
           <button class="tool-btn" data-box-add="gold">+황금</button>
-          <span class="dev-version-label">DEV v0.1.71</span>
+          <span class="dev-version-label">DEV v0.1.72</span>
         </div>
       </header>
 
@@ -2532,7 +2540,7 @@
             <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-box-add="random">+랜덤</button>
             <button class="tool-btn" data-box-add="gold">+황금</button>
-            <span class="dev-version-label">DEV v0.1.71</span>
+            <span class="dev-version-label">DEV v0.1.72</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2588,11 +2596,11 @@
       <div class="wallet-grid">
         <div class="wallet-card">
           <div class="wallet-label">📦 랜덤박스</div>
-          <div class="wallet-value" id="boxCount">1개</div>
+          <div class="wallet-value" id="boxCount">100개</div>
         </div>
         <div class="wallet-card">
           <div class="wallet-label">🏆 황금박스</div>
-          <div class="wallet-value" id="goldBoxCount">0개</div>
+          <div class="wallet-value" id="goldBoxCount">100개</div>
         </div>
         <div class="wallet-card full">
           <div class="wallet-label">💰 누적리워드</div>
@@ -2802,8 +2810,8 @@
       integratedWatchSeconds: 0,
       rewardGoalSeconds: 600,
       rewardAvailable: false,
-      randomBoxCount: 1,
-      goldBoxCount: 0,
+      randomBoxCount: 100,
+      goldBoxCount: 100,
       totalRewardPoint: 0,
       rewardAdTimer: null,
       rewardAdSeconds: 0,
@@ -3510,8 +3518,8 @@ window.addEventListener("resize", clampMiniPosition);
           return;
         }
         const remaining = openStageVideo.duration - openStageVideo.currentTime;
-        if(remaining < 1){
-          openStageVideo.playbackRate = 0.2;
+        if(remaining <= 0.6){
+          openStageVideo.playbackRate = 0.68;
           if(!slowFxShown){
             slowFxShown = true;
             openStage.classList.add("is-random-gold-slowfx");
