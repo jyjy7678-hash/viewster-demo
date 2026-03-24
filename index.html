@@ -2087,8 +2087,9 @@
       100%{opacity:1; transform:translateY(0) scale(1);}
     }
     @keyframes randomGSubReveal{
-      0%{opacity:0;}
-      100%{opacity:1;}
+      0%{opacity:0; transform:scale(.9);}
+      60%{opacity:1; transform:scale(1.05);}
+      100%{opacity:1; transform:scale(1);}
     }
     @keyframes goldBoxReveal{
       0%{opacity:0; transform:translateY(22px) scale(.68) rotate(-12deg);}
@@ -2349,8 +2350,11 @@
       border-radius:999px;
       font-size:13px;
       font-weight:800;
+      letter-spacing:.5px;
       color:#e5e7eb;
-      background:rgba(8,15,30,.42);
+      background:rgba(0,0,0,.35);
+      backdrop-filter:blur(6px);
+      box-shadow:0 0 10px rgba(255,200,0,.4), 0 0 30px rgba(255,200,0,.3), 0 0 60px rgba(255,200,0,.2);
       animation:randomGSubReveal .28s ease-out .72s both;
     }
     .result-sub{
@@ -2707,7 +2711,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.88</span>
+          <span class="dev-version-label">DEV v0.1.89</span>
         </div>
       </header>
 
@@ -2748,7 +2752,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.88</span>
+            <span class="dev-version-label">DEV v0.1.89</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
