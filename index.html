@@ -2711,7 +2711,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.90</span>
+          <span class="dev-version-label">DEV v0.1.91</span>
         </div>
       </header>
 
@@ -2752,7 +2752,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.90</span>
+            <span class="dev-version-label">DEV v0.1.91</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3850,7 +3850,7 @@ window.addEventListener("resize", clampMiniPosition);
       }
     }
 
-    function playOpenStageVideo(src, onDone){
+    function playOpenStageVideo(src, onDone, onRandomGoldLead){
       if(!src){
         onDone();
         return;
@@ -3875,9 +3875,9 @@ window.addEventListener("resize", clampMiniPosition);
         }
         if(remaining <= 1.5 && !goldLeadTextShown){
           goldLeadTextShown = true;
-          openResultAmount.textContent = "";
-          openResultSub.textContent = "황금박스 획득";
-          openStageResult.classList.remove("show-gold-box", "gold-win");
+          if(typeof onRandomGoldLead === "function"){
+            onRandomGoldLead();
+          }
         }
       };
       const finish = () => {
@@ -4243,6 +4243,7 @@ window.addEventListener("resize", clampMiniPosition);
     function runBoxAnimation(){
       let result;
       let revealDone = false;
+      let randomGoldResultRendered = false;
 
       if(state.openType === "gold"){
         result = createBoxResult(goldBoxTable, [{ value: "normal", weight: 1 }]);
@@ -4300,11 +4301,13 @@ window.addEventListener("resize", clampMiniPosition);
             subText: ""
           });
         } else if(state.openType === "random" && result.type === "chance_gold"){
-          showOpenStageResult({
-            amountText: `${result.reward.toLocaleString()} P`,
-            subText: "황금박스 획득",
-            keepVideoFrame: true
-          });
+          if(!randomGoldResultRendered){
+            showOpenStageResult({
+              amountText: `${result.reward.toLocaleString()} P`,
+              subText: "황금박스 획득",
+              keepVideoFrame: true
+            });
+          }
         } else {
           showOpenStageResult({
             amountText: `${result.reward.toLocaleString()} P`,
@@ -4325,12 +4328,20 @@ window.addEventListener("resize", clampMiniPosition);
       if(sequence.videoSrc){
         playOpenStageVideo(sequence.videoSrc, () => {
           if(state.openType === "random" && result.type === "chance_gold"){
-            state.openTimer = setTimeout(() => {
-              revealResult();
-            }, 420);
+            revealResult();
             return;
           }
           revealResult();
+        }, () => {
+          if(state.openType !== "random" || result.type !== "chance_gold" || randomGoldResultRendered){
+            return;
+          }
+          randomGoldResultRendered = true;
+          showOpenStageResult({
+            amountText: `${result.reward.toLocaleString()} P`,
+            subText: "황금박스 획득",
+            keepVideoFrame: true
+          });
         });
         return;
       }
