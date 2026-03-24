@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.85 -->
+<!-- Version: v0.1.88 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2082,6 +2082,14 @@
       60%{opacity:1; transform:translateY(-2px) scale(1.03);}
       100%{opacity:1; transform:translateY(0) scale(1);}
     }
+    @keyframes randomGAmountReveal{
+      0%{opacity:0; transform:translateY(6px) scale(.95);}
+      100%{opacity:1; transform:translateY(0) scale(1);}
+    }
+    @keyframes randomGSubReveal{
+      0%{opacity:0;}
+      100%{opacity:1;}
+    }
     @keyframes goldBoxReveal{
       0%{opacity:0; transform:translateY(22px) scale(.68) rotate(-12deg);}
       58%{opacity:1; transform:translateY(-4px) scale(1.08) rotate(4deg);}
@@ -2316,6 +2324,35 @@
     #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(3){--confetti-rot:28deg;animation-delay:.28s;}
     #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(4),
     #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(4){--confetti-rot:-28deg;animation-delay:.4s;}
+    /* RandomG 결과는 영상 + 텍스트만 사용 */
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .glow-burst,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .burst-ring,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .burst-rays,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-sparkles,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box{
+      display:none;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .open-stage-result{
+      gap:8px;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-amount{
+      order:2;
+      color:#fff;
+      opacity:0;
+      animation:randomGAmountReveal .34s ease-out .4s both;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-sub{
+      order:1;
+      opacity:0;
+      margin-bottom:4px;
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:800;
+      color:#e5e7eb;
+      background:rgba(8,15,30,.42);
+      animation:randomGSubReveal .28s ease-out .72s both;
+    }
     .result-sub{
       min-width:24px;
       font-size:13px;
@@ -2670,7 +2707,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.87</span>
+          <span class="dev-version-label">DEV v0.1.88</span>
         </div>
       </header>
 
@@ -2711,7 +2748,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.87</span>
+            <span class="dev-version-label">DEV v0.1.88</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3839,6 +3876,10 @@ window.addEventListener("resize", clampMiniPosition);
         openStageVideo.onended = null;
         openStageVideo.onerror = null;
         openStage.classList.remove("is-random-gold-slowfx");
+        if(isRandomGoldVideo && Number.isFinite(openStageVideo.duration) && openStageVideo.duration > 0){
+          openStageVideo.pause();
+          openStageVideo.currentTime = openStageVideo.duration;
+        }
         openStageVideo.playbackRate = 1;
         onDone();
       };
@@ -4084,13 +4125,16 @@ window.addEventListener("resize", clampMiniPosition);
       openResultSub.textContent = "";
     }
 
-    function showOpenStageResult({ amountText, subText = "", showGoldBox = false, showGoldWin = false }){
+    function showOpenStageResult({ amountText, subText = "", showGoldBox = false, showGoldWin = false, keepVideoFrame = false }){
       openResultAmount.textContent = amountText;
       openResultSub.textContent = subText;
       openStageResult.classList.toggle("show-gold-box", showGoldBox);
       openStageResult.classList.toggle("gold-win", showGoldWin);
       openStage.classList.add("stage-show-result");
-      openStage.classList.remove("stage-animating", "stage-video-playing");
+      openStage.classList.remove("stage-animating");
+      if(!keepVideoFrame){
+        openStage.classList.remove("stage-video-playing");
+      }
     }
 
     function closeOpenSheetOnly(){
@@ -4248,8 +4292,7 @@ window.addEventListener("resize", clampMiniPosition);
           showOpenStageResult({
             amountText: `${result.reward.toLocaleString()} P`,
             subText: "황금박스 획득",
-            showGoldBox: true,
-            showGoldWin: true
+            keepVideoFrame: true
           });
         } else {
           showOpenStageResult({
@@ -4269,14 +4312,11 @@ window.addEventListener("resize", clampMiniPosition);
       };
 
       if(sequence.videoSrc){
-        if(state.openType === "random" && result.type === "chance_gold"){
-          openStageResult.classList.add("show-gold-box", "gold-win");
-          openResultSub.textContent = "황금박스 획득";
-          openResultAmount.textContent = "";
-        }
         playOpenStageVideo(sequence.videoSrc, () => {
           if(state.openType === "random" && result.type === "chance_gold"){
-            revealResult();
+            state.openTimer = setTimeout(() => {
+              revealResult();
+            }, 420);
             return;
           }
           revealResult();
