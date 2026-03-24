@@ -2931,6 +2931,8 @@
     const playerFloatControls = document.querySelector(".player-float-controls");
     let watchTimerPolling = null;
     let watchTimerRunning = false;
+    let boundTimerVideo = null;
+    let boundTimerUpdateHandler = null;
 
     function extractVideoId(url){
       try{
@@ -2972,6 +2974,27 @@
     function resetWatchTimer(){
       watchTimerRunning = false;
       setWatchTimer(0);
+    }
+
+    function bindVideoTimer(video){
+      if(boundTimerVideo && boundTimerUpdateHandler){
+        boundTimerVideo.removeEventListener("timeupdate", boundTimerUpdateHandler);
+      }
+
+      boundTimerVideo = null;
+      boundTimerUpdateHandler = null;
+      setWatchTimer(0);
+
+      if(!video) return;
+
+      const updateTimerFromVideo = () => {
+        setWatchTimer(video.currentTime || 0);
+      };
+
+      boundTimerVideo = video;
+      boundTimerUpdateHandler = updateTimerFromVideo;
+      video.addEventListener("timeupdate", updateTimerFromVideo);
+      updateTimerFromVideo();
     }
 
     function requestYouTubePlaybackInfo(){
@@ -3597,6 +3620,7 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     function stopOpenStageVideo(){
+      bindVideoTimer(null);
       openStage.classList.remove("is-random-gold-slowfx");
       openStage.classList.remove("stage-video-playing");
       openStageVideo.pause();
@@ -3656,6 +3680,7 @@ window.addEventListener("resize", clampMiniPosition);
       openStageVideo.onerror = finish;
       openStageVideo.playbackRate = (isRandomGoldVideo || isRandomXVideo) ? state.openStageMidPlaybackRate : 1;
       openStageVideo.addEventListener("timeupdate", handleTimeUpdate);
+      bindVideoTimer(openStageVideo);
 
       if(openStageVideoSource){
         openStageVideoSource.src = src;
