@@ -2336,7 +2336,7 @@
       letter-spacing:-.01em;
       line-height:1.18;
       text-align:center;
-      margin-top:4px;
+      margin-top:10px;
       padding:8px 14px;
       border-radius:999px;
       background:rgba(8,15,30,.46);
@@ -2347,10 +2347,10 @@
     }
     .open-stage-result.gold-win .result-amount{
       order:3;
-      margin-top:22px;
-      font-size:34px;
-      color:#dbeafe;
-      text-shadow:0 0 18px rgba(96,165,250,.2);
+      margin-top:20px;
+      font-size:32px;
+      color:#fff;
+      text-shadow:0 0 16px rgba(148,163,184,.22);
     }
     .open-stage-result.gold-win .result-sub{order:2;}
     .open-stage-result.gold-win .result-gold-box{
@@ -2454,28 +2454,28 @@
       gap:12px;
     }
     #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box{
-      width:96px;
-      height:96px;
+      width:106px;
+      height:106px;
       margin-top:2px;
     }
     #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box .gift-box{
-      width:96px;
-      height:96px;
-      filter:drop-shadow(0 12px 18px rgba(92,43,9,.26));
+      width:106px;
+      height:106px;
+      filter:drop-shadow(0 14px 20px rgba(92,43,9,.28));
       animation:goldWinBoxPop .68s cubic-bezier(.16,1,.3,1) both;
     }
     #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box .gift-lid{
-      top:20px;
-      width:86px;
-      height:18px;
+      top:22px;
+      width:94px;
+      height:20px;
       border-radius:3px;
       background:linear-gradient(180deg, #ffe7a3 0%, #f2b934 52%, #dd951a 100%);
       box-shadow:inset 0 1px 0 rgba(255,255,255,.36), 0 4px 10px rgba(120,53,15,.18);
     }
     #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box .gift-body{
-      top:38px;
-      width:80px;
-      height:52px;
+      top:42px;
+      width:88px;
+      height:56px;
       border-radius:3px;
       background:linear-gradient(180deg, #f9d35f 0%, #e5a51f 58%, #cc8610 100%);
       box-shadow:inset 0 1px 0 rgba(255,255,255,.24), 0 10px 14px rgba(120,53,15,.2);
@@ -2493,11 +2493,46 @@
       background:linear-gradient(180deg, #fff8db 0%, #f6d773 100%);
     }
     #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box .gift-ribbon-knot{
-      top:13px;
-      width:13px;
-      height:9px;
+      top:14px;
+      width:14px;
+      height:10px;
       border-radius:1px;
       background:#fff5ca;
+    }
+
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box::before,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index:1;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box::before{
+      background:
+        radial-gradient(circle at 20% 28%, rgba(255,250,210,.95) 0 2px, transparent 3px),
+        radial-gradient(circle at 82% 24%, rgba(255,247,186,.9) 0 2px, transparent 3px),
+        radial-gradient(circle at 16% 70%, rgba(255,240,168,.8) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 86% 74%, rgba(255,250,222,.9) 0 1.5px, transparent 2.5px);
+      opacity:.68;
+      animation:goldSparkleTwinkle 1.6s ease-in-out infinite;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box::after{
+      background:radial-gradient(circle, rgba(250,204,21,.36) 0%, rgba(250,204,21,.1) 44%, rgba(250,204,21,0) 70%);
+      transform:scale(1.08);
+      filter:blur(1px);
+      opacity:.55;
+      animation:goldSparkleHalo 1.8s ease-in-out infinite;
+    }
+
+
+    @keyframes goldSparkleTwinkle{
+      0%,100%{opacity:.4;transform:scale(.96);}
+      50%{opacity:.86;transform:scale(1.03);}
+    }
+    @keyframes goldSparkleHalo{
+      0%,100%{opacity:.38;transform:scale(1.03);}
+      50%{opacity:.62;transform:scale(1.12);}
     }
 
     @media (max-height:760px){
@@ -2633,7 +2668,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.85</span>
+          <span class="dev-version-label">DEV v0.1.86</span>
         </div>
       </header>
 
@@ -2674,7 +2709,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.85</span>
+            <span class="dev-version-label">DEV v0.1.86</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4050,10 +4085,10 @@ window.addEventListener("resize", clampMiniPosition);
     function showOpenStageResult({ amountText, subText = "", showGoldBox = false, showGoldWin = false }){
       openResultAmount.textContent = amountText;
       openResultSub.textContent = subText;
-      openStage.classList.remove("stage-animating", "stage-video-playing");
       openStageResult.classList.toggle("show-gold-box", showGoldBox);
       openStageResult.classList.toggle("gold-win", showGoldWin);
       openStage.classList.add("stage-show-result");
+      openStage.classList.remove("stage-animating", "stage-video-playing");
     }
 
     function closeOpenSheetOnly(){
@@ -4209,7 +4244,7 @@ window.addEventListener("resize", clampMiniPosition);
           });
         } else if(state.openType === "random" && result.type === "chance_gold"){
           showOpenStageResult({
-            amountText: `+${result.reward.toLocaleString()} P`,
+            amountText: `${result.reward.toLocaleString()} P`,
             subText: "황금박스 획득",
             showGoldBox: true,
             showGoldWin: true
