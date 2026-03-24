@@ -1414,9 +1414,10 @@
       transition:border-color .3s ease, opacity .3s ease;
     }
     .box-open-stage.stage-show-result .open-stage-box-wrap{
-      opacity:.16;
-      transform:translateY(-38px) scale(.78);
-      filter:saturate(.82);
+      opacity:1;
+      transform:translateY(-36px) scale(1);
+      filter:none;
+      z-index:6;
     }
     .box-open-stage.stage-animating .open-stage-box-wrap{
       animation:boxStoryEntrance .62s cubic-bezier(.22,1,.36,1) both;
@@ -2523,7 +2524,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.80</span>
+          <span class="dev-version-label">DEV v0.1.81</span>
         </div>
       </header>
 
@@ -2564,7 +2565,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.80</span>
+            <span class="dev-version-label">DEV v0.1.81</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
