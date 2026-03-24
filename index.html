@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.78 -->
+<!-- Version: v0.1.79 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1714,7 +1714,7 @@
       opacity:0;
       transform:translateY(16px) scale(.74);
       position:relative;
-      z-index:2;
+      z-index:5;
     }
     .open-stage-result:not(.show-gold-box) .result-gold-box{
       display:none;
@@ -1722,7 +1722,7 @@
     .result-gold-box .gift-box{
       width:84px;
       height:84px;
-      filter:drop-shadow(0 8px 14px rgba(245,158,11,.2)) brightness(1.05) contrast(1.08);
+      filter:drop-shadow(0 8px 24px rgba(0,0,0,.3));
     }
     .result-gold-box .gift-lid{
       top:10px;
@@ -2081,8 +2081,8 @@
       height:176px;
       border-radius:50%;
       background:radial-gradient(circle, rgba(255,255,255,.22) 0%, rgba(59,130,246,.14) 38%, rgba(0,0,0,0) 74%);
-      filter:blur(10px);
-      opacity:.72;
+      opacity:.56;
+      z-index:1;
       animation:burstPulse 1.1s ease infinite alternate;
     }
 
@@ -2319,7 +2319,7 @@
     .open-stage-result.gold-win .result-gold-box .gift-box{
       width:92px;
       height:92px;
-      filter:drop-shadow(0 0 10px rgba(250,204,21,.26)) drop-shadow(0 12px 20px rgba(245,158,11,.2)) brightness(1.06) contrast(1.1);
+      filter:drop-shadow(0 10px 26px rgba(0,0,0,.3));
       animation:goldBoxHeroPulse 1.22s ease-in-out .16s infinite;
     }
     .box-open-stage.stage-video-playing.is-random-gold-slowfx .open-stage-result{
@@ -2329,9 +2329,8 @@
     .box-open-stage.stage-video-playing.is-random-gold-slowfx .glow-burst{
       width:210px;
       height:210px;
-      opacity:.95;
+      opacity:.82;
       background:radial-gradient(circle, rgba(255,220,74,.44) 0%, rgba(255,200,0,.32) 44%, rgba(0,0,0,0) 78%);
-      filter:blur(8px);
       animation:burstPulse .72s ease-in-out infinite alternate;
     }
     .box-open-stage.stage-video-playing.is-random-gold-slowfx .result-gold-box{
@@ -2345,7 +2344,7 @@
     .box-open-stage.stage-video-playing.is-random-gold-slowfx .result-gold-box .gift-box{
       width:108px;
       height:108px;
-      filter:drop-shadow(0 0 14px rgba(255,200,0,.34)) drop-shadow(0 14px 22px rgba(245,158,11,.26)) brightness(1.08) contrast(1.12);
+      filter:drop-shadow(0 12px 28px rgba(0,0,0,.32));
       animation:goldBoxHeroPulse .92s ease-in-out infinite;
     }
     .box-open-stage.stage-video-playing.is-random-gold-slowfx .result-sub{
@@ -2522,7 +2521,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.78</span>
+          <span class="dev-version-label">DEV v0.1.79</span>
         </div>
       </header>
 
@@ -2548,7 +2547,7 @@
                 allow="autoplay; encrypted-media; picture-in-picture"
                 allowfullscreen
               ></iframe>
-              <div class="timer-overlay" id="watchTimerOverlay">00:00:00</div>
+              <div class="timer-overlay" id="watchTimerOverlay">media 00:00:00 / real 00:00:00</div>
             </div>
           </div>
 
@@ -2563,7 +2562,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.78</span>
+            <span class="dev-version-label">DEV v0.1.79</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2933,6 +2932,7 @@
     let watchTimerRunning = false;
     let boundTimerVideo = null;
     let boundTimerUpdateHandler = null;
+    let boundTimerPlayHandler = null;
 
     function extractVideoId(url){
       try{
@@ -2968,8 +2968,10 @@
       return `${min}:${sec}:${centi}`;
     }
 
-    function setWatchTimer(seconds){
-      watchTimerOverlay.textContent = formatTimerClock(seconds);
+    function setWatchTimer(mediaSeconds, realSeconds){
+      const mediaClock = formatTimerClock(mediaSeconds);
+      const realClock = formatTimerClock(realSeconds == null ? mediaSeconds : realSeconds);
+      watchTimerOverlay.textContent = `media ${mediaClock} / real ${realClock}`;
     }
 
     function resetWatchTimer(){
@@ -2981,19 +2983,34 @@
       if(boundTimerVideo && boundTimerUpdateHandler){
         boundTimerVideo.removeEventListener("timeupdate", boundTimerUpdateHandler);
       }
+      if(boundTimerVideo && boundTimerPlayHandler){
+        boundTimerVideo.removeEventListener("play", boundTimerPlayHandler);
+      }
 
       boundTimerVideo = null;
       boundTimerUpdateHandler = null;
-      setWatchTimer(0);
+      boundTimerPlayHandler = null;
+      setWatchTimer(0, 0);
 
       if(!video) return;
 
+      let playbackStartAt = performance.now();
+
+      const handleVideoPlay = () => {
+        playbackStartAt = performance.now();
+      };
+
       const updateTimerFromVideo = () => {
-        setWatchTimer(video.currentTime || 0);
+        const mediaTime = video.currentTime || 0;
+        const realElapsed = Math.max((performance.now() - playbackStartAt) / 1000, 0);
+        setWatchTimer(mediaTime, realElapsed);
       };
 
       boundTimerVideo = video;
       boundTimerUpdateHandler = updateTimerFromVideo;
+      boundTimerPlayHandler = handleVideoPlay;
+
+      video.addEventListener("play", handleVideoPlay);
       video.addEventListener("timeupdate", updateTimerFromVideo);
       updateTimerFromVideo();
     }
