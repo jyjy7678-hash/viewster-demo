@@ -2474,6 +2474,7 @@
       font-size:24px;
       font-weight:900;
       letter-spacing:-.01em;
+      animation:randomGSubReveal .28s ease-out both;
     }
     .box-open-stage.stage-video-playing.is-random-gold-slowfx .result-amount{
       display:none;
@@ -2482,6 +2483,27 @@
     .box-open-stage.stage-video-playing.is-random-gold-slowfx .burst-rays,
     .box-open-stage.stage-video-playing.is-random-gold-slowfx .result-sparkles{
       display:none;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result.stage-video-playing .open-stage-result{
+      justify-content:flex-end;
+      padding:24px 20px 30px;
+      gap:8px;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result.stage-video-playing .result-sub{
+      opacity:1;
+      margin-top:0;
+      margin-bottom:0;
+      padding:9px 16px;
+      border-radius:999px;
+      background:rgba(0,0,0,.55);
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+      color:#ffd700;
+      text-shadow:0 0 8px rgba(255,215,0,.56);
+      font-size:24px;
+      font-weight:900;
+      letter-spacing:-.01em;
+      animation:none;
     }
     #openSheet.fx-random-gold .box-open-stage.stage-show-result .open-stage-box-wrap,
     #openSheet.fx-random-gold .box-open-stage.stage-show-result .open-stage-clouds,
@@ -2711,7 +2733,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.91</span>
+          <span class="dev-version-label">DEV v0.1.92</span>
         </div>
       </header>
 
@@ -2752,7 +2774,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.91</span>
+            <span class="dev-version-label">DEV v0.1.92</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
