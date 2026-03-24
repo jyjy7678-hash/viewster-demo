@@ -2505,10 +2505,10 @@
           <button class="tool-btn" data-add="60">+1분</button>
           <button class="tool-btn" data-reward-set="595">+보상</button>
           <button class="tool-btn" data-add="600">+10분</button>
-          <button class="tool-btn" data-open-speed="0.6">x0.6</button>
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
+          <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.74</span>
+          <span class="dev-version-label">DEV v0.1.75</span>
         </div>
       </header>
 
@@ -2545,10 +2545,10 @@
             <button class="tool-btn" data-add="60">+1분</button>
             <button class="tool-btn" data-reward-set="595">+보상</button>
             <button class="tool-btn" data-add="600">+10분</button>
-            <button class="tool-btn" data-open-speed="0.6">x0.6</button>
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
+            <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.74</span>
+            <span class="dev-version-label">DEV v0.1.75</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3521,31 +3521,16 @@ window.addEventListener("resize", clampMiniPosition);
       const isRandomXVideo = src === RANDOM_X_VIDEO_SRC;
       let slowFxShown = false;
       const handleTimeUpdate = () => {
-        if(!isRandomGoldVideo && !isRandomXVideo){
+        if(!isRandomGoldVideo){
           return;
         }
-        if(openStageVideo.currentTime <= 1.0){
-          openStageVideo.playbackRate = 1;
-          return;
-        }
-
-        if(isRandomXVideo){
-          openStageVideo.playbackRate = state.openStageMidPlaybackRate;
-          return;
-        }
-
         if(!Number.isFinite(openStageVideo.duration) || openStageVideo.duration <= 0){
           return;
         }
         const remaining = openStageVideo.duration - openStageVideo.currentTime;
-        if(remaining <= 0.6){
-          openStageVideo.playbackRate = 0.68;
-        if(!slowFxShown){
+        if(remaining <= 0.6 && !slowFxShown){
           slowFxShown = true;
           openStage.classList.add("is-random-gold-slowfx");
-        }
-      } else {
-          openStageVideo.playbackRate = state.openStageMidPlaybackRate;
         }
       };
       const finish = () => {
@@ -3569,7 +3554,7 @@ window.addEventListener("resize", clampMiniPosition);
       openStageVideo.setAttribute("webkit-playsinline", "");
       openStageVideo.onended = finish;
       openStageVideo.onerror = finish;
-      openStageVideo.playbackRate = 1;
+      openStageVideo.playbackRate = (isRandomGoldVideo || isRandomXVideo) ? state.openStageMidPlaybackRate : 1;
       openStageVideo.addEventListener("timeupdate", handleTimeUpdate);
 
       if(openStageVideoSource){
