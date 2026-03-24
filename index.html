@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.80 -->
+<!-- Version: v0.1.83 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1708,6 +1708,23 @@
     .box-open-stage.stage-video-playing .open-stage-clouds{
       opacity:0;
     }
+    /* RandomX/RandomG mp4 재생 중에는 랜덤 박스 레이어를 완전히 숨김 */
+    #openSheet.fx-random-fail .box-open-stage.stage-video-playing .open-stage-box-wrap,
+    #openSheet.fx-random-fail .box-open-stage.stage-video-playing .box-open-text,
+    #openSheet.fx-random-fail .box-open-stage.stage-video-playing .open-stage-clouds,
+    #openSheet.fx-random-gold .box-open-stage.stage-video-playing .open-stage-box-wrap,
+    #openSheet.fx-random-gold .box-open-stage.stage-video-playing .box-open-text,
+    #openSheet.fx-random-gold .box-open-stage.stage-video-playing .open-stage-clouds{
+      display:none;
+    }
+    #openSheet.fx-random-fail .box-open-stage.stage-video-playing::before,
+    #openSheet.fx-random-fail .box-open-stage.stage-video-playing::after,
+    #openSheet.fx-random-fail .box-open-stage.stage-video-playing .open-stage-backdrop,
+    #openSheet.fx-random-gold .box-open-stage.stage-video-playing::before,
+    #openSheet.fx-random-gold .box-open-stage.stage-video-playing::after,
+    #openSheet.fx-random-gold .box-open-stage.stage-video-playing .open-stage-backdrop{
+      display:none;
+    }
     .open-stage-result{
       position:absolute;
       inset:0;
@@ -2538,7 +2555,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.82</span>
+          <span class="dev-version-label">DEV v0.1.83</span>
         </div>
       </header>
 
@@ -2579,7 +2596,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.82</span>
+            <span class="dev-version-label">DEV v0.1.83</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
