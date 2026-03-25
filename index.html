@@ -1629,6 +1629,80 @@
     .box-open-stage.stage-animating .open-stage-box-wrap.is-final-gold::before{
       background:radial-gradient(circle, rgba(253,224,71,.26) 0%, rgba(245,158,11,0) 72%);
     }
+    /* Goldbox cinematic slot reel: centered front-view effect. */
+    .gold-slot-reel{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%, -50%);
+      width:152px;
+      height:172px;
+      border-radius:20px;
+      border:1px solid rgba(251,191,36,.38);
+      background:linear-gradient(180deg, rgba(14,9,2,.72) 0%, rgba(33,18,2,.6) 100%);
+      box-shadow:0 16px 36px rgba(0,0,0,.46), inset 0 0 22px rgba(251,191,36,.12);
+      overflow:hidden;
+      opacity:0;
+      pointer-events:none;
+      z-index:7;
+    }
+    .gold-slot-reel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(14,9,2,.8), rgba(14,9,2,0) 26%, rgba(14,9,2,0) 72%, rgba(14,9,2,.86));
+      z-index:2;
+    }
+    .gold-slot-track{
+      position:absolute;
+      left:0;
+      right:0;
+      top:-8px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:12px;
+      animation:goldSlotDown 1.4s cubic-bezier(.12,.68,.24,1) both;
+    }
+    .gold-slot-item{
+      color:#fde68a;
+      font-size:14px;
+      letter-spacing:.2em;
+      font-weight:900;
+      text-shadow:0 0 12px rgba(250,204,21,.38);
+      text-transform:uppercase;
+      line-height:1;
+      white-space:nowrap;
+    }
+    .gold-slot-item.main{
+      font-size:26px;
+      letter-spacing:.16em;
+      color:#fff7cc;
+    }
+    .box-open-stage.is-gold-cinematic{
+      background:linear-gradient(180deg, #3e2909 0%, #1f1405 54%, #100900 100%);
+    }
+    .box-open-stage.is-gold-cinematic .open-stage-backdrop{
+      background:
+        radial-gradient(circle at 50% 32%, rgba(250,204,21,.2), transparent 28%),
+        radial-gradient(circle at 50% 82%, rgba(217,119,6,.2), transparent 42%);
+      opacity:1;
+    }
+    .box-open-stage.show-gold-slot .gold-slot-reel{
+      animation:goldSlotReelIn .24s ease-out both, goldSlotReelOut .42s ease-in 1.58s forwards;
+    }
+    .box-open-stage.show-gold-slot .gold-slot-track{
+      animation:goldSlotDown 1.35s cubic-bezier(.12,.68,.24,1) both;
+    }
+    .box-open-stage.show-gold-slot .gift-box-glow{
+      animation:goldLightBurst .88s ease-out both;
+    }
+    .box-open-stage.show-gold-slot #boxIconStage .gift-lid{
+      animation:giftLidMechanical .66s steps(4,end) .26s both;
+    }
+    .box-open-stage.show-gold-slot #boxIconStage .gift-ribbon-knot{
+      animation:giftRibbonMechanical .66s steps(4,end) .26s both;
+    }
     .box-open-text{
       position:absolute;
       left:50%;
@@ -1892,6 +1966,31 @@
       0%{opacity:0; transform:translate3d(0,0,0) scale(.2);}
       30%{opacity:.24; transform:translate3d(0,-1px,0) scale(.42);}
       100%{opacity:0; transform:translate3d(calc(var(--spark-x, 0) * .22), calc(var(--spark-y, -20px) * .16), 0) scale(.18);}
+    }
+    @keyframes goldSlotReelIn{
+      0%{opacity:0; transform:translate(-50%, -40%) scale(.86);}
+      100%{opacity:1; transform:translate(-50%, -50%) scale(1);}
+    }
+    @keyframes goldSlotReelOut{
+      0%{opacity:1; transform:translate(-50%, -50%) scale(1);}
+      100%{opacity:0; transform:translate(-50%, -58%) scale(.96);}
+    }
+    @keyframes goldSlotDown{
+      0%{transform:translateY(-58%);}
+      100%{transform:translateY(48%);}
+    }
+    @keyframes goldLightBurst{
+      0%{opacity:0; transform:scale(.72);}
+      34%{opacity:1; transform:scale(1.08);}
+      100%{opacity:.12; transform:scale(1.22);}
+    }
+    @keyframes giftLidMechanical{
+      0%{transform:translateX(-50%) translateY(0) rotate(0deg);}
+      100%{transform:translateX(-50%) translateY(-42px) rotate(-14deg);}
+    }
+    @keyframes giftRibbonMechanical{
+      0%{transform:translateX(-50%) translateY(0);}
+      100%{transform:translateX(-50%) translateY(-46px);}
     }
     @keyframes giftBoxLidQuickOpen{
       0%,24%{transform:translateX(-50%) translateY(0) rotate(0deg);}
@@ -2943,6 +3042,18 @@
             </div>
           </div>
         </div>
+        <div class="gold-slot-reel" id="goldSlotReel" aria-hidden="true">
+          <div class="gold-slot-track">
+            <span class="gold-slot-item">VIEWSTER</span>
+            <span class="gold-slot-item">REWARD</span>
+            <span class="gold-slot-item main">GOLDBOX</span>
+            <span class="gold-slot-item">VIEWSTER</span>
+            <span class="gold-slot-item">REWARD</span>
+            <span class="gold-slot-item main">GOLDBOX</span>
+            <span class="gold-slot-item">VIEWSTER</span>
+            <span class="gold-slot-item">REWARD</span>
+          </div>
+        </div>
         <div class="box-open-text" id="openStageText"></div>
         <div class="open-stage-clouds" id="openStageClouds" aria-hidden="true">
           <span class="open-stage-cloud cloud-a"></span>
@@ -3136,6 +3247,7 @@
     const openStageVideo = document.getElementById("openStageVideo");
     const openStageVideoSource = document.getElementById("openStageVideoSource");
     const openStageBoxWrap = document.getElementById("openStageBoxWrap");
+    const goldSlotReel = document.getElementById("goldSlotReel");
     const openStageResult = document.getElementById("openStageResult");
     const openResultAmount = document.getElementById("openResultAmount");
     const openResultSub = document.getElementById("openResultSub");
@@ -3879,6 +3991,12 @@ window.addEventListener("resize", clampMiniPosition);
       openStageVideo.onerror = null;
     }
 
+    function resetGoldSlotReel(){
+      openStage.classList.remove("is-gold-cinematic", "show-gold-slot");
+      if(!goldSlotReel) return;
+      void goldSlotReel.offsetWidth;
+    }
+
     function applyOpenStagePlaybackRate(){
       const isRandomXVideo = openStageVideo.currentSrc.includes("X_view.mp4");
       const isRandomGVideo = openStageVideo.currentSrc.includes("G_view.mp4");
@@ -4159,6 +4277,7 @@ window.addEventListener("resize", clampMiniPosition);
       openResultAmount.textContent = "";
       openResultSub.textContent = "";
       stopOpenStageVideo();
+      resetGoldSlotReel();
     }
 
     function setOpenStageMessage(message, options = {}){
@@ -4311,10 +4430,19 @@ window.addEventListener("resize", clampMiniPosition);
       setOpenBoxBtnMode("busy", sequence.busyLabel);
 
       if(state.openType === "gold"){
+        openStage.classList.add("is-gold-cinematic");
+        scheduleOpenStageTimer(() => {
+          openStage.classList.add("show-gold-slot");
+        }, 160);
+        scheduleOpenStageTimer(() => {
+          openStage.classList.remove("show-gold-slot");
+        }, 2100);
         scheduleOpenStageTimer(() => {
           openStageBoxWrap.classList.add("is-final-gold");
           openStageBoxWrap.classList.add("is-opening-final");
         }, Math.max(sequence.revealDelay - 900, 0));
+      } else {
+        openStage.classList.remove("is-gold-cinematic", "show-gold-slot");
       }
 
       const revealResult = () => {
