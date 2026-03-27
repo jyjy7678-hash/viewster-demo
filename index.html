@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.2.00 -->
+<!-- Version: v0.2.01 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2469,37 +2469,89 @@
       text-shadow:0 0 16px rgba(148,163,184,.22);
     }
     .open-stage-result.gold-win .result-sub{order:2;}
-    .open-stage-result.gold-tier-basic .result-sub{
-      color:#fde68a;
-      text-shadow:0 0 10px rgba(250,204,21,.34);
+    .open-stage-result.gold-win{
+      --gold-tier-glow:.18;
+      --gold-tier-halo:.34;
+      --gold-tier-spark:.46;
+      --gold-tier-pulse-speed:1.22s;
+      --gold-tier-halo-scale:1.08;
+      --gold-tier-spark-speed:1.28s;
     }
-    .open-stage-result.gold-tier-good .result-sub{
-      color:#fef08a;
-      text-shadow:0 0 12px rgba(250,204,21,.42);
+    .open-stage-result.gold-tier-basic{
+      --gold-tier-glow:.16;
+      --gold-tier-halo:.3;
+      --gold-tier-spark:.38;
+      --gold-tier-pulse-speed:1.28s;
+      --gold-tier-halo-scale:1.06;
+      --gold-tier-spark-speed:1.34s;
     }
-    .open-stage-result.gold-tier-great .result-sub{
-      color:#facc15;
-      text-shadow:0 0 14px rgba(250,204,21,.52), 0 0 28px rgba(250,204,21,.26);
+    .open-stage-result.gold-tier-good{
+      --gold-tier-glow:.22;
+      --gold-tier-halo:.4;
+      --gold-tier-spark:.52;
+      --gold-tier-pulse-speed:1.16s;
+      --gold-tier-halo-scale:1.1;
+      --gold-tier-spark-speed:1.2s;
     }
-    .open-stage-result.gold-tier-best .result-sub{
-      color:#fef3c7;
-      text-shadow:0 0 16px rgba(251,191,36,.66), 0 0 34px rgba(250,204,21,.3);
+    .open-stage-result.gold-tier-great{
+      --gold-tier-glow:.3;
+      --gold-tier-halo:.56;
+      --gold-tier-spark:.68;
+      --gold-tier-pulse-speed:1s;
+      --gold-tier-halo-scale:1.15;
+      --gold-tier-spark-speed:1.06s;
     }
-    .open-stage-result.gold-tier-dream .result-sub{
-      color:#fff;
-      text-shadow:0 0 18px rgba(250,204,21,.78), 0 0 40px rgba(250,204,21,.4);
-      animation:goldWinTextPop .62s cubic-bezier(.22,1,.36,1) both;
+    .open-stage-result.gold-tier-best{
+      --gold-tier-glow:.38;
+      --gold-tier-halo:.72;
+      --gold-tier-spark:.82;
+      --gold-tier-pulse-speed:.92s;
+      --gold-tier-halo-scale:1.2;
+      --gold-tier-spark-speed:.96s;
+    }
+    .open-stage-result.gold-tier-dream{
+      --gold-tier-glow:.46;
+      --gold-tier-halo:.88;
+      --gold-tier-spark:1;
+      --gold-tier-pulse-speed:.82s;
+      --gold-tier-halo-scale:1.26;
+      --gold-tier-spark-speed:.86s;
     }
     .open-stage-result.gold-win .result-gold-box{
       order:1;
       width:92px;
       height:92px;
     }
+    .open-stage-result.gold-win .result-gold-box::before,
+    .open-stage-result.gold-win .result-gold-box::after{
+      content:"";
+      position:absolute;
+      inset:-8px;
+      pointer-events:none;
+      z-index:1;
+      border-radius:50%;
+    }
+    .open-stage-result.gold-win .result-gold-box::before{
+      background:
+        radial-gradient(circle at 14% 24%, rgba(255,251,220,var(--gold-tier-spark, .46)) 0 2px, transparent 3px),
+        radial-gradient(circle at 86% 20%, rgba(255,247,186,var(--gold-tier-spark, .46)) 0 2px, transparent 3px),
+        radial-gradient(circle at 18% 76%, rgba(255,240,168,var(--gold-tier-spark, .46)) 0 1.8px, transparent 2.9px),
+        radial-gradient(circle at 84% 80%, rgba(255,250,222,var(--gold-tier-spark, .46)) 0 1.8px, transparent 2.9px),
+        radial-gradient(circle at 50% 10%, rgba(255,253,236,var(--gold-tier-spark, .46)) 0 1.6px, transparent 2.8px),
+        radial-gradient(circle at 50% 90%, rgba(255,244,176,var(--gold-tier-spark, .46)) 0 1.6px, transparent 2.8px);
+      animation:goldSparkleTwinkle var(--gold-tier-spark-speed, 1.28s) ease-in-out infinite;
+    }
+    .open-stage-result.gold-win .result-gold-box::after{
+      background:radial-gradient(circle, rgba(250,204,21,var(--gold-tier-halo, .34)) 0%, rgba(250,204,21,.14) 46%, rgba(250,204,21,0) 74%);
+      transform:scale(var(--gold-tier-halo-scale, 1.08));
+      filter:blur(1px);
+      animation:goldSparkleHalo calc(var(--gold-tier-pulse-speed, 1.22s) + .2s) ease-in-out infinite;
+    }
     .open-stage-result.gold-win .result-gold-box .gift-box{
       width:92px;
       height:92px;
-      filter:drop-shadow(0 10px 22px rgba(0,0,0,.24));
-      animation:goldBoxHeroPulse 1.22s ease-in-out .16s infinite;
+      filter:drop-shadow(0 10px 22px rgba(0,0,0,.24)) drop-shadow(0 0 20px rgba(250,204,21,var(--gold-tier-glow, .18)));
+      animation:goldBoxHeroPulse var(--gold-tier-pulse-speed, 1.22s) ease-in-out .16s infinite;
     }
     /* RandomG 결과 전용: 잔상 없이 단순한 네모 선물상자 + 리본 */
     .result-gold-box .gift-box::before,
@@ -2845,7 +2897,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.00</span>
+          <span class="dev-version-label">DEV v0.2.01</span>
         </div>
       </header>
 
@@ -2886,7 +2938,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.00</span>
+            <span class="dev-version-label">DEV v0.2.01</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3992,9 +4044,12 @@ window.addEventListener("resize", clampMiniPosition);
       const endLoop = 1;
       const startIndex = (startLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
+      const finalHoldItems = 2;
       const startY = -(startIndex * itemHeight);
+      const preEndY = -((endIndex + finalHoldItems) * itemHeight);
       const endY = -(endIndex * itemHeight);
-      const reelDuration = randomInt(4200, 5200);
+      const reelDuration = randomInt(4300, 5400);
+      const finalSettleDuration = randomInt(620, 760);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
@@ -4003,32 +4058,39 @@ window.addEventListener("resize", clampMiniPosition);
         goldReelOverlay.classList.add("show");
         requestAnimationFrame(() => {
           goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.06,.74,.12,1)`;
-          goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
+          goldReelTrack.style.transform = `translate3d(0, ${preEndY}px, 0)`;
         });
       });
 
       const done = () => {
-        goldReelTrack.removeEventListener("transitionend", done);
         onDone();
       };
+      const startFinalSettle = () => {
+        goldReelTrack.removeEventListener("transitionend", startFinalSettle);
+        requestAnimationFrame(() => {
+          goldReelTrack.style.transition = `transform ${finalSettleDuration}ms cubic-bezier(.2,.66,.1,1)`;
+          goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
+        });
+        goldReelTrack.addEventListener("transitionend", done, { once: true });
+      };
 
-      goldReelTrack.addEventListener("transitionend", done, { once: true });
+      goldReelTrack.addEventListener("transitionend", startFinalSettle, { once: true });
     }
 
     function getGoldResultCelebrateMeta(reward){
       if(reward >= 1000000){
-        return { text: "꿈이야 생시야", tierClass: "gold-tier-dream" };
+        return { tierClass: "gold-tier-dream" };
       }
       if(reward >= 100000){
-        return { text: "최고다", tierClass: "gold-tier-best" };
+        return { tierClass: "gold-tier-best" };
       }
       if(reward >= 50000){
-        return { text: "와 대박", tierClass: "gold-tier-great" };
+        return { tierClass: "gold-tier-great" };
       }
       if(reward >= 10000){
-        return { text: "오 좋아", tierClass: "gold-tier-good" };
+        return { tierClass: "gold-tier-good" };
       }
-      return { text: "축하", tierClass: "gold-tier-basic" };
+      return { tierClass: "gold-tier-basic" };
     }
 
     function clearGoldResultTierClass(){
@@ -4379,7 +4441,7 @@ window.addEventListener("resize", clampMiniPosition);
       clearGoldResultTierClass();
       openStageResult.classList.toggle("show-gold-box", showGoldBox);
       openStageResult.classList.toggle("gold-win", showGoldWin);
-      if(state.openType === "gold" && subText){
+      if(state.openType === "gold"){
         openStageResult.classList.add(getGoldResultCelebrateMeta(Number(amountText.replace(/[^0-9]/g, "")) || 0).tierClass);
       }
       openStage.classList.add("stage-show-result");
@@ -4552,12 +4614,9 @@ window.addEventListener("resize", clampMiniPosition);
             });
           }
         } else {
-          const goldResultCelebrateMeta = state.openType === "gold"
-            ? getGoldResultCelebrateMeta(result.reward)
-            : null;
           showOpenStageResult({
             amountText: `${result.reward.toLocaleString()} P`,
-            subText: goldResultCelebrateMeta ? goldResultCelebrateMeta.text : "",
+            subText: "",
             keepVideoFrame: state.openType === "gold"
           });
         }
