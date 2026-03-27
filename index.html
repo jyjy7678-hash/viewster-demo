@@ -1694,7 +1694,7 @@
       height:100%;
       object-fit:cover;
       border-radius:26px;
-      z-index:5;
+      z-index:1;
       opacity:0;
       pointer-events:none;
       transition:opacity .24s ease;
@@ -1702,6 +1702,63 @@
     }
     .box-open-stage.stage-video-playing .open-stage-video{
       opacity:1;
+    }
+    .gold-reel-overlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      opacity:0;
+      pointer-events:none;
+      z-index:5;
+      transition:opacity .18s ease;
+    }
+    .gold-reel-overlay.show{
+      opacity:1;
+    }
+    .gold-reel-window{
+      width:min(72vw, 220px);
+      height:60px;
+      border-radius:16px;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(5,7,15,.72), rgba(5,7,15,.4));
+      border:1px solid rgba(255,255,255,.22);
+      box-shadow:0 14px 28px rgba(0,0,0,.28);
+      position:relative;
+    }
+    .gold-reel-window::before,
+    .gold-reel-window::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      height:16px;
+      z-index:2;
+      pointer-events:none;
+    }
+    .gold-reel-window::before{
+      top:0;
+      background:linear-gradient(180deg, rgba(3,7,18,.76), rgba(3,7,18,0));
+    }
+    .gold-reel-window::after{
+      bottom:0;
+      background:linear-gradient(0deg, rgba(3,7,18,.76), rgba(3,7,18,0));
+    }
+    .gold-reel-track{
+      transform:translate3d(0, 0, 0);
+      will-change:transform;
+    }
+    .gold-reel-item{
+      height:60px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:28px;
+      letter-spacing:.02em;
+      color:#fde68a;
+      text-shadow:0 6px 14px rgba(0,0,0,.45);
     }
     .box-open-stage.stage-video-playing .open-stage-box-wrap,
     .box-open-stage.stage-video-playing .box-open-text,
@@ -1736,7 +1793,7 @@
       padding:24px;
       opacity:0;
       pointer-events:none;
-      z-index:6;
+      z-index:10;
       transition:opacity .18s ease .16s;
     }
     .box-open-stage.stage-show-result .open-stage-result{
@@ -1744,7 +1801,7 @@
     }
     .box-open-stage.stage-video-playing.is-random-gold-slowfx .open-stage-result{
       opacity:1;
-      z-index:6;
+      z-index:10;
       transition:none;
     }
     .result-gold-box{
@@ -2749,7 +2806,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.94</span>
+          <span class="dev-version-label">DEV v0.1.95</span>
         </div>
       </header>
 
@@ -2790,7 +2847,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.94</span>
+            <span class="dev-version-label">DEV v0.1.95</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2920,6 +2977,11 @@
         <video class="open-stage-video" id="openStageVideo" autoplay muted playsinline webkit-playsinline preload="auto" aria-hidden="true">
           <source id="openStageVideoSource" src="" type="video/mp4" />
         </video>
+        <div class="gold-reel-overlay" id="goldReelOverlay" aria-hidden="true">
+          <div class="gold-reel-window">
+            <div class="gold-reel-track" id="goldReelTrack"></div>
+          </div>
+        </div>
         <div class="open-stage-box-wrap" id="openStageBoxWrap">
           <div class="box-icon box-pop is-random-box" id="boxIconStage">
             <span class="box-core-glow" aria-hidden="true"></span>
@@ -3094,11 +3156,14 @@
     ];
 
     const goldBoxTable = [
-      { value: 5000, weight: 48 },
-      { value: 10000, weight: 28 },
-      { value: 50000, weight: 16 },
-      { value: 100000, weight: 7 },
-      { value: 1000000, weight: 1 }
+      { value: 500, weight: 22 },
+      { value: 1000, weight: 20 },
+      { value: 5000, weight: 18 },
+      { value: 10000, weight: 15 },
+      { value: 50000, weight: 10 },
+      { value: 100000, weight: 8 },
+      { value: 500000, weight: 5 },
+      { value: 1000000, weight: 2 }
     ];
 
     const boxResultTypeTable = [
@@ -3138,6 +3203,8 @@
     const openStageVideoSource = document.getElementById("openStageVideoSource");
     const openStageBoxWrap = document.getElementById("openStageBoxWrap");
     const openStageResult = document.getElementById("openStageResult");
+    const goldReelOverlay = document.getElementById("goldReelOverlay");
+    const goldReelTrack = document.getElementById("goldReelTrack");
     const openResultAmount = document.getElementById("openResultAmount");
     const openResultSub = document.getElementById("openResultSub");
     const openBoxBtn = document.getElementById("openBoxBtn");
@@ -3835,6 +3902,8 @@ window.addEventListener("resize", clampMiniPosition);
     const openSheetFxClasses = ["fx-random-normal", "fx-random-fail", "fx-random-gold", "fx-gold-open"];
     const RANDOM_X_VIDEO_SRC = "./assets/X_view.mp4";
     const RANDOM_G_VIDEO_SRC = "./assets/G_view.mp4";
+    const GOLD_BOX_OPEN_VIDEO_SRC = "./assets/goldbox_open.mp4";
+    const GOLD_BOX_REEL_VALUES = [500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000];
 
     function resetSheetScroll(id){
       const sheet = document.getElementById(id);
@@ -3850,6 +3919,60 @@ window.addEventListener("resize", clampMiniPosition);
       const hasOpenSheet = !!document.querySelector(".sheet.show");
       document.body.style.overflowY = hasOpenSheet ? "hidden" : "";
       document.documentElement.style.overflowY = hasOpenSheet ? "hidden" : "";
+    }
+
+    function resetGoldReelOverlay(){
+      if(!goldReelOverlay || !goldReelTrack) return;
+      goldReelOverlay.classList.remove("show");
+      goldReelTrack.style.transition = "none";
+      goldReelTrack.style.transform = "translate3d(0, 0, 0)";
+      goldReelTrack.innerHTML = "";
+    }
+
+    function playGoldReelOverlay(targetReward, onDone){
+      if(!goldReelOverlay || !goldReelTrack){
+        onDone();
+        return;
+      }
+
+      const targetIndex = Math.max(GOLD_BOX_REEL_VALUES.indexOf(targetReward), 0);
+      const loops = 12;
+      const totalItems = [];
+      for(let i = 0; i < loops; i += 1){
+        totalItems.push(...GOLD_BOX_REEL_VALUES);
+      }
+
+      goldReelTrack.innerHTML = totalItems
+        .map(value => `<div class="gold-reel-item">${value.toLocaleString()}</div>`)
+        .join("");
+
+      const reelItem = goldReelTrack.querySelector(".gold-reel-item");
+      const itemHeight = reelItem ? reelItem.offsetHeight : 60;
+      const startLoop = loops - 1;
+      const endLoop = 1;
+      const startIndex = (startLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
+      const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
+      const startY = -(startIndex * itemHeight);
+      const endY = -(endIndex * itemHeight);
+      const reelDuration = randomInt(2200, 2800);
+
+      goldReelTrack.style.transition = "none";
+      goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
+
+      requestAnimationFrame(() => {
+        goldReelOverlay.classList.add("show");
+        requestAnimationFrame(() => {
+          goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.1,.84,.2,1)`;
+          goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
+        });
+      });
+
+      const done = () => {
+        goldReelTrack.removeEventListener("transitionend", done);
+        onDone();
+      };
+
+      goldReelTrack.addEventListener("transitionend", done, { once: true });
     }
 
     function resetRewardAdState(){
@@ -3888,7 +4011,7 @@ window.addEventListener("resize", clampMiniPosition);
       }
     }
 
-    function playOpenStageVideo(src, onDone, onRandomGoldLead){
+    function playOpenStageVideo(src, onDone, onRandomGoldLead, options = {}){
       if(!src){
         onDone();
         return;
@@ -3897,6 +4020,7 @@ window.addEventListener("resize", clampMiniPosition);
       let done = false;
       const isRandomGoldVideo = src === RANDOM_G_VIDEO_SRC;
       const isRandomXVideo = src === RANDOM_X_VIDEO_SRC;
+      const keepLastFrame = !!options.keepLastFrame;
       let slowFxShown = false;
       let goldLeadTextShown = false;
       const handleTimeUpdate = () => {
@@ -3925,9 +4049,9 @@ window.addEventListener("resize", clampMiniPosition);
         openStageVideo.onended = null;
         openStageVideo.onerror = null;
         openStage.classList.remove("is-random-gold-slowfx");
-        if(isRandomGoldVideo && Number.isFinite(openStageVideo.duration) && openStageVideo.duration > 0){
+        if((isRandomGoldVideo || keepLastFrame) && Number.isFinite(openStageVideo.duration) && openStageVideo.duration > 0){
           openStageVideo.pause();
-          openStageVideo.currentTime = openStageVideo.duration;
+          openStageVideo.currentTime = Math.max(openStageVideo.duration - 0.03, 0);
         }
         openStageVideo.playbackRate = 1;
         onDone();
@@ -4029,7 +4153,8 @@ window.addEventListener("resize", clampMiniPosition);
           busyLabel: "황금상자 준비 중",
           duration: 3000,
           revealDelay: 2200,
-          autoCloseDelay: 3000
+          autoCloseDelay: 3000,
+          videoSrc: GOLD_BOX_OPEN_VIDEO_SRC
         };
       }
 
@@ -4159,6 +4284,7 @@ window.addEventListener("resize", clampMiniPosition);
       openStageText.textContent = "";
       openResultAmount.textContent = "";
       openResultSub.textContent = "";
+      resetGoldReelOverlay();
       stopOpenStageVideo();
     }
 
@@ -4172,6 +4298,7 @@ window.addEventListener("resize", clampMiniPosition);
       openStageText.textContent = message || "";
       openResultAmount.textContent = "";
       openResultSub.textContent = "";
+      resetGoldReelOverlay();
     }
 
     function showOpenStageResult({ amountText, subText = "", showGoldBox = false, showGoldWin = false, keepVideoFrame = false }){
@@ -4272,7 +4399,9 @@ window.addEventListener("resize", clampMiniPosition);
         variant: state.openType === "gold" ? "gold" : "random"
       });
 
-      const openDelay = (state.openType === "random" && (state.openForcedResultType === "chance_fail" || state.openForcedResultType === "chance_gold")) ? 0 : 180;
+      const openDelay = state.openType === "gold"
+        ? 1000
+        : ((state.openType === "random" && (state.openForcedResultType === "chance_fail" || state.openForcedResultType === "chance_gold")) ? 0 : 180);
       state.openTimer = setTimeout(() => {
         runBoxAnimation();
       }, openDelay);
@@ -4365,6 +4494,14 @@ window.addEventListener("resize", clampMiniPosition);
 
       if(sequence.videoSrc){
         playOpenStageVideo(sequence.videoSrc, () => {
+          if(state.openType === "gold"){
+            scheduleOpenStageTimer(() => {
+              playGoldReelOverlay(result.reward, () => {
+                revealResult();
+              });
+            }, 150);
+            return;
+          }
           if(state.openType === "random" && result.type === "chance_gold"){
             revealResult();
             return;
@@ -4380,6 +4517,8 @@ window.addEventListener("resize", clampMiniPosition);
             subText: "황금박스 획득",
             keepVideoFrame: true
           });
+        }, {
+          keepLastFrame: state.openType === "gold"
         });
         return;
       }
