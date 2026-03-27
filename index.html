@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.88 -->
+<!-- Version: v0.2.00 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2845,7 +2845,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.99</span>
+          <span class="dev-version-label">DEV v0.2.00</span>
         </div>
       </header>
 
@@ -2886,7 +2886,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.99</span>
+            <span class="dev-version-label">DEV v0.2.00</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4061,6 +4061,7 @@ window.addEventListener("resize", clampMiniPosition);
       openStageVideo.load();
       openStageVideo.onended = null;
       openStageVideo.onerror = null;
+      openStageVideo.onplaying = null;
     }
 
     function applyOpenStagePlaybackRate(){
@@ -4081,6 +4082,9 @@ window.addEventListener("resize", clampMiniPosition);
       const isRandomGoldVideo = src === RANDOM_G_VIDEO_SRC;
       const isRandomXVideo = src === RANDOM_X_VIDEO_SRC;
       const keepLastFrame = !!options.keepLastFrame;
+      const nearEndLeadSeconds = Number.isFinite(options.nearEndLeadSeconds) ? Math.max(options.nearEndLeadSeconds, 0) : 0;
+      const onNearEnd = typeof options.onNearEnd === "function" ? options.onNearEnd : null;
+      let nearEndTriggered = false;
       let slowFxShown = false;
       let goldLeadTextShown = false;
       const handleTimeUpdate = () => {
@@ -4101,6 +4105,10 @@ window.addEventListener("resize", clampMiniPosition);
             onRandomGoldLead();
           }
         }
+        if(onNearEnd && !nearEndTriggered && remaining <= nearEndLeadSeconds){
+          nearEndTriggered = true;
+          onNearEnd();
+        }
       };
       const finish = () => {
         if(done) return;
@@ -4108,6 +4116,7 @@ window.addEventListener("resize", clampMiniPosition);
         openStageVideo.removeEventListener("timeupdate", handleTimeUpdate);
         openStageVideo.onended = null;
         openStageVideo.onerror = null;
+        openStageVideo.onplaying = null;
         openStage.classList.remove("is-random-gold-slowfx");
         if((isRandomGoldVideo || keepLastFrame) && Number.isFinite(openStageVideo.duration) && openStageVideo.duration > 0){
           openStageVideo.pause();
@@ -4117,7 +4126,6 @@ window.addEventListener("resize", clampMiniPosition);
         onDone();
       };
 
-      openStage.classList.add("stage-video-playing");
       openStageVideo.muted = true;
       openStageVideo.autoplay = true;
       openStageVideo.playsInline = true;
@@ -4127,6 +4135,9 @@ window.addEventListener("resize", clampMiniPosition);
       openStageVideo.setAttribute("webkit-playsinline", "");
       openStageVideo.onended = finish;
       openStageVideo.onerror = finish;
+      openStageVideo.onplaying = () => {
+        openStage.classList.add("stage-video-playing");
+      };
       openStageVideo.playbackRate = (isRandomGoldVideo || isRandomXVideo) ? state.openStageMidPlaybackRate : 1;
       openStageVideo.addEventListener("timeupdate", handleTimeUpdate);
       bindVideoTimer(openStageVideo);
@@ -4562,13 +4573,33 @@ window.addEventListener("resize", clampMiniPosition);
       };
 
       if(sequence.videoSrc){
+        let goldVideoEnded = false;
+        let goldReelStarted = false;
+        let goldReelDone = false;
+
+        const tryRevealGoldResult = () => {
+          if(!goldVideoEnded || !goldReelDone){
+            return;
+          }
+          revealResult();
+        };
+
+        const startGoldReelEarly = () => {
+          if(state.openType !== "gold" || goldReelStarted){
+            return;
+          }
+          goldReelStarted = true;
+          playGoldReelOverlay(result.reward, () => {
+            goldReelDone = true;
+            tryRevealGoldResult();
+          });
+        };
+
         playOpenStageVideo(sequence.videoSrc, () => {
           if(state.openType === "gold"){
-            scheduleOpenStageTimer(() => {
-              playGoldReelOverlay(result.reward, () => {
-                revealResult();
-              });
-            }, 150);
+            goldVideoEnded = true;
+            startGoldReelEarly();
+            tryRevealGoldResult();
             return;
           }
           if(state.openType === "random" && result.type === "chance_gold"){
@@ -4587,7 +4618,9 @@ window.addEventListener("resize", clampMiniPosition);
             keepVideoFrame: true
           });
         }, {
-          keepLastFrame: state.openType === "gold"
+          keepLastFrame: state.openType === "gold",
+          nearEndLeadSeconds: state.openType === "gold" ? 2 : 0,
+          onNearEnd: state.openType === "gold" ? startGoldReelEarly : null
         });
         return;
       }
