@@ -2319,6 +2319,12 @@
       background:linear-gradient(180deg, #6f5cff 0%, #8f6bff 35%, #c77dff 65%, #f3a6ff 100%);
       animation:goldGlowPulse .9s ease 1;
     }
+    /* Goldbox 오픈에서는 기존 박스/CSS 오픈 애니메이션 레이어를 완전히 숨기고 mp4만 노출 */
+    #openSheet.fx-gold-open .open-stage-box-wrap,
+    #openSheet.fx-gold-open .box-open-text,
+    #openSheet.fx-gold-open .open-stage-clouds{
+      display:none;
+    }
     #openSheet.fx-random-gold .open-stage-box-wrap::before{
       background:radial-gradient(circle, rgba(59,130,246,.18) 0%, rgba(59,130,246,0) 72%);
     }
@@ -2809,7 +2815,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.96</span>
+          <span class="dev-version-label">DEV v0.1.97</span>
         </div>
       </header>
 
@@ -2850,7 +2856,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.96</span>
+            <span class="dev-version-label">DEV v0.1.97</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
