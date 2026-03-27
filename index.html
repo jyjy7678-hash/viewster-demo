@@ -2897,7 +2897,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.02</span>
+          <span class="dev-version-label">DEV v0.2.03</span>
         </div>
       </header>
 
@@ -2938,7 +2938,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.02</span>
+            <span class="dev-version-label">DEV v0.2.03</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4028,7 +4028,8 @@ window.addEventListener("resize", clampMiniPosition);
       }
 
       const targetIndex = Math.max(GOLD_BOX_REEL_VALUES.indexOf(targetReward), 0);
-      const loops = 14;
+      // 회전 길이를 조금 더 늘리고, 판마다 체감이 달라지도록 루프 수를 랜덤화합니다.
+      const loops = randomInt(16, 20);
       const totalItems = [];
       for(let i = 0; i < loops; i += 1){
         totalItems.push(...GOLD_BOX_REEL_VALUES);
@@ -4046,7 +4047,22 @@ window.addEventListener("resize", clampMiniPosition);
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const startY = -(startIndex * itemHeight);
       const endY = -(endIndex * itemHeight);
-      const reelDuration = randomInt(5000, 5900);
+      const decelTailItems = randomInt(26, 54);
+      const decelStartIndex = Math.min(startIndex - 1, endIndex + decelTailItems);
+      const decelStartY = -(decelStartIndex * itemHeight);
+      const phase1Duration = randomInt(3400, 5000);
+      const phase2Duration = randomInt(3000, 4600);
+      const phasePause = randomInt(40, 190);
+      const phase1Ease = randomPick([
+        "cubic-bezier(.05,.92,.18,1)",
+        "cubic-bezier(.08,.9,.2,1)",
+        "cubic-bezier(.1,.88,.22,1)"
+      ]);
+      const phase2Ease = randomPick([
+        "cubic-bezier(.16,.72,.2,1)",
+        "cubic-bezier(.19,.66,.22,1)",
+        "cubic-bezier(.14,.7,.2,1)"
+      ]);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
@@ -4054,16 +4070,23 @@ window.addEventListener("resize", clampMiniPosition);
       requestAnimationFrame(() => {
         goldReelOverlay.classList.add("show");
         requestAnimationFrame(() => {
-          // 최종 목표 위치까지 한 번에 감속 정지해 "한 칸 더" 느낌을 제거합니다.
-          goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.07,.8,.17,1)`;
-          goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
+          // 1차 구간은 빠르게 오래 돌고, 2차 구간에서 랜덤한 감속 체감을 만듭니다.
+          goldReelTrack.style.transition = `transform ${phase1Duration}ms ${phase1Ease}`;
+          goldReelTrack.style.transform = `translate3d(0, ${decelStartY}px, 0)`;
         });
       });
 
       const done = () => {
         onDone();
       };
-      goldReelTrack.addEventListener("transitionend", done, { once: true });
+      const runFinalDecel = () => {
+        goldReelTrack.style.transition = `transform ${phase2Duration}ms ${phase2Ease}`;
+        goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
+        goldReelTrack.addEventListener("transitionend", done, { once: true });
+      };
+      goldReelTrack.addEventListener("transitionend", () => {
+        setTimeout(runFinalDecel, phasePause);
+      }, { once: true });
     }
 
     function getGoldResultCelebrateMeta(reward){
