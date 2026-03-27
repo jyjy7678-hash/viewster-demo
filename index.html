@@ -2469,6 +2469,27 @@
       text-shadow:0 0 16px rgba(148,163,184,.22);
     }
     .open-stage-result.gold-win .result-sub{order:2;}
+    .open-stage-result.gold-tier-basic .result-sub{
+      color:#fde68a;
+      text-shadow:0 0 10px rgba(250,204,21,.34);
+    }
+    .open-stage-result.gold-tier-good .result-sub{
+      color:#fef08a;
+      text-shadow:0 0 12px rgba(250,204,21,.42);
+    }
+    .open-stage-result.gold-tier-great .result-sub{
+      color:#facc15;
+      text-shadow:0 0 14px rgba(250,204,21,.52), 0 0 28px rgba(250,204,21,.26);
+    }
+    .open-stage-result.gold-tier-best .result-sub{
+      color:#fef3c7;
+      text-shadow:0 0 16px rgba(251,191,36,.66), 0 0 34px rgba(250,204,21,.3);
+    }
+    .open-stage-result.gold-tier-dream .result-sub{
+      color:#fff;
+      text-shadow:0 0 18px rgba(250,204,21,.78), 0 0 40px rgba(250,204,21,.4);
+      animation:goldWinTextPop .62s cubic-bezier(.22,1,.36,1) both;
+    }
     .open-stage-result.gold-win .result-gold-box{
       order:1;
       width:92px;
@@ -2824,7 +2845,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.1.98</span>
+          <span class="dev-version-label">DEV v0.1.99</span>
         </div>
       </header>
 
@@ -2865,7 +2886,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.1.98</span>
+            <span class="dev-version-label">DEV v0.1.99</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3922,6 +3943,7 @@ window.addEventListener("resize", clampMiniPosition);
     const RANDOM_G_VIDEO_SRC = "./assets/G_view.mp4";
     const GOLD_BOX_OPEN_VIDEO_SRC = "./assets/goldbox_open.mp4";
     const GOLD_BOX_REEL_VALUES = [500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000];
+    const GOLD_RESULT_TIER_CLASSES = ["gold-tier-basic", "gold-tier-good", "gold-tier-great", "gold-tier-best", "gold-tier-dream"];
 
     function resetSheetScroll(id){
       const sheet = document.getElementById(id);
@@ -3954,7 +3976,7 @@ window.addEventListener("resize", clampMiniPosition);
       }
 
       const targetIndex = Math.max(GOLD_BOX_REEL_VALUES.indexOf(targetReward), 0);
-      const loops = 12;
+      const loops = 14;
       const totalItems = [];
       for(let i = 0; i < loops; i += 1){
         totalItems.push(...GOLD_BOX_REEL_VALUES);
@@ -3972,7 +3994,7 @@ window.addEventListener("resize", clampMiniPosition);
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const startY = -(startIndex * itemHeight);
       const endY = -(endIndex * itemHeight);
-      const reelDuration = randomInt(2200, 2800);
+      const reelDuration = randomInt(4200, 5200);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
@@ -3980,7 +4002,7 @@ window.addEventListener("resize", clampMiniPosition);
       requestAnimationFrame(() => {
         goldReelOverlay.classList.add("show");
         requestAnimationFrame(() => {
-          goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.1,.84,.2,1)`;
+          goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.06,.74,.12,1)`;
           goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
         });
       });
@@ -3991,6 +4013,26 @@ window.addEventListener("resize", clampMiniPosition);
       };
 
       goldReelTrack.addEventListener("transitionend", done, { once: true });
+    }
+
+    function getGoldResultCelebrateMeta(reward){
+      if(reward >= 1000000){
+        return { text: "꿈이야 생시야", tierClass: "gold-tier-dream" };
+      }
+      if(reward >= 100000){
+        return { text: "최고다", tierClass: "gold-tier-best" };
+      }
+      if(reward >= 50000){
+        return { text: "와 대박", tierClass: "gold-tier-great" };
+      }
+      if(reward >= 10000){
+        return { text: "오 좋아", tierClass: "gold-tier-good" };
+      }
+      return { text: "축하", tierClass: "gold-tier-basic" };
+    }
+
+    function clearGoldResultTierClass(){
+      openStageResult.classList.remove(...GOLD_RESULT_TIER_CLASSES);
     }
 
     function resetRewardAdState(){
@@ -4171,7 +4213,7 @@ window.addEventListener("resize", clampMiniPosition);
           busyLabel: "황금상자 준비 중",
           duration: 3000,
           revealDelay: 2200,
-          autoCloseDelay: 3000,
+          autoCloseDelay: 5200,
           videoSrc: GOLD_BOX_OPEN_VIDEO_SRC
         };
       }
@@ -4310,6 +4352,7 @@ window.addEventListener("resize", clampMiniPosition);
       openStage.classList.remove("stage-show-result");
       openStage.classList.toggle("stage-animating", !!options.animating);
       openStageResult.classList.remove("show-gold-box", "gold-win");
+      clearGoldResultTierClass();
       if(options.variant){
         setOpenStageVariant(options.variant);
       }
@@ -4322,8 +4365,12 @@ window.addEventListener("resize", clampMiniPosition);
     function showOpenStageResult({ amountText, subText = "", showGoldBox = false, showGoldWin = false, keepVideoFrame = false }){
       openResultAmount.textContent = amountText;
       openResultSub.textContent = subText;
+      clearGoldResultTierClass();
       openStageResult.classList.toggle("show-gold-box", showGoldBox);
       openStageResult.classList.toggle("gold-win", showGoldWin);
+      if(state.openType === "gold" && subText){
+        openStageResult.classList.add(getGoldResultCelebrateMeta(Number(amountText.replace(/[^0-9]/g, "")) || 0).tierClass);
+      }
       openStage.classList.add("stage-show-result");
       openStage.classList.remove("stage-animating");
       if(!keepVideoFrame){
@@ -4494,9 +4541,12 @@ window.addEventListener("resize", clampMiniPosition);
             });
           }
         } else {
+          const goldResultCelebrateMeta = state.openType === "gold"
+            ? getGoldResultCelebrateMeta(result.reward)
+            : null;
           showOpenStageResult({
             amountText: `${result.reward.toLocaleString()} P`,
-            subText: "",
+            subText: goldResultCelebrateMeta ? goldResultCelebrateMeta.text : "",
             keepVideoFrame: state.openType === "gold"
           });
         }
