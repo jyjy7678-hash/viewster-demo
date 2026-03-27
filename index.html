@@ -2897,7 +2897,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.01</span>
+          <span class="dev-version-label">DEV v0.2.02</span>
         </div>
       </header>
 
@@ -2938,7 +2938,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.01</span>
+            <span class="dev-version-label">DEV v0.2.02</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4044,12 +4044,9 @@ window.addEventListener("resize", clampMiniPosition);
       const endLoop = 1;
       const startIndex = (startLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
-      const finalHoldItems = 2;
       const startY = -(startIndex * itemHeight);
-      const preEndY = -((endIndex + finalHoldItems) * itemHeight);
       const endY = -(endIndex * itemHeight);
-      const reelDuration = randomInt(4300, 5400);
-      const finalSettleDuration = randomInt(620, 760);
+      const reelDuration = randomInt(5000, 5900);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
@@ -4057,24 +4054,16 @@ window.addEventListener("resize", clampMiniPosition);
       requestAnimationFrame(() => {
         goldReelOverlay.classList.add("show");
         requestAnimationFrame(() => {
-          goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.06,.74,.12,1)`;
-          goldReelTrack.style.transform = `translate3d(0, ${preEndY}px, 0)`;
+          // 최종 목표 위치까지 한 번에 감속 정지해 "한 칸 더" 느낌을 제거합니다.
+          goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.07,.8,.17,1)`;
+          goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
         });
       });
 
       const done = () => {
         onDone();
       };
-      const startFinalSettle = () => {
-        goldReelTrack.removeEventListener("transitionend", startFinalSettle);
-        requestAnimationFrame(() => {
-          goldReelTrack.style.transition = `transform ${finalSettleDuration}ms cubic-bezier(.2,.66,.1,1)`;
-          goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
-        });
-        goldReelTrack.addEventListener("transitionend", done, { once: true });
-      };
-
-      goldReelTrack.addEventListener("transitionend", startFinalSettle, { once: true });
+      goldReelTrack.addEventListener("transitionend", done, { once: true });
     }
 
     function getGoldResultCelebrateMeta(reward){
