@@ -2884,7 +2884,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.34</span>
+          <span class="dev-version-label">DEV v0.2.35</span>
         </div>
       </header>
 
@@ -2924,7 +2924,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.34</span>
+            <span class="dev-version-label">DEV v0.2.35</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4060,13 +4060,21 @@ window.addEventListener("resize", clampMiniPosition);
       const endLoop = 1;
       const startIndex = (startLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
-      const includeSlowExtraSlot = Math.random() < 0.2;
+      // 강도 테스트 체감을 위해 마지막 1칸 감속 구간은 항상 활성화한다.
+      const includeSlowExtraSlot = true;
       const startY = -(startIndex * itemHeight);
       const reelAppearDelay = 0;
       const settleFinalIndex = endIndex + GOLD_BOX_REEL_VALUES.length;
-      const settleDurationByStrength = { 1: 750, 2: 900, 3: 1000, 4: 1150, 5: 1300 };
+      const settleProfileByStrength = {
+        1: { duration: 420, easing: "cubic-bezier(.18,.84,.42,1)" },
+        2: { duration: 820, easing: "cubic-bezier(.14,.86,.32,1)" },
+        3: { duration: 1300, easing: "cubic-bezier(.08,.9,.22,1)" },
+        4: { duration: 1950, easing: "cubic-bezier(.04,.94,.14,1)" },
+        5: { duration: 2800, easing: "cubic-bezier(.01,.98,.08,1)" }
+      };
+      const settleProfile = settleProfileByStrength[goldSettleStrength] || settleProfileByStrength[3];
       const finalSegmentDuration = includeSlowExtraSlot
-        ? (settleDurationByStrength[goldSettleStrength] || 1000)
+        ? settleProfile.duration
         : 1000;
       const settlePreFinalIndex = includeSlowExtraSlot ? settleFinalIndex + 1 : settleFinalIndex;
       const reelDuration = randomInt(5900, 7200);
@@ -4084,7 +4092,7 @@ window.addEventListener("resize", clampMiniPosition);
             const keyframes = includeSlowExtraSlot
               ? [
                   { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.02,.9,.2,1)" },
-                  { offset: preFinalOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: "cubic-bezier(.18,.76,.32,1)" },
+                  { offset: preFinalOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: settleProfile.easing },
                   { transform: `translate3d(0, ${finalY}px, 0)` }
                 ]
               : [
