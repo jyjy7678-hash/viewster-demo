@@ -2861,7 +2861,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.19</span>
+          <span class="dev-version-label">DEV v0.2.20</span>
         </div>
       </header>
 
@@ -2901,7 +2901,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.19</span>
+            <span class="dev-version-label">DEV v0.2.20</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3990,7 +3990,7 @@ window.addEventListener("resize", clampMiniPosition);
       goldReelTrack.innerHTML = "";
     }
 
-    function playGoldReelOverlay(targetReward, onDone, videoStartedAt = 0){
+    function playGoldReelOverlay(targetReward, onDone){
       if(!goldReelOverlay || !goldReelTrack){
         onDone();
         return;
@@ -4015,8 +4015,7 @@ window.addEventListener("resize", clampMiniPosition);
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const startY = -(startIndex * itemHeight);
       const endY = -(endIndex * itemHeight);
-      const elapsedSinceVideoStart = videoStartedAt ? (Date.now() - videoStartedAt) : 0;
-      const reelAppearDelay = Math.max(2000 - elapsedSinceVideoStart, 0);
+      const reelAppearDelay = 0;
       const reelDuration = randomInt(6800, 8200);
 
       goldReelTrack.style.transition = "none";
@@ -4156,6 +4155,9 @@ window.addEventListener("resize", clampMiniPosition);
         const supportsFrameCallback = typeof openStageVideo.requestVideoFrameCallback === "function";
         openStageVideo.addEventListener("playing", () => {
           goldOpenVideoStartedAt = Date.now();
+          if(typeof options.onGoldReelStart === "function"){
+            scheduleOpenStageTimer(() => options.onGoldReelStart(), 2000);
+          }
           if(supportsFrameCallback){
             openStageVideo.requestVideoFrameCallback(() => markGoldVideoReady());
             return;
@@ -4634,11 +4636,6 @@ window.addEventListener("resize", clampMiniPosition);
       if(sequence.videoSrc){
         playOpenStageVideo(sequence.videoSrc, () => {
           if(state.openType === "gold"){
-            scheduleOpenStageTimer(() => {
-              playGoldReelOverlay(result.reward, () => {
-                revealResult();
-              }, goldOpenVideoStartedAt);
-            }, 150);
             return;
           }
           if(state.openType === "random" && result.type === "chance_gold"){
@@ -4657,7 +4654,12 @@ window.addEventListener("resize", clampMiniPosition);
             keepVideoFrame: true
           });
         }, {
-          keepLastFrame: state.openType === "gold"
+          keepLastFrame: state.openType === "gold",
+          onGoldReelStart: state.openType === "gold"
+            ? () => playGoldReelOverlay(result.reward, () => {
+              revealResult();
+            })
+            : null
         });
         return;
       }
