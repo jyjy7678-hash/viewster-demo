@@ -2861,7 +2861,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.18</span>
+          <span class="dev-version-label">DEV v0.2.19</span>
         </div>
       </header>
 
@@ -2901,7 +2901,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.18</span>
+            <span class="dev-version-label">DEV v0.2.19</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4016,7 +4016,7 @@ window.addEventListener("resize", clampMiniPosition);
       const startY = -(startIndex * itemHeight);
       const endY = -(endIndex * itemHeight);
       const elapsedSinceVideoStart = videoStartedAt ? (Date.now() - videoStartedAt) : 0;
-      const reelAppearDelay = Math.max(4000 - elapsedSinceVideoStart, 0);
+      const reelAppearDelay = Math.max(2000 - elapsedSinceVideoStart, 0);
       const reelDuration = randomInt(6800, 8200);
 
       goldReelTrack.style.transition = "none";
