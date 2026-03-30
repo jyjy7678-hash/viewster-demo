@@ -2861,7 +2861,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.11</span>
+          <span class="dev-version-label">DEV v0.2.12</span>
         </div>
       </header>
 
@@ -2901,7 +2901,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.11</span>
+            <span class="dev-version-label">DEV v0.2.12</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4351,11 +4351,15 @@ window.addEventListener("resize", clampMiniPosition);
 
     function openSheet(id, options = {}){
       const keepWallet = !!options.keepWallet;
+      const fxClass = options.fxClass || "";
       const shouldKeepWallet = keepWallet && id === "openSheet" && document.getElementById("walletSheet").classList.contains("show");
 
       closeAllSheets({ keepWallet: shouldKeepWallet, preserveOpenFlowState: id === "openSheet" });
 
       overlay.classList.add("show");
+      if(id === "openSheet" && fxClass){
+        applyOpenSheetFx(fxClass);
+      }
       document.getElementById(id).classList.add("show");
       resetSheetScroll(id);
       syncSheetScrollLock();
@@ -4415,14 +4419,33 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     function closeOpenSheetOnly(){
-      document.getElementById("openSheet").classList.remove("show");
-      resetOpenSheetState();
+      const shouldDelayReset = openSheetEl.classList.contains("fx-gold-open");
+      openSheetEl.classList.remove("show");
+      const finalizeClose = () => {
+        resetOpenSheetState();
+        if(!document.querySelector(".sheet.show")){
+          overlay.classList.remove("show");
+        }
+        syncSheetScrollLock();
+      };
 
-      if(!document.querySelector(".sheet.show")){
-        overlay.classList.remove("show");
+      if(shouldDelayReset){
+        let isClosed = false;
+        const onCloseEnd = (event) => {
+          if(event.target !== openSheetEl || event.propertyName !== "transform" || isClosed) return;
+          isClosed = true;
+          finalizeClose();
+        };
+        openSheetEl.addEventListener("transitionend", onCloseEnd, { once: true });
+        setTimeout(() => {
+          if(isClosed) return;
+          isClosed = true;
+          finalizeClose();
+        }, 320);
+        return;
       }
 
-      syncSheetScrollLock();
+      finalizeClose();
     }
 
     function startRewardAdFlow(){
@@ -4489,11 +4512,11 @@ window.addEventListener("resize", clampMiniPosition);
         return;
       }
 
-      openSheet("openSheet", { keepWallet: state.openFromWallet });
+      openSheet("openSheet", {
+        keepWallet: state.openFromWallet,
+        fxClass: state.openType === "gold" ? "fx-gold-open" : ""
+      });
       setOpenBoxBtnMode("busy");
-      if(state.openType === "gold"){
-        applyOpenSheetFx("fx-gold-open");
-      }
 
       setOpenStageMessage("", {
         animating: true,
