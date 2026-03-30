@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.2.01 -->
+<!-- Version: v0.2.04 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2320,18 +2320,21 @@
     }
     #openSheet.fx-gold-open .box-open-stage{
       border-color:transparent;
-      background:#05070f;
+      background:linear-gradient(180deg, #6f5cff 0%, #8f6bff 35%, #c77dff 65%, #f3a6ff 100%);
       animation:none;
     }
-    #openSheet.fx-gold-open .box-open-stage::before,
-    #openSheet.fx-gold-open .box-open-stage::after,
-    #openSheet.fx-gold-open .box-open-stage .open-stage-backdrop{
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing{
+      background:#05070f;
+    }
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing::before,
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing::after,
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing .open-stage-backdrop{
       display:none;
     }
-    /* Goldbox 오픈에서는 기존 박스/CSS 오픈 애니메이션 레이어를 완전히 숨기고 mp4만 노출 */
-    #openSheet.fx-gold-open .open-stage-box-wrap,
-    #openSheet.fx-gold-open .box-open-text,
-    #openSheet.fx-gold-open .open-stage-clouds{
+    /* Goldbox 오픈에서는 mp4 시작 전까지 기존 오픈 레이어를 유지하고, 재생 시점부터만 숨김 */
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing .open-stage-box-wrap,
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing .box-open-text,
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing .open-stage-clouds{
       display:none;
     }
     #openSheet.fx-random-gold .open-stage-box-wrap::before{
@@ -2897,7 +2900,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.03</span>
+          <span class="dev-version-label">DEV v0.2.04</span>
         </div>
       </header>
 
@@ -2938,7 +2941,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.03</span>
+            <span class="dev-version-label">DEV v0.2.04</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4162,23 +4165,24 @@ window.addEventListener("resize", clampMiniPosition);
       let slowFxShown = false;
       let goldLeadTextShown = false;
       const handleTimeUpdate = () => {
-        if(!isRandomGoldVideo){
-          return;
-        }
         if(!Number.isFinite(openStageVideo.duration) || openStageVideo.duration <= 0){
           return;
         }
         const remaining = openStageVideo.duration - openStageVideo.currentTime;
-        if(remaining <= 1.5 && !slowFxShown){
-          slowFxShown = true;
-          openStage.classList.add("is-random-gold-slowfx");
-        }
-        if(remaining <= 1.5 && !goldLeadTextShown){
-          goldLeadTextShown = true;
-          if(typeof onRandomGoldLead === "function"){
-            onRandomGoldLead();
+
+        if(isRandomGoldVideo){
+          if(remaining <= 1.5 && !slowFxShown){
+            slowFxShown = true;
+            openStage.classList.add("is-random-gold-slowfx");
+          }
+          if(remaining <= 1.5 && !goldLeadTextShown){
+            goldLeadTextShown = true;
+            if(typeof onRandomGoldLead === "function"){
+              onRandomGoldLead();
+            }
           }
         }
+
         if(onNearEnd && !nearEndTriggered && remaining <= nearEndLeadSeconds){
           nearEndTriggered = true;
           onNearEnd();
