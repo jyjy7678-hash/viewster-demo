@@ -2884,7 +2884,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.38</span>
+          <span class="dev-version-label">DEV v0.2.39</span>
         </div>
       </header>
 
@@ -2924,7 +2924,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.38</span>
+            <span class="dev-version-label">DEV v0.2.39</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4060,14 +4060,11 @@ window.addEventListener("resize", clampMiniPosition);
       const endLoop = 1;
       const startIndex = (startLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
-      // 강도 테스트 체감을 위해 마지막 1칸 감속 구간은 항상 활성화한다.
-      const includeSlowExtraSlot = true;
       const startY = -(startIndex * itemHeight);
       const reelAppearDelay = 0;
       const settleFinalIndex = endIndex + GOLD_BOX_REEL_VALUES.length;
       const settleIntensityScale = 0.58;
-      const settleDurationScale = 1.25;
-      const extraSlotSlowdownScale = 1.4;
+      const settleDurationScale = 1.32;
       const settleProfileByStrength = {
         1: { duration: Math.round(420 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.18,.84,.42,1)" },
         2: { duration: Math.round(820 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.14,.86,.32,1)" },
@@ -4076,10 +4073,7 @@ window.addEventListener("resize", clampMiniPosition);
         5: { duration: Math.round(2800 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.01,.98,.08,1)" }
       };
       const settleProfile = settleProfileByStrength[goldSettleStrength] || settleProfileByStrength[3];
-      const finalSegmentDuration = includeSlowExtraSlot
-        ? Math.round(settleProfile.duration * extraSlotSlowdownScale)
-        : 1000;
-      const settlePreFinalIndex = includeSlowExtraSlot ? settleFinalIndex + 1 : settleFinalIndex;
+      const finalSegmentDuration = settleProfile.duration;
       const reelDuration = randomInt(5900, 7200);
       const preFinalOffset = Math.max(0.12, (reelDuration - finalSegmentDuration) / reelDuration);
 
@@ -4091,17 +4085,11 @@ window.addEventListener("resize", clampMiniPosition);
           goldReelOverlay.classList.add("show");
           requestAnimationFrame(() => {
             const finalY = -(settleFinalIndex * itemHeight);
-            const preFinalY = -(settlePreFinalIndex * itemHeight);
-            const keyframes = includeSlowExtraSlot
-              ? [
-                  { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.16,.78,.32,1)" },
-                  { offset: preFinalOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: settleProfile.easing },
-                  { transform: `translate3d(0, ${finalY}px, 0)` }
-                ]
-              : [
-                  { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.02,.9,.2,1)" },
-                  { transform: `translate3d(0, ${finalY}px, 0)` }
-                ];
+            const keyframes = [
+              { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.16,.78,.32,1)" },
+              { offset: preFinalOffset, transform: `translate3d(0, ${finalY}px, 0)`, easing: settleProfile.easing },
+              { transform: `translate3d(0, ${finalY}px, 0)` }
+            ];
             goldReelAnimation = goldReelTrack.animate(keyframes, {
               duration: reelDuration,
               fill: "forwards",
