@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.2.05 -->
+<!-- Version: v0.2.06 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1703,20 +1703,6 @@
     .box-open-stage.stage-video-playing .open-stage-video{
       opacity:1;
     }
-    .box-open-stage.stage-gold-prep{
-      background:#05070f;
-    }
-    .box-open-stage.stage-gold-prep::before,
-    .box-open-stage.stage-gold-prep::after,
-    .box-open-stage.stage-gold-prep .open-stage-backdrop,
-    .box-open-stage.stage-gold-prep .open-stage-box-wrap,
-    .box-open-stage.stage-gold-prep .box-open-text,
-    .box-open-stage.stage-gold-prep .open-stage-clouds{
-      display:none;
-    }
-    .box-open-stage.stage-gold-prep .open-stage-video{
-      opacity:1;
-    }
     .gold-reel-overlay{
       position:absolute;
       inset:0;
@@ -1725,11 +1711,13 @@
       justify-content:center;
       opacity:0;
       pointer-events:none;
-      z-index:5;
+      z-index:14;
+      visibility:hidden;
       transition:opacity .18s ease;
     }
     .gold-reel-overlay.show{
       opacity:1;
+      visibility:visible;
     }
     .gold-reel-window{
       width:min(72vw, 220px);
@@ -2910,11 +2898,10 @@
         <div class="header-right header-test-tools">
           <button class="tool-btn" data-add="60">+1분</button>
           <button class="tool-btn" data-reward-set="595">+보상</button>
-          <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.05</span>
+          <span class="dev-version-label">DEV v0.2.06</span>
         </div>
       </header>
 
@@ -2951,11 +2938,10 @@
           <div class="player-test-tools">
             <button class="tool-btn" data-add="60">+1분</button>
             <button class="tool-btn" data-reward-set="595">+보상</button>
-            <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.05</span>
+            <span class="dev-version-label">DEV v0.2.06</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4151,6 +4137,7 @@ window.addEventListener("resize", clampMiniPosition);
       openStageVideo.onended = null;
       openStageVideo.onerror = null;
       openStageVideo.onplaying = null;
+      openStageVideo.onloadedmetadata = null;
     }
 
     function applyOpenStagePlaybackRate(){
@@ -4174,6 +4161,7 @@ window.addEventListener("resize", clampMiniPosition);
       const nearEndLeadSeconds = Number.isFinite(options.nearEndLeadSeconds) ? Math.max(options.nearEndLeadSeconds, 0) : 0;
       const onNearEnd = typeof options.onNearEnd === "function" ? options.onNearEnd : null;
       let nearEndTriggered = false;
+      let nearEndFallbackTimer = null;
       let slowFxShown = false;
       let goldLeadTextShown = false;
       const handleTimeUpdate = () => {
@@ -4207,6 +4195,11 @@ window.addEventListener("resize", clampMiniPosition);
         openStageVideo.onended = null;
         openStageVideo.onerror = null;
         openStageVideo.onplaying = null;
+        openStageVideo.onloadedmetadata = null;
+        if(nearEndFallbackTimer){
+          clearTimeout(nearEndFallbackTimer);
+          nearEndFallbackTimer = null;
+        }
         openStage.classList.remove("is-random-gold-slowfx");
         if((isRandomGoldVideo || keepLastFrame) && Number.isFinite(openStageVideo.duration) && openStageVideo.duration > 0){
           openStageVideo.pause();
@@ -4228,6 +4221,22 @@ window.addEventListener("resize", clampMiniPosition);
       openStageVideo.onplaying = () => {
         openStage.classList.remove("stage-gold-prep");
         openStage.classList.add("stage-video-playing");
+      };
+      openStageVideo.onloadedmetadata = () => {
+        if(!onNearEnd || nearEndTriggered || !Number.isFinite(openStageVideo.duration) || openStageVideo.duration <= 0){
+          return;
+        }
+        const leadMs = Math.max(openStageVideo.duration - nearEndLeadSeconds, 0) * 1000;
+        if(nearEndFallbackTimer){
+          clearTimeout(nearEndFallbackTimer);
+        }
+        nearEndFallbackTimer = setTimeout(() => {
+          if(nearEndTriggered){
+            return;
+          }
+          nearEndTriggered = true;
+          onNearEnd();
+        }, leadMs);
       };
       openStageVideo.playbackRate = (isRandomGoldVideo || isRandomXVideo) ? state.openStageMidPlaybackRate : 1;
       openStageVideo.addEventListener("timeupdate", handleTimeUpdate);
@@ -4565,7 +4574,7 @@ window.addEventListener("resize", clampMiniPosition);
         animating: true,
         variant: state.openType === "gold" ? "gold" : "random"
       });
-      openStage.classList.toggle("stage-gold-prep", state.openType === "gold");
+      openStage.classList.remove("stage-gold-prep");
 
       const openDelay = state.openType === "gold"
         ? 1000
