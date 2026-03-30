@@ -2949,7 +2949,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.49</span>
+          <span class="dev-version-label">DEV v0.2.50</span>
         </div>
       </header>
 
@@ -2989,7 +2989,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.49</span>
+            <span class="dev-version-label">DEV v0.2.50</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3070,6 +3070,11 @@
         <button class="wallet-test-btn" data-settle-strength-test="1">강도1</button><button class="wallet-test-btn" data-settle-strength-test="2">강도2</button><button class="wallet-test-btn" data-settle-strength-test="3">강도3</button><button class="wallet-test-btn" data-settle-strength-test="4">강도4</button><button class="wallet-test-btn" data-settle-strength-test="5">강도5</button>
       </div>
       <div class="wallet-test-note" id="settleStrengthLabel">settle 강도: 3</div>
+      <div class="wallet-test-row" aria-label="직전 후보에서 당첨금으로 넘어가는 속도 테스트">
+        <button class="wallet-test-btn" data-candidate-speed-adjust="-60">빠르게</button>
+        <button class="wallet-test-btn" data-candidate-speed-adjust="60">느리게</button>
+      </div>
+      <div class="wallet-test-note" id="candidateToTargetSpeedLabel">넘어가는 속도: 420ms</div>
     </div>
   </section>
 
@@ -3296,6 +3301,7 @@
     let miniDragOffsetX = 0;
     let miniDragOffsetY = 0;
     let goldSettleStrength = 3;
+    let goldCandidateToTargetDuration = 420;
 
     const boxTable = [
       { value: 5, weight: 35 },
@@ -3335,6 +3341,7 @@
     const rewardRightText = document.getElementById("rewardRightText");
     const rewardInline = document.getElementById("rewardInline");
     const settleStrengthLabel = document.getElementById("settleStrengthLabel");
+    const candidateToTargetSpeedLabel = document.getElementById("candidateToTargetSpeedLabel");
 
     function updateGoldSettleStrengthUI(){
       if(settleStrengthLabel){
@@ -3343,6 +3350,11 @@
       document.querySelectorAll("[data-settle-strength-test]").forEach(btn => {
         btn.classList.toggle("active", Number(btn.dataset.settleStrengthTest) === goldSettleStrength);
       });
+    }
+    function updateCandidateToTargetSpeedLabel(){
+      if(candidateToTargetSpeedLabel){
+        candidateToTargetSpeedLabel.textContent = `넘어가는 속도: ${goldCandidateToTargetDuration}ms`;
+      }
     }
     const inlineGetBtnWide = document.getElementById("inlineGetBtnWide");
     const commentCountText = document.getElementById("commentCountText");
@@ -4166,7 +4178,8 @@ window.addEventListener("resize", clampMiniPosition);
             const finalY = -(settleFinalIndex * itemHeight);
             const preFinalIndex = settleFinalIndex + 1;
             const preFinalY = -(preFinalIndex * itemHeight);
-            const suspenseOffset = Math.min(0.992, preFinalOffset + 0.88 * (1 - preFinalOffset));
+            const candidateToTargetOffset = Math.max(preFinalOffset + 0.001, 1 - (goldCandidateToTargetDuration / reelDuration));
+            const suspenseOffset = Math.min(0.992, candidateToTargetOffset);
             const keyframes = [
               { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.16,.78,.32,1)" },
               { offset: preFinalOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: settleProfile.easing },
@@ -4850,6 +4863,14 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       });
     });
     updateGoldSettleStrengthUI();
+    document.querySelectorAll("[data-candidate-speed-adjust]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const adjust = Number(btn.dataset.candidateSpeedAdjust) || 0;
+        goldCandidateToTargetDuration = Math.min(1200, Math.max(180, goldCandidateToTargetDuration + adjust));
+        updateCandidateToTargetSpeedLabel();
+      });
+    });
+    updateCandidateToTargetSpeedLabel();
     inlineGetBtnWide.addEventListener("click", startRewardAdFlow);
 
     rewardAdBtn.addEventListener("click", () => {
