@@ -2873,7 +2873,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.31</span>
+          <span class="dev-version-label">DEV v0.2.32</span>
         </div>
       </header>
 
@@ -2913,7 +2913,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.31</span>
+            <span class="dev-version-label">DEV v0.2.32</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3993,12 +3993,17 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     let goldReelStartTimer = null;
+    let goldReelAnimation = null;
     let goldOpenVideoStartedAt = 0;
 
     function resetGoldReelOverlay(){
       if(!goldReelOverlay || !goldReelTrack) return;
       clearTimeout(goldReelStartTimer);
       goldReelStartTimer = null;
+      if(goldReelAnimation){
+        goldReelAnimation.cancel();
+        goldReelAnimation = null;
+      }
       goldOpenVideoStartedAt = 0;
       goldReelOverlay.classList.remove("show");
       goldReelTrack.style.transition = "none";
@@ -4029,13 +4034,14 @@ window.addEventListener("resize", clampMiniPosition);
       const endLoop = 1;
       const startIndex = (startLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
-      const rareSlowExtraStep = Math.random() < 0.2;
+      const includeSlowExtraSlot = Math.random() < 0.2;
       const startY = -(startIndex * itemHeight);
       const reelAppearDelay = 0;
       const settleFinalIndex = endIndex + GOLD_BOX_REEL_VALUES.length;
-      const settlePrimaryIndex = rareSlowExtraStep ? settleFinalIndex + 1 : settleFinalIndex;
+      const finalSegmentDuration = 1000;
+      const settlePreFinalIndex = includeSlowExtraSlot ? settleFinalIndex + 1 : settleFinalIndex;
       const reelDuration = randomInt(5900, 7200);
-      const slowFinalStepDuration = randomInt(780, 980);
+      const preFinalOffset = Math.max(0.12, (reelDuration - finalSegmentDuration) / reelDuration);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
@@ -4044,23 +4050,30 @@ window.addEventListener("resize", clampMiniPosition);
         requestAnimationFrame(() => {
           goldReelOverlay.classList.add("show");
           requestAnimationFrame(() => {
-            goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.02,.9,.2,1)`;
-            goldReelTrack.style.transform = `translate3d(0, ${-(settlePrimaryIndex * itemHeight)}px, 0)`;
+            const finalY = -(settleFinalIndex * itemHeight);
+            const preFinalY = -(settlePreFinalIndex * itemHeight);
+            const keyframes = includeSlowExtraSlot
+              ? [
+                  { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.02,.9,.2,1)" },
+                  { offset: preFinalOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: "cubic-bezier(.18,.76,.32,1)" },
+                  { transform: `translate3d(0, ${finalY}px, 0)` }
+                ]
+              : [
+                  { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.02,.9,.2,1)" },
+                  { transform: `translate3d(0, ${finalY}px, 0)` }
+                ];
+            goldReelAnimation = goldReelTrack.animate(keyframes, {
+              duration: reelDuration,
+              fill: "forwards",
+              easing: "linear"
+            });
+            goldReelAnimation.onfinish = () => {
+              goldReelAnimation = null;
+              onDone();
+            };
           });
         });
       }, reelAppearDelay);
-
-      goldReelTrack.addEventListener("transitionend", () => {
-        if(!rareSlowExtraStep){
-          onDone();
-          return;
-        }
-        requestAnimationFrame(() => {
-          goldReelTrack.style.transition = `transform ${slowFinalStepDuration}ms cubic-bezier(.16,.92,.32,1)`;
-          goldReelTrack.style.transform = `translate3d(0, ${-(settleFinalIndex * itemHeight)}px, 0)`;
-        });
-        goldReelTrack.addEventListener("transitionend", () => onDone(), { once: true });
-      }, { once: true });
     }
 
     function getGoldResultCelebrateMeta(reward){
