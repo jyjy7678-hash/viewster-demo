@@ -1802,6 +1802,10 @@
       letter-spacing:.02em;
       color:#fde68a;
       text-shadow:0 6px 14px rgba(0,0,0,.45);
+      transform-origin:center center;
+    }
+    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-item{
+      animation:goldPrizeBurst .52s cubic-bezier(.2,.9,.3,1) 1, goldPrizeGlow 1.08s ease-in-out .52s infinite;
     }
     .box-open-stage.stage-video-playing .open-stage-box-wrap,
     .box-open-stage.stage-video-playing .box-open-text,
@@ -1990,6 +1994,15 @@
       0%{opacity:0; transform:translate3d(0,0,0) scale(.28);}
       32%{opacity:1; transform:translate3d(0,-9px,0) scale(1.12);}
       100%{opacity:0; transform:translate3d(var(--spark-x, 0), var(--spark-y, -24px), 0) scale(.78);}
+    }
+    @keyframes goldPrizeBurst{
+      0%{transform:scale(.9);text-shadow:0 0 0 rgba(250,204,21,0);}
+      72%{transform:scale(1.08);text-shadow:0 0 26px rgba(250,204,21,.74), 0 0 42px rgba(255,244,181,.46);}
+      100%{transform:scale(1.02);text-shadow:0 0 18px rgba(250,204,21,.46), 0 6px 14px rgba(0,0,0,.45);}
+    }
+    @keyframes goldPrizeGlow{
+      0%,100%{filter:brightness(1);text-shadow:0 0 18px rgba(250,204,21,.42), 0 6px 14px rgba(0,0,0,.45);}
+      50%{filter:brightness(1.1);text-shadow:0 0 26px rgba(250,204,21,.65), 0 0 40px rgba(255,244,181,.42), 0 6px 14px rgba(0,0,0,.45);}
     }
     @keyframes goldReelBorderSweep{
       to{--gold-border-angle:1turn;}
@@ -2904,7 +2917,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.41</span>
+          <span class="dev-version-label">DEV v0.2.42</span>
         </div>
       </header>
 
@@ -2944,7 +2957,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.41</span>
+            <span class="dev-version-label">DEV v0.2.42</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
