@@ -2873,7 +2873,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.25</span>
+          <span class="dev-version-label">DEV v0.2.26</span>
         </div>
       </header>
 
@@ -2913,7 +2913,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.25</span>
+            <span class="dev-version-label">DEV v0.2.26</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4030,16 +4030,12 @@ window.addEventListener("resize", clampMiniPosition);
       const startIndex = (startLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const startY = -(startIndex * itemHeight);
-      const endY = -(endIndex * itemHeight);
       const reelAppearDelay = 0;
-      const settleExtraLoops = randomInt(0, 1);
-      const settleNearSteps = randomInt(1, 3);
-      const settleLateSteps = randomInt(1, 2);
-      const settleNearIndex = endIndex + settleLateSteps;
-      const settleFarIndex = endIndex + (GOLD_BOX_REEL_VALUES.length * (settleExtraLoops + 1)) + settleNearSteps;
+      const settleFinalIndex = endIndex + GOLD_BOX_REEL_VALUES.length;
+      const settleOneMoreStep = randomInt(0, 1);
+      const settleStartIndex = settleFinalIndex - settleOneMoreStep;
       const reelDuration = randomInt(5900, 7200);
-      const settleDurationA = randomInt(560, 860);
-      const settleDurationB = randomInt(340, 620);
+      const settleDuration = randomInt(520, 760);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
@@ -4049,22 +4045,19 @@ window.addEventListener("resize", clampMiniPosition);
           goldReelOverlay.classList.add("show");
           requestAnimationFrame(() => {
             goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.02,.9,.2,1)`;
-            goldReelTrack.style.transform = `translate3d(0, ${-(settleFarIndex * itemHeight)}px, 0)`;
+            goldReelTrack.style.transform = `translate3d(0, ${-(settleStartIndex * itemHeight)}px, 0)`;
           });
         });
       }, reelAppearDelay);
 
-      const settleToNear = () => {
-        goldReelTrack.removeEventListener("transitionend", settleToNear);
-        goldReelTrack.style.transition = `transform ${settleDurationA}ms cubic-bezier(.28,.02,.22,1.02)`;
-        goldReelTrack.style.transform = `translate3d(0, ${-(settleNearIndex * itemHeight)}px, 0)`;
-        goldReelTrack.addEventListener("transitionend", settleToFinal, { once: true });
-      };
-
       const settleToFinal = () => {
         goldReelTrack.removeEventListener("transitionend", settleToFinal);
-        goldReelTrack.style.transition = `transform ${settleDurationB}ms cubic-bezier(.16,.84,.26,1)`;
-        goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
+        if(settleOneMoreStep === 0){
+          onDone();
+          return;
+        }
+        goldReelTrack.style.transition = `transform ${settleDuration}ms cubic-bezier(.2,.84,.26,1)`;
+        goldReelTrack.style.transform = `translate3d(0, ${-(settleFinalIndex * itemHeight)}px, 0)`;
         goldReelTrack.addEventListener("transitionend", done, { once: true });
       };
 
@@ -4073,7 +4066,7 @@ window.addEventListener("resize", clampMiniPosition);
         onDone();
       };
 
-      goldReelTrack.addEventListener("transitionend", settleToNear, { once: true });
+      goldReelTrack.addEventListener("transitionend", settleToFinal, { once: true });
     }
 
     function getGoldResultCelebrateMeta(reward){
