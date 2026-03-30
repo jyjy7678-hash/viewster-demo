@@ -1755,6 +1755,11 @@
     .gold-reel-overlay.show{
       opacity:1;
     }
+    @property --gold-border-angle{
+      syntax:"<angle>";
+      inherits:false;
+      initial-value:0deg;
+    }
     .gold-reel-window{
       width:min(72vw, 220px);
       height:60px;
@@ -1986,8 +1991,8 @@
       32%{opacity:1; transform:translate3d(0,-9px,0) scale(1.12);}
       100%{opacity:0; transform:translate3d(var(--spark-x, 0), var(--spark-y, -24px), 0) scale(.78);}
     }
-    @keyframes goldReelBorderSpin{
-      to{transform:rotate(1turn);}
+    @keyframes goldReelBorderSweep{
+      to{--gold-border-angle:1turn;}
     }
     @keyframes boxFailSpark{
       0%{opacity:0; transform:translate3d(0,0,0) scale(.2);}
@@ -2417,11 +2422,15 @@
       inset:-1px;
       border-radius:inherit;
       padding:1px;
-      background:conic-gradient(from 0deg, rgba(251,191,36,.1), rgba(253,224,71,.95), rgba(251,191,36,.1), rgba(253,224,71,.95), rgba(251,191,36,.1));
+      opacity:0;
+      background:conic-gradient(from var(--gold-border-angle, 0deg), rgba(251,191,36,.08) 0deg, rgba(251,191,36,.08) 316deg, rgba(253,224,71,.98) 338deg, rgba(255,244,181,.35) 360deg);
       -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite:xor;
       mask-composite:exclude;
-      animation:goldReelBorderSpin 1.6s linear infinite;
+    }
+    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-window::after{
+      opacity:1;
+      animation:goldReelBorderSweep 1.3s linear infinite;
     }
     #openSheet.fx-random-gold .result-sub,
     #openSheet.fx-gold-open .result-sub{
@@ -2895,7 +2904,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.40</span>
+          <span class="dev-version-label">DEV v0.2.41</span>
         </div>
       </header>
 
@@ -2935,7 +2944,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.40</span>
+            <span class="dev-version-label">DEV v0.2.41</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4042,7 +4051,7 @@ window.addEventListener("resize", clampMiniPosition);
         goldReelAnimation = null;
       }
       goldOpenVideoStartedAt = 0;
-      goldReelOverlay.classList.remove("show");
+      goldReelOverlay.classList.remove("show", "reel-settled");
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = "translate3d(0, 0, 0)";
       goldReelTrack.innerHTML = "";
@@ -4094,6 +4103,7 @@ window.addEventListener("resize", clampMiniPosition);
       goldReelStartTimer = setTimeout(() => {
         requestAnimationFrame(() => {
           goldReelOverlay.classList.add("show");
+          goldReelOverlay.classList.remove("reel-settled");
           requestAnimationFrame(() => {
             const finalY = -(settleFinalIndex * itemHeight);
             const keyframes = [
@@ -4108,6 +4118,7 @@ window.addEventListener("resize", clampMiniPosition);
             });
             goldReelAnimation.onfinish = () => {
               goldReelAnimation = null;
+              goldReelOverlay.classList.add("reel-settled");
               onDone();
             };
           });
