@@ -2949,7 +2949,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.47</span>
+          <span class="dev-version-label">DEV v0.2.48</span>
         </div>
       </header>
 
@@ -2989,7 +2989,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.47</span>
+            <span class="dev-version-label">DEV v0.2.48</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4164,13 +4164,13 @@ window.addEventListener("resize", clampMiniPosition);
           goldReelOverlay.classList.remove("reel-settled");
           requestAnimationFrame(() => {
             const finalY = -(settleFinalIndex * itemHeight);
-            const preFinalIndex = settleFinalIndex - 1;
+            const preFinalIndex = settleFinalIndex + 1;
             const preFinalY = -(preFinalIndex * itemHeight);
             const suspenseOffset = Math.min(0.985, preFinalOffset + 0.76 * (1 - preFinalOffset));
             const keyframes = [
               { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.16,.78,.32,1)" },
               { offset: preFinalOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: settleProfile.easing },
-              { offset: suspenseOffset, transform: `translate3d(0, ${preFinalY - itemHeight * 0.78}px, 0)`, easing: "cubic-bezier(.12,.9,.22,1)" },
+              { offset: suspenseOffset, transform: `translate3d(0, ${preFinalY + itemHeight * 0.78}px, 0)`, easing: "cubic-bezier(.12,.9,.22,1)" },
               { transform: `translate3d(0, ${finalY}px, 0)` }
             ];
             goldReelAnimation = goldReelTrack.animate(keyframes, {
