@@ -2949,7 +2949,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.46</span>
+          <span class="dev-version-label">DEV v0.2.47</span>
         </div>
       </header>
 
@@ -2989,7 +2989,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.46</span>
+            <span class="dev-version-label">DEV v0.2.47</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4065,6 +4065,7 @@ window.addEventListener("resize", clampMiniPosition);
     const RANDOM_G_VIDEO_SRC = "./assets/G_view.mp4";
     const GOLD_BOX_OPEN_VIDEO_SRC = "./assets/goldbox_open.mp4";
     const GOLD_BOX_REEL_VALUES = [500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000];
+    const GOLD_REEL_ACTIVE_COUNT = 5;
     const GOLD_RESULT_TIER_CLASSES = ["gold-tier-basic", "gold-tier-good", "gold-tier-great", "gold-tier-best", "gold-tier-dream"];
 
     function resetSheetScroll(id){
@@ -4108,11 +4109,22 @@ window.addEventListener("resize", clampMiniPosition);
         return;
       }
 
-      const targetIndex = Math.max(GOLD_BOX_REEL_VALUES.indexOf(targetReward), 0);
+      const otherValues = GOLD_BOX_REEL_VALUES.filter(value => value !== targetReward);
+      const shuffledOthers = [...otherValues];
+      for(let i = shuffledOthers.length - 1; i > 0; i -= 1){
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledOthers[i], shuffledOthers[j]] = [shuffledOthers[j], shuffledOthers[i]];
+      }
+      const activeGoldReelValues = [targetReward, ...shuffledOthers.slice(0, GOLD_REEL_ACTIVE_COUNT - 1)];
+      for(let i = activeGoldReelValues.length - 1; i > 0; i -= 1){
+        const j = Math.floor(Math.random() * (i + 1));
+        [activeGoldReelValues[i], activeGoldReelValues[j]] = [activeGoldReelValues[j], activeGoldReelValues[i]];
+      }
+      const targetIndex = Math.max(activeGoldReelValues.indexOf(targetReward), 0);
       const loops = 18;
       const totalItems = [];
       for(let i = 0; i < loops; i += 1){
-        totalItems.push(...GOLD_BOX_REEL_VALUES);
+        totalItems.push(...activeGoldReelValues);
       }
 
       goldReelTrack.innerHTML = totalItems
@@ -4123,11 +4135,11 @@ window.addEventListener("resize", clampMiniPosition);
       const itemHeight = reelItem ? reelItem.offsetHeight : 60;
       const startLoop = loops - 1;
       const endLoop = 1;
-      const startIndex = (startLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
-      const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
+      const startIndex = (startLoop * activeGoldReelValues.length) + targetIndex;
+      const endIndex = (endLoop * activeGoldReelValues.length) + targetIndex;
       const startY = -(startIndex * itemHeight);
       const reelAppearDelay = 0;
-      const settleFinalIndex = endIndex + GOLD_BOX_REEL_VALUES.length;
+      const settleFinalIndex = endIndex + activeGoldReelValues.length;
       const settleIntensityScale = 0.58;
       const settleDurationScale = 1.32;
       const settleProfileByStrength = {
