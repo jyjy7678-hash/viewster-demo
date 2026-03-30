@@ -2860,7 +2860,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.08</span>
+          <span class="dev-version-label">DEV v0.2.09</span>
         </div>
       </header>
 
@@ -2900,7 +2900,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.08</span>
+            <span class="dev-version-label">DEV v0.2.09</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4127,15 +4127,25 @@ window.addEventListener("resize", clampMiniPosition);
           openStageVideo.pause();
           openStageVideo.currentTime = Math.max(openStageVideo.duration - 0.03, 0);
         }
+        openStage.style.removeProperty("background");
         openStageVideo.playbackRate = 1;
         onDone();
       };
 
-      openStage.classList.add("stage-video-playing");
-      if(openSheetEl.classList.contains("fx-gold-open")){
-        openStageVideo.addEventListener("loadeddata", () => openStage.classList.add("stage-video-ready"), { once:true });
+      const isGoldOpenFx = openSheetEl.classList.contains("fx-gold-open");
+      if(isGoldOpenFx){
+        let goldVideoReadyMarked = false;
+        openStage.style.background = "transparent";
+        const markGoldVideoReady = () => {
+          if(goldVideoReadyMarked) return;
+          goldVideoReadyMarked = true;
+          openStage.style.removeProperty("background");
+          openStage.classList.add("stage-video-ready", "stage-video-playing");
+        };
+        openStageVideo.addEventListener("loadeddata", markGoldVideoReady, { once:true });
+        openStageVideo.addEventListener("playing", markGoldVideoReady, { once:true });
       } else {
-        openStage.classList.add("stage-video-ready");
+        openStage.classList.add("stage-video-ready", "stage-video-playing");
       }
       openStageVideo.muted = true;
       openStageVideo.autoplay = true;
