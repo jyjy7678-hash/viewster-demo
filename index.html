@@ -114,11 +114,6 @@
       background:#2457d6;
       color:#fff;
     }
-    .tool-btn.active-gold-video{
-      background:#2457d6;
-      color:#fff;
-    }
-
     .main-scroll{
       flex:1;
       overflow-y:auto;
@@ -2848,9 +2843,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <button class="tool-btn active-gold-video" data-gold-open-video="./assets/goldbox_open.mp4">goldbox_open.mp4</button>
-          <button class="tool-btn" data-gold-open-video="./assets/goldbox2_open.mp4">goldbox2_open.mp4</button>
-          <span class="dev-version-label">DEV v0.2.02</span>
+          <span class="dev-version-label">DEV v0.2.01</span>
         </div>
       </header>
 
@@ -2890,9 +2883,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <button class="tool-btn active-gold-video" data-gold-open-video="./assets/goldbox_open.mp4">goldbox_open.mp4</button>
-            <button class="tool-btn" data-gold-open-video="./assets/goldbox2_open.mp4">goldbox2_open.mp4</button>
-            <span class="dev-version-label">DEV v0.2.02</span>
+            <span class="dev-version-label">DEV v0.2.01</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3948,7 +3939,6 @@ window.addEventListener("resize", clampMiniPosition);
     const RANDOM_X_VIDEO_SRC = "./assets/X_view.mp4";
     const RANDOM_G_VIDEO_SRC = "./assets/G_view.mp4";
     const GOLD_BOX_OPEN_VIDEO_SRC = "./assets/goldbox_open.mp4";
-    let selectedGoldOpenVideoSrc = GOLD_BOX_OPEN_VIDEO_SRC;
     const GOLD_BOX_REEL_VALUES = [500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000];
     const GOLD_RESULT_TIER_CLASSES = ["gold-tier-basic", "gold-tier-good", "gold-tier-great", "gold-tier-best", "gold-tier-dream"];
 
@@ -4221,7 +4211,7 @@ window.addEventListener("resize", clampMiniPosition);
           duration: 3000,
           revealDelay: 2200,
           autoCloseDelay: 5200,
-          videoSrc: selectedGoldOpenVideoSrc
+          videoSrc: GOLD_BOX_OPEN_VIDEO_SRC
         };
       }
 
@@ -4672,19 +4662,6 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
         });
       });
     });
-    document.querySelectorAll(".tool-btn[data-gold-open-video]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const nextSrc = btn.dataset.goldOpenVideo;
-        if(!nextSrc){
-          return;
-        }
-        selectedGoldOpenVideoSrc = nextSrc;
-        document.querySelectorAll(".tool-btn[data-gold-open-video]").forEach(videoBtn => {
-          videoBtn.classList.toggle("active-gold-video", videoBtn.dataset.goldOpenVideo === nextSrc);
-        });
-      });
-    });
-
     watchTitle.addEventListener("click", () => {
       watchTitle.classList.toggle("expanded");
       setTimeout(updateFixedLayout, 20);
