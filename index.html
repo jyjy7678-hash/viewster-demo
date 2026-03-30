@@ -1774,19 +1774,14 @@
     .gold-reel-window::after{
       content:"";
       position:absolute;
-      left:0;
-      right:0;
-      height:16px;
+      inset:0;
       z-index:2;
       pointer-events:none;
     }
     .gold-reel-window::before{
-      top:0;
-      background:linear-gradient(180deg, rgba(3,7,18,.76), rgba(3,7,18,0));
-    }
-    .gold-reel-window::after{
-      bottom:0;
-      background:linear-gradient(0deg, rgba(3,7,18,.76), rgba(3,7,18,0));
+      background:
+        linear-gradient(180deg, rgba(3,7,18,.76), rgba(3,7,18,0) 16px),
+        linear-gradient(0deg, rgba(3,7,18,.76), rgba(3,7,18,0) 16px);
     }
     .gold-reel-track{
       transform:translate3d(0, 0, 0);
@@ -1990,6 +1985,9 @@
       0%{opacity:0; transform:translate3d(0,0,0) scale(.28);}
       32%{opacity:1; transform:translate3d(0,-9px,0) scale(1.12);}
       100%{opacity:0; transform:translate3d(var(--spark-x, 0), var(--spark-y, -24px), 0) scale(.78);}
+    }
+    @keyframes goldReelBorderSpin{
+      to{transform:rotate(1turn);}
     }
     @keyframes boxFailSpark{
       0%{opacity:0; transform:translate3d(0,0,0) scale(.2);}
@@ -2411,6 +2409,19 @@
       color:#ffffff;
       text-shadow:0 0 16px rgba(148,163,184,.24);
       animation:resultAmountPop .46s ease-out;
+    }
+    #openSheet.fx-gold-open .result-amount{
+      display:none;
+    }
+    #openSheet.fx-gold-open .gold-reel-window::after{
+      inset:-1px;
+      border-radius:inherit;
+      padding:1px;
+      background:conic-gradient(from 0deg, rgba(251,191,36,.1), rgba(253,224,71,.95), rgba(251,191,36,.1), rgba(253,224,71,.95), rgba(251,191,36,.1));
+      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      animation:goldReelBorderSpin 1.6s linear infinite;
     }
     #openSheet.fx-random-gold .result-sub,
     #openSheet.fx-gold-open .result-sub{
@@ -2884,7 +2895,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.39</span>
+          <span class="dev-version-label">DEV v0.2.40</span>
         </div>
       </header>
 
@@ -2924,7 +2935,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.39</span>
+            <span class="dev-version-label">DEV v0.2.40</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
