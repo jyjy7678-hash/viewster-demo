@@ -2873,7 +2873,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.28</span>
+          <span class="dev-version-label">DEV v0.2.29</span>
         </div>
       </header>
 
@@ -2913,7 +2913,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.28</span>
+            <span class="dev-version-label">DEV v0.2.29</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4032,10 +4032,8 @@ window.addEventListener("resize", clampMiniPosition);
       const startY = -(startIndex * itemHeight);
       const reelAppearDelay = 0;
       const settleFinalIndex = endIndex + GOLD_BOX_REEL_VALUES.length;
-      const settleOneMoreStep = randomInt(0, 1);
-      const settleStartIndex = settleFinalIndex - settleOneMoreStep;
+      const settleStartIndex = settleFinalIndex;
       const reelDuration = randomInt(5900, 7200);
-      const settleDuration = randomInt(180, 260);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
@@ -4050,23 +4048,12 @@ window.addEventListener("resize", clampMiniPosition);
         });
       }, reelAppearDelay);
 
-      const settleToFinal = () => {
-        goldReelTrack.removeEventListener("transitionend", settleToFinal);
-        if(settleOneMoreStep === 0){
-          onDone();
-          return;
-        }
-        goldReelTrack.style.transition = `transform ${settleDuration}ms cubic-bezier(.24,.7,.34,1)`;
-        goldReelTrack.style.transform = `translate3d(0, ${-(settleFinalIndex * itemHeight)}px, 0)`;
-        goldReelTrack.addEventListener("transitionend", done, { once: true });
-      };
-
       const done = () => {
         goldReelTrack.removeEventListener("transitionend", done);
         onDone();
       };
 
-      goldReelTrack.addEventListener("transitionend", settleToFinal, { once: true });
+      goldReelTrack.addEventListener("transitionend", done, { once: true });
     }
 
     function getGoldResultCelebrateMeta(reward){
