@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.1.89 -->
+<!-- Version: DEV v0.2.51 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2959,7 +2959,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.50</span>
+          <span class="dev-version-label">DEV v0.2.51</span>
         </div>
       </header>
 
@@ -2999,7 +2999,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.50</span>
+            <span class="dev-version-label">DEV v0.2.51</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3053,9 +3053,10 @@
     <div class="sheet-body">
       <div class="sheet-title">내 지갑</div>
       <!-- 모바일에서 바로 보이는 상단 테스트 영역 -->
-      <div class="wallet-test-row wallet-test-row--gold" aria-label="황금박스 결과 테스트">
-        <button class="wallet-test-btn" data-gold-reward-test="500">+500</button><button class="wallet-test-btn" data-gold-reward-test="1000">+1000</button><button class="wallet-test-btn" data-gold-reward-test="5000">+5000</button><button class="wallet-test-btn" data-gold-reward-test="10000">+10000</button><button class="wallet-test-btn" data-gold-reward-test="50000">+50000</button><button class="wallet-test-btn" data-gold-reward-test="500000">+500000</button><button class="wallet-test-btn" data-gold-reward-test="1000000">+1000000</button><button class="wallet-test-btn" data-gold-reward-test="1000000">빠르게</button><button class="wallet-test-btn" data-gold-reward-test="1000000">느리게</button>
+      <div class="wallet-test-row" aria-label="황금박스 결과 테스트">
+        <button class="wallet-test-btn" data-gold-reward-test="500">+500</button><button class="wallet-test-btn" data-gold-reward-test="1000">+1000</button><button class="wallet-test-btn" data-gold-reward-test="5000">+5000</button><button class="wallet-test-btn" data-gold-reward-test="10000">+10000</button><button class="wallet-test-btn" data-gold-reward-test="50000">+50000</button><button class="wallet-test-btn" data-gold-reward-test="500000">+500000</button><button class="wallet-test-btn" data-gold-reward-test="1000000">+1000000</button><button class="wallet-test-btn" data-settle-strength-test="1">빠르게</button><button class="wallet-test-btn" data-settle-strength-test="5">느리게</button>
       </div>
+      <div class="wallet-test-note" id="goldSpeedLabel">넘어가는 속도: 1300ms</div>
       <div class="wallet-test-note" id="settleStrengthLabel">settle 강도: 3</div>
       <div class="wallet-grid">
         <div class="wallet-card">
@@ -3346,10 +3347,15 @@
     const rewardRightText = document.getElementById("rewardRightText");
     const rewardInline = document.getElementById("rewardInline");
     const settleStrengthLabel = document.getElementById("settleStrengthLabel");
+    const goldSpeedLabel = document.getElementById("goldSpeedLabel");
+    const settleSpeedMsByStrength = { 1: 420, 2: 820, 3: 1300, 4: 1950, 5: 2800 };
 
     function updateGoldSettleStrengthUI(){
       if(settleStrengthLabel){
         settleStrengthLabel.textContent = `settle 강도: ${goldSettleStrength}`;
+      }
+      if(goldSpeedLabel){
+        goldSpeedLabel.textContent = `넘어가는 속도: ${settleSpeedMsByStrength[goldSettleStrength] || 1300}ms`;
       }
       document.querySelectorAll("[data-settle-strength-test]").forEach(btn => {
         btn.classList.toggle("active", Number(btn.dataset.settleStrengthTest) === goldSettleStrength);
