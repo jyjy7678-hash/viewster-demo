@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.51 -->
+<!-- Version: DEV v0.2.52 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2959,7 +2959,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.51</span>
+          <span class="dev-version-label">DEV v0.2.52</span>
         </div>
       </header>
 
@@ -2999,7 +2999,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.51</span>
+            <span class="dev-version-label">DEV v0.2.52</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3053,11 +3053,13 @@
     <div class="sheet-body">
       <div class="sheet-title">내 지갑</div>
       <!-- 모바일에서 바로 보이는 상단 테스트 영역 -->
-      <div class="wallet-test-row" aria-label="황금박스 결과 테스트">
+      <div class="wallet-test-row wallet-test-row--gold" aria-label="황금박스 결과 테스트">
         <button class="wallet-test-btn" data-gold-reward-test="500">+500</button><button class="wallet-test-btn" data-gold-reward-test="1000">+1000</button><button class="wallet-test-btn" data-gold-reward-test="5000">+5000</button><button class="wallet-test-btn" data-gold-reward-test="10000">+10000</button><button class="wallet-test-btn" data-gold-reward-test="50000">+50000</button><button class="wallet-test-btn" data-gold-reward-test="500000">+500000</button><button class="wallet-test-btn" data-gold-reward-test="1000000">+1000000</button><button class="wallet-test-btn" data-settle-strength-test="1">빠르게</button><button class="wallet-test-btn" data-settle-strength-test="5">느리게</button>
       </div>
-      <div class="wallet-test-note" id="goldSpeedLabel">넘어가는 속도: 1300ms</div>
-      <div class="wallet-test-note" id="settleStrengthLabel">settle 강도: 3</div>
+      <div class="wallet-test-note"><span id="goldSpeedLabel">넘어가는 속도: 1300ms</span> · <span id="settleStrengthLabel">settle 강도: 3</span></div>
+      <div class="wallet-test-row" aria-label="마지막 1칸 추가 패턴 강도 테스트">
+        <button class="wallet-test-btn" data-settle-strength-test="1">강도1</button><button class="wallet-test-btn" data-settle-strength-test="2">강도2</button><button class="wallet-test-btn" data-settle-strength-test="3">강도3</button><button class="wallet-test-btn" data-settle-strength-test="4">강도4</button><button class="wallet-test-btn" data-settle-strength-test="5">강도5</button>
+      </div>
       <div class="wallet-grid">
         <div class="wallet-card">
           <div class="wallet-label">📦 랜덤박스</div>
@@ -3078,9 +3080,6 @@
         <button class="wallet-open-btn" id="walletOpenRandomFail">랜덤X</button>
         <button class="wallet-open-btn" id="walletOpenRandomGold">랜덤G</button>
         <button class="wallet-open-btn gold" id="walletOpenGold">황금</button>
-      </div>
-      <div class="wallet-test-row" aria-label="마지막 1칸 추가 패턴 강도 테스트">
-        <button class="wallet-test-btn" data-settle-strength-test="1">강도1</button><button class="wallet-test-btn" data-settle-strength-test="2">강도2</button><button class="wallet-test-btn" data-settle-strength-test="3">강도3</button><button class="wallet-test-btn" data-settle-strength-test="4">강도4</button><button class="wallet-test-btn" data-settle-strength-test="5">강도5</button>
       </div>
     </div>
   </section>
