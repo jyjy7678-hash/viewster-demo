@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.54 -->
+<!-- Version: DEV v0.2.55 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2959,7 +2959,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.54</span>
+          <span class="dev-version-label">DEV v0.2.55</span>
         </div>
       </header>
 
@@ -2999,7 +2999,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.54</span>
+            <span class="dev-version-label">DEV v0.2.55</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4158,10 +4158,11 @@ window.addEventListener("resize", clampMiniPosition);
         5: { duration: Math.round(2800 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.01,.98,.08,1)" }
       };
       const settleProfile = settleProfileByStrength[3];
-      const extraSlowdownDuration = 2000;
-      const finalSegmentDuration = Math.round(goldSettleSpeedMs * settleIntensityScale * settleDurationScale) + extraSlowdownDuration;
-      const reelDuration = randomInt(5900, 7200) + extraSlowdownDuration;
-      const preFinalOffset = Math.max(0.12, (reelDuration - finalSegmentDuration) / reelDuration);
+      const suspenseDuration = Math.max(120, Math.round(goldSettleSpeedMs * settleIntensityScale * settleDurationScale));
+      const finalSettleDuration = 220;
+      const shouldExtraSuspenseStep = Math.random() < 0.6;
+      const reelDuration = randomInt(5900, 7200) + finalSettleDuration + (shouldExtraSuspenseStep ? suspenseDuration : 0);
+      const preFinalOffset = Math.max(0.12, (reelDuration - finalSettleDuration - (shouldExtraSuspenseStep ? suspenseDuration : 0)) / reelDuration);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
@@ -4174,13 +4175,15 @@ window.addEventListener("resize", clampMiniPosition);
             const finalY = -(settleFinalIndex * itemHeight);
             const preFinalIndex = settleFinalIndex + 1;
             const preFinalY = -(preFinalIndex * itemHeight);
-            const suspenseOffset = Math.min(0.992, preFinalOffset + 0.88 * (1 - preFinalOffset));
+            const suspenseOffset = Math.min(0.992, preFinalOffset + ((shouldExtraSuspenseStep ? suspenseDuration : 0) / reelDuration));
             const keyframes = [
               { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.16,.78,.32,1)" },
-              { offset: preFinalOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: settleProfile.easing },
-              { offset: suspenseOffset, transform: `translate3d(0, ${preFinalY + itemHeight * 0.9}px, 0)`, easing: "cubic-bezier(.3,.96,.64,1)" },
+              { offset: preFinalOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: shouldExtraSuspenseStep ? settleProfile.easing : "cubic-bezier(.2,.88,.34,1)" },
               { transform: `translate3d(0, ${finalY}px, 0)` }
             ];
+            if(shouldExtraSuspenseStep){
+              keyframes.splice(2, 0, { offset: suspenseOffset, transform: `translate3d(0, ${preFinalY + itemHeight * 0.9}px, 0)`, easing: "cubic-bezier(.3,.96,.64,1)" });
+            }
             goldReelAnimation = goldReelTrack.animate(keyframes, {
               duration: reelDuration,
               fill: "forwards",
