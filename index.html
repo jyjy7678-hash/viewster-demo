@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.2.06 -->
+<!-- Version: v0.1.88 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1711,13 +1711,11 @@
       justify-content:center;
       opacity:0;
       pointer-events:none;
-      z-index:14;
-      visibility:hidden;
+      z-index:5;
       transition:opacity .18s ease;
     }
     .gold-reel-overlay.show{
       opacity:1;
-      visibility:visible;
     }
     .gold-reel-window{
       width:min(72vw, 220px);
@@ -2322,21 +2320,18 @@
     }
     #openSheet.fx-gold-open .box-open-stage{
       border-color:transparent;
-      background:linear-gradient(180deg, #6f5cff 0%, #8f6bff 35%, #c77dff 65%, #f3a6ff 100%);
+      background:#05070f;
       animation:none;
     }
-    #openSheet.fx-gold-open .box-open-stage.stage-video-playing{
-      background:#05070f;
-    }
-    #openSheet.fx-gold-open .box-open-stage.stage-video-playing::before,
-    #openSheet.fx-gold-open .box-open-stage.stage-video-playing::after,
-    #openSheet.fx-gold-open .box-open-stage.stage-video-playing .open-stage-backdrop{
+    #openSheet.fx-gold-open .box-open-stage::before,
+    #openSheet.fx-gold-open .box-open-stage::after,
+    #openSheet.fx-gold-open .box-open-stage .open-stage-backdrop{
       display:none;
     }
-    /* Goldbox 오픈에서는 mp4 시작 전까지 기존 오픈 레이어를 유지하고, 재생 시점부터만 숨김 */
-    #openSheet.fx-gold-open .box-open-stage.stage-video-playing .open-stage-box-wrap,
-    #openSheet.fx-gold-open .box-open-stage.stage-video-playing .box-open-text,
-    #openSheet.fx-gold-open .box-open-stage.stage-video-playing .open-stage-clouds{
+    /* Goldbox 오픈에서는 기존 박스/CSS 오픈 애니메이션 레이어를 완전히 숨기고 mp4만 노출 */
+    #openSheet.fx-gold-open .open-stage-box-wrap,
+    #openSheet.fx-gold-open .box-open-text,
+    #openSheet.fx-gold-open .open-stage-clouds{
       display:none;
     }
     #openSheet.fx-random-gold .open-stage-box-wrap::before{
@@ -2474,89 +2469,37 @@
       text-shadow:0 0 16px rgba(148,163,184,.22);
     }
     .open-stage-result.gold-win .result-sub{order:2;}
-    .open-stage-result.gold-win{
-      --gold-tier-glow:.18;
-      --gold-tier-halo:.34;
-      --gold-tier-spark:.46;
-      --gold-tier-pulse-speed:1.22s;
-      --gold-tier-halo-scale:1.08;
-      --gold-tier-spark-speed:1.28s;
+    .open-stage-result.gold-tier-basic .result-sub{
+      color:#fde68a;
+      text-shadow:0 0 10px rgba(250,204,21,.34);
     }
-    .open-stage-result.gold-tier-basic{
-      --gold-tier-glow:.16;
-      --gold-tier-halo:.3;
-      --gold-tier-spark:.38;
-      --gold-tier-pulse-speed:1.28s;
-      --gold-tier-halo-scale:1.06;
-      --gold-tier-spark-speed:1.34s;
+    .open-stage-result.gold-tier-good .result-sub{
+      color:#fef08a;
+      text-shadow:0 0 12px rgba(250,204,21,.42);
     }
-    .open-stage-result.gold-tier-good{
-      --gold-tier-glow:.22;
-      --gold-tier-halo:.4;
-      --gold-tier-spark:.52;
-      --gold-tier-pulse-speed:1.16s;
-      --gold-tier-halo-scale:1.1;
-      --gold-tier-spark-speed:1.2s;
+    .open-stage-result.gold-tier-great .result-sub{
+      color:#facc15;
+      text-shadow:0 0 14px rgba(250,204,21,.52), 0 0 28px rgba(250,204,21,.26);
     }
-    .open-stage-result.gold-tier-great{
-      --gold-tier-glow:.3;
-      --gold-tier-halo:.56;
-      --gold-tier-spark:.68;
-      --gold-tier-pulse-speed:1s;
-      --gold-tier-halo-scale:1.15;
-      --gold-tier-spark-speed:1.06s;
+    .open-stage-result.gold-tier-best .result-sub{
+      color:#fef3c7;
+      text-shadow:0 0 16px rgba(251,191,36,.66), 0 0 34px rgba(250,204,21,.3);
     }
-    .open-stage-result.gold-tier-best{
-      --gold-tier-glow:.38;
-      --gold-tier-halo:.72;
-      --gold-tier-spark:.82;
-      --gold-tier-pulse-speed:.92s;
-      --gold-tier-halo-scale:1.2;
-      --gold-tier-spark-speed:.96s;
-    }
-    .open-stage-result.gold-tier-dream{
-      --gold-tier-glow:.46;
-      --gold-tier-halo:.88;
-      --gold-tier-spark:1;
-      --gold-tier-pulse-speed:.82s;
-      --gold-tier-halo-scale:1.26;
-      --gold-tier-spark-speed:.86s;
+    .open-stage-result.gold-tier-dream .result-sub{
+      color:#fff;
+      text-shadow:0 0 18px rgba(250,204,21,.78), 0 0 40px rgba(250,204,21,.4);
+      animation:goldWinTextPop .62s cubic-bezier(.22,1,.36,1) both;
     }
     .open-stage-result.gold-win .result-gold-box{
       order:1;
       width:92px;
       height:92px;
     }
-    .open-stage-result.gold-win .result-gold-box::before,
-    .open-stage-result.gold-win .result-gold-box::after{
-      content:"";
-      position:absolute;
-      inset:-8px;
-      pointer-events:none;
-      z-index:1;
-      border-radius:50%;
-    }
-    .open-stage-result.gold-win .result-gold-box::before{
-      background:
-        radial-gradient(circle at 14% 24%, rgba(255,251,220,var(--gold-tier-spark, .46)) 0 2px, transparent 3px),
-        radial-gradient(circle at 86% 20%, rgba(255,247,186,var(--gold-tier-spark, .46)) 0 2px, transparent 3px),
-        radial-gradient(circle at 18% 76%, rgba(255,240,168,var(--gold-tier-spark, .46)) 0 1.8px, transparent 2.9px),
-        radial-gradient(circle at 84% 80%, rgba(255,250,222,var(--gold-tier-spark, .46)) 0 1.8px, transparent 2.9px),
-        radial-gradient(circle at 50% 10%, rgba(255,253,236,var(--gold-tier-spark, .46)) 0 1.6px, transparent 2.8px),
-        radial-gradient(circle at 50% 90%, rgba(255,244,176,var(--gold-tier-spark, .46)) 0 1.6px, transparent 2.8px);
-      animation:goldSparkleTwinkle var(--gold-tier-spark-speed, 1.28s) ease-in-out infinite;
-    }
-    .open-stage-result.gold-win .result-gold-box::after{
-      background:radial-gradient(circle, rgba(250,204,21,var(--gold-tier-halo, .34)) 0%, rgba(250,204,21,.14) 46%, rgba(250,204,21,0) 74%);
-      transform:scale(var(--gold-tier-halo-scale, 1.08));
-      filter:blur(1px);
-      animation:goldSparkleHalo calc(var(--gold-tier-pulse-speed, 1.22s) + .2s) ease-in-out infinite;
-    }
     .open-stage-result.gold-win .result-gold-box .gift-box{
       width:92px;
       height:92px;
-      filter:drop-shadow(0 10px 22px rgba(0,0,0,.24)) drop-shadow(0 0 20px rgba(250,204,21,var(--gold-tier-glow, .18)));
-      animation:goldBoxHeroPulse var(--gold-tier-pulse-speed, 1.22s) ease-in-out .16s infinite;
+      filter:drop-shadow(0 10px 22px rgba(0,0,0,.24));
+      animation:goldBoxHeroPulse 1.22s ease-in-out .16s infinite;
     }
     /* RandomG 결과 전용: 잔상 없이 단순한 네모 선물상자 + 리본 */
     .result-gold-box .gift-box::before,
@@ -2898,10 +2841,11 @@
         <div class="header-right header-test-tools">
           <button class="tool-btn" data-add="60">+1분</button>
           <button class="tool-btn" data-reward-set="595">+보상</button>
+          <button class="tool-btn" data-add="600">+10분</button>
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.06</span>
+          <span class="dev-version-label">DEV v0.1.99</span>
         </div>
       </header>
 
@@ -2938,10 +2882,11 @@
           <div class="player-test-tools">
             <button class="tool-btn" data-add="60">+1분</button>
             <button class="tool-btn" data-reward-set="595">+보상</button>
+            <button class="tool-btn" data-add="600">+10분</button>
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.06</span>
+            <span class="dev-version-label">DEV v0.1.99</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4031,8 +3976,7 @@ window.addEventListener("resize", clampMiniPosition);
       }
 
       const targetIndex = Math.max(GOLD_BOX_REEL_VALUES.indexOf(targetReward), 0);
-      // 회전 길이를 조금 더 늘리고, 판마다 체감이 달라지도록 루프 수를 랜덤화합니다.
-      const loops = randomInt(16, 20);
+      const loops = 14;
       const totalItems = [];
       for(let i = 0; i < loops; i += 1){
         totalItems.push(...GOLD_BOX_REEL_VALUES);
@@ -4050,60 +3994,41 @@ window.addEventListener("resize", clampMiniPosition);
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const startY = -(startIndex * itemHeight);
       const endY = -(endIndex * itemHeight);
-      const decelTailItems = randomInt(26, 54);
-      const decelStartIndex = Math.min(startIndex - 1, endIndex + decelTailItems);
-      const decelStartY = -(decelStartIndex * itemHeight);
-      const phase1Duration = randomInt(3400, 5000);
-      const phase2Duration = randomInt(3000, 4600);
-      const phasePause = randomInt(40, 190);
-      const phase1Ease = randomPick([
-        "cubic-bezier(.05,.92,.18,1)",
-        "cubic-bezier(.08,.9,.2,1)",
-        "cubic-bezier(.1,.88,.22,1)"
-      ]);
-      const phase2Ease = randomPick([
-        "cubic-bezier(.16,.72,.2,1)",
-        "cubic-bezier(.19,.66,.22,1)",
-        "cubic-bezier(.14,.7,.2,1)"
-      ]);
+      const reelDuration = randomInt(4200, 5200);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
-      goldReelOverlay.classList.add("show");
 
       requestAnimationFrame(() => {
-        // 1차 구간은 빠르게 오래 돌고, 2차 구간에서 랜덤한 감속 체감을 만듭니다.
-        goldReelTrack.style.transition = `transform ${phase1Duration}ms ${phase1Ease}`;
-        goldReelTrack.style.transform = `translate3d(0, ${decelStartY}px, 0)`;
+        goldReelOverlay.classList.add("show");
+        requestAnimationFrame(() => {
+          goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.06,.74,.12,1)`;
+          goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
+        });
       });
 
       const done = () => {
+        goldReelTrack.removeEventListener("transitionend", done);
         onDone();
       };
-      const runFinalDecel = () => {
-        goldReelTrack.style.transition = `transform ${phase2Duration}ms ${phase2Ease}`;
-        goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
-        goldReelTrack.addEventListener("transitionend", done, { once: true });
-      };
-      goldReelTrack.addEventListener("transitionend", () => {
-        setTimeout(runFinalDecel, phasePause);
-      }, { once: true });
+
+      goldReelTrack.addEventListener("transitionend", done, { once: true });
     }
 
     function getGoldResultCelebrateMeta(reward){
       if(reward >= 1000000){
-        return { tierClass: "gold-tier-dream" };
+        return { text: "꿈이야 생시야", tierClass: "gold-tier-dream" };
       }
       if(reward >= 100000){
-        return { tierClass: "gold-tier-best" };
+        return { text: "최고다", tierClass: "gold-tier-best" };
       }
       if(reward >= 50000){
-        return { tierClass: "gold-tier-great" };
+        return { text: "와 대박", tierClass: "gold-tier-great" };
       }
       if(reward >= 10000){
-        return { tierClass: "gold-tier-good" };
+        return { text: "오 좋아", tierClass: "gold-tier-good" };
       }
-      return { tierClass: "gold-tier-basic" };
+      return { text: "축하", tierClass: "gold-tier-basic" };
     }
 
     function clearGoldResultTierClass(){
@@ -4126,7 +4051,7 @@ window.addEventListener("resize", clampMiniPosition);
     function stopOpenStageVideo(){
       bindVideoTimer(null);
       openStage.classList.remove("is-random-gold-slowfx");
-      openStage.classList.remove("stage-video-playing", "stage-gold-prep");
+      openStage.classList.remove("stage-video-playing");
       openStageVideo.pause();
       openStageVideo.playbackRate = 1;
       if(openStageVideoSource){
@@ -4136,8 +4061,6 @@ window.addEventListener("resize", clampMiniPosition);
       openStageVideo.load();
       openStageVideo.onended = null;
       openStageVideo.onerror = null;
-      openStageVideo.onplaying = null;
-      openStageVideo.onloadedmetadata = null;
     }
 
     function applyOpenStagePlaybackRate(){
@@ -4158,34 +4081,25 @@ window.addEventListener("resize", clampMiniPosition);
       const isRandomGoldVideo = src === RANDOM_G_VIDEO_SRC;
       const isRandomXVideo = src === RANDOM_X_VIDEO_SRC;
       const keepLastFrame = !!options.keepLastFrame;
-      const nearEndLeadSeconds = Number.isFinite(options.nearEndLeadSeconds) ? Math.max(options.nearEndLeadSeconds, 0) : 0;
-      const onNearEnd = typeof options.onNearEnd === "function" ? options.onNearEnd : null;
-      let nearEndTriggered = false;
-      let nearEndFallbackTimer = null;
       let slowFxShown = false;
       let goldLeadTextShown = false;
       const handleTimeUpdate = () => {
+        if(!isRandomGoldVideo){
+          return;
+        }
         if(!Number.isFinite(openStageVideo.duration) || openStageVideo.duration <= 0){
           return;
         }
         const remaining = openStageVideo.duration - openStageVideo.currentTime;
-
-        if(isRandomGoldVideo){
-          if(remaining <= 1.5 && !slowFxShown){
-            slowFxShown = true;
-            openStage.classList.add("is-random-gold-slowfx");
-          }
-          if(remaining <= 1.5 && !goldLeadTextShown){
-            goldLeadTextShown = true;
-            if(typeof onRandomGoldLead === "function"){
-              onRandomGoldLead();
-            }
-          }
+        if(remaining <= 1.5 && !slowFxShown){
+          slowFxShown = true;
+          openStage.classList.add("is-random-gold-slowfx");
         }
-
-        if(onNearEnd && !nearEndTriggered && remaining <= nearEndLeadSeconds){
-          nearEndTriggered = true;
-          onNearEnd();
+        if(remaining <= 1.5 && !goldLeadTextShown){
+          goldLeadTextShown = true;
+          if(typeof onRandomGoldLead === "function"){
+            onRandomGoldLead();
+          }
         }
       };
       const finish = () => {
@@ -4194,12 +4108,6 @@ window.addEventListener("resize", clampMiniPosition);
         openStageVideo.removeEventListener("timeupdate", handleTimeUpdate);
         openStageVideo.onended = null;
         openStageVideo.onerror = null;
-        openStageVideo.onplaying = null;
-        openStageVideo.onloadedmetadata = null;
-        if(nearEndFallbackTimer){
-          clearTimeout(nearEndFallbackTimer);
-          nearEndFallbackTimer = null;
-        }
         openStage.classList.remove("is-random-gold-slowfx");
         if((isRandomGoldVideo || keepLastFrame) && Number.isFinite(openStageVideo.duration) && openStageVideo.duration > 0){
           openStageVideo.pause();
@@ -4209,6 +4117,7 @@ window.addEventListener("resize", clampMiniPosition);
         onDone();
       };
 
+      openStage.classList.add("stage-video-playing");
       openStageVideo.muted = true;
       openStageVideo.autoplay = true;
       openStageVideo.playsInline = true;
@@ -4218,26 +4127,6 @@ window.addEventListener("resize", clampMiniPosition);
       openStageVideo.setAttribute("webkit-playsinline", "");
       openStageVideo.onended = finish;
       openStageVideo.onerror = finish;
-      openStageVideo.onplaying = () => {
-        openStage.classList.remove("stage-gold-prep");
-        openStage.classList.add("stage-video-playing");
-      };
-      openStageVideo.onloadedmetadata = () => {
-        if(!onNearEnd || nearEndTriggered || !Number.isFinite(openStageVideo.duration) || openStageVideo.duration <= 0){
-          return;
-        }
-        const leadMs = Math.max(openStageVideo.duration - nearEndLeadSeconds, 0) * 1000;
-        if(nearEndFallbackTimer){
-          clearTimeout(nearEndFallbackTimer);
-        }
-        nearEndFallbackTimer = setTimeout(() => {
-          if(nearEndTriggered){
-            return;
-          }
-          nearEndTriggered = true;
-          onNearEnd();
-        }, leadMs);
-      };
       openStageVideo.playbackRate = (isRandomGoldVideo || isRandomXVideo) ? state.openStageMidPlaybackRate : 1;
       openStageVideo.addEventListener("timeupdate", handleTimeUpdate);
       bindVideoTimer(openStageVideo);
@@ -4449,7 +4338,7 @@ window.addEventListener("resize", clampMiniPosition);
 
     function resetOpenStageState(){
       setOpenStageVariant(state.openType === "gold" ? "gold" : "random");
-      openStage.classList.remove("stage-show-result", "stage-animating", "stage-video-playing", "stage-gold-prep");
+      openStage.classList.remove("stage-show-result", "stage-animating", "stage-video-playing");
       openStageBoxWrap.classList.remove("is-opening-final", "is-final-gold");
       openStageResult.classList.remove("show-gold-box", "gold-win");
       openStageText.textContent = "";
@@ -4479,7 +4368,7 @@ window.addEventListener("resize", clampMiniPosition);
       clearGoldResultTierClass();
       openStageResult.classList.toggle("show-gold-box", showGoldBox);
       openStageResult.classList.toggle("gold-win", showGoldWin);
-      if(state.openType === "gold"){
+      if(state.openType === "gold" && subText){
         openStageResult.classList.add(getGoldResultCelebrateMeta(Number(amountText.replace(/[^0-9]/g, "")) || 0).tierClass);
       }
       openStage.classList.add("stage-show-result");
@@ -4574,7 +4463,6 @@ window.addEventListener("resize", clampMiniPosition);
         animating: true,
         variant: state.openType === "gold" ? "gold" : "random"
       });
-      openStage.classList.remove("stage-gold-prep");
 
       const openDelay = state.openType === "gold"
         ? 1000
@@ -4616,9 +4504,6 @@ window.addEventListener("resize", clampMiniPosition);
       setOpenStageVariant(sequence.revealVariant);
       openStageBoxWrap.classList.remove("is-opening-final", "is-final-gold", "is-suspense-phase");
       setOpenBoxBtnMode("busy", sequence.busyLabel);
-      if(state.openType !== "gold") {
-        openStage.classList.remove("stage-gold-prep");
-      }
 
       if(state.openType === "gold"){
         scheduleOpenStageTimer(() => {
@@ -4656,9 +4541,12 @@ window.addEventListener("resize", clampMiniPosition);
             });
           }
         } else {
+          const goldResultCelebrateMeta = state.openType === "gold"
+            ? getGoldResultCelebrateMeta(result.reward)
+            : null;
           showOpenStageResult({
             amountText: `${result.reward.toLocaleString()} P`,
-            subText: "",
+            subText: goldResultCelebrateMeta ? goldResultCelebrateMeta.text : "",
             keepVideoFrame: state.openType === "gold"
           });
         }
@@ -4674,33 +4562,13 @@ window.addEventListener("resize", clampMiniPosition);
       };
 
       if(sequence.videoSrc){
-        let goldVideoEnded = false;
-        let goldReelStarted = false;
-        let goldReelDone = false;
-
-        const tryRevealGoldResult = () => {
-          if(!goldVideoEnded || !goldReelDone){
-            return;
-          }
-          revealResult();
-        };
-
-        const startGoldReelEarly = () => {
-          if(state.openType !== "gold" || goldReelStarted){
-            return;
-          }
-          goldReelStarted = true;
-          playGoldReelOverlay(result.reward, () => {
-            goldReelDone = true;
-            tryRevealGoldResult();
-          });
-        };
-
         playOpenStageVideo(sequence.videoSrc, () => {
           if(state.openType === "gold"){
-            goldVideoEnded = true;
-            startGoldReelEarly();
-            tryRevealGoldResult();
+            scheduleOpenStageTimer(() => {
+              playGoldReelOverlay(result.reward, () => {
+                revealResult();
+              });
+            }, 150);
             return;
           }
           if(state.openType === "random" && result.type === "chance_gold"){
@@ -4719,9 +4587,7 @@ window.addEventListener("resize", clampMiniPosition);
             keepVideoFrame: true
           });
         }, {
-          keepLastFrame: state.openType === "gold",
-          nearEndLeadSeconds: state.openType === "gold" ? 2 : 0,
-          onNearEnd: state.openType === "gold" ? startGoldReelEarly : null
+          keepLastFrame: state.openType === "gold"
         });
         return;
       }
