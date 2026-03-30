@@ -2873,7 +2873,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.30</span>
+          <span class="dev-version-label">DEV v0.2.31</span>
         </div>
       </header>
 
@@ -2913,7 +2913,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.30</span>
+            <span class="dev-version-label">DEV v0.2.31</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4030,13 +4030,12 @@ window.addEventListener("resize", clampMiniPosition);
       const startIndex = (startLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const rareSlowExtraStep = Math.random() < 0.2;
-      // PR #145에서 빠진 extra-step 감각을 forward 감속 구간 안에서만 작게 복구
-      const extraStepOffset = rareSlowExtraStep ? 1 : 0;
-      const startY = -((startIndex - extraStepOffset) * itemHeight);
+      const startY = -(startIndex * itemHeight);
       const reelAppearDelay = 0;
       const settleFinalIndex = endIndex + GOLD_BOX_REEL_VALUES.length;
-      const settleStartIndex = settleFinalIndex;
+      const settlePrimaryIndex = rareSlowExtraStep ? settleFinalIndex + 1 : settleFinalIndex;
       const reelDuration = randomInt(5900, 7200);
+      const slowFinalStepDuration = randomInt(780, 980);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
@@ -4046,17 +4045,22 @@ window.addEventListener("resize", clampMiniPosition);
           goldReelOverlay.classList.add("show");
           requestAnimationFrame(() => {
             goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.02,.9,.2,1)`;
-            goldReelTrack.style.transform = `translate3d(0, ${-(settleStartIndex * itemHeight)}px, 0)`;
+            goldReelTrack.style.transform = `translate3d(0, ${-(settlePrimaryIndex * itemHeight)}px, 0)`;
           });
         });
       }, reelAppearDelay);
 
-      const done = () => {
-        goldReelTrack.removeEventListener("transitionend", done);
-        onDone();
-      };
-
-      goldReelTrack.addEventListener("transitionend", done, { once: true });
+      goldReelTrack.addEventListener("transitionend", () => {
+        if(!rareSlowExtraStep){
+          onDone();
+          return;
+        }
+        requestAnimationFrame(() => {
+          goldReelTrack.style.transition = `transform ${slowFinalStepDuration}ms cubic-bezier(.16,.92,.32,1)`;
+          goldReelTrack.style.transform = `translate3d(0, ${-(settleFinalIndex * itemHeight)}px, 0)`;
+        });
+        goldReelTrack.addEventListener("transitionend", () => onDone(), { once: true });
+      }, { once: true });
     }
 
     function getGoldResultCelebrateMeta(reward){
