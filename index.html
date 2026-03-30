@@ -2860,7 +2860,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.09</span>
+          <span class="dev-version-label">DEV v0.2.10</span>
         </div>
       </header>
 
@@ -2900,7 +2900,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.09</span>
+            <span class="dev-version-label">DEV v0.2.10</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4142,8 +4142,14 @@ window.addEventListener("resize", clampMiniPosition);
           openStage.style.removeProperty("background");
           openStage.classList.add("stage-video-ready", "stage-video-playing");
         };
-        openStageVideo.addEventListener("loadeddata", markGoldVideoReady, { once:true });
-        openStageVideo.addEventListener("playing", markGoldVideoReady, { once:true });
+        const supportsFrameCallback = typeof openStageVideo.requestVideoFrameCallback === "function";
+        openStageVideo.addEventListener("playing", () => {
+          if(supportsFrameCallback){
+            openStageVideo.requestVideoFrameCallback(() => markGoldVideoReady());
+            return;
+          }
+          markGoldVideoReady();
+        }, { once:true });
       } else {
         openStage.classList.add("stage-video-ready", "stage-video-playing");
       }
