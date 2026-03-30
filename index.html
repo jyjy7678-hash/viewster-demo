@@ -2884,7 +2884,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.36</span>
+          <span class="dev-version-label">DEV v0.2.37</span>
         </div>
       </header>
 
@@ -2924,7 +2924,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.36</span>
+            <span class="dev-version-label">DEV v0.2.37</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4065,7 +4065,7 @@ window.addEventListener("resize", clampMiniPosition);
       const startY = -(startIndex * itemHeight);
       const reelAppearDelay = 0;
       const settleFinalIndex = endIndex + GOLD_BOX_REEL_VALUES.length;
-      const settleIntensityScale = 0.25;
+      const settleIntensityScale = 0.58;
       const settleProfileByStrength = {
         1: { duration: Math.round(420 * settleIntensityScale), easing: "cubic-bezier(.18,.84,.42,1)" },
         2: { duration: Math.round(820 * settleIntensityScale), easing: "cubic-bezier(.14,.86,.32,1)" },
@@ -4092,7 +4092,7 @@ window.addEventListener("resize", clampMiniPosition);
             const preFinalY = -(settlePreFinalIndex * itemHeight);
             const keyframes = includeSlowExtraSlot
               ? [
-                  { transform: `translate3d(0, ${startY}px, 0)`, easing: "linear" },
+                  { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.16,.78,.32,1)" },
                   { offset: preFinalOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: settleProfile.easing },
                   { transform: `translate3d(0, ${finalY}px, 0)` }
                 ]
