@@ -2486,27 +2486,23 @@
       text-shadow:0 0 16px rgba(148,163,184,.22);
     }
     .open-stage-result.gold-win .result-sub{order:2;}
-    .open-stage-result.gold-tier-basic .result-sub{
-      color:#fde68a;
-      text-shadow:0 0 10px rgba(250,204,21,.34);
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-basic{--gold-tier-glow:.88;--gold-tier-pulse:1.08s;--gold-tier-ring:.92s;--gold-tier-sparkle:.95;--gold-tier-burst:8px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-good{--gold-tier-glow:1;--gold-tier-pulse:.98s;--gold-tier-ring:.84s;--gold-tier-sparkle:1.05;--gold-tier-burst:11px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-great{--gold-tier-glow:1.16;--gold-tier-pulse:.9s;--gold-tier-ring:.76s;--gold-tier-sparkle:1.16;--gold-tier-burst:15px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-best{--gold-tier-glow:1.3;--gold-tier-pulse:.82s;--gold-tier-ring:.7s;--gold-tier-sparkle:1.24;--gold-tier-burst:19px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-dream{--gold-tier-glow:1.46;--gold-tier-pulse:.72s;--gold-tier-ring:.62s;--gold-tier-sparkle:1.34;--gold-tier-burst:24px;}
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result{
+      --gold-tier-glow:1;
+      --gold-tier-pulse:.98s;
+      --gold-tier-ring:.84s;
+      --gold-tier-sparkle:1;
+      --gold-tier-burst:10px;
     }
-    .open-stage-result.gold-tier-good .result-sub{
-      color:#fef08a;
-      text-shadow:0 0 12px rgba(250,204,21,.42);
-    }
-    .open-stage-result.gold-tier-great .result-sub{
-      color:#facc15;
-      text-shadow:0 0 14px rgba(250,204,21,.52), 0 0 28px rgba(250,204,21,.26);
-    }
-    .open-stage-result.gold-tier-best .result-sub{
-      color:#fef3c7;
-      text-shadow:0 0 16px rgba(251,191,36,.66), 0 0 34px rgba(250,204,21,.3);
-    }
-    .open-stage-result.gold-tier-dream .result-sub{
-      color:#fff;
-      text-shadow:0 0 18px rgba(250,204,21,.78), 0 0 40px rgba(250,204,21,.4);
-      animation:goldWinTextPop .62s cubic-bezier(.22,1,.36,1) both;
-    }
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .glow-burst{filter:brightness(var(--gold-tier-glow)) saturate(calc(1 + (var(--gold-tier-glow) - 1) * .9));animation-duration:var(--gold-tier-pulse);}
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .burst-ring{animation-duration:var(--gold-tier-ring);transform:translate(-50%,-50%) scale(calc(.92 + (var(--gold-tier-glow) - 1) * .46));}
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .burst-rays{filter:brightness(calc(.92 + var(--gold-tier-glow) * .24));}
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .result-sparkles{transform:translateY(calc(var(--gold-tier-burst) * -1));}
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .result-sparkles span{opacity:calc(.28 + (var(--gold-tier-glow) - .85) * .42);animation-duration:calc(.94s / var(--gold-tier-sparkle));}
     .open-stage-result.gold-win .result-gold-box{
       order:1;
       width:92px;
@@ -2861,7 +2857,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.22</span>
+          <span class="dev-version-label">DEV v0.2.23</span>
         </div>
       </header>
 
@@ -2901,7 +2897,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.22</span>
+            <span class="dev-version-label">DEV v0.2.23</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4041,18 +4037,18 @@ window.addEventListener("resize", clampMiniPosition);
 
     function getGoldResultCelebrateMeta(reward){
       if(reward >= 1000000){
-        return { text: "꿈이야 생시야", tierClass: "gold-tier-dream" };
+        return { tierClass: "gold-tier-dream" };
       }
       if(reward >= 100000){
-        return { text: "최고다", tierClass: "gold-tier-best" };
+        return { tierClass: "gold-tier-best" };
       }
       if(reward >= 50000){
-        return { text: "와 대박", tierClass: "gold-tier-great" };
+        return { tierClass: "gold-tier-great" };
       }
       if(reward >= 10000){
-        return { text: "오 좋아", tierClass: "gold-tier-good" };
+        return { tierClass: "gold-tier-good" };
       }
-      return { text: "축하", tierClass: "gold-tier-basic" };
+      return { tierClass: "gold-tier-basic" };
     }
 
     function clearGoldResultTierClass(){
@@ -4422,7 +4418,7 @@ window.addEventListener("resize", clampMiniPosition);
       clearGoldResultTierClass();
       openStageResult.classList.toggle("show-gold-box", showGoldBox);
       openStageResult.classList.toggle("gold-win", showGoldWin);
-      if(state.openType === "gold" && subText){
+      if(state.openType === "gold"){
         openStageResult.classList.add(getGoldResultCelebrateMeta(Number(amountText.replace(/[^0-9]/g, "")) || 0).tierClass);
       }
       openStage.classList.add("stage-show-result");
@@ -4618,7 +4614,7 @@ window.addEventListener("resize", clampMiniPosition);
             : null;
           showOpenStageResult({
             amountText: `${result.reward.toLocaleString()} P`,
-            subText: goldResultCelebrateMeta ? goldResultCelebrateMeta.text : "",
+            subText: "",
             keepVideoFrame: state.openType === "gold"
           });
         }
