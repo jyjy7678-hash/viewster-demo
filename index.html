@@ -2861,7 +2861,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.12</span>
+          <span class="dev-version-label">DEV v0.2.13</span>
         </div>
       </header>
 
@@ -2901,7 +2901,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.12</span>
+            <span class="dev-version-label">DEV v0.2.13</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4522,6 +4522,13 @@ window.addEventListener("resize", clampMiniPosition);
         animating: true,
         variant: state.openType === "gold" ? "gold" : "random"
       });
+      if(state.openType === "gold"){
+        openStage.classList.add("stage-video-playing", "stage-video-ready");
+        if(openStageVideoSource){
+          openStageVideoSource.setAttribute("src", GOLD_BOX_OPEN_VIDEO_SRC);
+        }
+        openStageVideo.load();
+      }
 
       const openDelay = state.openType === "gold"
         ? 1000
