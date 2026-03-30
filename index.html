@@ -2873,7 +2873,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.29</span>
+          <span class="dev-version-label">DEV v0.2.30</span>
         </div>
       </header>
 
@@ -2913,7 +2913,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.29</span>
+            <span class="dev-version-label">DEV v0.2.30</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4029,7 +4029,10 @@ window.addEventListener("resize", clampMiniPosition);
       const endLoop = 1;
       const startIndex = (startLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
-      const startY = -(startIndex * itemHeight);
+      const rareSlowExtraStep = Math.random() < 0.2;
+      // PR #145에서 빠진 extra-step 감각을 forward 감속 구간 안에서만 작게 복구
+      const extraStepOffset = rareSlowExtraStep ? 1 : 0;
+      const startY = -((startIndex - extraStepOffset) * itemHeight);
       const reelAppearDelay = 0;
       const settleFinalIndex = endIndex + GOLD_BOX_REEL_VALUES.length;
       const settleStartIndex = settleFinalIndex;
