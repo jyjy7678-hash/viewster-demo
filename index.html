@@ -1706,9 +1706,13 @@
       min-height:320px;
     }
     #openSheet.fx-gold-open .box-open-stage.stage-video-playing #openStageVideo{
+      opacity:0;
       transform:translate(-1.5%, -1%) scale(1.09);
       transform-origin:center center;
       object-position:50% 46%;
+    }
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing.stage-video-ready #openStageVideo{
+      opacity:1;
     }
     .gold-reel-overlay{
       position:absolute;
@@ -2856,7 +2860,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.07</span>
+          <span class="dev-version-label">DEV v0.2.08</span>
         </div>
       </header>
 
@@ -2896,7 +2900,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.07</span>
+            <span class="dev-version-label">DEV v0.2.08</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4060,7 +4064,7 @@ window.addEventListener("resize", clampMiniPosition);
 
     function stopOpenStageVideo(){
       bindVideoTimer(null);
-      openStage.classList.remove("is-random-gold-slowfx");
+      openStage.classList.remove("is-random-gold-slowfx", "stage-video-ready");
       openStage.classList.remove("stage-video-playing");
       openStageVideo.pause();
       openStageVideo.playbackRate = 1;
@@ -4128,6 +4132,11 @@ window.addEventListener("resize", clampMiniPosition);
       };
 
       openStage.classList.add("stage-video-playing");
+      if(openSheetEl.classList.contains("fx-gold-open")){
+        openStageVideo.addEventListener("loadeddata", () => openStage.classList.add("stage-video-ready"), { once:true });
+      } else {
+        openStage.classList.add("stage-video-ready");
+      }
       openStageVideo.muted = true;
       openStageVideo.autoplay = true;
       openStageVideo.playsInline = true;
@@ -4348,7 +4357,7 @@ window.addEventListener("resize", clampMiniPosition);
 
     function resetOpenStageState(){
       setOpenStageVariant(state.openType === "gold" ? "gold" : "random");
-      openStage.classList.remove("stage-show-result", "stage-animating", "stage-video-playing");
+      openStage.classList.remove("stage-show-result", "stage-animating", "stage-video-playing", "stage-video-ready");
       openStageBoxWrap.classList.remove("is-opening-final", "is-final-gold");
       openStageResult.classList.remove("show-gold-box", "gold-win");
       openStageText.textContent = "";
