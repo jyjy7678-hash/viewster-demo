@@ -1811,10 +1811,10 @@
       position:absolute;
       left:-45%;
       top:50%;
-      width:48%;
-      height:2px;
-      background:linear-gradient(90deg, rgba(255,244,181,0), rgba(255,255,255,.98), rgba(255,244,181,0));
-      box-shadow:0 0 9px rgba(255,244,181,.95);
+      width:72%;
+      height:4px;
+      background:linear-gradient(90deg, rgba(255,233,125,0), rgba(255,248,196,.98) 20%, rgba(255,255,255,1) 50%, rgba(255,248,196,.98) 80%, rgba(255,233,125,0));
+      box-shadow:0 0 14px rgba(255,248,196,.98), 0 0 28px rgba(250,204,21,.6);
       transform:translateY(-50%);
       opacity:0;
       pointer-events:none;
@@ -2023,9 +2023,9 @@
       to{--gold-border-angle:1turn;}
     }
     @keyframes goldAmountCenterSweep{
-      0%{left:-48%;opacity:0;}
-      24%{opacity:1;}
-      100%{left:102%;opacity:0;}
+      0%{left:-72%;opacity:0;}
+      20%{opacity:1;}
+      100%{left:132%;opacity:0;}
     }
     @keyframes boxFailSpark{
       0%{opacity:0; transform:translate3d(0,0,0) scale(.2);}
@@ -2456,15 +2456,15 @@
       border-radius:inherit;
       padding:1px;
       opacity:0;
-      background:conic-gradient(from var(--gold-border-angle, 0deg), rgba(251,191,36,.34) 0deg, rgba(251,191,36,.14) 302deg, rgba(255,244,181,.98) 334deg, rgba(254,240,138,.7) 348deg, rgba(251,191,36,.34) 360deg);
-      filter:drop-shadow(0 0 4px rgba(251,191,36,.86)) drop-shadow(0 0 9px rgba(255,244,181,.52));
+      background:conic-gradient(from var(--gold-border-angle, 0deg), rgba(251,191,36,.64) 0deg, rgba(251,191,36,.26) 292deg, rgba(255,249,196,1) 326deg, rgba(255,239,139,.92) 346deg, rgba(251,191,36,.64) 360deg);
+      filter:drop-shadow(0 0 8px rgba(251,191,36,.98)) drop-shadow(0 0 16px rgba(255,244,181,.82));
       -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite:xor;
       mask-composite:exclude;
     }
     #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-window::after{
-      opacity:.98;
-      animation:goldReelBorderSweep 1.05s linear infinite;
+      opacity:1;
+      animation:goldReelBorderSweep .9s linear infinite;
     }
     #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-item::after{
       animation:goldAmountCenterSweep .72s ease-out .18s 1;
@@ -2941,7 +2941,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.43</span>
+          <span class="dev-version-label">DEV v0.2.44</span>
         </div>
       </header>
 
@@ -2981,7 +2981,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.43</span>
+            <span class="dev-version-label">DEV v0.2.44</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
