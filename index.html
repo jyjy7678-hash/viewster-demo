@@ -4150,8 +4150,9 @@ window.addEventListener("resize", clampMiniPosition);
         5: { duration: Math.round(2800 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.01,.98,.08,1)" }
       };
       const settleProfile = settleProfileByStrength[goldSettleStrength] || settleProfileByStrength[3];
-      const finalSegmentDuration = settleProfile.duration;
-      const reelDuration = randomInt(5900, 7200);
+      const extraSlowdownDuration = 2000;
+      const finalSegmentDuration = settleProfile.duration + extraSlowdownDuration;
+      const reelDuration = randomInt(5900, 7200) + extraSlowdownDuration;
       const preFinalOffset = Math.max(0.12, (reelDuration - finalSegmentDuration) / reelDuration);
 
       goldReelTrack.style.transition = "none";
@@ -4163,9 +4164,13 @@ window.addEventListener("resize", clampMiniPosition);
           goldReelOverlay.classList.remove("reel-settled");
           requestAnimationFrame(() => {
             const finalY = -(settleFinalIndex * itemHeight);
+            const preFinalIndex = settleFinalIndex - 1;
+            const preFinalY = -(preFinalIndex * itemHeight);
+            const suspenseOffset = Math.min(0.985, preFinalOffset + 0.76 * (1 - preFinalOffset));
             const keyframes = [
               { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.16,.78,.32,1)" },
-              { offset: preFinalOffset, transform: `translate3d(0, ${finalY}px, 0)`, easing: settleProfile.easing },
+              { offset: preFinalOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: settleProfile.easing },
+              { offset: suspenseOffset, transform: `translate3d(0, ${preFinalY - itemHeight * 0.78}px, 0)`, easing: "cubic-bezier(.12,.9,.22,1)" },
               { transform: `translate3d(0, ${finalY}px, 0)` }
             ];
             goldReelAnimation = goldReelTrack.animate(keyframes, {
