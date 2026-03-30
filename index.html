@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: v0.2.04 -->
+<!-- Version: v0.2.05 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1703,6 +1703,20 @@
     .box-open-stage.stage-video-playing .open-stage-video{
       opacity:1;
     }
+    .box-open-stage.stage-gold-prep{
+      background:#05070f;
+    }
+    .box-open-stage.stage-gold-prep::before,
+    .box-open-stage.stage-gold-prep::after,
+    .box-open-stage.stage-gold-prep .open-stage-backdrop,
+    .box-open-stage.stage-gold-prep .open-stage-box-wrap,
+    .box-open-stage.stage-gold-prep .box-open-text,
+    .box-open-stage.stage-gold-prep .open-stage-clouds{
+      display:none;
+    }
+    .box-open-stage.stage-gold-prep .open-stage-video{
+      opacity:1;
+    }
     .gold-reel-overlay{
       position:absolute;
       inset:0;
@@ -2900,7 +2914,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.04</span>
+          <span class="dev-version-label">DEV v0.2.05</span>
         </div>
       </header>
 
@@ -2941,7 +2955,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.04</span>
+            <span class="dev-version-label">DEV v0.2.05</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4069,14 +4083,12 @@ window.addEventListener("resize", clampMiniPosition);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
+      goldReelOverlay.classList.add("show");
 
       requestAnimationFrame(() => {
-        goldReelOverlay.classList.add("show");
-        requestAnimationFrame(() => {
-          // 1차 구간은 빠르게 오래 돌고, 2차 구간에서 랜덤한 감속 체감을 만듭니다.
-          goldReelTrack.style.transition = `transform ${phase1Duration}ms ${phase1Ease}`;
-          goldReelTrack.style.transform = `translate3d(0, ${decelStartY}px, 0)`;
-        });
+        // 1차 구간은 빠르게 오래 돌고, 2차 구간에서 랜덤한 감속 체감을 만듭니다.
+        goldReelTrack.style.transition = `transform ${phase1Duration}ms ${phase1Ease}`;
+        goldReelTrack.style.transform = `translate3d(0, ${decelStartY}px, 0)`;
       });
 
       const done = () => {
@@ -4128,7 +4140,7 @@ window.addEventListener("resize", clampMiniPosition);
     function stopOpenStageVideo(){
       bindVideoTimer(null);
       openStage.classList.remove("is-random-gold-slowfx");
-      openStage.classList.remove("stage-video-playing");
+      openStage.classList.remove("stage-video-playing", "stage-gold-prep");
       openStageVideo.pause();
       openStageVideo.playbackRate = 1;
       if(openStageVideoSource){
@@ -4214,6 +4226,7 @@ window.addEventListener("resize", clampMiniPosition);
       openStageVideo.onended = finish;
       openStageVideo.onerror = finish;
       openStageVideo.onplaying = () => {
+        openStage.classList.remove("stage-gold-prep");
         openStage.classList.add("stage-video-playing");
       };
       openStageVideo.playbackRate = (isRandomGoldVideo || isRandomXVideo) ? state.openStageMidPlaybackRate : 1;
@@ -4427,7 +4440,7 @@ window.addEventListener("resize", clampMiniPosition);
 
     function resetOpenStageState(){
       setOpenStageVariant(state.openType === "gold" ? "gold" : "random");
-      openStage.classList.remove("stage-show-result", "stage-animating", "stage-video-playing");
+      openStage.classList.remove("stage-show-result", "stage-animating", "stage-video-playing", "stage-gold-prep");
       openStageBoxWrap.classList.remove("is-opening-final", "is-final-gold");
       openStageResult.classList.remove("show-gold-box", "gold-win");
       openStageText.textContent = "";
@@ -4552,6 +4565,7 @@ window.addEventListener("resize", clampMiniPosition);
         animating: true,
         variant: state.openType === "gold" ? "gold" : "random"
       });
+      openStage.classList.toggle("stage-gold-prep", state.openType === "gold");
 
       const openDelay = state.openType === "gold"
         ? 1000
@@ -4593,6 +4607,9 @@ window.addEventListener("resize", clampMiniPosition);
       setOpenStageVariant(sequence.revealVariant);
       openStageBoxWrap.classList.remove("is-opening-final", "is-final-gold", "is-suspense-phase");
       setOpenBoxBtnMode("busy", sequence.busyLabel);
+      if(state.openType !== "gold") {
+        openStage.classList.remove("stage-gold-prep");
+      }
 
       if(state.openType === "gold"){
         scheduleOpenStageTimer(() => {
