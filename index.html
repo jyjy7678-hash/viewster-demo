@@ -2884,7 +2884,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.37</span>
+          <span class="dev-version-label">DEV v0.2.38</span>
         </div>
       </header>
 
@@ -2924,7 +2924,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.37</span>
+            <span class="dev-version-label">DEV v0.2.38</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4066,16 +4066,18 @@ window.addEventListener("resize", clampMiniPosition);
       const reelAppearDelay = 0;
       const settleFinalIndex = endIndex + GOLD_BOX_REEL_VALUES.length;
       const settleIntensityScale = 0.58;
+      const settleDurationScale = 1.25;
+      const extraSlotSlowdownScale = 1.4;
       const settleProfileByStrength = {
-        1: { duration: Math.round(420 * settleIntensityScale), easing: "cubic-bezier(.18,.84,.42,1)" },
-        2: { duration: Math.round(820 * settleIntensityScale), easing: "cubic-bezier(.14,.86,.32,1)" },
-        3: { duration: Math.round(1300 * settleIntensityScale), easing: "cubic-bezier(.08,.9,.22,1)" },
-        4: { duration: Math.round(1950 * settleIntensityScale), easing: "cubic-bezier(.04,.94,.14,1)" },
-        5: { duration: Math.round(2800 * settleIntensityScale), easing: "cubic-bezier(.01,.98,.08,1)" }
+        1: { duration: Math.round(420 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.18,.84,.42,1)" },
+        2: { duration: Math.round(820 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.14,.86,.32,1)" },
+        3: { duration: Math.round(1300 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.08,.9,.22,1)" },
+        4: { duration: Math.round(1950 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.04,.94,.14,1)" },
+        5: { duration: Math.round(2800 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.01,.98,.08,1)" }
       };
       const settleProfile = settleProfileByStrength[goldSettleStrength] || settleProfileByStrength[3];
       const finalSegmentDuration = includeSlowExtraSlot
-        ? settleProfile.duration
+        ? Math.round(settleProfile.duration * extraSlotSlowdownScale)
         : 1000;
       const settlePreFinalIndex = includeSlowExtraSlot ? settleFinalIndex + 1 : settleFinalIndex;
       const reelDuration = randomInt(5900, 7200);
