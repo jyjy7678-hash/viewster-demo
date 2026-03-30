@@ -1809,12 +1809,12 @@
     .gold-reel-item::after{
       content:"";
       position:absolute;
-      left:-45%;
+      left:-72%;
       top:50%;
-      width:72%;
-      height:4px;
-      background:linear-gradient(90deg, rgba(255,233,125,0), rgba(255,248,196,.98) 20%, rgba(255,255,255,1) 50%, rgba(255,248,196,.98) 80%, rgba(255,233,125,0));
-      box-shadow:0 0 14px rgba(255,248,196,.98), 0 0 28px rgba(250,204,21,.6);
+      width:108%;
+      height:7px;
+      background:linear-gradient(90deg, rgba(255,233,125,0), rgba(255,248,196,1) 16%, rgba(255,255,255,1) 50%, rgba(255,248,196,1) 84%, rgba(255,233,125,0));
+      box-shadow:0 0 18px rgba(255,248,196,1), 0 0 34px rgba(250,204,21,.82), 0 0 52px rgba(250,204,21,.52);
       transform:translateY(-50%);
       opacity:0;
       pointer-events:none;
@@ -2020,12 +2020,13 @@
       50%{filter:brightness(1.1);text-shadow:0 0 26px rgba(250,204,21,.65), 0 0 40px rgba(255,244,181,.42), 0 6px 14px rgba(0,0,0,.45);}
     }
     @keyframes goldReelBorderSweep{
-      to{--gold-border-angle:1turn;}
+      from{background-position:-130% 0, 0 0;}
+      to{background-position:130% 0, 0 0;}
     }
     @keyframes goldAmountCenterSweep{
-      0%{left:-72%;opacity:0;}
-      20%{opacity:1;}
-      100%{left:132%;opacity:0;}
+      0%{left:-98%;opacity:0;}
+      18%{opacity:1;}
+      100%{left:148%;opacity:0;}
     }
     @keyframes boxFailSpark{
       0%{opacity:0; transform:translate3d(0,0,0) scale(.2);}
@@ -2452,19 +2453,21 @@
       display:none;
     }
     #openSheet.fx-gold-open .gold-reel-window::after{
-      inset:-1px;
+      inset:-2px;
       border-radius:inherit;
-      padding:1px;
+      padding:2px;
       opacity:0;
-      background:conic-gradient(from var(--gold-border-angle, 0deg), rgba(251,191,36,.64) 0deg, rgba(251,191,36,.26) 292deg, rgba(255,249,196,1) 326deg, rgba(255,239,139,.92) 346deg, rgba(251,191,36,.64) 360deg);
-      filter:drop-shadow(0 0 8px rgba(251,191,36,.98)) drop-shadow(0 0 16px rgba(255,244,181,.82));
+      background:
+        linear-gradient(90deg, rgba(255,233,125,0) 0%, rgba(255,250,205,.98) 46%, rgba(255,255,255,1) 50%, rgba(255,250,205,.98) 54%, rgba(255,233,125,0) 100%) -130% 0 / 220% 100% no-repeat,
+        linear-gradient(180deg, rgba(255,248,196,.98), rgba(251,191,36,.92));
+      filter:drop-shadow(0 0 12px rgba(251,191,36,1)) drop-shadow(0 0 22px rgba(255,244,181,.95));
       -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite:xor;
       mask-composite:exclude;
     }
     #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-window::after{
       opacity:1;
-      animation:goldReelBorderSweep .9s linear infinite;
+      animation:goldReelBorderSweep .84s linear infinite;
     }
     #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-item::after{
       animation:goldAmountCenterSweep .72s ease-out .18s 1;
@@ -2941,7 +2944,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.44</span>
+          <span class="dev-version-label">DEV v0.2.45</span>
         </div>
       </header>
 
@@ -2981,7 +2984,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.44</span>
+            <span class="dev-version-label">DEV v0.2.45</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
