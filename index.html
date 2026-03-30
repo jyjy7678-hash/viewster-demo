@@ -2861,7 +2861,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.16</span>
+          <span class="dev-version-label">DEV v0.2.17</span>
         </div>
       </header>
 
@@ -2901,7 +2901,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.16</span>
+            <span class="dev-version-label">DEV v0.2.17</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3976,8 +3976,12 @@ window.addEventListener("resize", clampMiniPosition);
       document.documentElement.style.overflowY = hasOpenSheet ? "hidden" : "";
     }
 
+    let goldReelStartTimer = null;
+
     function resetGoldReelOverlay(){
       if(!goldReelOverlay || !goldReelTrack) return;
+      clearTimeout(goldReelStartTimer);
+      goldReelStartTimer = null;
       goldReelOverlay.classList.remove("show");
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = "translate3d(0, 0, 0)";
@@ -3991,7 +3995,7 @@ window.addEventListener("resize", clampMiniPosition);
       }
 
       const targetIndex = Math.max(GOLD_BOX_REEL_VALUES.indexOf(targetReward), 0);
-      const loops = 14;
+      const loops = 18;
       const totalItems = [];
       for(let i = 0; i < loops; i += 1){
         totalItems.push(...GOLD_BOX_REEL_VALUES);
@@ -4009,18 +4013,21 @@ window.addEventListener("resize", clampMiniPosition);
       const endIndex = (endLoop * GOLD_BOX_REEL_VALUES.length) + targetIndex;
       const startY = -(startIndex * itemHeight);
       const endY = -(endIndex * itemHeight);
-      const reelDuration = randomInt(4200, 5200);
+      const reelAppearDelay = 4000;
+      const reelDuration = randomInt(6800, 8200);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
 
-      requestAnimationFrame(() => {
-        goldReelOverlay.classList.add("show");
+      goldReelStartTimer = setTimeout(() => {
         requestAnimationFrame(() => {
-          goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.06,.74,.12,1)`;
-          goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
+          goldReelOverlay.classList.add("show");
+          requestAnimationFrame(() => {
+            goldReelTrack.style.transition = `transform ${reelDuration}ms cubic-bezier(.04,.88,.14,1)`;
+            goldReelTrack.style.transform = `translate3d(0, ${endY}px, 0)`;
+          });
         });
-      });
+      }, reelAppearDelay);
 
       const done = () => {
         goldReelTrack.removeEventListener("transitionend", done);
