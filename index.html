@@ -931,6 +931,22 @@
       background:linear-gradient(180deg,#f8d34e,#d9a911);
       color:#2b2100;
     }
+    .wallet-test-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin-top:8px;
+    }
+    .wallet-test-btn{
+      border:1px solid #d8deea;
+      background:#f8fafc;
+      color:#1f2937;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+      padding:5px 9px;
+      line-height:1;
+    }
 
     .comment-tab{
       display:flex;
@@ -2486,11 +2502,11 @@
       text-shadow:0 0 16px rgba(148,163,184,.22);
     }
     .open-stage-result.gold-win .result-sub{order:2;}
-    #openSheet.fx-gold-open .open-stage-result.gold-tier-basic{--gold-tier-glow:.88;--gold-tier-pulse:1.08s;--gold-tier-ring:.92s;--gold-tier-sparkle:.95;--gold-tier-burst:8px;}
-    #openSheet.fx-gold-open .open-stage-result.gold-tier-good{--gold-tier-glow:1;--gold-tier-pulse:.98s;--gold-tier-ring:.84s;--gold-tier-sparkle:1.05;--gold-tier-burst:11px;}
-    #openSheet.fx-gold-open .open-stage-result.gold-tier-great{--gold-tier-glow:1.16;--gold-tier-pulse:.9s;--gold-tier-ring:.76s;--gold-tier-sparkle:1.16;--gold-tier-burst:15px;}
-    #openSheet.fx-gold-open .open-stage-result.gold-tier-best{--gold-tier-glow:1.3;--gold-tier-pulse:.82s;--gold-tier-ring:.7s;--gold-tier-sparkle:1.24;--gold-tier-burst:19px;}
-    #openSheet.fx-gold-open .open-stage-result.gold-tier-dream{--gold-tier-glow:1.46;--gold-tier-pulse:.72s;--gold-tier-ring:.62s;--gold-tier-sparkle:1.34;--gold-tier-burst:24px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-basic{--gold-tier-glow:.68;--gold-tier-pulse:1.2s;--gold-tier-ring:1.05s;--gold-tier-sparkle:.72;--gold-tier-burst:4px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-good{--gold-tier-glow:.98;--gold-tier-pulse:.98s;--gold-tier-ring:.84s;--gold-tier-sparkle:.98;--gold-tier-burst:10px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-great{--gold-tier-glow:1.35;--gold-tier-pulse:.82s;--gold-tier-ring:.68s;--gold-tier-sparkle:1.22;--gold-tier-burst:18px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-best{--gold-tier-glow:1.72;--gold-tier-pulse:.68s;--gold-tier-ring:.56s;--gold-tier-sparkle:1.48;--gold-tier-burst:26px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-dream{--gold-tier-glow:2.2;--gold-tier-pulse:.54s;--gold-tier-ring:.44s;--gold-tier-sparkle:1.9;--gold-tier-burst:36px;}
     #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result{
       --gold-tier-glow:1;
       --gold-tier-pulse:.98s;
@@ -2500,9 +2516,9 @@
     }
     #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .glow-burst{filter:brightness(var(--gold-tier-glow)) saturate(calc(1 + (var(--gold-tier-glow) - 1) * .9));animation-duration:var(--gold-tier-pulse);}
     #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .burst-ring{animation-duration:var(--gold-tier-ring);transform:translate(-50%,-50%) scale(calc(.92 + (var(--gold-tier-glow) - 1) * .46));}
-    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .burst-rays{filter:brightness(calc(.92 + var(--gold-tier-glow) * .24));}
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .burst-rays{filter:brightness(calc(.7 + var(--gold-tier-glow) * .36));}
     #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .result-sparkles{transform:translateY(calc(var(--gold-tier-burst) * -1));}
-    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .result-sparkles span{opacity:calc(.28 + (var(--gold-tier-glow) - .85) * .42);animation-duration:calc(.94s / var(--gold-tier-sparkle));}
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .result-sparkles span{opacity:calc(.06 + (var(--gold-tier-glow) - .68) * .5);animation-duration:calc(.98s / var(--gold-tier-sparkle));}
     .open-stage-result.gold-win .result-gold-box{
       order:1;
       width:92px;
@@ -2857,7 +2873,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.23</span>
+          <span class="dev-version-label">DEV v0.2.24</span>
         </div>
       </header>
 
@@ -2897,7 +2913,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.23</span>
+            <span class="dev-version-label">DEV v0.2.24</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2970,6 +2986,9 @@
         <button class="wallet-open-btn" id="walletOpenRandomFail">랜덤X</button>
         <button class="wallet-open-btn" id="walletOpenRandomGold">랜덤G</button>
         <button class="wallet-open-btn gold" id="walletOpenGold">황금</button>
+      </div>
+      <div class="wallet-test-row" aria-label="황금박스 결과 테스트">
+        <button class="wallet-test-btn" data-gold-reward-test="500">+500</button><button class="wallet-test-btn" data-gold-reward-test="1000">+1000</button><button class="wallet-test-btn" data-gold-reward-test="5000">+5000</button><button class="wallet-test-btn" data-gold-reward-test="10000">+10000</button><button class="wallet-test-btn" data-gold-reward-test="50000">+50000</button><button class="wallet-test-btn" data-gold-reward-test="500000">+500000</button><button class="wallet-test-btn" data-gold-reward-test="1000000">+1000000</button>
       </div>
     </div>
   </section>
@@ -3180,6 +3199,7 @@
       openTimer: null,
       openType: "random",
       openForcedResultType: null,
+      openForcedGoldReward: null,
       openFromWallet: false,
       openAutoCloseTimer: null,
       openBoxBtnMode: "start",
@@ -4508,6 +4528,7 @@ window.addEventListener("resize", clampMiniPosition);
     function startOpenFlow(type, options = {}){
       state.openType = type || "random";
       state.openForcedResultType = options.forcedResultType || null;
+      state.openForcedGoldReward = Number(options.forcedGoldReward) || null;
       state.openFromWallet = !!options.fromWallet;
       clearTimeout(state.openAutoCloseTimer);
       clearTimeout(state.openTimer);
@@ -4547,6 +4568,9 @@ window.addEventListener("resize", clampMiniPosition);
 
       if(state.openType === "gold"){
         result = createBoxResult(goldBoxTable, [{ value: "normal", weight: 1 }]);
+        if(state.openForcedGoldReward){
+          result.reward = state.openForcedGoldReward;
+        }
       } else {
         result = createBoxResult(
           boxTable,
@@ -4683,6 +4707,9 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     document.getElementById("walletOpenRandomFail").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "chance_fail" }));
     document.getElementById("walletOpenRandomGold").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "chance_gold" }));
     document.getElementById("walletOpenGold").addEventListener("click", () => startOpenFlow("gold", { fromWallet: true }));
+    document.querySelectorAll("[data-gold-reward-test]").forEach(btn => {
+      btn.addEventListener("click", () => startOpenFlow("gold", { fromWallet: true, forcedGoldReward: Number(btn.dataset.goldRewardTest) }));
+    });
     inlineGetBtnWide.addEventListener("click", startRewardAdFlow);
 
     rewardAdBtn.addEventListener("click", () => {
