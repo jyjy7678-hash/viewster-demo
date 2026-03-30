@@ -947,6 +947,17 @@
       padding:5px 9px;
       line-height:1;
     }
+    .wallet-test-btn.active{
+      border-color:#2563eb;
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+    .wallet-test-note{
+      margin-top:4px;
+      font-size:11px;
+      color:#64748b;
+      font-weight:700;
+    }
 
     .comment-tab{
       display:flex;
@@ -2873,7 +2884,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.32</span>
+          <span class="dev-version-label">DEV v0.2.34</span>
         </div>
       </header>
 
@@ -2913,7 +2924,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.32</span>
+            <span class="dev-version-label">DEV v0.2.34</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2990,6 +3001,10 @@
       <div class="wallet-test-row" aria-label="황금박스 결과 테스트">
         <button class="wallet-test-btn" data-gold-reward-test="500">+500</button><button class="wallet-test-btn" data-gold-reward-test="1000">+1000</button><button class="wallet-test-btn" data-gold-reward-test="5000">+5000</button><button class="wallet-test-btn" data-gold-reward-test="10000">+10000</button><button class="wallet-test-btn" data-gold-reward-test="50000">+50000</button><button class="wallet-test-btn" data-gold-reward-test="500000">+500000</button><button class="wallet-test-btn" data-gold-reward-test="1000000">+1000000</button>
       </div>
+      <div class="wallet-test-row" aria-label="마지막 1칸 추가 패턴 강도 테스트">
+        <button class="wallet-test-btn" data-settle-strength-test="1">강도1</button><button class="wallet-test-btn" data-settle-strength-test="2">강도2</button><button class="wallet-test-btn" data-settle-strength-test="3">강도3</button><button class="wallet-test-btn" data-settle-strength-test="4">강도4</button><button class="wallet-test-btn" data-settle-strength-test="5">강도5</button>
+      </div>
+      <div class="wallet-test-note" id="settleStrengthLabel">settle 강도: 3</div>
     </div>
   </section>
 
@@ -3215,6 +3230,7 @@
     let miniDragActive = false;
     let miniDragOffsetX = 0;
     let miniDragOffsetY = 0;
+    let goldSettleStrength = 3;
 
     const boxTable = [
       { value: 5, weight: 35 },
@@ -3253,6 +3269,16 @@
     const rewardFill = document.getElementById("rewardFill");
     const rewardRightText = document.getElementById("rewardRightText");
     const rewardInline = document.getElementById("rewardInline");
+    const settleStrengthLabel = document.getElementById("settleStrengthLabel");
+
+    function updateGoldSettleStrengthUI(){
+      if(settleStrengthLabel){
+        settleStrengthLabel.textContent = `settle 강도: ${goldSettleStrength}`;
+      }
+      document.querySelectorAll("[data-settle-strength-test]").forEach(btn => {
+        btn.classList.toggle("active", Number(btn.dataset.settleStrengthTest) === goldSettleStrength);
+      });
+    }
     const inlineGetBtnWide = document.getElementById("inlineGetBtnWide");
     const commentCountText = document.getElementById("commentCountText");
     const sheetCommentCount = document.getElementById("sheetCommentCount");
@@ -4038,7 +4064,10 @@ window.addEventListener("resize", clampMiniPosition);
       const startY = -(startIndex * itemHeight);
       const reelAppearDelay = 0;
       const settleFinalIndex = endIndex + GOLD_BOX_REEL_VALUES.length;
-      const finalSegmentDuration = 1000;
+      const settleDurationByStrength = { 1: 750, 2: 900, 3: 1000, 4: 1150, 5: 1300 };
+      const finalSegmentDuration = includeSlowExtraSlot
+        ? (settleDurationByStrength[goldSettleStrength] || 1000)
+        : 1000;
       const settlePreFinalIndex = includeSlowExtraSlot ? settleFinalIndex + 1 : settleFinalIndex;
       const reelDuration = randomInt(5900, 7200);
       const preFinalOffset = Math.max(0.12, (reelDuration - finalSegmentDuration) / reelDuration);
@@ -4731,6 +4760,13 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     document.querySelectorAll("[data-gold-reward-test]").forEach(btn => {
       btn.addEventListener("click", () => startOpenFlow("gold", { fromWallet: true, forcedGoldReward: Number(btn.dataset.goldRewardTest) }));
     });
+    document.querySelectorAll("[data-settle-strength-test]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        goldSettleStrength = Number(btn.dataset.settleStrengthTest) || 3;
+        updateGoldSettleStrengthUI();
+      });
+    });
+    updateGoldSettleStrengthUI();
     inlineGetBtnWide.addEventListener("click", startRewardAdFlow);
 
     rewardAdBtn.addEventListener("click", () => {
