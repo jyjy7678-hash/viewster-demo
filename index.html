@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.58 -->
+<!-- Version: DEV v0.2.59 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -3056,10 +3056,6 @@
       <div class="wallet-test-row wallet-test-row--gold" aria-label="황금박스 결과 테스트">
         <button class="wallet-test-btn" data-gold-reward-test="500">+500</button><button class="wallet-test-btn" data-gold-reward-test="1000">+1000</button><button class="wallet-test-btn" data-gold-reward-test="5000">+5000</button><button class="wallet-test-btn" data-gold-reward-test="10000">+10000</button><button class="wallet-test-btn" data-gold-reward-test="50000">+50000</button><button class="wallet-test-btn" data-gold-reward-test="500000">+500000</button><button class="wallet-test-btn" data-gold-reward-test="1000000">+1000000</button>
       </div>
-      <div class="wallet-test-row" aria-label="황금박스 넘어가는 속도 테스트">
-        <button class="wallet-test-btn" data-gold-speed-delta="-1000">-1000</button><button class="wallet-test-btn" data-gold-speed-delta="1000">+1000</button><button class="wallet-test-btn" data-gold-speed-delta="-50">-50</button><button class="wallet-test-btn" data-gold-speed-delta="50">+50</button>
-      </div>
-      <div class="wallet-test-note"><span id="goldSpeedLabel">넘어가는 속도: 1300ms</span></div>
       <div class="wallet-grid">
         <div class="wallet-card">
           <div class="wallet-label">📦 랜덤박스</div>
@@ -3306,7 +3302,7 @@
     let miniDragActive = false;
     let miniDragOffsetX = 0;
     let miniDragOffsetY = 0;
-    let goldSettleSpeedMs = 1300;
+    const GOLD_SETTLE_SPEED_MS = 1300;
 
     const boxTable = [
       { value: 5, weight: 35 },
@@ -3345,13 +3341,6 @@
     const rewardFill = document.getElementById("rewardFill");
     const rewardRightText = document.getElementById("rewardRightText");
     const rewardInline = document.getElementById("rewardInline");
-    const goldSpeedLabel = document.getElementById("goldSpeedLabel");
-
-    function updateGoldSettleSpeedUI(){
-      if(goldSpeedLabel){
-        goldSpeedLabel.textContent = `넘어가는 속도: ${goldSettleSpeedMs}ms`;
-      }
-    }
     const inlineGetBtnWide = document.getElementById("inlineGetBtnWide");
     const commentCountText = document.getElementById("commentCountText");
     const sheetCommentCount = document.getElementById("sheetCommentCount");
@@ -4158,7 +4147,7 @@ window.addEventListener("resize", clampMiniPosition);
         5: { duration: Math.round(2800 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.01,.98,.08,1)" }
       };
       const settleProfile = settleProfileByStrength[3];
-      const suspenseDuration = Math.max(120, Math.round(goldSettleSpeedMs * settleIntensityScale * settleDurationScale));
+      const suspenseDuration = Math.max(120, Math.round(GOLD_SETTLE_SPEED_MS * settleIntensityScale * settleDurationScale));
       const finalStepDuration = 220;
       const shouldExtraSuspenseStep = Math.random() < 0.6;
       const reelDuration = randomInt(5900, 7200) + finalStepDuration + (shouldExtraSuspenseStep ? suspenseDuration : 0);
@@ -4863,13 +4852,6 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     document.querySelectorAll("[data-gold-reward-test]").forEach(btn => {
       btn.addEventListener("click", () => startOpenFlow("gold", { fromWallet: true, forcedGoldReward: Number(btn.dataset.goldRewardTest) }));
     });
-    document.querySelectorAll("[data-gold-speed-delta]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        goldSettleSpeedMs = Math.max(100, goldSettleSpeedMs + (Number(btn.dataset.goldSpeedDelta) || 0));
-        updateGoldSettleSpeedUI();
-      });
-    });
-    updateGoldSettleSpeedUI();
     inlineGetBtnWide.addEventListener("click", startRewardAdFlow);
 
     rewardAdBtn.addEventListener("click", () => {
