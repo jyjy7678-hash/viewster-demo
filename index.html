@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.62 -->
+<!-- Version: DEV v0.2.63 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2971,7 +2971,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.62</span>
+          <span class="dev-version-label">DEV v0.2.63</span>
         </div>
       </header>
 
@@ -3011,7 +3011,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.62</span>
+            <span class="dev-version-label">DEV v0.2.63</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4167,7 +4167,7 @@ window.addEventListener("resize", clampMiniPosition);
       };
       const settleProfile = settleProfileByStrength[3];
       const suspenseDuration = Math.max(120, Math.round(GOLD_SETTLE_SPEED_MS * settleIntensityScale * settleDurationScale));
-      const finalStepDuration = 220;
+      const finalStepDuration = 300;
       const shouldExtraSuspenseStep = Math.random() < 0.6;
       const reelDuration = randomInt(5900, 7200) + finalStepDuration + (shouldExtraSuspenseStep ? suspenseDuration : 0);
       const preFinalOffset = Math.max(0.12, (reelDuration - finalStepDuration - (shouldExtraSuspenseStep ? suspenseDuration : 0)) / reelDuration);
@@ -4181,8 +4181,10 @@ window.addEventListener("resize", clampMiniPosition);
           goldReelOverlay.classList.remove("reel-settled");
           requestAnimationFrame(() => {
             const finalY = -(settleFinalIndex * itemHeight);
-            const finalStepDistance = itemHeight * 0.6;
+            const finalStepDistance = itemHeight * 0.86;
             const preFinalY = finalY - finalStepDistance;
+            const finalAbsorbDistance = Math.max(itemHeight * 0.22, finalStepDistance * 0.3);
+            const preFinalAbsorbY = finalY - finalAbsorbDistance;
             const finalStepOffset = Math.min(0.996, (reelDuration - finalStepDuration) / reelDuration);
             const suspenseOffset = Math.min(
               finalStepOffset - 0.002,
@@ -4191,14 +4193,14 @@ window.addEventListener("resize", clampMiniPosition);
             const keyframes = [
               { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.16,.78,.32,1)" },
               { offset: preFinalOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: shouldExtraSuspenseStep ? settleProfile.easing : "cubic-bezier(.2,.88,.34,1)" },
-              { offset: finalStepOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: "cubic-bezier(0.25, 1, 0.5, 1)" },
+              { offset: finalStepOffset, transform: `translate3d(0, ${preFinalAbsorbY}px, 0)`, easing: "cubic-bezier(.16,.92,.3,1)" },
               { transform: `translate3d(0, ${finalY}px, 0)` }
             ];
             if(shouldExtraSuspenseStep){
               keyframes.splice(2, 0, {
                 offset: suspenseOffset,
-                transform: `translate3d(0, ${preFinalY + finalStepDistance * 0.34}px, 0)`,
-                easing: "cubic-bezier(0.25, 1, 0.5, 1)"
+                transform: `translate3d(0, ${preFinalY + (preFinalAbsorbY - preFinalY) * 0.58}px, 0)`,
+                easing: "cubic-bezier(.2,.9,.34,1)"
               });
             }
             goldReelAnimation = goldReelTrack.animate(keyframes, {
