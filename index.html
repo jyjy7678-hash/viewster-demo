@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.56 -->
+<!-- Version: DEV v0.2.58 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2959,7 +2959,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.56</span>
+          <span class="dev-version-label">DEV v0.2.58</span>
         </div>
       </header>
 
@@ -2999,7 +2999,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.56</span>
+            <span class="dev-version-label">DEV v0.2.58</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4159,10 +4159,10 @@ window.addEventListener("resize", clampMiniPosition);
       };
       const settleProfile = settleProfileByStrength[3];
       const suspenseDuration = Math.max(120, Math.round(goldSettleSpeedMs * settleIntensityScale * settleDurationScale));
-      const finalSettleDuration = 170;
+      const finalStepDuration = 220;
       const shouldExtraSuspenseStep = Math.random() < 0.6;
-      const reelDuration = randomInt(5900, 7200) + finalSettleDuration + (shouldExtraSuspenseStep ? suspenseDuration : 0);
-      const preFinalOffset = Math.max(0.12, (reelDuration - finalSettleDuration - (shouldExtraSuspenseStep ? suspenseDuration : 0)) / reelDuration);
+      const reelDuration = randomInt(5900, 7200) + finalStepDuration + (shouldExtraSuspenseStep ? suspenseDuration : 0);
+      const preFinalOffset = Math.max(0.12, (reelDuration - finalStepDuration - (shouldExtraSuspenseStep ? suspenseDuration : 0)) / reelDuration);
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
@@ -4173,16 +4173,25 @@ window.addEventListener("resize", clampMiniPosition);
           goldReelOverlay.classList.remove("reel-settled");
           requestAnimationFrame(() => {
             const finalY = -(settleFinalIndex * itemHeight);
-            const preFinalIndex = settleFinalIndex + 0.84;
-            const preFinalY = -(preFinalIndex * itemHeight);
-            const suspenseOffset = Math.min(0.992, preFinalOffset + ((shouldExtraSuspenseStep ? suspenseDuration : 0) / reelDuration));
+            const finalStepDistance = itemHeight * 0.6;
+            const preFinalY = finalY - finalStepDistance;
+            const finalStepOffset = Math.min(0.996, (reelDuration - finalStepDuration) / reelDuration);
+            const suspenseOffset = Math.min(
+              finalStepOffset - 0.002,
+              preFinalOffset + ((shouldExtraSuspenseStep ? suspenseDuration : 0) / reelDuration)
+            );
             const keyframes = [
               { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.16,.78,.32,1)" },
               { offset: preFinalOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: shouldExtraSuspenseStep ? settleProfile.easing : "cubic-bezier(.2,.88,.34,1)" },
+              { offset: finalStepOffset, transform: `translate3d(0, ${preFinalY}px, 0)`, easing: "cubic-bezier(0.25, 1, 0.5, 1)" },
               { transform: `translate3d(0, ${finalY}px, 0)` }
             ];
             if(shouldExtraSuspenseStep){
-              keyframes.splice(2, 0, { offset: suspenseOffset, transform: `translate3d(0, ${preFinalY + itemHeight * 0.58}px, 0)`, easing: "cubic-bezier(.24,.92,.52,1)" });
+              keyframes.splice(2, 0, {
+                offset: suspenseOffset,
+                transform: `translate3d(0, ${preFinalY + finalStepDistance * 0.34}px, 0)`,
+                easing: "cubic-bezier(0.25, 1, 0.5, 1)"
+              });
             }
             goldReelAnimation = goldReelTrack.animate(keyframes, {
               duration: reelDuration,
