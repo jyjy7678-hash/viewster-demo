@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.64 -->
+<!-- Version: DEV v0.2.65 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2971,7 +2971,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.64</span>
+          <span class="dev-version-label">DEV v0.2.65</span>
         </div>
       </header>
 
@@ -3011,7 +3011,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.64</span>
+            <span class="dev-version-label">DEV v0.2.65</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4169,11 +4169,19 @@ window.addEventListener("resize", clampMiniPosition);
       const slowSpinDuration = randomInt(1000, 3000);
       const finalStepDuration = Math.round(620 * settleIntensityScale * settleDurationScale);
       const reelDuration = randomInt(5600, 6800) + slowSpinDuration + finalStepDuration;
-      const fastStageRatio = randomInt(48, 56) / 100;
-      const midStageRatio = randomInt(18, 24) / 100;
-      const stageOneOffset = Math.max(0.32, Math.min(0.6, fastStageRatio));
-      const stageTwoOffset = Math.max(stageOneOffset + 0.1, Math.min(0.84, stageOneOffset + midStageRatio));
-      const stageThreeOffset = Math.max(stageTwoOffset + 0.08, Math.min(0.975, (reelDuration - finalStepDuration) / reelDuration));
+      const stageRatios = [
+        randomInt(44, 50) / 100,
+        randomInt(20, 25) / 100,
+        randomInt(16, 20) / 100
+      ];
+      const stageFourRatio = Math.max(0.08, 1 - (stageRatios[0] + stageRatios[1] + stageRatios[2]));
+      const stageDurations = [...stageRatios, stageFourRatio];
+      const stageSpeeds = [
+        { start: 10, end: 8 },
+        { start: 8, end: 6 },
+        { start: 6, end: 4 },
+        { start: 4, end: 2 }
+      ];
 
       goldReelTrack.style.transition = "none";
       goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
@@ -4185,14 +4193,23 @@ window.addEventListener("resize", clampMiniPosition);
           requestAnimationFrame(() => {
             const finalY = -(settleFinalIndex * itemHeight);
             const totalTravel = startY - finalY;
+            const stageWeights = stageDurations.map((duration, idx) => {
+              const stageSpeed = stageSpeeds[idx];
+              return duration * ((stageSpeed.start + stageSpeed.end) / 2);
+            });
+            const totalWeight = stageWeights.reduce((sum, weight) => sum + weight, 0) || 1;
+            const stageTravelRatios = stageWeights.map(weight => weight / totalWeight);
+            const stageOneOffset = stageTravelRatios[0];
+            const stageTwoOffset = stageOneOffset + stageTravelRatios[1];
+            const stageThreeOffset = stageTwoOffset + stageTravelRatios[2];
             const stageOneY = startY - (totalTravel * stageOneOffset);
             const stageTwoY = startY - (totalTravel * stageTwoOffset);
             const stageThreeY = startY - (totalTravel * stageThreeOffset);
             const keyframes = [
-              { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.16,.78,.32,1)" },
-              { offset: stageOneOffset, transform: `translate3d(0, ${stageOneY}px, 0)`, easing: "cubic-bezier(.2,.86,.36,1)" },
+              { transform: `translate3d(0, ${startY}px, 0)`, easing: "cubic-bezier(.14,.82,.3,1)" },
+              { offset: stageOneOffset, transform: `translate3d(0, ${stageOneY}px, 0)`, easing: "cubic-bezier(.2,.84,.34,1)" },
               { offset: stageTwoOffset, transform: `translate3d(0, ${stageTwoY}px, 0)`, easing: settleProfile.easing },
-              { offset: stageThreeOffset, transform: `translate3d(0, ${stageThreeY}px, 0)`, easing: "cubic-bezier(.18,.92,.28,1)" },
+              { offset: stageThreeOffset, transform: `translate3d(0, ${stageThreeY}px, 0)`, easing: "cubic-bezier(.24,.88,.34,1)" },
               { transform: `translate3d(0, ${finalY}px, 0)` }
             ];
             goldReelAnimation = goldReelTrack.animate(keyframes, {
