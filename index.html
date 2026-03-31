@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.61 -->
+<!-- Version: DEV v0.2.62 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -948,16 +948,16 @@
       white-space:nowrap;
     }
     .wallet-test-row--gold{
-      flex-wrap:nowrap;
-      overflow-x:auto;
       margin-top:0;
-      padding-right:8px;
-      -ms-overflow-style:none;
-      scrollbar-width:none;
+      margin-left:auto;
+      gap:4px;
+      min-width:0;
     }
-    .wallet-test-row--gold::-webkit-scrollbar{display:none;}
-    .wallet-test-row--gold .wallet-test-btn{
-      flex:0 0 auto;
+    .wallet-test-line{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap:4px;
     }
     .wallet-test-btn{
       border:1px solid #d8deea;
@@ -2971,7 +2971,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.61</span>
+          <span class="dev-version-label">DEV v0.2.62</span>
         </div>
       </header>
 
@@ -3011,7 +3011,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.61</span>
+            <span class="dev-version-label">DEV v0.2.62</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3067,7 +3067,12 @@
         <div class="sheet-title">내 지갑</div>
         <!-- 모바일에서 바로 보이는 상단 테스트 영역 -->
         <div class="wallet-test-row wallet-test-row--gold" aria-label="황금박스 결과 테스트">
-          <button class="wallet-test-btn" data-gold-reward-test="500">+500</button><button class="wallet-test-btn" data-gold-reward-test="1000">+천</button><button class="wallet-test-btn" data-gold-reward-test="5000">+5천</button><button class="wallet-test-btn" data-gold-reward-test="10000">+만</button><button class="wallet-test-btn" data-gold-reward-test="50000">+5만</button><button class="wallet-test-btn" data-gold-reward-test="100000">+10만</button><button class="wallet-test-btn" data-gold-reward-test="500000">+50만</button><button class="wallet-test-btn" data-gold-reward-test="1000000">+100만</button>
+          <div class="wallet-test-line">
+            <button class="wallet-test-btn" data-gold-reward-test="500">+500</button><button class="wallet-test-btn" data-gold-reward-test="1000">+천</button><button class="wallet-test-btn" data-gold-reward-test="5000">+5천</button><button class="wallet-test-btn" data-gold-reward-test="10000">+만</button><button class="wallet-test-btn" data-gold-reward-test="50000">+5만</button>
+          </div>
+          <div class="wallet-test-line">
+            <button class="wallet-test-btn" data-gold-reward-test="100000">+10만</button><button class="wallet-test-btn" data-gold-reward-test="500000">+50만</button><button class="wallet-test-btn" data-gold-reward-test="1000000">+100만</button>
+          </div>
         </div>
       </div>
       <div class="wallet-grid">
