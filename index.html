@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.81 -->
+<!-- Version: DEV v0.2.82 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -985,19 +985,17 @@
       font-weight:700;
     }
     .gold-reel-tune-panel{
-      display:grid;
-      grid-template-rows:0fr;
+      max-height:0;
       margin:0;
       border:0;
       border-radius:0;
       background:transparent;
       padding:0;
-      min-height:0;
       overflow:hidden;
-      transition:grid-template-rows .22s ease, margin .22s ease, padding .22s ease, border-width .22s ease;
+      transition:max-height .22s ease, margin .22s ease, padding .22s ease, border-width .22s ease;
     }
     .gold-reel-tune-panel:not(.collapsed){
-      grid-template-rows:1fr;
+      max-height:420px;
       margin-top:8px;
       margin-bottom:12px;
       border:1px solid #dbe4f3;
@@ -1043,8 +1041,7 @@
     }
     .gold-reel-tune-content{
       margin-top:0;
-      min-height:0;
-      overflow:hidden;
+      display:block;
     }
     .gold-reel-tune-grid{
       display:grid;
@@ -3094,7 +3091,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.81</span>
+          <span class="dev-version-label">DEV v0.2.82</span>
         </div>
       </header>
 
@@ -3134,7 +3131,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.81</span>
+            <span class="dev-version-label">DEV v0.2.82</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
