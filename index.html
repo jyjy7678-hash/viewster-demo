@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.76 -->
+<!-- Version: DEV v0.2.77 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -984,7 +984,15 @@
       font-weight:700;
     }
     .gold-reel-tune-panel{
-      margin:10px 0;
+      margin:0;
+      border:0;
+      border-radius:0;
+      background:transparent;
+      padding:0;
+      min-height:0;
+    }
+    .gold-reel-tune-panel:not(.collapsed){
+      margin-top:8px;
       border:1px solid #dbe4f3;
       border-radius:12px;
       background:#f8fbff;
@@ -1009,9 +1017,8 @@
       font-size:11px;
     }
 
-    .wallet-top-row .gold-reel-tune-title{
+    .sheet-head .gold-reel-tune-title{
       width:auto;
-      margin-left:auto;
       padding:4px 9px;
       border:1px solid #d8deea;
       border-radius:999px;
@@ -1020,16 +1027,18 @@
       color:#1f2937;
       gap:4px;
       flex-shrink:0;
+      position:absolute;
+      right:48px;
+      top:12px;
     }
-    .gold-reel-tune-panel.collapsed .gold-reel-tune-title::after{
+    .gold-reel-tune-title.collapsed::after{
       content:"▼";
     }
     .gold-reel-tune-content{
       margin-top:8px;
     }
-    .gold-reel-tune-panel.collapsed .gold-reel-tune-content{
-      display:none;
-    }
+    .gold-reel-tune-panel.collapsed{display:none;}
+    .gold-reel-tune-panel.collapsed .gold-reel-tune-content{display:none;}
     .gold-reel-tune-grid{
       display:grid;
       grid-template-columns:40px 1fr 1fr 1.6fr;
@@ -3078,7 +3087,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.76</span>
+          <span class="dev-version-label">DEV v0.2.77</span>
         </div>
       </header>
 
@@ -3118,7 +3127,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.76</span>
+            <span class="dev-version-label">DEV v0.2.77</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3167,6 +3176,7 @@
 
   <section class="sheet sheet--action" id="walletSheet">
     <div class="sheet-head">
+      <button type="button" class="gold-reel-tune-title collapsed" id="goldReelTuneToggleBtn">릴 테스트</button>
       <button class="sheet-close" data-close="walletSheet">×</button>
     </div>
     <div class="sheet-body">
@@ -3181,7 +3191,6 @@
             <button class="wallet-test-btn" data-gold-reward-test="100000">+10만</button><button class="wallet-test-btn" data-gold-reward-test="500000">+50만</button><button class="wallet-test-btn" data-gold-reward-test="1000000">+100만</button>
           </div>
         </div>
-        <button type="button" class="gold-reel-tune-title" id="goldReelTuneToggleBtn">릴 테스트</button>
       </div>
       <div class="gold-reel-tune-panel collapsed" id="goldReelTunePanel" aria-label="황금박스 릴 감속 테스트">
         <div class="gold-reel-tune-content">
@@ -5242,6 +5251,7 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
 
     goldReelTuneToggleBtn.addEventListener("click", () => {
       goldReelTunePanel.classList.toggle("collapsed");
+      goldReelTuneToggleBtn.classList.toggle("collapsed");
     });
 
     applyReelTuneBtn.addEventListener("click", () => {
