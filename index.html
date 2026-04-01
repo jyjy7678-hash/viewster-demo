@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.73 -->
+<!-- Version: DEV v0.2.72 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1441,8 +1441,7 @@
       --gift-ribbon:transparent;
     }
     .box-icon.is-random-box .gift-box{
-      transform:translateY(4px) rotateX(8deg) rotateY(-10deg) scale(1.01);
-      transform-style:preserve-3d;
+      transform:translateY(4px);
       filter:drop-shadow(0 24px 34px rgba(49,46,129,.48));
     }
     .box-icon.is-random-box .gift-ribbon-knot{
@@ -1455,9 +1454,8 @@
       border-radius:4px 4px 2px 2px;
       box-shadow:inset 0 1px 0 rgba(255,255,255,.42), 0 12px 18px rgba(49,46,129,.3);
       transform-origin:20px 30px;
-      transform:skewX(-8deg);
       overflow:visible;
-      background:linear-gradient(180deg, rgba(255,255,255,.3), rgba(255,255,255,.06) 66%, rgba(255,255,255,0) 100%);
+      background:linear-gradient(168deg, rgba(255,255,255,.22), rgba(255,255,255,0) 46%);
     }
     .box-icon.is-random-box .gift-body{
       top:48px;
@@ -1465,7 +1463,7 @@
       height:80px;
       border-radius:2px;
       box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 18px 30px rgba(49,46,129,.34);
-      background:linear-gradient(178deg, rgba(255,255,255,.16), rgba(255,255,255,.02) 50%, rgba(255,255,255,0) 100%);
+      background:linear-gradient(172deg, rgba(255,255,255,.14), rgba(255,255,255,0) 44%);
       overflow:visible;
     }
     .box-icon.is-random-box .gift-lid::before,
@@ -1476,8 +1474,8 @@
       border-radius:inherit;
       box-shadow:none;
       background:
-        linear-gradient(156deg, rgba(255,255,255,.34) 0%, rgba(255,255,255,0) 44%),
-        repeating-linear-gradient(132deg,
+        linear-gradient(156deg, rgba(255,255,255,.38) 0%, rgba(255,255,255,0) 42%),
+        repeating-linear-gradient(128deg,
           #ff335f 0 10px,
           #ff8a00 10px 20px,
           #ffe600 20px 30px,
@@ -1486,40 +1484,8 @@
           #6b63ff 50px 60px,
           #d54bff 60px 70px);
     }
-    .box-icon.is-random-box .gift-lid::before{
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.08) 56%, rgba(255,255,255,0) 100%),
-        repeating-linear-gradient(136deg,
-          #ff476e 0 10px,
-          #ff9b1f 10px 20px,
-          #ffe95e 20px 30px,
-          #4deca5 30px 40px,
-          #4bc3ff 40px 50px,
-          #7f72ff 50px 60px,
-          #e85fff 60px 70px);
-    }
+    .box-icon.is-random-box .gift-lid::after,
     .box-icon.is-random-box .gift-body::after{
-      content:"";
-      position:absolute;
-      top:2px;
-      right:-10px;
-      width:10px;
-      height:76px;
-      border-radius:0 2px 2px 0;
-      transform:skewY(-8deg);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0) 36%),
-        repeating-linear-gradient(132deg,
-          #bf244d 0 10px,
-          #c46810 10px 20px,
-          #d6bc24 20px 30px,
-          #1f9a5d 30px 40px,
-          #1d78ad 40px 50px,
-          #4644a8 50px 60px,
-          #8b2ca8 60px 70px);
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
-    }
-    .box-icon.is-random-box .gift-lid::after{
       display:none;
     }
 
@@ -3096,7 +3062,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.73</span>
+          <span class="dev-version-label">DEV v0.2.72</span>
         </div>
       </header>
 
@@ -3136,7 +3102,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.73</span>
+            <span class="dev-version-label">DEV v0.2.72</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
