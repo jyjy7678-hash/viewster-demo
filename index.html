@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.78 -->
+<!-- Version: DEV v0.2.79 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -992,10 +992,11 @@
       min-height:0;
       max-height:0;
       overflow:hidden;
-      transition:max-height .22s ease, margin-top .22s ease, padding .22s ease, border-width .22s ease;
+      transition:max-height .22s ease, margin .22s ease, padding .22s ease, border-width .22s ease;
     }
     .gold-reel-tune-panel:not(.collapsed){
       margin-top:8px;
+      margin-bottom:10px;
       border:1px solid #dbe4f3;
       border-radius:12px;
       background:#f8fbff;
@@ -3088,7 +3089,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.78</span>
+          <span class="dev-version-label">DEV v0.2.79</span>
         </div>
       </header>
 
@@ -3128,7 +3129,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.78</span>
+            <span class="dev-version-label">DEV v0.2.79</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -5255,7 +5256,8 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
         goldReelTunePanel.style.maxHeight = "0px";
         return;
       }
-      goldReelTunePanel.style.maxHeight = `${goldReelTunePanel.scrollHeight}px`;
+      const panelExtraSpace = 20;
+      goldReelTunePanel.style.maxHeight = `${goldReelTunePanel.scrollHeight + panelExtraSpace}px`;
     }
 
     goldReelTuneToggleBtn.addEventListener("click", () => {
