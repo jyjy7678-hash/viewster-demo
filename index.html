@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.75 -->
+<!-- Version: DEV v0.2.76 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -897,19 +897,19 @@
     .wallet-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:8px;
-      margin-bottom:8px;
+      gap:6px;
+      margin-bottom:6px;
     }
     .wallet-card{
       background:#f5f7fb;
-      border-radius:16px;
-      padding:11px 12px;
-      min-height:74px;
+      border-radius:14px;
+      padding:8px 10px;
+      min-height:58px;
       text-align:center;
     }
     .wallet-card.full{grid-column:1 / -1;}
-    .wallet-label{font-size:12px;color:#6b7280;font-weight:700;}
-    .wallet-value{font-size:18px;font-weight:900;color:var(--primary);margin-top:4px;line-height:1.15;}
+    .wallet-label{font-size:11px;color:#6b7280;font-weight:700;}
+    .wallet-value{font-size:16px;font-weight:900;color:var(--primary);margin-top:2px;line-height:1.1;}
 
     .wallet-action-row{
       display:grid;
@@ -940,26 +940,21 @@
     }
     .wallet-top-row{
       display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
+      align-items:flex-start;
+      gap:6px;
     }
     .wallet-top-row .sheet-title{
       margin:0;
       white-space:nowrap;
     }
-    .wallet-top-tools{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
-      gap:4px;
-      min-width:0;
-      margin-left:auto;
-    }
     .wallet-test-row--gold{
       margin-top:0;
       gap:3px;
       min-width:0;
+      flex:1;
+    }
+    .wallet-top-row .wallet-test-line{
+      justify-content:flex-start;
     }
     .wallet-test-line{
       display:flex;
@@ -1014,8 +1009,9 @@
       font-size:11px;
     }
 
-    .wallet-top-tools .gold-reel-tune-title{
+    .wallet-top-row .gold-reel-tune-title{
       width:auto;
+      margin-left:auto;
       padding:4px 9px;
       border:1px solid #d8deea;
       border-radius:999px;
@@ -1023,6 +1019,7 @@
       font-size:11px;
       color:#1f2937;
       gap:4px;
+      flex-shrink:0;
     }
     .gold-reel-tune-panel.collapsed .gold-reel-tune-title::after{
       content:"▼";
@@ -2953,10 +2950,10 @@
       .sheet-head{height:44px;}
       .sheet-title{margin:6px 0 10px;font-size:17px;}
       .sheet--action .sheet-body{gap:8px;padding-bottom:calc(12px + env(safe-area-inset-bottom, 0px));}
-      .wallet-grid{gap:8px;margin-bottom:8px;}
-      .wallet-card{padding:12px;}
-      .wallet-label{font-size:12px;}
-      .wallet-value{font-size:18px;}
+      .wallet-grid{gap:6px;margin-bottom:6px;}
+      .wallet-card{padding:8px 10px;min-height:56px;}
+      .wallet-label{font-size:11px;}
+      .wallet-value{font-size:16px;margin-top:2px;}
       .wallet-open-btn{min-height:40px;font-size:13px;}
       .ad-top{font-size:17px;padding-bottom:4px;}
       .ad-desc{font-size:11px;padding-bottom:8px;}
@@ -3081,7 +3078,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.72</span>
+          <span class="dev-version-label">DEV v0.2.76</span>
         </div>
       </header>
 
@@ -3121,7 +3118,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.72</span>
+            <span class="dev-version-label">DEV v0.2.76</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3176,17 +3173,15 @@
       <div class="wallet-top-row">
         <div class="sheet-title">내 지갑</div>
         <!-- 모바일에서 바로 보이는 상단 테스트 영역 -->
-        <div class="wallet-top-tools">
-          <button type="button" class="gold-reel-tune-title" id="goldReelTuneToggleBtn">릴 테스트</button>
-          <div class="wallet-test-row wallet-test-row--gold" aria-label="황금박스 결과 테스트">
+        <div class="wallet-test-row wallet-test-row--gold" aria-label="황금박스 결과 테스트">
           <div class="wallet-test-line">
             <button class="wallet-test-btn" data-gold-reward-test="500">+500</button><button class="wallet-test-btn" data-gold-reward-test="1000">+천</button><button class="wallet-test-btn" data-gold-reward-test="5000">+5천</button><button class="wallet-test-btn" data-gold-reward-test="10000">+만</button><button class="wallet-test-btn" data-gold-reward-test="50000">+5만</button>
           </div>
           <div class="wallet-test-line">
             <button class="wallet-test-btn" data-gold-reward-test="100000">+10만</button><button class="wallet-test-btn" data-gold-reward-test="500000">+50만</button><button class="wallet-test-btn" data-gold-reward-test="1000000">+100만</button>
           </div>
-          </div>
         </div>
+        <button type="button" class="gold-reel-tune-title" id="goldReelTuneToggleBtn">릴 테스트</button>
       </div>
       <div class="gold-reel-tune-panel collapsed" id="goldReelTunePanel" aria-label="황금박스 릴 감속 테스트">
         <div class="gold-reel-tune-content">
