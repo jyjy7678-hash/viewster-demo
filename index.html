@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.66 -->
+<!-- Version: DEV v0.2.67 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -979,6 +979,53 @@
       font-size:11px;
       color:#64748b;
       font-weight:700;
+    }
+    .gold-reel-tune-panel{
+      margin:10px 0;
+      border:1px solid #dbe4f3;
+      border-radius:12px;
+      background:#f8fbff;
+      padding:10px;
+    }
+    .gold-reel-tune-title{
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:8px;
+      color:#1e3a8a;
+    }
+    .gold-reel-tune-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:6px;
+    }
+    .gold-reel-tune-grid input{
+      width:100%;
+      border:1px solid #cbd5e1;
+      border-radius:8px;
+      padding:6px 8px;
+      font-size:12px;
+      background:#fff;
+    }
+    .gold-reel-tune-actions{
+      display:flex;
+      gap:6px;
+      margin-top:8px;
+    }
+    .gold-reel-tune-btn{
+      border:none;
+      border-radius:8px;
+      padding:7px 10px;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .gold-reel-tune-btn.apply{
+      background:#2563eb;
+      color:#fff;
+    }
+    .gold-reel-tune-btn.reset{
+      background:#e2e8f0;
+      color:#1f2937;
     }
 
     .comment-tab{
@@ -2971,7 +3018,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.66</span>
+          <span class="dev-version-label">DEV v0.2.67</span>
         </div>
       </header>
 
@@ -3011,7 +3058,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.66</span>
+            <span class="dev-version-label">DEV v0.2.67</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3073,6 +3120,28 @@
           <div class="wallet-test-line">
             <button class="wallet-test-btn" data-gold-reward-test="100000">+10만</button><button class="wallet-test-btn" data-gold-reward-test="500000">+50만</button><button class="wallet-test-btn" data-gold-reward-test="1000000">+100만</button>
           </div>
+        </div>
+      </div>
+      <div class="gold-reel-tune-panel" id="goldReelTunePanel" aria-label="황금박스 릴 감속 테스트">
+        <div class="gold-reel-tune-title">황금박스 릴 감속 테스트 (다음 실행부터 반영)</div>
+        <div class="gold-reel-tune-grid">
+          <input type="number" id="reelS1Max" placeholder="1단계 최고속도">
+          <input type="number" id="reelS1Min" placeholder="1단계 최저속도">
+          <input type="number" id="reelS1Dur" placeholder="1단계 유지시간(ms)">
+          <input type="number" id="reelS2Max" placeholder="2단계 최고속도">
+          <input type="number" id="reelS2Min" placeholder="2단계 최저속도">
+          <input type="number" id="reelS2Dur" placeholder="2단계 유지시간(ms)">
+          <input type="number" id="reelS3Max" placeholder="3단계 최고속도">
+          <input type="number" id="reelS3Min" placeholder="3단계 최저속도">
+          <input type="number" id="reelS3DurMin" placeholder="3단계 유지시간 최소(ms)">
+          <input type="number" id="reelS3DurMax" placeholder="3단계 유지시간 최대(ms)">
+          <input type="number" id="reelS4Max" placeholder="4단계 최고속도">
+          <input type="number" id="reelS4Min" placeholder="4단계 최저속도">
+          <input type="number" id="reelS4Dur" placeholder="4단계 유지시간(ms)">
+        </div>
+        <div class="gold-reel-tune-actions">
+          <button class="gold-reel-tune-btn apply" id="applyReelTuneBtn">적용</button>
+          <button class="gold-reel-tune-btn reset" id="resetReelTuneBtn">기본값 복원</button>
         </div>
       </div>
       <div class="wallet-grid">
@@ -3322,6 +3391,12 @@
     let miniDragOffsetX = 0;
     let miniDragOffsetY = 0;
     const GOLD_SETTLE_SPEED_MS = 1300;
+    const GOLD_REEL_STAGE_DEFAULTS = {
+      stage1: { maxSpeed: 10, minSpeed: 8, duration: 800 },
+      stage2: { maxSpeed: 8, minSpeed: 6, duration: 700 },
+      stage3: { maxSpeed: 6, minSpeed: 4, durationMin: 1000, durationMax: 3000 },
+      stage4: { maxSpeed: 4, minSpeed: 2, duration: 600 }
+    };
 
     const boxTable = [
       { value: 5, weight: 35 },
@@ -3400,6 +3475,21 @@
     const miniAdWrap = document.getElementById("miniAdWrap");
     const paidBadge = document.getElementById("paidBadge");
     const playerFloatControls = document.querySelector(".player-float-controls");
+    const reelS1MaxInput = document.getElementById("reelS1Max");
+    const reelS1MinInput = document.getElementById("reelS1Min");
+    const reelS1DurInput = document.getElementById("reelS1Dur");
+    const reelS2MaxInput = document.getElementById("reelS2Max");
+    const reelS2MinInput = document.getElementById("reelS2Min");
+    const reelS2DurInput = document.getElementById("reelS2Dur");
+    const reelS3MaxInput = document.getElementById("reelS3Max");
+    const reelS3MinInput = document.getElementById("reelS3Min");
+    const reelS3DurMinInput = document.getElementById("reelS3DurMin");
+    const reelS3DurMaxInput = document.getElementById("reelS3DurMax");
+    const reelS4MaxInput = document.getElementById("reelS4Max");
+    const reelS4MinInput = document.getElementById("reelS4Min");
+    const reelS4DurInput = document.getElementById("reelS4Dur");
+    const applyReelTuneBtn = document.getElementById("applyReelTuneBtn");
+    const resetReelTuneBtn = document.getElementById("resetReelTuneBtn");
     let watchTimerPolling = null;
     let watchTimerRunning = false;
     let boundTimerVideo = null;
@@ -3586,6 +3676,47 @@
 
     function randomInt(min, max){
       return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function cloneGoldReelDefaults(){
+      return JSON.parse(JSON.stringify(GOLD_REEL_STAGE_DEFAULTS));
+    }
+    state.goldReelStageConfig = cloneGoldReelDefaults();
+
+    function syncGoldReelTuneInputs(config){
+      reelS1MaxInput.value = config.stage1.maxSpeed;
+      reelS1MinInput.value = config.stage1.minSpeed;
+      reelS1DurInput.value = config.stage1.duration;
+      reelS2MaxInput.value = config.stage2.maxSpeed;
+      reelS2MinInput.value = config.stage2.minSpeed;
+      reelS2DurInput.value = config.stage2.duration;
+      reelS3MaxInput.value = config.stage3.maxSpeed;
+      reelS3MinInput.value = config.stage3.minSpeed;
+      reelS3DurMinInput.value = config.stage3.durationMin;
+      reelS3DurMaxInput.value = config.stage3.durationMax;
+      reelS4MaxInput.value = config.stage4.maxSpeed;
+      reelS4MinInput.value = config.stage4.minSpeed;
+      reelS4DurInput.value = config.stage4.duration;
+    }
+
+    function readGoldReelTuneInputs(){
+      return {
+        stage1: { maxSpeed: Number(reelS1MaxInput.value), minSpeed: Number(reelS1MinInput.value), duration: Number(reelS1DurInput.value) },
+        stage2: { maxSpeed: Number(reelS2MaxInput.value), minSpeed: Number(reelS2MinInput.value), duration: Number(reelS2DurInput.value) },
+        stage3: { maxSpeed: Number(reelS3MaxInput.value), minSpeed: Number(reelS3MinInput.value), durationMin: Number(reelS3DurMinInput.value), durationMax: Number(reelS3DurMaxInput.value) },
+        stage4: { maxSpeed: Number(reelS4MaxInput.value), minSpeed: Number(reelS4MinInput.value), duration: Number(reelS4DurInput.value) }
+      };
+    }
+
+    function validateGoldReelTune(config){
+      const speedOk = [config.stage1, config.stage2, config.stage3, config.stage4].every(stage =>
+        Number.isFinite(stage.maxSpeed) && Number.isFinite(stage.minSpeed) && stage.maxSpeed >= stage.minSpeed
+      );
+      if(!speedOk) return false;
+      if(config.stage1.duration <= 0 || config.stage2.duration <= 0 || config.stage4.duration <= 0) return false;
+      if(config.stage3.durationMin <= 0 || config.stage3.durationMax <= 0) return false;
+      if(config.stage3.durationMin > config.stage3.durationMax) return false;
+      return true;
     }
 
     function clearOpenStageTimers(){
@@ -4156,31 +4287,21 @@ window.addEventListener("resize", clampMiniPosition);
       const startY = -(startIndex * itemHeight);
       const reelAppearDelay = 0;
       const settleFinalIndex = endIndex + activeGoldReelValues.length;
-      const settleIntensityScale = 0.62;
-      const settleDurationScale = 1.18;
-      const settleProfileByStrength = {
-        1: { duration: Math.round(420 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.18,.84,.42,1)" },
-        2: { duration: Math.round(820 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.14,.86,.32,1)" },
-        3: { duration: Math.round(1300 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.08,.9,.22,1)" },
-        4: { duration: Math.round(1950 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.04,.94,.14,1)" },
-        5: { duration: Math.round(2800 * settleIntensityScale * settleDurationScale), easing: "cubic-bezier(.01,.98,.08,1)" }
-      };
-      const settleProfile = settleProfileByStrength[3];
-      const slowSpinDuration = randomInt(1000, 3000);
-      const finalStepDuration = Math.round(620 * settleIntensityScale * settleDurationScale);
-      const reelDuration = randomInt(5600, 6800) + slowSpinDuration + finalStepDuration;
-      const stageRatios = [
-        randomInt(44, 50) / 100,
-        randomInt(20, 25) / 100,
-        randomInt(16, 20) / 100
+      const stageConfig = state.goldReelStageConfig || GOLD_REEL_STAGE_DEFAULTS;
+      const stageDurationMs = [
+        stageConfig.stage1.duration,
+        stageConfig.stage2.duration,
+        randomInt(stageConfig.stage3.durationMin, stageConfig.stage3.durationMax),
+        stageConfig.stage4.duration
       ];
-      const stageFourRatio = Math.max(0.08, 1 - (stageRatios[0] + stageRatios[1] + stageRatios[2]));
-      const stageDurations = [...stageRatios, stageFourRatio];
+      const reelDuration = stageDurationMs.reduce((sum, duration) => sum + duration, 0);
+      const stageDurationTotal = reelDuration || 1;
+      const stageDurations = stageDurationMs.map(duration => duration / stageDurationTotal);
       const stageSpeeds = [
-        { startSpeed: 10, endSpeed: 8 },
-        { startSpeed: 8, endSpeed: 6 },
-        { startSpeed: 6, endSpeed: 4 },
-        { startSpeed: 4, endSpeed: 2 }
+        { startSpeed: stageConfig.stage1.maxSpeed, endSpeed: stageConfig.stage1.minSpeed },
+        { startSpeed: stageConfig.stage2.maxSpeed, endSpeed: stageConfig.stage2.minSpeed },
+        { startSpeed: stageConfig.stage3.maxSpeed, endSpeed: stageConfig.stage3.minSpeed },
+        { startSpeed: stageConfig.stage4.maxSpeed, endSpeed: stageConfig.stage4.minSpeed }
       ];
 
       goldReelTrack.style.transition = "none";
@@ -4949,6 +5070,26 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
         });
       });
     });
+
+    syncGoldReelTuneInputs(state.goldReelStageConfig);
+
+    applyReelTuneBtn.addEventListener("click", () => {
+      const nextConfig = readGoldReelTuneInputs();
+      if(!validateGoldReelTune(nextConfig)){
+        showToast("입력값 오류: 속도/유지시간을 확인하세요.");
+        return;
+      }
+      state.goldReelStageConfig = nextConfig;
+      showToast("릴 감속 설정이 적용되었습니다.");
+    });
+
+    resetReelTuneBtn.addEventListener("click", () => {
+      const defaults = cloneGoldReelDefaults();
+      state.goldReelStageConfig = defaults;
+      syncGoldReelTuneInputs(defaults);
+      showToast("기본값으로 복원되었습니다.");
+    });
+
     watchTitle.addEventListener("click", () => {
       watchTitle.classList.toggle("expanded");
       setTimeout(updateFixedLayout, 20);
