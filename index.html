@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.79 -->
+<!-- Version: DEV v0.2.80 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -895,6 +895,7 @@
     }
 
     .wallet-grid{
+      margin-top:2px;
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:6px;
@@ -996,7 +997,7 @@
     }
     .gold-reel-tune-panel:not(.collapsed){
       margin-top:8px;
-      margin-bottom:10px;
+      margin-bottom:12px;
       border:1px solid #dbe4f3;
       border-radius:12px;
       background:#f8fbff;
@@ -3089,7 +3090,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.79</span>
+          <span class="dev-version-label">DEV v0.2.80</span>
         </div>
       </header>
 
@@ -3129,7 +3130,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.79</span>
+            <span class="dev-version-label">DEV v0.2.80</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -5256,7 +5257,7 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
         goldReelTunePanel.style.maxHeight = "0px";
         return;
       }
-      const panelExtraSpace = 20;
+      const panelExtraSpace = 30;
       goldReelTunePanel.style.maxHeight = `${goldReelTunePanel.scrollHeight + panelExtraSpace}px`;
     }
 
