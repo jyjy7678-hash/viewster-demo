@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.68 -->
+<!-- Version: DEV v0.2.70 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -3062,7 +3062,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.68</span>
+          <span class="dev-version-label">DEV v0.2.70</span>
         </div>
       </header>
 
@@ -3102,7 +3102,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.68</span>
+            <span class="dev-version-label">DEV v0.2.70</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3457,10 +3457,10 @@
     let miniDragOffsetY = 0;
     const GOLD_SETTLE_SPEED_MS = 1300;
     const GOLD_REEL_STAGE_DEFAULTS = {
-      stage1: { maxSpeed: 10, minSpeed: 8, duration: 800 },
-      stage2: { maxSpeed: 8, minSpeed: 6, duration: 700 },
-      stage3: { maxSpeed: 6, minSpeed: 4, durationMin: 1000, durationMax: 3000 },
-      stage4: { maxSpeed: 4, minSpeed: 2, durationMin: 200, durationMax: 500 }
+      stage1: { maxSpeed: 10, minSpeed: 3, duration: 2000 },
+      stage2: { maxSpeed: 3, minSpeed: 1, duration: 1000 },
+      stage3: { maxSpeed: 1, minSpeed: 0.15, durationMin: 2000, durationMax: 3000 },
+      stage4: { maxSpeed: 0.15, minSpeed: 0.1, durationMin: 4000, durationMax: 6000 }
     };
 
     const boxTable = [
