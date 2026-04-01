@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.69 -->
+<!-- Version: DEV v0.2.68 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -3062,7 +3062,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.69</span>
+          <span class="dev-version-label">DEV v0.2.68</span>
         </div>
       </header>
 
@@ -3102,7 +3102,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.69</span>
+            <span class="dev-version-label">DEV v0.2.68</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4394,13 +4394,9 @@ window.addEventListener("resize", clampMiniPosition);
               stageEnds.push(stageCursor);
             });
             stageEnds[stageEnds.length - 1] = 1;
-            const speedCurvePower = 1.7;
-            const mapReelSpeed = (speedValue) => Math.pow(Math.max(0, speedValue), speedCurvePower);
             const stageWeights = stageDurations.map((duration, idx) => {
               const stage = stageSpeeds[idx];
-              const curvedStart = mapReelSpeed(stage.startSpeed);
-              const curvedEnd = mapReelSpeed(stage.endSpeed);
-              return duration * ((curvedStart + curvedEnd) / 2);
+              return duration * ((stage.startSpeed + stage.endSpeed) / 2);
             });
             const totalWeight = stageWeights.reduce((sum, weight) => sum + weight, 0) || 1;
             const buildTravelRatio = (offset) => {
@@ -4409,8 +4405,6 @@ window.addEventListener("resize", clampMiniPosition);
               for(let i = 0; i < stageDurations.length; i += 1){
                 const stageOffset = stageEnds[i];
                 const stage = stageSpeeds[i];
-                const curvedStart = mapReelSpeed(stage.startSpeed);
-                const curvedEnd = mapReelSpeed(stage.endSpeed);
                 if(offset >= stageOffset){
                   coveredWeight += stageWeights[i];
                   startOffset = stageOffset;
@@ -4418,7 +4412,7 @@ window.addEventListener("resize", clampMiniPosition);
                 }
                 const localDuration = stageDurations[i] || 1;
                 const localT = Math.max(0, Math.min(1, (offset - startOffset) / localDuration));
-                const localWeight = localDuration * ((curvedStart * localT) + ((curvedEnd - curvedStart) * localT * localT / 2));
+                const localWeight = localDuration * ((stage.startSpeed * localT) + ((stage.endSpeed - stage.startSpeed) * localT * localT / 2));
                 coveredWeight += localWeight;
                 break;
               }
