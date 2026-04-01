@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.70 -->
+<!-- Version: DEV v0.2.71 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -3062,7 +3062,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.70</span>
+          <span class="dev-version-label">DEV v0.2.71</span>
         </div>
       </header>
 
@@ -3102,7 +3102,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.70</span>
+            <span class="dev-version-label">DEV v0.2.71</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3450,6 +3450,8 @@
     let autoWatchTimer = null;
     let scrollIdleTimer = null;
     let infoCollapsed = false;
+    let lastWatchScrollTop = 0;
+    let upwardScrollDistance = 0;
     let miniSizeLevel = 1;
 
     let miniDragActive = false;
@@ -4076,11 +4078,29 @@ function updateFixedLayout(){
     function setupWatchScrollBehavior(){
       watchScroll.addEventListener("scroll", () => {
         const y = watchScroll.scrollTop;
+        const delta = y - lastWatchScrollTop;
+        const upwardThreshold = 20;
         clearTimeout(scrollIdleTimer);
 
         if (y > 20) {
           collapseInfoPanel();
         }
+
+        if (infoCollapsed) {
+          if (delta < 0) {
+            upwardScrollDistance += Math.abs(delta);
+            if (upwardScrollDistance >= upwardThreshold) {
+              expandInfoPanel();
+              upwardScrollDistance = 0;
+            }
+          } else if (delta > 0) {
+            upwardScrollDistance = 0;
+          }
+        } else {
+          upwardScrollDistance = 0;
+        }
+
+        lastWatchScrollTop = y;
 
         scrollIdleTimer = setTimeout(() => {
           expandInfoPanel();
@@ -4115,6 +4135,8 @@ function updateFixedLayout(){
 
       infoCollapsed = false;
       watchCollapseArea.classList.remove("collapsed");
+      lastWatchScrollTop = 0;
+      upwardScrollDistance = 0;
 
       resetPaidBadge();
 
