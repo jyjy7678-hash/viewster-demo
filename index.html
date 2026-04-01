@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.71 -->
+<!-- Version: DEV v0.2.72 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -3062,7 +3062,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.71</span>
+          <span class="dev-version-label">DEV v0.2.72</span>
         </div>
       </header>
 
@@ -3102,7 +3102,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.71</span>
+            <span class="dev-version-label">DEV v0.2.72</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3457,6 +3457,49 @@
     let miniDragActive = false;
     let miniDragOffsetX = 0;
     let miniDragOffsetY = 0;
+
+    const SHEET_IDLE_CLOSE_MS = 10000;
+    let walletSheetIdleTimer = null;
+    let commentSheetIdleTimer = null;
+
+    function clearSheetIdleTimer(id){
+      if(id === "walletSheet"){
+        clearTimeout(walletSheetIdleTimer);
+        walletSheetIdleTimer = null;
+        return;
+      }
+      if(id === "commentSheet"){
+        clearTimeout(commentSheetIdleTimer);
+        commentSheetIdleTimer = null;
+      }
+    }
+
+    function resetSheetIdleTimer(id){
+      const sheet = document.getElementById(id);
+      if(!sheet || !sheet.classList.contains("show")){
+        clearSheetIdleTimer(id);
+        return;
+      }
+      if(id === "walletSheet" && openSheetEl.classList.contains("show")){
+        clearSheetIdleTimer("walletSheet");
+        return;
+      }
+
+      clearSheetIdleTimer(id);
+      const idleHandler = () => {
+        if(!sheet.classList.contains("show")) return;
+        if(id === "walletSheet" && openSheetEl.classList.contains("show")) return;
+        closeAllSheets();
+      };
+
+      if(id === "walletSheet") walletSheetIdleTimer = setTimeout(idleHandler, SHEET_IDLE_CLOSE_MS);
+      if(id === "commentSheet") commentSheetIdleTimer = setTimeout(idleHandler, SHEET_IDLE_CLOSE_MS);
+    }
+
+    function syncSheetIdleTimers(){
+      resetSheetIdleTimer("walletSheet");
+      resetSheetIdleTimer("commentSheet");
+    }
     const GOLD_SETTLE_SPEED_MS = 1300;
     const GOLD_REEL_STAGE_DEFAULTS = {
       stage1: { maxSpeed: 10, minSpeed: 3, duration: 2000 },
@@ -4326,6 +4369,16 @@ window.addEventListener("resize", clampMiniPosition);
       document.documentElement.style.overflowY = hasOpenSheet ? "hidden" : "";
     }
 
+    function bindSheetIdleInteractions(id){
+      const sheet = document.getElementById(id);
+      if(!sheet) return;
+      const onInteraction = () => resetSheetIdleTimer(id);
+      ["touchstart", "click", "pointerdown"].forEach(type => {
+        sheet.addEventListener(type, onInteraction, { passive: true });
+      });
+      sheet.addEventListener("scroll", onInteraction, { passive: true });
+    }
+
     let goldReelStartTimer = null;
     let goldReelAnimation = null;
     let goldOpenVideoStartedAt = 0;
@@ -4782,6 +4835,7 @@ window.addEventListener("resize", clampMiniPosition);
       }
 
       syncSheetScrollLock();
+      syncSheetIdleTimers();
     }
 
     function openSheet(id, options = {}){
@@ -4798,6 +4852,7 @@ window.addEventListener("resize", clampMiniPosition);
       document.getElementById(id).classList.add("show");
       resetSheetScroll(id);
       syncSheetScrollLock();
+      syncSheetIdleTimers();
     }
 
     function resetOpenSheetFx(){
@@ -4862,6 +4917,7 @@ window.addEventListener("resize", clampMiniPosition);
           overlay.classList.remove("show");
         }
         syncSheetScrollLock();
+        syncSheetIdleTimers();
       };
 
       if(shouldDelayReset){
@@ -5205,6 +5261,9 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     });
 
     window.addEventListener("resize", updateFixedLayout);
+
+    bindSheetIdleInteractions("walletSheet");
+    bindSheetIdleInteractions("commentSheet");
 
     setupWatchScrollBehavior();
     updateWallet();
