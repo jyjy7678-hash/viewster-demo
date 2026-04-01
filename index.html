@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.68 -->
+<!-- Version: DEV v0.2.69 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -3197,7 +3197,11 @@
             <div class="gold-reel-tune-grid-stage">4</div>
             <input type="number" id="reelS4Max" aria-label="4단계 최고속도">
             <input type="number" id="reelS4Min" aria-label="4단계 최저속도">
-            <input type="number" id="reelS4Dur" aria-label="4단계 유지시간(ms)">
+            <div class="gold-reel-tune-range">
+              <input type="number" id="reelS4DurMin" aria-label="4단계 유지시간 최소(ms)">
+              <span>~</span>
+              <input type="number" id="reelS4DurMax" aria-label="4단계 유지시간 최대(ms)">
+            </div>
           </div>
           <div class="gold-reel-tune-actions">
             <button class="gold-reel-tune-btn apply" id="applyReelTuneBtn">적용</button>
@@ -3456,7 +3460,7 @@
       stage1: { maxSpeed: 10, minSpeed: 8, duration: 800 },
       stage2: { maxSpeed: 8, minSpeed: 6, duration: 700 },
       stage3: { maxSpeed: 6, minSpeed: 4, durationMin: 1000, durationMax: 3000 },
-      stage4: { maxSpeed: 4, minSpeed: 2, duration: 600 }
+      stage4: { maxSpeed: 4, minSpeed: 2, durationMin: 200, durationMax: 500 }
     };
 
     const boxTable = [
@@ -3548,7 +3552,8 @@
     const reelS3DurMaxInput = document.getElementById("reelS3DurMax");
     const reelS4MaxInput = document.getElementById("reelS4Max");
     const reelS4MinInput = document.getElementById("reelS4Min");
-    const reelS4DurInput = document.getElementById("reelS4Dur");
+    const reelS4DurMinInput = document.getElementById("reelS4DurMin");
+    const reelS4DurMaxInput = document.getElementById("reelS4DurMax");
     const goldReelTunePanel = document.getElementById("goldReelTunePanel");
     const goldReelTuneToggleBtn = document.getElementById("goldReelTuneToggleBtn");
     const applyReelTuneBtn = document.getElementById("applyReelTuneBtn");
@@ -3759,7 +3764,8 @@
       reelS3DurMaxInput.value = config.stage3.durationMax;
       reelS4MaxInput.value = config.stage4.maxSpeed;
       reelS4MinInput.value = config.stage4.minSpeed;
-      reelS4DurInput.value = config.stage4.duration;
+      reelS4DurMinInput.value = config.stage4.durationMin;
+      reelS4DurMaxInput.value = config.stage4.durationMax;
     }
 
     function readGoldReelTuneInputs(){
@@ -3767,7 +3773,7 @@
         stage1: { maxSpeed: Number(reelS1MaxInput.value), minSpeed: Number(reelS1MinInput.value), duration: Number(reelS1DurInput.value) },
         stage2: { maxSpeed: Number(reelS2MaxInput.value), minSpeed: Number(reelS2MinInput.value), duration: Number(reelS2DurInput.value) },
         stage3: { maxSpeed: Number(reelS3MaxInput.value), minSpeed: Number(reelS3MinInput.value), durationMin: Number(reelS3DurMinInput.value), durationMax: Number(reelS3DurMaxInput.value) },
-        stage4: { maxSpeed: Number(reelS4MaxInput.value), minSpeed: Number(reelS4MinInput.value), duration: Number(reelS4DurInput.value) }
+        stage4: { maxSpeed: Number(reelS4MaxInput.value), minSpeed: Number(reelS4MinInput.value), durationMin: Number(reelS4DurMinInput.value), durationMax: Number(reelS4DurMaxInput.value) }
       };
     }
 
@@ -3776,9 +3782,11 @@
         Number.isFinite(stage.maxSpeed) && Number.isFinite(stage.minSpeed) && stage.maxSpeed >= stage.minSpeed
       );
       if(!speedOk) return false;
-      if(config.stage1.duration <= 0 || config.stage2.duration <= 0 || config.stage4.duration <= 0) return false;
+      if(config.stage1.duration <= 0 || config.stage2.duration <= 0) return false;
       if(config.stage3.durationMin <= 0 || config.stage3.durationMax <= 0) return false;
+      if(config.stage4.durationMin <= 0 || config.stage4.durationMax <= 0) return false;
       if(config.stage3.durationMin > config.stage3.durationMax) return false;
+      if(config.stage4.durationMin > config.stage4.durationMax || config.stage4.durationMax > 1000) return false;
       return true;
     }
 
@@ -4355,7 +4363,7 @@ window.addEventListener("resize", clampMiniPosition);
         stageConfig.stage1.duration,
         stageConfig.stage2.duration,
         randomInt(stageConfig.stage3.durationMin, stageConfig.stage3.durationMax),
-        stageConfig.stage4.duration
+        randomInt(stageConfig.stage4.durationMin, stageConfig.stage4.durationMax)
       ];
       const reelDuration = stageDurationMs.reduce((sum, duration) => sum + duration, 0);
       const stageDurationTotal = reelDuration || 1;
