@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.77 -->
+<!-- Version: DEV v0.2.78 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -990,6 +990,9 @@
       background:transparent;
       padding:0;
       min-height:0;
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .22s ease, margin-top .22s ease, padding .22s ease, border-width .22s ease;
     }
     .gold-reel-tune-panel:not(.collapsed){
       margin-top:8px;
@@ -1035,10 +1038,8 @@
       content:"▼";
     }
     .gold-reel-tune-content{
-      margin-top:8px;
+      margin-top:0;
     }
-    .gold-reel-tune-panel.collapsed{display:none;}
-    .gold-reel-tune-panel.collapsed .gold-reel-tune-content{display:none;}
     .gold-reel-tune-grid{
       display:grid;
       grid-template-columns:40px 1fr 1fr 1.6fr;
@@ -3087,7 +3088,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.77</span>
+          <span class="dev-version-label">DEV v0.2.78</span>
         </div>
       </header>
 
@@ -3127,7 +3128,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.77</span>
+            <span class="dev-version-label">DEV v0.2.78</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -5249,10 +5250,21 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
 
     syncGoldReelTuneInputs(state.goldReelStageConfig);
 
+    function syncGoldReelTunePanelHeight(){
+      if(goldReelTunePanel.classList.contains("collapsed")){
+        goldReelTunePanel.style.maxHeight = "0px";
+        return;
+      }
+      goldReelTunePanel.style.maxHeight = `${goldReelTunePanel.scrollHeight}px`;
+    }
+
     goldReelTuneToggleBtn.addEventListener("click", () => {
       goldReelTunePanel.classList.toggle("collapsed");
       goldReelTuneToggleBtn.classList.toggle("collapsed");
+      syncGoldReelTunePanelHeight();
     });
+    syncGoldReelTunePanelHeight();
+    window.addEventListener("resize", syncGoldReelTunePanelHeight);
 
     applyReelTuneBtn.addEventListener("click", () => {
       const nextConfig = readGoldReelTuneInputs();
