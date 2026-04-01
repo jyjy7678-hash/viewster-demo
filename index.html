@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.69 -->
+<!-- Version: DEV v0.2.68 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -3778,6 +3778,8 @@
     }
 
     function validateGoldReelTune(config){
+      const requiredInputs = [reelS1MaxInput, reelS1MinInput, reelS1DurInput, reelS2MaxInput, reelS2MinInput, reelS2DurInput, reelS3MaxInput, reelS3MinInput, reelS3DurMinInput, reelS3DurMaxInput, reelS4MaxInput, reelS4MinInput, reelS4DurMinInput, reelS4DurMaxInput];
+      if(requiredInputs.some(input => input.value.trim() === "")) return false;
       const speedOk = [config.stage1, config.stage2, config.stage3, config.stage4].every(stage =>
         Number.isFinite(stage.maxSpeed) && Number.isFinite(stage.minSpeed) && stage.maxSpeed >= stage.minSpeed
       );
@@ -3786,7 +3788,7 @@
       if(config.stage3.durationMin <= 0 || config.stage3.durationMax <= 0) return false;
       if(config.stage4.durationMin <= 0 || config.stage4.durationMax <= 0) return false;
       if(config.stage3.durationMin > config.stage3.durationMax) return false;
-      if(config.stage4.durationMin > config.stage4.durationMax || config.stage4.durationMax > 1000) return false;
+      if(config.stage4.durationMin > config.stage4.durationMax) return false;
       return true;
     }
 
