@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.89 -->
+<!-- Version: DEV v0.2.90 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -584,6 +584,22 @@
       margin-bottom:4px;
       justify-content:flex-end;
     }
+    .wallet-entry-split{
+      position:relative;
+      flex:1;
+      min-width:0;
+    }
+    .wallet-test-hit{
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:18px;
+      border:none;
+      background:transparent;
+      z-index:2;
+      cursor:pointer;
+    }
     .small-pill{
       flex:0 0 auto;
       padding:0 12px;
@@ -899,10 +915,12 @@
 
     #commentSheet{z-index:50;}
     #walletSheet{z-index:51;}
-    #adSheet{z-index:52;}
-    #openSheet{z-index:53;}
+    #walletSheetLive{z-index:52;}
+    #adSheet{z-index:53;}
+    #openSheet{z-index:54;}
 
     #walletSheet,
+    #walletSheetLive,
     #adSheet,
     #openSheet{
       overflow:hidden;
@@ -911,7 +929,8 @@
     #openSheet .sheet-body{
       overflow:hidden;
     }
-    #walletSheet .sheet-body{
+    #walletSheet .sheet-body,
+    #walletSheetLive .sheet-body{
       overflow-x:hidden;
       overflow-y:auto;
     }
@@ -3122,7 +3141,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.89</span>
+          <span class="dev-version-label">DEV v0.2.90</span>
         </div>
       </header>
 
@@ -3162,7 +3181,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.89</span>
+            <span class="dev-version-label">DEV v0.2.90</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3172,7 +3191,10 @@
 
               <div class="watch-collapse-area" id="watchCollapseArea">
                 <div class="small-actions">
-                  <button class="small-pill" id="openWalletBtn">🎁 혜택</button>
+                  <div class="wallet-entry-split">
+                    <button class="wallet-test-hit" id="openWalletTestHit" aria-label="테스트 지갑 열기"></button>
+                    <button class="small-pill" id="openWalletBtn">🎯 미션</button>
+                  </div>
                   <button class="small-pill" id="openCommentBtn">💬 댓글 <span id="commentCountText">0</span></button>
                 </div>
 
@@ -3291,6 +3313,35 @@
           <button class="wallet-open-btn" id="walletOpenRandomFail">랜덤X</button>
           <button class="wallet-open-btn" id="walletOpenRandomGold">랜덤G</button>
           <button class="wallet-open-btn gold" id="walletOpenGold">황금</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet sheet--action" id="walletSheetLive">
+    <div class="sheet-head">
+      <button class="sheet-close" data-close="walletSheetLive">×</button>
+    </div>
+    <div class="sheet-body">
+      <div class="sheet-title">내 지갑</div>
+      <div class="wallet-content-block">
+        <div class="wallet-grid">
+          <div class="wallet-card">
+            <div class="wallet-label">📦 랜덤박스</div>
+            <div class="wallet-value" id="boxCountLive">100개</div>
+          </div>
+          <div class="wallet-card">
+            <div class="wallet-label">🏆 황금박스</div>
+            <div class="wallet-value" id="goldBoxCountLive">100개</div>
+          </div>
+          <div class="wallet-card full">
+            <div class="wallet-label">💰 누적리워드</div>
+            <div class="wallet-value" id="rewardPointLive">0 P</div>
+          </div>
+        </div>
+        <div class="wallet-action-row">
+          <button class="wallet-open-btn" id="walletLiveOpenRandom">랜덤박스 열기</button>
+          <button class="wallet-open-btn gold" id="walletLiveOpenGold">황금박스 열기</button>
         </div>
       </div>
     </div>
@@ -3526,8 +3577,12 @@
     let walletSheetIdleTimer = null;
     let commentSheetIdleTimer = null;
 
+    function isWalletSheetId(id){
+      return id === "walletSheet" || id === "walletSheetLive";
+    }
+
     function clearSheetIdleTimer(id){
-      if(id === "walletSheet"){
+      if(isWalletSheetId(id)){
         clearTimeout(walletSheetIdleTimer);
         walletSheetIdleTimer = null;
         return;
@@ -3544,24 +3599,25 @@
         clearSheetIdleTimer(id);
         return;
       }
-      if(id === "walletSheet" && openSheetEl.classList.contains("show")){
-        clearSheetIdleTimer("walletSheet");
+      if(isWalletSheetId(id) && openSheetEl.classList.contains("show")){
+        clearSheetIdleTimer(id);
         return;
       }
 
       clearSheetIdleTimer(id);
       const idleHandler = () => {
         if(!sheet.classList.contains("show")) return;
-        if(id === "walletSheet" && openSheetEl.classList.contains("show")) return;
+        if(isWalletSheetId(id) && openSheetEl.classList.contains("show")) return;
         closeAllSheets();
       };
 
-      if(id === "walletSheet") walletSheetIdleTimer = setTimeout(idleHandler, SHEET_IDLE_CLOSE_MS);
+      if(isWalletSheetId(id)) walletSheetIdleTimer = setTimeout(idleHandler, SHEET_IDLE_CLOSE_MS);
       if(id === "commentSheet") commentSheetIdleTimer = setTimeout(idleHandler, SHEET_IDLE_CLOSE_MS);
     }
 
     function syncSheetIdleTimers(){
       resetSheetIdleTimer("walletSheet");
+      resetSheetIdleTimer("walletSheetLive");
       resetSheetIdleTimer("commentSheet");
     }
     const GOLD_SETTLE_SPEED_MS = 1300;
@@ -3610,6 +3666,7 @@
     const rewardRightText = document.getElementById("rewardRightText");
     const rewardInline = document.getElementById("rewardInline");
     const openWalletBtn = document.getElementById("openWalletBtn");
+    const openWalletTestHit = document.getElementById("openWalletTestHit");
     const benefitBanner = document.getElementById("benefitBanner");
     const closeBenefitBtn = document.getElementById("closeBenefitBtn");
     const inlineGetBtnWide = document.getElementById("inlineGetBtnWide");
@@ -3621,6 +3678,9 @@
     const boxCount = document.getElementById("boxCount");
     const goldBoxCount = document.getElementById("goldBoxCount");
     const rewardPoint = document.getElementById("rewardPoint");
+    const boxCountLive = document.getElementById("boxCountLive");
+    const goldBoxCountLive = document.getElementById("goldBoxCountLive");
+    const rewardPointLive = document.getElementById("rewardPointLive");
     const rewardAdVideo = document.getElementById("rewardAdVideo");
     const rewardAdProgress = document.getElementById("rewardAdProgress");
     const rewardAdBtn = document.getElementById("rewardAdBtn");
@@ -3951,7 +4011,7 @@ function wakePlayerControls(){
 }
     function setBenefitEnabled(enabled){
       state.benefitEnabled = enabled;
-      openWalletBtn.textContent = enabled ? "🎁 지갑" : "🎁 혜택";
+      openWalletBtn.textContent = enabled ? "🎁 지갑" : "🎯 미션";
       benefitBanner.classList.toggle("hidden", !enabled);
       rewardInline.classList.toggle("hidden", !enabled);
       if(enabled){
@@ -4145,6 +4205,9 @@ function wakePlayerControls(){
       boxCount.textContent = `${state.randomBoxCount}개`;
       goldBoxCount.textContent = `${state.goldBoxCount}개`;
       rewardPoint.textContent = `${state.totalRewardPoint.toLocaleString()} P`;
+      boxCountLive.textContent = `${state.randomBoxCount}개`;
+      goldBoxCountLive.textContent = `${state.goldBoxCount}개`;
+      rewardPointLive.textContent = `${state.totalRewardPoint.toLocaleString()} P`;
     }
 
     function updateRewardUI(){
@@ -4425,8 +4488,8 @@ window.addEventListener("resize", clampMiniPosition);
       syncMiniSizeButton();
     }
 
-    const managedSheetIds = ["walletSheet", "openSheet", "adSheet", "commentSheet"];
-    const exclusiveSheetIds = ["walletSheet", "openSheet", "adSheet"];
+    const managedSheetIds = ["walletSheet", "walletSheetLive", "openSheet", "adSheet", "commentSheet"];
+    const exclusiveSheetIds = ["walletSheet", "walletSheetLive", "openSheet", "adSheet"];
     const openSheetFxClasses = ["fx-random-normal", "fx-random-fail", "fx-random-gold", "fx-gold-open"];
     const RANDOM_X_VIDEO_SRC = "./assets/X_view.mp4";
     const RANDOM_G_VIDEO_SRC = "./assets/G_view.mp4";
@@ -4898,7 +4961,7 @@ window.addEventListener("resize", clampMiniPosition);
       const preserveOpenFlowState = !!options.preserveOpenFlowState;
 
       managedSheetIds.forEach(id => {
-        if(keepWallet && id === "walletSheet") return;
+        if(keepWallet && isWalletSheetId(id)) return;
         document.getElementById(id).classList.remove("show");
       });
 
@@ -4907,6 +4970,7 @@ window.addEventListener("resize", clampMiniPosition);
 
       if(!keepWallet){
         resetSheetScroll("walletSheet");
+        resetSheetScroll("walletSheetLive");
         resetSheetScroll("commentSheet");
       }
 
@@ -4923,7 +4987,8 @@ window.addEventListener("resize", clampMiniPosition);
     function openSheet(id, options = {}){
       const keepWallet = !!options.keepWallet;
       const fxClass = options.fxClass || "";
-      const shouldKeepWallet = keepWallet && id === "openSheet" && document.getElementById("walletSheet").classList.contains("show");
+      const hasWalletSheetOpen = document.getElementById("walletSheet").classList.contains("show") || document.getElementById("walletSheetLive").classList.contains("show");
+      const shouldKeepWallet = keepWallet && id === "openSheet" && hasWalletSheetOpen;
 
       closeAllSheets({ keepWallet: shouldKeepWallet, preserveOpenFlowState: id === "openSheet" });
 
@@ -5251,6 +5316,13 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
         setBenefitEnabled(true);
         return;
       }
+      openSheet("walletSheetLive");
+    });
+    openWalletTestHit.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if(!state.benefitEnabled){
+        setBenefitEnabled(true);
+      }
       openSheet("walletSheet");
     });
     closeBenefitBtn.addEventListener("click", () => setBenefitEnabled(false));
@@ -5259,6 +5331,12 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     document.getElementById("walletOpenRandomFail").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "chance_fail" }));
     document.getElementById("walletOpenRandomGold").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "chance_gold" }));
     document.getElementById("walletOpenGold").addEventListener("click", () => startOpenFlow("gold", { fromWallet: true }));
+    document.getElementById("walletLiveOpenRandom").addEventListener("click", () => {
+      const randomTypes = ["normal", "chance_fail", "chance_gold"];
+      const pickedType = randomTypes[Math.floor(Math.random() * randomTypes.length)];
+      startOpenFlow("random", { fromWallet: true, forcedResultType: pickedType });
+    });
+    document.getElementById("walletLiveOpenGold").addEventListener("click", () => startOpenFlow("gold", { fromWallet: true }));
     document.querySelectorAll("[data-gold-reward-test]").forEach(btn => {
       btn.addEventListener("click", () => startOpenFlow("gold", { fromWallet: true, forcedGoldReward: Number(btn.dataset.goldRewardTest) }));
     });
@@ -5355,6 +5433,7 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     window.addEventListener("resize", updateFixedLayout);
 
     bindSheetIdleInteractions("walletSheet");
+    bindSheetIdleInteractions("walletSheetLive");
     bindSheetIdleInteractions("commentSheet");
 
     setupWatchScrollBehavior();
