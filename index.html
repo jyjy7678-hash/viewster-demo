@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.82 -->
+<!-- Version: DEV v0.2.83 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -894,12 +894,17 @@
       overflow:hidden;
     }
 
-    .wallet-grid{
+    .wallet-content-block{
       margin-top:2px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .wallet-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:6px;
-      margin-bottom:6px;
+      margin:0;
     }
     .wallet-card{
       background:#f5f7fb;
@@ -916,7 +921,7 @@
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
       gap:10px;
-      margin-top:auto;
+      margin-top:0;
     }
     .wallet-open-btn{
       flex:1;
@@ -3091,7 +3096,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.82</span>
+          <span class="dev-version-label">DEV v0.2.83</span>
         </div>
       </header>
 
@@ -3131,7 +3136,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.82</span>
+            <span class="dev-version-label">DEV v0.2.83</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3238,26 +3243,28 @@
           </div>
         </div>
       </div>
-      <div class="wallet-grid">
-        <div class="wallet-card">
-          <div class="wallet-label">📦 랜덤박스</div>
-          <div class="wallet-value" id="boxCount">100개</div>
+      <div class="wallet-content-block">
+        <div class="wallet-grid">
+          <div class="wallet-card">
+            <div class="wallet-label">📦 랜덤박스</div>
+            <div class="wallet-value" id="boxCount">100개</div>
+          </div>
+          <div class="wallet-card">
+            <div class="wallet-label">🏆 황금박스</div>
+            <div class="wallet-value" id="goldBoxCount">100개</div>
+          </div>
+          <div class="wallet-card full">
+            <div class="wallet-label">💰 누적리워드</div>
+            <div class="wallet-value" id="rewardPoint">0 P</div>
+          </div>
         </div>
-        <div class="wallet-card">
-          <div class="wallet-label">🏆 황금박스</div>
-          <div class="wallet-value" id="goldBoxCount">100개</div>
-        </div>
-        <div class="wallet-card full">
-          <div class="wallet-label">💰 누적리워드</div>
-          <div class="wallet-value" id="rewardPoint">0 P</div>
-        </div>
-      </div>
 
-      <div class="wallet-action-row">
-        <button class="wallet-open-btn" id="walletOpenRandom">랜덤</button>
-        <button class="wallet-open-btn" id="walletOpenRandomFail">랜덤X</button>
-        <button class="wallet-open-btn" id="walletOpenRandomGold">랜덤G</button>
-        <button class="wallet-open-btn gold" id="walletOpenGold">황금</button>
+        <div class="wallet-action-row">
+          <button class="wallet-open-btn" id="walletOpenRandom">랜덤</button>
+          <button class="wallet-open-btn" id="walletOpenRandomFail">랜덤X</button>
+          <button class="wallet-open-btn" id="walletOpenRandomGold">랜덤G</button>
+          <button class="wallet-open-btn gold" id="walletOpenGold">황금</button>
+        </div>
       </div>
     </div>
   </section>
