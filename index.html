@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.90 -->
+<!-- Version: DEV v0.2.91 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -584,7 +584,7 @@
       margin-bottom:4px;
       justify-content:flex-end;
     }
-    .wallet-entry-split{
+    .wallet-entry-overlay{
       position:relative;
       flex:1;
       min-width:0;
@@ -593,16 +593,16 @@
       position:absolute;
       left:0;
       top:0;
-      bottom:0;
+      height:100%;
       width:18px;
       border:none;
       background:transparent;
-      z-index:2;
+      z-index:3;
       cursor:pointer;
     }
-    .small-pill{
-      flex:0 0 auto;
-      padding:0 12px;
+    #openWalletBtn{
+      position:relative;
+      width:100%;
     }
 
     .small-pill{
@@ -3141,7 +3141,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.90</span>
+          <span class="dev-version-label">DEV v0.2.91</span>
         </div>
       </header>
 
@@ -3181,7 +3181,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.90</span>
+            <span class="dev-version-label">DEV v0.2.91</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3191,7 +3191,7 @@
 
               <div class="watch-collapse-area" id="watchCollapseArea">
                 <div class="small-actions">
-                  <div class="wallet-entry-split">
+                  <div class="wallet-entry-overlay">
                     <button class="wallet-test-hit" id="openWalletTestHit" aria-label="테스트 지갑 열기"></button>
                     <button class="small-pill" id="openWalletBtn">🎯 미션</button>
                   </div>
