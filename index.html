@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.83 -->
+<!-- Version: DEV v0.2.84 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -892,6 +892,9 @@
     #adSheet .sheet-body,
     #openSheet .sheet-body{
       overflow:hidden;
+    }
+    #walletSheet .sheet-body{
+      overflow-y:auto;
     }
 
     .wallet-content-block{
@@ -2973,6 +2976,7 @@
       .wallet-label{font-size:11px;}
       .wallet-value{font-size:16px;margin-top:2px;}
       .wallet-open-btn{min-height:40px;font-size:13px;}
+      #walletSheet .sheet-body{padding-bottom:calc(16px + env(safe-area-inset-bottom, 0px));}
       .ad-top{font-size:17px;padding-bottom:4px;}
       .ad-desc{font-size:11px;padding-bottom:8px;}
       .ad-progress-wrap{padding-top:10px;}
@@ -3096,7 +3100,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.83</span>
+          <span class="dev-version-label">DEV v0.2.84</span>
         </div>
       </header>
 
@@ -3136,7 +3140,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.83</span>
+            <span class="dev-version-label">DEV v0.2.84</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
