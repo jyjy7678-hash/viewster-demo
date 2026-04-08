@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.91 -->
+<!-- Version: DEV v0.2.92 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1032,6 +1032,89 @@
       color:#64748b;
       font-weight:700;
     }
+    .wallet-ui-switch{
+      display:flex;
+      gap:8px;
+      margin:8px 0 10px;
+      overflow-x:auto;
+      padding-bottom:2px;
+      -webkit-overflow-scrolling:touch;
+    }
+    .wallet-ui-switch-btn{
+      border:1px solid #d8deea;
+      background:#fff;
+      color:#334155;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      padding:7px 12px;
+      white-space:nowrap;
+    }
+    .wallet-ui-switch-btn.active{
+      border-color:#2563eb;
+      background:#dbeafe;
+      color:#1d4ed8;
+    }
+    #walletSheet.wallet-ui-2 .wallet-grid{grid-template-columns:1fr;}
+    #walletSheet.wallet-ui-2 .wallet-card{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      text-align:left;
+      min-height:64px;
+      padding:12px 14px;
+      border-radius:16px;
+    }
+    #walletSheet.wallet-ui-2 .wallet-card.full{order:1;}
+    #walletSheet.wallet-ui-2 .wallet-value{margin-top:0;font-size:17px;}
+    #walletSheet.wallet-ui-2 .wallet-action-row{margin-top:2px;}
+    #walletSheet.wallet-ui-3 .wallet-card{
+      min-height:76px;
+      border-radius:18px;
+      padding:12px;
+    }
+    #walletSheet.wallet-ui-3 .wallet-card.full{min-height:62px;text-align:left;}
+    #walletSheet.wallet-ui-3 .wallet-card:not(.full) .wallet-value{
+      font-size:24px;
+      font-weight:700;
+      margin-top:6px;
+    }
+    #walletSheet.wallet-ui-3 .wallet-action-row{
+      position:sticky;
+      bottom:0;
+      padding-top:8px;
+      background:linear-gradient(180deg, rgba(255,255,255,0), #fff 30%);
+    }
+    #walletSheet.wallet-ui-3 .wallet-open-btn{min-height:52px;border-radius:16px;}
+    #walletSheet.wallet-ui-4 .wallet-grid{gap:8px;margin-bottom:6px;}
+    #walletSheet.wallet-ui-4 .wallet-card{
+      min-height:48px;
+      text-align:left;
+      border-radius:16px;
+      padding:10px 12px;
+    }
+    #walletSheet.wallet-ui-4 .wallet-card:not(.full){
+      grid-column:1 / -1;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    #walletSheet.wallet-ui-4 .wallet-action-row{gap:12px;}
+    #walletSheet.wallet-ui-4 .wallet-open-btn{min-height:56px;font-size:15px;border-radius:18px;}
+    #walletSheet.wallet-ui-5 .wallet-card{
+      border-radius:18px;
+      padding:12px;
+      box-shadow:0 1px 4px rgba(15,23,42,.08);
+      background:linear-gradient(180deg,#f8fafc,#eef2ff);
+    }
+    #walletSheet.wallet-ui-5 .wallet-card:nth-child(2){background:linear-gradient(180deg,#fff6d7,#f3dfa2);}
+    #walletSheet.wallet-ui-5 .wallet-card:nth-child(2) .wallet-label{color:#805d00;}
+    #walletSheet.wallet-ui-5 .wallet-card:nth-child(2) .wallet-value{
+      color:#a16207;
+      font-size:20px;
+      font-weight:700;
+    }
+    #walletSheet.wallet-ui-5 .wallet-open-btn{min-height:54px;border-radius:18px;}
     .gold-reel-tune-panel{
       flex-shrink:0;
       max-height:0;
@@ -3141,7 +3224,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.91</span>
+          <span class="dev-version-label">DEV v0.2.92</span>
         </div>
       </header>
 
@@ -3181,7 +3264,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.91</span>
+            <span class="dev-version-label">DEV v0.2.92</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3249,6 +3332,13 @@
             <button class="wallet-test-btn" data-gold-reward-test="100000">+10만</button><button class="wallet-test-btn" data-gold-reward-test="500000">+50만</button><button class="wallet-test-btn" data-gold-reward-test="1000000">+100만</button>
           </div>
         </div>
+      </div>
+      <div class="wallet-ui-switch" aria-label="지갑 UI 테스트 전환">
+        <button class="wallet-ui-switch-btn active" data-wallet-ui="1">UI1</button>
+        <button class="wallet-ui-switch-btn" data-wallet-ui="2">UI2</button>
+        <button class="wallet-ui-switch-btn" data-wallet-ui="3">UI3</button>
+        <button class="wallet-ui-switch-btn" data-wallet-ui="4">UI4</button>
+        <button class="wallet-ui-switch-btn" data-wallet-ui="5">UI5</button>
       </div>
       <div class="gold-reel-tune-panel collapsed" id="goldReelTunePanel" aria-label="황금박스 릴 감속 테스트">
         <div class="gold-reel-tune-content">
@@ -3572,10 +3662,24 @@
     let miniDragActive = false;
     let miniDragOffsetX = 0;
     let miniDragOffsetY = 0;
+    let currentWalletUI = 1;
 
     const SHEET_IDLE_CLOSE_MS = 10000;
     let walletSheetIdleTimer = null;
     let commentSheetIdleTimer = null;
+
+    function applyWalletUI(nextUI){
+      const walletSheet = document.getElementById("walletSheet");
+      if(!walletSheet) return;
+      const parsedUI = Number(nextUI);
+      if(parsedUI < 1 || parsedUI > 5) return;
+      currentWalletUI = parsedUI;
+      walletSheet.classList.remove("wallet-ui-1", "wallet-ui-2", "wallet-ui-3", "wallet-ui-4", "wallet-ui-5");
+      walletSheet.classList.add(`wallet-ui-${currentWalletUI}`);
+      document.querySelectorAll(".wallet-ui-switch-btn").forEach(btn => {
+        btn.classList.toggle("active", Number(btn.dataset.walletUi) === currentWalletUI);
+      });
+    }
 
     function isWalletSheetId(id){
       return id === "walletSheet" || id === "walletSheetLive";
@@ -5337,6 +5441,10 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       startOpenFlow("random", { fromWallet: true, forcedResultType: pickedType });
     });
     document.getElementById("walletLiveOpenGold").addEventListener("click", () => startOpenFlow("gold", { fromWallet: true }));
+    document.querySelectorAll(".wallet-ui-switch-btn").forEach(btn => {
+      btn.addEventListener("click", () => applyWalletUI(btn.dataset.walletUi));
+    });
+    applyWalletUI(currentWalletUI);
     document.querySelectorAll("[data-gold-reward-test]").forEach(btn => {
       btn.addEventListener("click", () => startOpenFlow("gold", { fromWallet: true, forcedGoldReward: Number(btn.dataset.goldRewardTest) }));
     });
