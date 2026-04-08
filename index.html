@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.92 -->
+<!-- Version: DEV v0.2.93 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1055,8 +1055,38 @@
       background:#dbeafe;
       color:#1d4ed8;
     }
-    #walletSheet.wallet-ui-2 .wallet-grid{grid-template-columns:1fr;}
-    #walletSheet.wallet-ui-2 .wallet-card{
+    #walletSheetLive .sheet-head{
+      justify-content:flex-start;
+      padding:0 52px 0 16px;
+    }
+    #walletSheetLive .sheet-head::before{
+      display:none;
+    }
+    .wallet-live-head{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:0;
+      width:100%;
+    }
+    .wallet-live-head .sheet-title{
+      margin:0;
+      white-space:nowrap;
+      font-size:18px;
+    }
+    .wallet-live-head .wallet-ui-switch{
+      margin:0;
+      gap:6px;
+      flex:1;
+      min-width:0;
+      padding-bottom:0;
+    }
+    .wallet-live-head .wallet-ui-switch-btn{
+      padding:6px 10px;
+      font-size:11px;
+    }
+    :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-grid{grid-template-columns:1fr;}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-card{
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -1065,56 +1095,56 @@
       padding:12px 14px;
       border-radius:16px;
     }
-    #walletSheet.wallet-ui-2 .wallet-card.full{order:1;}
-    #walletSheet.wallet-ui-2 .wallet-value{margin-top:0;font-size:17px;}
-    #walletSheet.wallet-ui-2 .wallet-action-row{margin-top:2px;}
-    #walletSheet.wallet-ui-3 .wallet-card{
+    :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-card.full{order:1;}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-value{margin-top:0;font-size:17px;}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-action-row{margin-top:2px;}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-card{
       min-height:76px;
       border-radius:18px;
       padding:12px;
     }
-    #walletSheet.wallet-ui-3 .wallet-card.full{min-height:62px;text-align:left;}
-    #walletSheet.wallet-ui-3 .wallet-card:not(.full) .wallet-value{
+    :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-card.full{min-height:62px;text-align:left;}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-card:not(.full) .wallet-value{
       font-size:24px;
       font-weight:700;
       margin-top:6px;
     }
-    #walletSheet.wallet-ui-3 .wallet-action-row{
+    :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-action-row{
       position:sticky;
       bottom:0;
       padding-top:8px;
       background:linear-gradient(180deg, rgba(255,255,255,0), #fff 30%);
     }
-    #walletSheet.wallet-ui-3 .wallet-open-btn{min-height:52px;border-radius:16px;}
-    #walletSheet.wallet-ui-4 .wallet-grid{gap:8px;margin-bottom:6px;}
-    #walletSheet.wallet-ui-4 .wallet-card{
+    :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-open-btn{min-height:52px;border-radius:16px;}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-4 .wallet-grid{gap:8px;margin-bottom:6px;}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-4 .wallet-card{
       min-height:48px;
       text-align:left;
       border-radius:16px;
       padding:10px 12px;
     }
-    #walletSheet.wallet-ui-4 .wallet-card:not(.full){
+    :is(#walletSheet, #walletSheetLive).wallet-ui-4 .wallet-card:not(.full){
       grid-column:1 / -1;
       display:flex;
       align-items:center;
       justify-content:space-between;
     }
-    #walletSheet.wallet-ui-4 .wallet-action-row{gap:12px;}
-    #walletSheet.wallet-ui-4 .wallet-open-btn{min-height:56px;font-size:15px;border-radius:18px;}
-    #walletSheet.wallet-ui-5 .wallet-card{
+    :is(#walletSheet, #walletSheetLive).wallet-ui-4 .wallet-action-row{gap:12px;}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-4 .wallet-open-btn{min-height:56px;font-size:15px;border-radius:18px;}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-card{
       border-radius:18px;
       padding:12px;
       box-shadow:0 1px 4px rgba(15,23,42,.08);
       background:linear-gradient(180deg,#f8fafc,#eef2ff);
     }
-    #walletSheet.wallet-ui-5 .wallet-card:nth-child(2){background:linear-gradient(180deg,#fff6d7,#f3dfa2);}
-    #walletSheet.wallet-ui-5 .wallet-card:nth-child(2) .wallet-label{color:#805d00;}
-    #walletSheet.wallet-ui-5 .wallet-card:nth-child(2) .wallet-value{
+    :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-card:nth-child(2){background:linear-gradient(180deg,#fff6d7,#f3dfa2);}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-card:nth-child(2) .wallet-label{color:#805d00;}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-card:nth-child(2) .wallet-value{
       color:#a16207;
       font-size:20px;
       font-weight:700;
     }
-    #walletSheet.wallet-ui-5 .wallet-open-btn{min-height:54px;border-radius:18px;}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-open-btn{min-height:54px;border-radius:18px;}
     .gold-reel-tune-panel{
       flex-shrink:0;
       max-height:0;
@@ -3224,7 +3254,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.92</span>
+          <span class="dev-version-label">DEV v0.2.93</span>
         </div>
       </header>
 
@@ -3264,7 +3294,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.92</span>
+            <span class="dev-version-label">DEV v0.2.93</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3410,10 +3440,19 @@
 
   <section class="sheet sheet--action" id="walletSheetLive">
     <div class="sheet-head">
+      <div class="wallet-live-head">
+        <div class="sheet-title">내 지갑</div>
+        <div class="wallet-ui-switch" aria-label="실버전 지갑 UI 테스트 전환">
+          <button class="wallet-ui-switch-btn active" data-wallet-ui="1">UI1</button>
+          <button class="wallet-ui-switch-btn" data-wallet-ui="2">UI2</button>
+          <button class="wallet-ui-switch-btn" data-wallet-ui="3">UI3</button>
+          <button class="wallet-ui-switch-btn" data-wallet-ui="4">UI4</button>
+          <button class="wallet-ui-switch-btn" data-wallet-ui="5">UI5</button>
+        </div>
+      </div>
       <button class="sheet-close" data-close="walletSheetLive">×</button>
     </div>
     <div class="sheet-body">
-      <div class="sheet-title">내 지갑</div>
       <div class="wallet-content-block">
         <div class="wallet-grid">
           <div class="wallet-card">
@@ -3669,13 +3708,15 @@
     let commentSheetIdleTimer = null;
 
     function applyWalletUI(nextUI){
-      const walletSheet = document.getElementById("walletSheet");
-      if(!walletSheet) return;
+      const walletSheets = [document.getElementById("walletSheet"), document.getElementById("walletSheetLive")].filter(Boolean);
+      if(!walletSheets.length) return;
       const parsedUI = Number(nextUI);
       if(parsedUI < 1 || parsedUI > 5) return;
       currentWalletUI = parsedUI;
-      walletSheet.classList.remove("wallet-ui-1", "wallet-ui-2", "wallet-ui-3", "wallet-ui-4", "wallet-ui-5");
-      walletSheet.classList.add(`wallet-ui-${currentWalletUI}`);
+      walletSheets.forEach(sheet => {
+        sheet.classList.remove("wallet-ui-1", "wallet-ui-2", "wallet-ui-3", "wallet-ui-4", "wallet-ui-5");
+        sheet.classList.add(`wallet-ui-${currentWalletUI}`);
+      });
       document.querySelectorAll(".wallet-ui-switch-btn").forEach(btn => {
         btn.classList.toggle("active", Number(btn.dataset.walletUi) === currentWalletUI);
       });
