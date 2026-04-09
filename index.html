@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.94 -->
+<!-- Version: DEV v0.2.95 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -950,14 +950,15 @@
     }
     .wallet-card{
       background:#f5f7fb;
-      border-radius:14px;
-      padding:8px 10px;
+      border-radius:16px;
+      padding:10px 12px;
       min-height:58px;
       text-align:center;
+      box-shadow:0 6px 16px rgba(15,23,42,.08);
     }
     .wallet-card.full{grid-column:1 / -1;}
     .wallet-label{font-size:11px;color:#6b7280;font-weight:700;}
-    .wallet-value{font-size:16px;font-weight:900;color:var(--primary);margin-top:2px;line-height:1.1;}
+    .wallet-value{font-size:24px;font-weight:800;color:var(--primary);margin-top:2px;line-height:1.1;letter-spacing:-0.02em;}
 
     .wallet-action-row{
       display:grid;
@@ -975,10 +976,13 @@
       font-weight:900;
       font-size:14px;
       cursor:pointer;
+      transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
     }
+    .wallet-open-btn:active{transform:scale(.97);}
     .wallet-open-btn.gold{
-      background:linear-gradient(180deg,#f8d34e,#d9a911);
+      background:linear-gradient(180deg,#ffe27a,#f4bf28);
       color:#2b2100;
+      box-shadow:0 6px 14px rgba(234,179,8,.3);
     }
     .wallet-test-row{
       display:flex;
@@ -1106,17 +1110,17 @@
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-card.full{order:1;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-label{font-size:11px;}
-    :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-value{margin-top:0;font-size:23px;font-weight:700;}
+    :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-value{margin-top:0;font-size:24px;font-weight:800;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-action-row{margin-top:14px;gap:14px;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-card{
       min-height:76px;
-      border-radius:18px;
-      padding:12px;
+      border-radius:16px;
+      padding:14px;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-card.full{min-height:62px;text-align:left;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-card:not(.full) .wallet-value{
       font-size:24px;
-      font-weight:700;
+      font-weight:800;
       margin-top:6px;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-action-row{
@@ -1152,9 +1156,9 @@
       justify-items:center;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-card{
-      border-radius:18px;
-      padding:16px;
-      box-shadow:0 1px 4px rgba(15,23,42,.08);
+      border-radius:16px;
+      padding:18px;
+      box-shadow:0 8px 20px rgba(15,23,42,.1);
       background:linear-gradient(180deg,#f8fafc,#eef2ff);
       width:100%;
       max-width:360px;
@@ -1163,8 +1167,8 @@
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-card:nth-child(2) .wallet-label{color:#805d00;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-card:nth-child(2) .wallet-value{
       color:#a16207;
-      font-size:23px;
-      font-weight:700;
+      font-size:24px;
+      font-weight:800;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-action-row{
       margin-top:16px;
