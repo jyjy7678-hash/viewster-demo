@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.01 -->
+<!-- Version: DEV v0.3.02 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1105,8 +1105,8 @@
       background:#1e40af;color:#fff;font-size:16px;font-weight:900;
       flex-shrink:0;
     }
-    #walletSheetLive .wallet-icon-img{width:78px;height:78px;object-fit:contain;flex-shrink:0;transform:scale(1.05);}
-    #walletSheetLive .wallet-icon-img.is-gold{transform:translate(-10px,-11px) scale(1.5);}
+    #walletSheetLive .wallet-icon-img{width:78px;height:78px;object-fit:contain;flex-shrink:0;transform-origin:left center;transform:scale(1.14);}
+    #walletSheetLive .wallet-icon-img.is-gold{transform-origin:left center;transform:translate(-10px,-11px) scale(1.62);}
     #walletSheetLive .wallet-label{font-size:13px;color:#9ca3af;line-height:1.32;}
     #walletSheetLive .wallet-value{margin-top:6px;font-size:24px;color:#f8fafc;line-height:1.08;}
     #walletSheetLive .wallet-open-btn{
@@ -1126,8 +1126,9 @@
     #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left{
       justify-content:flex-end;
       padding-left:0;
-      padding-right:2px;
-      gap:8px;
+      padding-right:10px;
+      gap:10px;
+      margin-right:10px;
       transform:translateX(0);
     }
     #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left > div{
