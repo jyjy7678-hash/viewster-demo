@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.94 -->
+<!-- Version: DEV v0.2.95 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1064,6 +1064,7 @@
       justify-content:center;
       padding:0;
       border-bottom:none;
+      touch-action:none;
     }
     #walletSheetLive .sheet-body{
       padding:4px 16px calc(18px + env(safe-area-inset-bottom, 0px));
@@ -1080,8 +1081,8 @@
     #walletSheetLive .wallet-card{
       background:#0f1118;
       border-radius:20px;
-      padding:16px;
-      min-height:88px;
+      padding:18px 17px;
+      min-height:106px;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -1102,20 +1103,24 @@
       background:#1e40af;color:#fff;font-size:16px;font-weight:900;
       flex-shrink:0;
     }
-    #walletSheetLive .wallet-icon-img{width:54px;height:54px;object-fit:contain;flex-shrink:0;}
-    #walletSheetLive .wallet-icon-img.is-gold{transform:translate(-4px,-6px) scale(1.16);}
-    #walletSheetLive .wallet-label{font-size:13px;color:#9ca3af;}
-    #walletSheetLive .wallet-value{margin-top:4px;font-size:24px;color:#f8fafc;}
+    #walletSheetLive .wallet-icon-img{width:76px;height:76px;object-fit:contain;flex-shrink:0;transform:scale(1);}
+    #walletSheetLive .wallet-icon-img.is-gold{transform:translate(-8px,-9px) scale(1.2);}
+    #walletSheetLive .wallet-label{font-size:13px;color:#9ca3af;line-height:1.32;}
+    #walletSheetLive .wallet-value{margin-top:6px;font-size:24px;color:#f8fafc;line-height:1.08;}
     #walletSheetLive .wallet-open-btn{
-      min-height:40px;
-      min-width:76px;
-      padding:0 14px;
+      min-height:38px;
+      min-width:56px;
+      width:56px;
+      padding:0 10px;
       border-radius:12px;
-      font-size:13px;
-      background:#2563eb;
-      color:#fff;
+      font-size:12px;
+      background:#ffffff;
+      color:#000000;
+      box-shadow:0 4px 10px rgba(15,23,42,.16);
       flex-shrink:0;
+      align-self:center;
     }
+    #walletSheetLive .wallet-card:first-child .wallet-open-btn{width:74px;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .sheet-body{
       padding-top:28px;
     }
@@ -3313,7 +3318,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.94</span>
+          <span class="dev-version-label">DEV v0.2.95</span>
         </div>
       </header>
 
@@ -3353,7 +3358,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.94</span>
+            <span class="dev-version-label">DEV v0.2.95</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3938,11 +3943,16 @@
     const goldReelTuneToggleBtn = document.getElementById("goldReelTuneToggleBtn");
     const applyReelTuneBtn = document.getElementById("applyReelTuneBtn");
     const resetReelTuneBtn = document.getElementById("resetReelTuneBtn");
+    const walletSheetLiveEl = document.getElementById("walletSheetLive");
+    const walletSheetLiveHead = walletSheetLiveEl ? walletSheetLiveEl.querySelector(".sheet-head") : null;
     let watchTimerPolling = null;
     let watchTimerRunning = false;
     let boundTimerVideo = null;
     let boundTimerUpdateHandler = null;
     let boundTimerPlayHandler = null;
+    let walletLiveDragStartY = 0;
+    let walletLiveDragDeltaY = 0;
+    let walletLiveDragging = false;
 
     function extractVideoId(url){
       try{
@@ -4730,6 +4740,37 @@ window.addEventListener("resize", clampMiniPosition);
         sheet.addEventListener(type, onInteraction, { passive: true });
       });
       sheet.addEventListener("scroll", onInteraction, { passive: true });
+    }
+
+    function startWalletSheetLiveDrag(clientY){
+      if(!walletSheetLiveEl || !walletSheetLiveEl.classList.contains("show")) return;
+      walletLiveDragging = true;
+      walletLiveDragStartY = clientY;
+      walletLiveDragDeltaY = 0;
+      walletSheetLiveEl.style.transition = "none";
+    }
+
+    function moveWalletSheetLiveDrag(clientY){
+      if(!walletLiveDragging || !walletSheetLiveEl) return;
+      walletLiveDragDeltaY = Math.max(0, clientY - walletLiveDragStartY);
+      walletSheetLiveEl.style.transform = `translateY(${walletLiveDragDeltaY}px)`;
+    }
+
+    function endWalletSheetLiveDrag(){
+      if(!walletLiveDragging || !walletSheetLiveEl) return;
+      walletLiveDragging = false;
+      walletSheetLiveEl.style.removeProperty("transition");
+      const closeThreshold = 72;
+      if(walletLiveDragDeltaY > closeThreshold){
+        walletSheetLiveEl.style.removeProperty("transform");
+        closeAllSheets();
+      } else {
+        walletSheetLiveEl.style.transform = "translateY(0)";
+        requestAnimationFrame(() => {
+          walletSheetLiveEl.style.removeProperty("transform");
+        });
+      }
+      walletLiveDragDeltaY = 0;
     }
 
     let goldReelStartTimer = null;
@@ -5641,6 +5682,29 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
         closeAllSheets();
       });
     });
+
+    if(walletSheetLiveHead){
+      walletSheetLiveHead.addEventListener("pointerdown", (event) => {
+        if(event.button !== undefined && event.button !== 0) return;
+        startWalletSheetLiveDrag(event.clientY);
+      });
+      walletSheetLiveHead.addEventListener("pointermove", (event) => {
+        if(!walletLiveDragging) return;
+        moveWalletSheetLiveDrag(event.clientY);
+      });
+      walletSheetLiveHead.addEventListener("pointerup", endWalletSheetLiveDrag);
+      walletSheetLiveHead.addEventListener("pointercancel", endWalletSheetLiveDrag);
+      walletSheetLiveHead.addEventListener("touchstart", (event) => {
+        if(!event.touches[0]) return;
+        startWalletSheetLiveDrag(event.touches[0].clientY);
+      }, { passive: true });
+      walletSheetLiveHead.addEventListener("touchmove", (event) => {
+        if(!walletLiveDragging || !event.touches[0]) return;
+        moveWalletSheetLiveDrag(event.touches[0].clientY);
+      }, { passive: true });
+      walletSheetLiveHead.addEventListener("touchend", endWalletSheetLiveDrag);
+      walletSheetLiveHead.addEventListener("touchcancel", endWalletSheetLiveDrag);
+    }
 
     window.addEventListener("resize", updateFixedLayout);
 
