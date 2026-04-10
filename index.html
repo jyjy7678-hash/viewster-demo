@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.05 -->
+<!-- Version: DEV v0.3.06 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1066,17 +1066,25 @@
       border-bottom:none;
       touch-action:none;
     }
+    #walletSheetLive{
+      top:auto;
+      height:auto;
+      max-height:84vh;
+    }
     #walletSheetLive .sheet-body{
-      padding:6px 16px calc(22px + env(safe-area-inset-bottom, 0px));
+      justify-content:flex-start;
+      padding:6px 16px calc(10px + env(safe-area-inset-bottom, 0px));
     }
     #walletSheetLive .wallet-content-block{
       margin-top:0;
       gap:16px;
+      padding-bottom:0;
     }
     #walletSheetLive .wallet-grid{
       display:flex;
       flex-direction:column;
       gap:26px;
+      margin-bottom:0;
     }
     #walletSheetLive .wallet-card{
       background:#0f1118;
@@ -1171,6 +1179,9 @@
     #walletSheetLive .wallet-value.wallet-value-count .count-num{font-size:24px;font-weight:900;line-height:1;}
     #walletSheetLive .wallet-value.wallet-value-count .count-unit{font-size:13px;color:#94a3b8;transform:translateY(-1px);}
     @media (max-height:760px){
+      #walletSheetLive{
+        max-height:90vh;
+      }
       #walletSheetLive .sheet-body{
         padding:4px 14px calc(16px + env(safe-area-inset-bottom, 0px));
       }
@@ -3379,7 +3390,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.3.05</span>
+          <span class="dev-version-label">DEV v0.3.06</span>
         </div>
       </header>
 
@@ -3419,7 +3430,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.3.05</span>
+            <span class="dev-version-label">DEV v0.3.06</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
