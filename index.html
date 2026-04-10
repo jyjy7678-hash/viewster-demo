@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.98 -->
+<!-- Version: DEV v0.2.99 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1096,6 +1096,8 @@
       gap:10px;
       min-width:0;
       flex:1;
+      justify-content:flex-start;
+      padding-left:6px;
     }
     #walletSheetLive .wallet-point-badge{
       width:34px;height:34px;border-radius:50%;
@@ -1121,11 +1123,15 @@
       align-self:center;
       margin-left:auto;
     }
-    #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left > div{transform:translateX(6px);}
-    #walletSheetLive .wallet-value.wallet-value-point{display:flex;align-items:baseline;gap:7px;white-space:nowrap;}
+    #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left > div{transform:translateX(10px);}
+    #walletSheetLive .wallet-value.wallet-value-point{display:flex;flex-direction:column;align-items:flex-start;gap:4px;white-space:normal;line-height:1.05;}
     #walletSheetLive .wallet-value.wallet-value-point .point-main{font-size:28px;font-weight:900;line-height:1;}
-    #walletSheetLive .wallet-value.wallet-value-point .point-eq{font-size:15px;font-weight:700;color:#cbd5e1;}
-    #walletSheetLive .wallet-value.wallet-value-point .point-krw{font-size:16px;font-weight:700;color:#cbd5e1;}
+    #walletSheetLive .wallet-value.wallet-value-point .point-krw-line{display:flex;align-items:baseline;gap:4px;color:#cbd5e1;font-weight:700;}
+    #walletSheetLive .wallet-value.wallet-value-point .point-eq{font-size:14px;line-height:1;}
+    #walletSheetLive .wallet-value.wallet-value-point .point-krw{font-size:15px;line-height:1;}
+    #walletSheetLive .wallet-value.wallet-value-count{display:inline-flex;align-items:flex-end;gap:2px;line-height:1;}
+    #walletSheetLive .wallet-value.wallet-value-count .count-num{font-size:24px;font-weight:900;line-height:1;}
+    #walletSheetLive .wallet-value.wallet-value-count .count-unit{font-size:13px;color:#94a3b8;transform:translateY(-1px);}
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .sheet-body{
       padding-top:28px;
     }
@@ -3323,7 +3329,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.98</span>
+          <span class="dev-version-label">DEV v0.2.99</span>
         </div>
       </header>
 
@@ -3363,7 +3369,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.98</span>
+            <span class="dev-version-label">DEV v0.2.99</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3517,7 +3523,7 @@
               <div class="wallet-point-badge">P</div>
               <div>
                 <div class="wallet-label">보유 포인트</div>
-                <div class="wallet-value wallet-value-point" id="rewardPointLive"><span class="point-main">0</span><span class="point-eq">=</span><span class="point-krw">₩ 0</span></div>
+                <div class="wallet-value wallet-value-point" id="rewardPointLive"><span class="point-main">0</span><span class="point-krw-line"><span class="point-eq">=</span><span class="point-krw">₩ 0</span></span></div>
               </div>
             </div>
             <button class="wallet-open-btn" type="button">출금하기</button>
@@ -3528,7 +3534,7 @@
               <img class="wallet-icon-img" src="./assets/randombox.png" alt="랜덤박스" />
               <div>
                 <div class="wallet-label">보유 랜덤박스</div>
-                <div class="wallet-value" id="boxCountLive">100개</div>
+                <div class="wallet-value wallet-value-count" id="boxCountLive"><span class="count-num">100</span><span class="count-unit">개</span></div>
               </div>
             </div>
             <button class="wallet-open-btn" id="walletLiveOpenRandom">열기</button>
@@ -3539,7 +3545,7 @@
               <img class="wallet-icon-img is-gold" src="./assets/goldbox.png" alt="황금박스" />
               <div>
                 <div class="wallet-label">보유 황금박스</div>
-                <div class="wallet-value" id="goldBoxCountLive">100개</div>
+                <div class="wallet-value wallet-value-count" id="goldBoxCountLive"><span class="count-num">100</span><span class="count-unit">개</span></div>
               </div>
             </div>
             <button class="wallet-open-btn" id="walletLiveOpenGold">열기</button>
@@ -4428,10 +4434,10 @@ function wakePlayerControls(){
       boxCount.textContent = `${state.randomBoxCount}개`;
       goldBoxCount.textContent = `${state.goldBoxCount}개`;
       rewardPoint.textContent = `${state.totalRewardPoint.toLocaleString()} P`;
-      boxCountLive.textContent = `${state.randomBoxCount}개`;
-      goldBoxCountLive.textContent = `${state.goldBoxCount}개`;
+      boxCountLive.innerHTML = `<span class="count-num">${state.randomBoxCount.toLocaleString()}</span><span class="count-unit">개</span>`;
+      goldBoxCountLive.innerHTML = `<span class="count-num">${state.goldBoxCount.toLocaleString()}</span><span class="count-unit">개</span>`;
       const livePointText = state.totalRewardPoint.toLocaleString();
-      rewardPointLive.innerHTML = `<span class="point-main">${livePointText}</span><span class="point-eq">=</span><span class="point-krw">₩ ${livePointText}</span>`;
+      rewardPointLive.innerHTML = `<span class="point-main">${livePointText}</span><span class="point-krw-line"><span class="point-eq">=</span><span class="point-krw">₩ ${livePointText}</span></span>`;
     }
 
     function updateRewardUI(){
