@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.03 -->
+<!-- Version: DEV v0.3.04 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1105,8 +1105,8 @@
       background:#1e40af;color:#fff;font-size:16px;font-weight:900;
       flex-shrink:0;
     }
-    #walletSheetLive .wallet-icon-img{width:78px;height:78px;object-fit:contain;flex-shrink:0;transform-origin:left center;transform:translateX(-8px) scale(1.14);}
-    #walletSheetLive .wallet-icon-img.is-gold{transform-origin:left center;transform:translate(-10px,-11px) scale(1.62);}
+    #walletSheetLive .wallet-icon-img{width:78px;height:78px;object-fit:contain;flex-shrink:0;transform:scale(1.14);}
+    #walletSheetLive .wallet-icon-img.is-gold{transform:scale(1.62);}
     #walletSheetLive .wallet-label{font-size:13px;color:#9ca3af;line-height:1.32;}
     #walletSheetLive .wallet-value{margin-top:6px;font-size:24px;color:#f8fafc;line-height:1.08;}
     #walletSheetLive .wallet-open-btn{
@@ -1124,18 +1124,21 @@
       margin-left:auto;
     }
     #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left{
-      justify-content:flex-end;
+      display:grid;
+      grid-template-columns:92px minmax(0,1fr);
+      align-items:center;
+      gap:10px;
       padding-left:0;
       padding-right:10px;
-      gap:10px;
       margin-right:10px;
-      transform:translateX(0);
     }
+    #walletSheetLive .wallet-card:nth-child(n+2) .wallet-icon-img{justify-self:center;align-self:center;}
     #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left > div{
-      text-align:right;
+      text-align:left;
       display:flex;
       flex-direction:column;
-      align-items:flex-end;
+      align-items:flex-start;
+      min-width:0;
     }
     #walletSheetLive .wallet-value.wallet-value-point{display:inline-flex;align-items:flex-end;gap:6px;white-space:nowrap;line-height:1.05;}
     #walletSheetLive .wallet-value.wallet-value-point.is-multiline{display:flex;flex-direction:column;align-items:flex-start;gap:4px;white-space:normal;}
@@ -3343,7 +3346,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.3.03</span>
+          <span class="dev-version-label">DEV v0.3.04</span>
         </div>
       </header>
 
@@ -3383,7 +3386,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.3.03</span>
+            <span class="dev-version-label">DEV v0.3.04</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
