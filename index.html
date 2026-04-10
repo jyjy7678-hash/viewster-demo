@@ -1126,8 +1126,9 @@
     #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left{
       justify-content:flex-end;
       padding-left:0;
-      padding-right:16px;
+      padding-right:2px;
       gap:8px;
+      transform:translateX(10px);
     }
     #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left > div{
       text-align:right;
@@ -4449,7 +4450,7 @@ function wakePlayerControls(){
       boxCountLive.innerHTML = `<span class="count-num">${state.randomBoxCount.toLocaleString()}</span><span class="count-unit">개</span>`;
       goldBoxCountLive.innerHTML = `<span class="count-num">${state.goldBoxCount.toLocaleString()}</span><span class="count-unit">개</span>`;
       const livePointText = state.totalRewardPoint.toLocaleString();
-      const isLivePointMultiline = livePointText.length >= 7;
+      const isLivePointMultiline = state.totalRewardPoint >= 100500;
       rewardPointLive.classList.toggle("is-multiline", isLivePointMultiline);
       rewardPointLive.innerHTML = `<span class="point-main">${livePointText}</span><span class="point-krw-line"><span class="point-eq">=</span><span class="point-krw">₩ ${livePointText}</span></span>`;
     }
