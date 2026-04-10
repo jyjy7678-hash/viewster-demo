@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.97 -->
+<!-- Version: DEV v0.2.98 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1076,7 +1076,7 @@
     #walletSheetLive .wallet-grid{
       display:flex;
       flex-direction:column;
-      gap:36px;
+      gap:32px;
     }
     #walletSheetLive .wallet-card{
       background:#0f1118;
@@ -1093,7 +1093,7 @@
     #walletSheetLive .wallet-card-left{
       display:flex;
       align-items:center;
-      gap:12px;
+      gap:10px;
       min-width:0;
       flex:1;
     }
@@ -1111,7 +1111,7 @@
       height:36px;
       max-width:120px;
       padding:0 12px;
-      border-radius:10px;
+      border-radius:999px;
       font-size:13px;
       background:#ffffff;
       color:#000000;
@@ -1121,6 +1121,11 @@
       align-self:center;
       margin-left:auto;
     }
+    #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left > div{transform:translateX(6px);}
+    #walletSheetLive .wallet-value.wallet-value-point{display:flex;align-items:baseline;gap:7px;white-space:nowrap;}
+    #walletSheetLive .wallet-value.wallet-value-point .point-main{font-size:28px;font-weight:900;line-height:1;}
+    #walletSheetLive .wallet-value.wallet-value-point .point-eq{font-size:15px;font-weight:700;color:#cbd5e1;}
+    #walletSheetLive .wallet-value.wallet-value-point .point-krw{font-size:16px;font-weight:700;color:#cbd5e1;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .sheet-body{
       padding-top:28px;
     }
@@ -3318,7 +3323,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.97</span>
+          <span class="dev-version-label">DEV v0.2.98</span>
         </div>
       </header>
 
@@ -3358,7 +3363,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.97</span>
+            <span class="dev-version-label">DEV v0.2.98</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3512,7 +3517,7 @@
               <div class="wallet-point-badge">P</div>
               <div>
                 <div class="wallet-label">보유 포인트</div>
-                <div class="wallet-value" id="rewardPointLive">P 0</div>
+                <div class="wallet-value wallet-value-point" id="rewardPointLive"><span class="point-main">0</span><span class="point-eq">=</span><span class="point-krw">₩ 0</span></div>
               </div>
             </div>
             <button class="wallet-open-btn" type="button">출금하기</button>
@@ -4425,7 +4430,8 @@ function wakePlayerControls(){
       rewardPoint.textContent = `${state.totalRewardPoint.toLocaleString()} P`;
       boxCountLive.textContent = `${state.randomBoxCount}개`;
       goldBoxCountLive.textContent = `${state.goldBoxCount}개`;
-      rewardPointLive.textContent = `${state.totalRewardPoint.toLocaleString()} P`;
+      const livePointText = state.totalRewardPoint.toLocaleString();
+      rewardPointLive.innerHTML = `<span class="point-main">${livePointText}</span><span class="point-eq">=</span><span class="point-krw">₩ ${livePointText}</span>`;
     }
 
     function updateRewardUI(){
