@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.95 -->
+<!-- Version: DEV v0.2.94 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1059,35 +1059,62 @@
       background:#dbeafe;
       color:#1d4ed8;
     }
+    /* 실 버전 지갑: 1단계 카드형 UI */
     #walletSheetLive .sheet-head{
-      justify-content:flex-start;
-      padding:0 52px 0 16px;
+      justify-content:center;
+      padding:0;
+      border-bottom:none;
     }
-    #walletSheetLive .sheet-head::before{
-      display:none;
+    #walletSheetLive .sheet-body{
+      padding:4px 16px calc(18px + env(safe-area-inset-bottom, 0px));
     }
-    .wallet-live-head{
+    #walletSheetLive .wallet-content-block{
+      margin-top:0;
+      gap:14px;
+    }
+    #walletSheetLive .wallet-grid{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    #walletSheetLive .wallet-card{
+      background:#0f1118;
+      border-radius:20px;
+      padding:16px;
+      min-height:88px;
       display:flex;
       align-items:center;
-      gap:8px;
+      justify-content:space-between;
+      text-align:left;
+      box-shadow:0 10px 24px rgba(2,6,23,.24);
+      overflow:visible;
+    }
+    #walletSheetLive .wallet-card-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
       min-width:0;
-      width:100%;
-    }
-    .wallet-live-head .sheet-title{
-      margin:0;
-      white-space:nowrap;
-      font-size:18px;
-    }
-    .wallet-live-head .wallet-ui-switch{
-      margin:0;
-      gap:6px;
       flex:1;
-      min-width:0;
-      padding-bottom:0;
     }
-    .wallet-live-head .wallet-ui-switch-btn{
-      padding:6px 10px;
-      font-size:11px;
+    #walletSheetLive .wallet-point-badge{
+      width:34px;height:34px;border-radius:50%;
+      display:grid;place-items:center;
+      background:#1e40af;color:#fff;font-size:16px;font-weight:900;
+      flex-shrink:0;
+    }
+    #walletSheetLive .wallet-icon-img{width:54px;height:54px;object-fit:contain;flex-shrink:0;}
+    #walletSheetLive .wallet-icon-img.is-gold{transform:translate(-4px,-6px) scale(1.16);}
+    #walletSheetLive .wallet-label{font-size:13px;color:#9ca3af;}
+    #walletSheetLive .wallet-value{margin-top:4px;font-size:24px;color:#f8fafc;}
+    #walletSheetLive .wallet-open-btn{
+      min-height:40px;
+      min-width:76px;
+      padding:0 14px;
+      border-radius:12px;
+      font-size:13px;
+      background:#2563eb;
+      color:#fff;
+      flex-shrink:0;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .sheet-body{
       padding-top:28px;
@@ -3286,7 +3313,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.93</span>
+          <span class="dev-version-label">DEV v0.2.94</span>
         </div>
       </header>
 
@@ -3326,7 +3353,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.93</span>
+            <span class="dev-version-label">DEV v0.2.94</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3471,38 +3498,42 @@
   </section>
 
   <section class="sheet sheet--action" id="walletSheetLive">
-    <div class="sheet-head">
-      <div class="wallet-live-head">
-        <div class="sheet-title">내 지갑</div>
-        <div class="wallet-ui-switch" aria-label="실버전 지갑 UI 테스트 전환">
-          <button class="wallet-ui-switch-btn active" data-wallet-ui="1">UI1</button>
-          <button class="wallet-ui-switch-btn" data-wallet-ui="2">UI2</button>
-          <button class="wallet-ui-switch-btn" data-wallet-ui="3">UI3</button>
-          <button class="wallet-ui-switch-btn" data-wallet-ui="4">UI4</button>
-          <button class="wallet-ui-switch-btn" data-wallet-ui="5">UI5</button>
-        </div>
-      </div>
-      <button class="sheet-close" data-close="walletSheetLive">×</button>
-    </div>
+    <div class="sheet-head"></div>
     <div class="sheet-body">
       <div class="wallet-content-block">
         <div class="wallet-grid">
           <div class="wallet-card">
-            <div class="wallet-label">📦 랜덤박스</div>
-            <div class="wallet-value" id="boxCountLive">100개</div>
+            <div class="wallet-card-left">
+              <div class="wallet-point-badge">P</div>
+              <div>
+                <div class="wallet-label">보유 포인트</div>
+                <div class="wallet-value" id="rewardPointLive">P 0</div>
+              </div>
+            </div>
+            <button class="wallet-open-btn" type="button">출금하기</button>
           </div>
+
           <div class="wallet-card">
-            <div class="wallet-label">🏆 황금박스</div>
-            <div class="wallet-value" id="goldBoxCountLive">100개</div>
+            <div class="wallet-card-left">
+              <img class="wallet-icon-img" src="./assets/randombox.png" alt="랜덤박스" />
+              <div>
+                <div class="wallet-label">보유 랜덤박스</div>
+                <div class="wallet-value" id="boxCountLive">100개</div>
+              </div>
+            </div>
+            <button class="wallet-open-btn" id="walletLiveOpenRandom">열기</button>
           </div>
-          <div class="wallet-card full">
-            <div class="wallet-label">💰 누적리워드</div>
-            <div class="wallet-value" id="rewardPointLive">0 P</div>
+
+          <div class="wallet-card">
+            <div class="wallet-card-left">
+              <img class="wallet-icon-img is-gold" src="./assets/goldbox.png" alt="황금박스" />
+              <div>
+                <div class="wallet-label">보유 황금박스</div>
+                <div class="wallet-value" id="goldBoxCountLive">100개</div>
+              </div>
+            </div>
+            <button class="wallet-open-btn" id="walletLiveOpenGold">열기</button>
           </div>
-        </div>
-        <div class="wallet-action-row">
-          <button class="wallet-open-btn" id="walletLiveOpenRandom">랜덤박스 열기</button>
-          <button class="wallet-open-btn gold" id="walletLiveOpenGold">황금박스 열기</button>
         </div>
       </div>
     </div>
