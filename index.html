@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.2.99 -->
+<!-- Version: DEV v0.3.00 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1123,8 +1123,20 @@
       align-self:center;
       margin-left:auto;
     }
-    #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left > div{transform:translateX(10px);}
-    #walletSheetLive .wallet-value.wallet-value-point{display:flex;flex-direction:column;align-items:flex-start;gap:4px;white-space:normal;line-height:1.05;}
+    #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left{
+      justify-content:flex-end;
+      padding-left:0;
+      padding-right:16px;
+      gap:8px;
+    }
+    #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left > div{
+      text-align:right;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+    }
+    #walletSheetLive .wallet-value.wallet-value-point{display:inline-flex;align-items:flex-end;gap:6px;white-space:nowrap;line-height:1.05;}
+    #walletSheetLive .wallet-value.wallet-value-point.is-multiline{display:flex;flex-direction:column;align-items:flex-start;gap:4px;white-space:normal;}
     #walletSheetLive .wallet-value.wallet-value-point .point-main{font-size:28px;font-weight:900;line-height:1;}
     #walletSheetLive .wallet-value.wallet-value-point .point-krw-line{display:flex;align-items:baseline;gap:4px;color:#cbd5e1;font-weight:700;}
     #walletSheetLive .wallet-value.wallet-value-point .point-eq{font-size:14px;line-height:1;}
@@ -3329,7 +3341,7 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.2.99</span>
+          <span class="dev-version-label">DEV v0.3.00</span>
         </div>
       </header>
 
@@ -3369,7 +3381,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.2.99</span>
+            <span class="dev-version-label">DEV v0.3.00</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -4437,6 +4449,8 @@ function wakePlayerControls(){
       boxCountLive.innerHTML = `<span class="count-num">${state.randomBoxCount.toLocaleString()}</span><span class="count-unit">개</span>`;
       goldBoxCountLive.innerHTML = `<span class="count-num">${state.goldBoxCount.toLocaleString()}</span><span class="count-unit">개</span>`;
       const livePointText = state.totalRewardPoint.toLocaleString();
+      const isLivePointMultiline = livePointText.length >= 7;
+      rewardPointLive.classList.toggle("is-multiline", isLivePointMultiline);
       rewardPointLive.innerHTML = `<span class="point-main">${livePointText}</span><span class="point-krw-line"><span class="point-eq">=</span><span class="point-krw">₩ ${livePointText}</span></span>`;
     }
 
