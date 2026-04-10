@@ -1109,12 +1109,12 @@
       display:grid;
       grid-template-columns:28px minmax(0,1fr);
       align-items:center;
-      gap:6px;
+      gap:4px;
       padding-left:0;
       padding-right:10px;
       margin-right:10px;
     }
-    #walletSheetLive .wallet-card:first-child .wallet-card-left > div{
+    #walletSheetLive .wallet-card:first-child .wallet-point-text{
       min-width:0;
       display:flex;
       flex-direction:column;
@@ -1130,7 +1130,7 @@
       max-width:120px;
       padding:0 12px;
       border-radius:999px;
-      font-size:13px;
+      font-size:15px;
       background:#ffffff;
       color:#000000;
       box-shadow:none;
@@ -1156,8 +1156,8 @@
       align-items:flex-start;
       min-width:0;
     }
-    #walletSheetLive .wallet-value.wallet-value-point{display:inline-flex;align-items:flex-end;gap:6px;white-space:nowrap;line-height:1.05;}
-    #walletSheetLive .wallet-value.wallet-value-point.is-multiline{display:flex;flex-direction:column;align-items:flex-start;gap:4px;white-space:normal;}
+    #walletSheetLive .wallet-value.wallet-value-point{display:flex;flex-direction:column;align-items:flex-start;gap:4px;white-space:normal;line-height:1.05;}
+    #walletSheetLive .wallet-value.wallet-value-point.is-multiline{gap:4px;}
     #walletSheetLive .wallet-value.wallet-value-point .point-main{font-size:25px;font-weight:900;line-height:1;}
     #walletSheetLive .wallet-value.wallet-value-point .point-krw-line{display:flex;align-items:baseline;gap:4px;color:#cbd5e1;font-weight:700;}
     #walletSheetLive .wallet-value.wallet-value-point .point-eq{font-size:14px;line-height:1;}
@@ -3553,8 +3553,8 @@
         <div class="wallet-grid">
           <div class="wallet-card">
             <div class="wallet-card-left">
-              <div class="wallet-point-badge">P</div>
-              <div>
+              <div class="wallet-point-badge" aria-hidden="true">P</div>
+              <div class="wallet-point-text">
                 <div class="wallet-label">보유 포인트</div>
                 <div class="wallet-value wallet-value-point" id="rewardPointLive"><span class="point-main">0</span><span class="point-krw-line"><span class="point-eq">=</span><span class="point-krw">₩ 0</span></span></div>
               </div>
