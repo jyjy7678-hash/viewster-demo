@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.17 -->
+<!-- Version: DEV v0.3.18 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1001,9 +1001,9 @@
     }
     .donation-channel-id{display:none;}
     .donation-channel-link{
-      border:1px solid #e5e7eb;
-      background:#f8fafc;
-      color:#475569;
+      border:1px solid #d21f1f;
+      background:linear-gradient(180deg,#ff4e45,#dc2626);
+      color:#fff;
       border-radius:999px;
       min-height:30px;
       padding:0 10px;
@@ -1011,6 +1011,7 @@
       font-weight:800;
       cursor:pointer;
       flex-shrink:0;
+      box-shadow:0 8px 16px rgba(220,38,38,.22);
     }
     .donation-channel-guide{
       font-size:12px;
@@ -1052,19 +1053,25 @@
       box-shadow:0 8px 18px rgba(59,130,246,.12);
     }
     .donation-rank-item.is-rank-1{
-      background:linear-gradient(180deg,#fff7d6,#fffdf3);
-      border-color:#f4c64f;
-      box-shadow:0 10px 22px rgba(234,179,8,.18);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.9), transparent 38%),
+        linear-gradient(180deg,#fff3bf,#ffe08a 54%,#fff8da 100%);
+      border-color:#e0ac18;
+      box-shadow:0 14px 28px rgba(234,179,8,.24), 0 0 0 1px rgba(255,236,153,.55) inset;
     }
     .donation-rank-item.is-rank-2{
-      background:linear-gradient(180deg,#f8fafc,#f1f5f9);
-      border-color:#cbd5e1;
-      box-shadow:0 10px 22px rgba(100,116,139,.14);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.92), transparent 38%),
+        linear-gradient(180deg,#eef4fb,#dbe5f1 52%,#f8fbff 100%);
+      border-color:#a8b7c9;
+      box-shadow:0 14px 28px rgba(100,116,139,.18), 0 0 0 1px rgba(255,255,255,.55) inset;
     }
     .donation-rank-item.is-rank-3{
-      background:linear-gradient(180deg,#fff1e8,#fff7f1);
-      border-color:#d6a37d;
-      box-shadow:0 10px 22px rgba(180,83,9,.14);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.88), transparent 38%),
+        linear-gradient(180deg,#ffd7bf,#efb08a 52%,#fff1e8 100%);
+      border-color:#c97b49;
+      box-shadow:0 14px 28px rgba(180,83,9,.2), 0 0 0 1px rgba(255,234,223,.5) inset;
     }
     .donation-rank-num{
       min-width:52px;
@@ -1072,9 +1079,14 @@
       font-weight:900;
       color:#111827;
     }
-    .donation-rank-item.is-rank-1 .donation-rank-num{ color:#a16207; }
-    .donation-rank-item.is-rank-2 .donation-rank-num{ color:#475569; }
-    .donation-rank-item.is-rank-3 .donation-rank-num{ color:#9a3412; }
+    .donation-rank-item.is-rank-1 .donation-rank-num{ color:#8a5a00; text-shadow:0 1px 0 rgba(255,255,255,.65); }
+    .donation-rank-item.is-rank-2 .donation-rank-num{ color:#40566f; text-shadow:0 1px 0 rgba(255,255,255,.7); }
+    .donation-rank-item.is-rank-3 .donation-rank-num{ color:#8f3f12; text-shadow:0 1px 0 rgba(255,255,255,.6); }
+    .donation-rank-item.is-rank-1 .donation-rank-name,
+    .donation-rank-item.is-rank-2 .donation-rank-name,
+    .donation-rank-item.is-rank-3 .donation-rank-name{
+      font-weight:900;
+    }
     .donation-rank-name{
       min-width:0;
       flex:1;
@@ -3736,7 +3748,7 @@
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.17</span>
+          <span class="dev-version-label">DEV v0.3.18</span>
         </div>
       </header>
 
@@ -3777,7 +3789,7 @@
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.17</span>
+            <span class="dev-version-label">DEV v0.3.18</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
