@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.07 -->
+<!-- Version: DEV v0.3.08 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1125,223 +1125,206 @@
     }
     .wallet-open-btn{
       flex:1;
-      min-height:44px;
+      min-height:42px;
       border:none;
       border-radius:14px;
       background:#111827;
       color:#fff;
-      font-size:14px;
       font-weight:900;
+      font-size:14px;
       cursor:pointer;
-      box-shadow:0 8px 18px rgba(17,24,39,.12);
+      transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
     }
     .wallet-open-btn:active{transform:scale(.97);}
     .wallet-open-btn.gold{
-      background:linear-gradient(135deg,#f59e0b,#f97316);
-      color:#fff7ed;
+      background:linear-gradient(180deg,#ffe27a,#f4bf28);
+      color:#2b2100;
+      box-shadow:0 6px 14px rgba(234,179,8,.3);
     }
-
     .wallet-test-row{
       display:flex;
-      flex-direction:column;
+      flex-wrap:wrap;
       gap:6px;
-      margin-top:0;
-      flex:1;
-      align-items:flex-end;
+      margin-top:8px;
     }
     .wallet-top-row{
+      flex-shrink:0;
       display:flex;
       align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:nowrap;
+      gap:6px;
     }
     .wallet-top-row .sheet-title{
-      margin:8px 0 0;
-      flex-shrink:0;
+      margin:0;
+      white-space:nowrap;
     }
     .wallet-test-row--gold{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
-      gap:4px;
+      margin-top:0;
+      gap:3px;
+      min-width:0;
       flex:1;
     }
     .wallet-top-row .wallet-test-line{
-      justify-content:flex-end;
+      justify-content:flex-start;
     }
     .wallet-test-line{
       display:flex;
       flex-wrap:wrap;
-      gap:4px;
       justify-content:flex-end;
+      gap:4px;
     }
     .wallet-test-btn{
-      height:28px;
-      padding:0 9px;
-      border:none;
+      border:1px solid #d8deea;
+      background:#f8fafc;
+      color:#1f2937;
       border-radius:999px;
-      background:#eef3ff;
-      color:#2457d6;
       font-size:11px;
-      font-weight:900;
-      cursor:pointer;
-      flex:0 0 auto;
+      font-weight:800;
+      padding:5px 9px;
+      line-height:1;
     }
     .wallet-test-btn.active{
-      background:#2457d6;
-      color:#fff;
-      box-shadow:0 6px 14px rgba(36,87,214,.2);
+      border-color:#2563eb;
+      background:#dbeafe;
+      color:#1d4ed8;
     }
     .wallet-test-note{
+      margin-top:4px;
       font-size:11px;
-      color:#6b7280;
+      color:#64748b;
       font-weight:700;
-      line-height:1.35;
     }
-
     .wallet-ui-switch{
       display:flex;
-      gap:6px;
+      gap:8px;
+      margin:8px 0 10px;
       overflow-x:auto;
-      -ms-overflow-style:none;
-      scrollbar-width:none;
       padding-bottom:2px;
+      -webkit-overflow-scrolling:touch;
     }
-    .wallet-ui-switch::-webkit-scrollbar{display:none;}
     .wallet-ui-switch-btn{
-      min-width:52px;
-      height:28px;
-      border:none;
+      border:1px solid #d8deea;
+      background:#fff;
+      color:#334155;
       border-radius:999px;
-      background:#eef2f7;
-      color:#475569;
-      font-size:11px;
-      font-weight:900;
-      cursor:pointer;
-      flex:0 0 auto;
+      font-size:12px;
+      font-weight:800;
+      padding:7px 12px;
+      white-space:nowrap;
     }
     .wallet-ui-switch-btn.active{
-      background:#111827;
-      color:#fff;
-      box-shadow:0 8px 16px rgba(17,24,39,.18);
+      border-color:#2563eb;
+      background:#dbeafe;
+      color:#1d4ed8;
     }
-
+    /* 실 버전 지갑: 1단계 카드형 UI */
     #walletSheetLive .sheet-head{
-      height:28px;
+      justify-content:center;
+      padding:0;
       border-bottom:none;
-      background:transparent;
       touch-action:none;
-      cursor:grab;
-    }
-    #walletSheetLive .sheet-head::before{
-      top:9px;
-      width:38px;
-      height:5px;
-      background:rgba(203,213,225,.95);
     }
     #walletSheetLive{
       top:auto;
       height:auto;
       max-height:84vh;
-      background:#111827;
-      z-index:52;
-      border-radius:28px 28px 0 0;
-      box-shadow:0 -18px 44px rgba(2,6,23,.34);
     }
     #walletSheetLive .sheet-body{
       justify-content:flex-start;
-      gap:16px;
-      padding:0 18px calc(10px + env(safe-area-inset-bottom, 0px));
+      padding:6px 16px calc(10px + env(safe-area-inset-bottom, 0px));
     }
     #walletSheetLive .wallet-content-block{
       margin-top:0;
-      gap:18px;
+      gap:16px;
       padding-bottom:0;
     }
     #walletSheetLive .wallet-grid{
-      grid-template-columns:1fr;
+      display:flex;
+      flex-direction:column;
       gap:26px;
       margin-bottom:0;
     }
     #walletSheetLive .wallet-card{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) auto;
+      background:#0f1118;
+      border-radius:20px;
+      padding:22px 19px;
+      min-height:112px;
+      display:flex;
       align-items:center;
-      gap:18px;
-      min-height:0;
-      padding:0;
-      border-radius:0;
-      background:transparent;
-      box-shadow:none;
-      color:#f8fafc;
+      justify-content:space-between;
       text-align:left;
+      box-shadow:0 10px 24px rgba(2,6,23,.24);
+      overflow:visible;
     }
     #walletSheetLive .wallet-card-left{
-      display:grid;
-      grid-template-columns:auto minmax(0,1fr);
+      display:flex;
       align-items:center;
-      gap:16px;
+      gap:10px;
       min-width:0;
+      flex:1;
+      justify-content:flex-start;
+      padding-left:4px;
     }
     #walletSheetLive .wallet-point-badge{
-      width:22px;
-      height:22px;
-      border-radius:50%;
-      background:#e879f9;
-      color:#fff;
-      font-size:12px;
-      font-weight:900;
-      display:grid;
-      place-items:center;
-      box-shadow:0 8px 18px rgba(232,121,249,.28);
+      width:18px;height:18px;border-radius:50%;
+      display:grid;place-items:center;
+      background:#fff;color:#111;font-size:11px;font-weight:900;
+      line-height:1;
+      flex-shrink:0;
     }
     #walletSheetLive .wallet-card:first-child .wallet-card-left{
-      grid-template-columns:1fr;
-      gap:0;
-      align-items:flex-start;
-      justify-items:start;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding-left:0;
+      padding-right:6px;
+      margin-right:8px;
     }
     #walletSheetLive .wallet-card:first-child .wallet-point-text{
+      min-width:0;
       display:flex;
       flex-direction:column;
+      align-items:flex-start;
+      text-align:left;
       gap:6px;
-      min-width:0;
     }
     #walletSheetLive .wallet-card:first-child .wallet-point-label-row{
       display:flex;
       align-items:center;
-      gap:8px;
+      gap:6px;
     }
     #walletSheetLive .wallet-icon-img{width:78px;height:78px;object-fit:contain;flex-shrink:0;transform:scale(1.14);}
     #walletSheetLive .wallet-icon-img.is-gold{transform:translate(-5px, -5px) scale(1.62);}
     #walletSheetLive .wallet-label{font-size:13px;color:#9ca3af;line-height:1.32;}
     #walletSheetLive .wallet-value{margin-top:6px;font-size:24px;color:#f8fafc;line-height:1.08;}
     #walletSheetLive .wallet-open-btn{
-      min-width:94px;
-      min-height:36px;
-      padding:0 16px;
+      height:36px;
+      max-width:120px;
+      padding:0 12px;
       border-radius:999px;
-      background:#2563eb;
-      color:#fff;
-      font-size:13px;
-      font-weight:900;
+      font-size:15px;
+      background:#ffffff;
+      color:#000000;
       box-shadow:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
       white-space:nowrap;
+      flex-shrink:0;
+      align-self:center;
+      margin-left:auto;
     }
     #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left{
-      grid-template-columns:74px minmax(0,1fr);
+      display:grid;
+      grid-template-columns:92px minmax(0,1fr);
       align-items:center;
-      gap:18px;
+      gap:10px;
+      padding-left:0;
+      padding-right:10px;
+      margin-right:10px;
     }
     #walletSheetLive .wallet-card:nth-child(n+2) .wallet-icon-img{justify-self:center;align-self:center;}
     #walletSheetLive .wallet-card:nth-child(n+2) .wallet-card-left > div{
+      text-align:left;
       display:flex;
       flex-direction:column;
-      justify-content:center;
+      align-items:flex-start;
       min-width:0;
     }
     #walletSheetLive .wallet-value.wallet-value-point{display:flex;align-items:baseline;gap:6px;white-space:nowrap;line-height:1;}
@@ -1352,1158 +1335,2076 @@
     #walletSheetLive .wallet-value.wallet-value-count{display:inline-flex;align-items:flex-end;gap:2px;line-height:1;}
     #walletSheetLive .wallet-value.wallet-value-count .count-num{font-size:24px;font-weight:900;line-height:1;}
     #walletSheetLive .wallet-value.wallet-value-count .count-unit{font-size:13px;color:#94a3b8;transform:translateY(-1px);}
-
     @media (max-height:760px){
       #walletSheetLive{
         max-height:90vh;
       }
       #walletSheetLive .sheet-body{
-        padding-bottom:calc(8px + env(safe-area-inset-bottom, 0px));
+        padding:4px 14px calc(16px + env(safe-area-inset-bottom, 0px));
       }
       #walletSheetLive .wallet-content-block{gap:14px;}
       #walletSheetLive .wallet-grid{gap:22px;}
       #walletSheetLive .wallet-card{
-        gap:14px;
+        padding:18px 16px;
+        min-height:102px;
       }
       #walletSheetLive .wallet-open-btn{height:34px;}
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .sheet-body{
-      gap:10px;
+      padding-top:28px;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-grid{
-      grid-template-columns:1fr 1fr;
-      gap:10px;
+      grid-template-columns:1fr;
+      gap:18px;
+      justify-items:center;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-card{
-      background:linear-gradient(180deg,#ffffff,#f8fbff);
-      border:1px solid #e5ebf5;
-      border-radius:18px;
-      box-shadow:none;
-      text-align:left;
-      padding:14px;
-      min-height:72px;
       display:flex;
-      flex-direction:column;
+      align-items:center;
       justify-content:space-between;
-      gap:8px;
+      text-align:left;
+      min-height:76px;
+      padding:16px 18px;
+      width:100%;
+      max-width:360px;
+      border-radius:16px;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-card.full{order:1;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-label{font-size:11px;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-value{margin-top:0;font-size:24px;font-weight:800;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-2 .wallet-action-row{margin-top:14px;gap:14px;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-card{
-      background:#ffffff;
-      border:1px solid #edf2f7;
-      border-radius:20px;
-      box-shadow:0 10px 20px rgba(15,23,42,.06);
+      min-height:76px;
+      border-radius:16px;
+      padding:14px;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-card.full{min-height:62px;text-align:left;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-card:not(.full) .wallet-value{
-      font-size:22px;
+      font-size:24px;
+      font-weight:800;
+      margin-top:6px;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-action-row{
-      gap:12px;
+      position:sticky;
+      bottom:0;
+      padding-top:8px;
+      background:linear-gradient(180deg, rgba(255,255,255,0), #fff 30%);
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-3 .wallet-open-btn{min-height:52px;border-radius:16px;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-4 .wallet-grid{gap:8px;margin-bottom:6px;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-4 .wallet-card{
-      border-radius:18px;
-      background:linear-gradient(180deg,#ffffff,#f4f8ff);
-      box-shadow:0 12px 24px rgba(59,130,246,.08);
-      padding:14px;
+      min-height:48px;
+      text-align:left;
+      border-radius:16px;
+      padding:10px 12px;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-4 .wallet-card:not(.full){
-      min-height:84px;
+      grid-column:1 / -1;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-4 .wallet-action-row{gap:12px;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-4 .wallet-open-btn{min-height:56px;font-size:15px;border-radius:18px;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .sheet-body{
-      gap:12px;
+      padding-top:30px;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-content-block{
-      gap:14px;
+      align-items:center;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-grid{
-      grid-template-columns:1fr;
-      gap:10px;
+      gap:18px;
+      justify-items:center;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-card{
-      text-align:left;
-      padding:14px 16px;
-      min-height:74px;
-      background:linear-gradient(180deg,#fffef8,#fff6d7);
-      border:1px solid #f3e6a1;
-      box-shadow:none;
+      border-radius:16px;
+      padding:18px;
+      box-shadow:0 8px 20px rgba(15,23,42,.1);
+      background:linear-gradient(180deg,#f8fafc,#eef2ff);
+      width:100%;
+      max-width:360px;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-card:nth-child(2){background:linear-gradient(180deg,#fff6d7,#f3dfa2);}
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-card:nth-child(2) .wallet-label{color:#805d00;}
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-card:nth-child(2) .wallet-value{
-      color:#7c4a03;
+      color:#a16207;
+      font-size:24px;
+      font-weight:800;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-action-row{
-      gap:12px;
+      margin-top:16px;
+      gap:14px;
+      width:100%;
+      max-width:360px;
     }
     :is(#walletSheet, #walletSheetLive).wallet-ui-5 .wallet-open-btn{min-height:56px;border-radius:18px;}
-
-    .comment-item{
-      display:flex;
-      gap:10px;
-      padding:12px 0;
-      border-bottom:1px solid var(--line);
+    .gold-reel-tune-panel{
+      flex-shrink:0;
+      max-height:0;
+      margin:0;
+      border:0;
+      border-radius:0;
+      background:transparent;
+      padding:0;
+      overflow:hidden;
+      transition:max-height .22s ease, margin .22s ease, padding .22s ease, border-width .22s ease;
     }
-    .comment-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;background:#ddd;flex-shrink:0;}
-    .comment-name{font-size:13px;font-weight:800;margin-bottom:4px;}
-    .comment-text{font-size:13px;color:#374151;line-height:1.5;white-space:pre-wrap;word-break:break-word;}
-
-    .loading{
-      padding:20px 12px;
-      color:#6b7280;
-      font-size:13px;
-      text-align:center;
+    .gold-reel-tune-panel:not(.collapsed){
+      max-height:420px;
+      margin-top:8px;
+      margin-bottom:12px;
+      border:1px solid #dbe4f3;
+      border-radius:12px;
+      background:#f8fbff;
+      padding:10px;
+    }
+    .gold-reel-tune-title{
+      border:none;
+      background:transparent;
+      width:100%;
+      text-align:left;
+      padding:0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      font-size:12px;
+      font-weight:900;
+      color:#1e3a8a;
+      cursor:pointer;
+    }
+    .gold-reel-tune-title::after{
+      content:"▲";
+      font-size:11px;
     }
 
     .sheet-head .gold-reel-tune-title{
-      position:absolute;
-      left:10px;
-      top:8px;
-      min-width:0;
-      max-width:calc(100% - 56px);
-      height:32px;
-      padding:0 12px;
-      border:none;
+      width:auto;
+      padding:4px 9px;
+      border:1px solid #d8deea;
       border-radius:999px;
-      background:#eef3ff;
-      color:#2457d6;
-      font-size:12px;
-      font-weight:900;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      line-height:1;
-    }
-    .sheet-head .gold-reel-tune-title.collapsed::after{
-      content:"펼치기";
-      color:#64748b;
+      background:#f8fafc;
       font-size:11px;
-      font-weight:800;
+      color:#1f2937;
+      gap:4px;
+      flex-shrink:0;
+      position:absolute;
+      right:48px;
+      top:12px;
     }
-    .sheet-head .gold-reel-tune-title:not(.collapsed)::after{
-      content:"접기";
-      color:#1d4ed8;
-      font-size:11px;
-      font-weight:800;
+    .gold-reel-tune-title.collapsed::after{
+      content:"▼";
     }
-    .gold-reel-tune-panel{
-      border-radius:18px;
-      background:linear-gradient(180deg,#f8fbff,#eef4ff);
-      border:1px solid #d7e3ff;
-      box-shadow:0 8px 20px rgba(37,99,235,.08);
-      padding:14px 14px 16px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      overflow:hidden;
-      max-height:760px;
-      opacity:1;
-      transition:max-height .22s ease, opacity .18s ease, padding .18s ease, margin .18s ease, border-width .18s ease;
-    }
-    .gold-reel-tune-panel.collapsed{
-      max-height:0;
-      opacity:0;
-      padding-top:0;
-      padding-bottom:0;
-      margin:0;
-      border-width:0;
-      pointer-events:none;
-    }
-    .gold-reel-tune-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-    }
-    .gold-reel-tune-title{
-      font-size:14px;
-      font-weight:900;
-      color:#0f172a;
-    }
-    .gold-reel-tune-note{
-      font-size:11px;
-      color:#475569;
-      line-height:1.4;
-      text-align:right;
+    .gold-reel-tune-content{
+      margin-top:0;
+      display:block;
     }
     .gold-reel-tune-grid{
       display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:10px;
-    }
-    .gold-reel-tune-card{
-      background:#ffffff;
-      border:1px solid #dfe7f8;
-      border-radius:14px;
-      padding:12px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .gold-reel-tune-card-title{
-      font-size:12px;
-      font-weight:900;
-      color:#111827;
-    }
-    .gold-reel-tune-field{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-    }
-    .gold-reel-tune-label{
+      grid-template-columns:40px 1fr 1fr 1.6fr;
+      gap:5px;
       font-size:11px;
-      font-weight:800;
-      color:#475569;
+      align-items:center;
     }
-    .gold-reel-tune-input{
+    .gold-reel-tune-grid-header{
+      text-align:center;
+      font-weight:800;
+      color:#334155;
+    }
+    .gold-reel-tune-grid-stage{
+      text-align:center;
+      font-weight:800;
+      color:#1e3a8a;
+    }
+    .gold-reel-tune-grid input{
       width:100%;
-      height:34px;
       border:1px solid #cbd5e1;
-      border-radius:10px;
-      padding:0 10px;
-      font-size:13px;
-      font-weight:700;
-      color:#111827;
+      border-radius:7px;
+      padding:5px 4px;
+      font-size:11px;
+      text-align:center;
       background:#fff;
+      min-width:0;
+    }
+    .gold-reel-tune-range{
+      display:flex;
+      align-items:center;
+      gap:3px;
+    }
+    .gold-reel-tune-range span{
+      font-size:10px;
+      color:#64748b;
     }
     .gold-reel-tune-actions{
       display:flex;
-      gap:8px;
-      justify-content:flex-end;
-      flex-wrap:wrap;
+      gap:6px;
+      margin-top:7px;
     }
     .gold-reel-tune-btn{
-      height:36px;
-      padding:0 14px;
       border:none;
-      border-radius:999px;
+      border-radius:8px;
+      padding:7px 10px;
       font-size:12px;
-      font-weight:900;
+      font-weight:800;
       cursor:pointer;
     }
     .gold-reel-tune-btn.apply{
-      background:#2457d6;
+      background:#2563eb;
       color:#fff;
-      box-shadow:0 8px 18px rgba(36,87,214,.18);
     }
     .gold-reel-tune-btn.reset{
       background:#e2e8f0;
-      color:#0f172a;
+      color:#1f2937;
+    }
+
+    .comment-tab{
+      display:flex;
+      gap:8px;
+      margin-bottom:12px;
+    }
+    .chip{
+      border:none;
+      background:#eef2f7;
+      color:#111;
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:800;
+    }
+    .chip.active{background:#111827;color:#fff;}
+    .comment-item{
+      display:flex;
+      gap:10px;
+      padding:14px 0;
+      border-bottom:1px solid #edf0f4;
+    }
+    .comment-avatar{
+      width:38px;height:38px;border-radius:50%;background:#ddd;object-fit:cover;flex-shrink:0;
+    }
+    .comment-name{font-size:13px;font-weight:900;margin-bottom:4px;}
+    .comment-text{
+      font-size:13px;
+      line-height:1.5;
+      color:#374151;
+      white-space:pre-wrap;
+      word-break:break-word;
     }
 
     .ad-top{
+      padding:0 16px 6px;
       font-size:18px;
       font-weight:900;
-      color:#fff;
-      padding:10px 18px 6px;
-      text-align:center;
-      letter-spacing:-0.02em;
     }
     .ad-desc{
+      padding:0 16px 10px;
+      color:#c8d0dd;
       font-size:12px;
-      color:#c7d2fe;
-      padding:0 18px 12px;
-      text-align:center;
-      line-height:1.5;
-      word-break:keep-all;
+      line-height:1.45;
     }
-    .ad-video-wrap{
-      padding:0 18px;
-    }
-    .ad-video-shell{
-      border-radius:22px;
+    .ad-frame{
+      margin:0 16px;
+      border-radius:18px;
       overflow:hidden;
-      background:#000;
-      box-shadow:0 14px 32px rgba(0,0,0,.28);
-      position:relative;
-    }
-    .ad-video-shell::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:inherit;
-      pointer-events:none;
-    }
-    .ad-video{
-      width:100%;
+      background:#111827;
       aspect-ratio:16/9;
-      background:#000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .ad-frame video{
+      width:100%;
+      height:100%;
       object-fit:cover;
-      display:block;
+      background:#000;
     }
-    .ad-progress-wrap{
-      padding:12px 18px 0;
-    }
+    .ad-progress-wrap{padding:12px 16px 6px;}
     .ad-progress-track{
+      width:100%;
       height:8px;
+      background:#273144;
       border-radius:999px;
-      background:rgba(148,163,184,.22);
       overflow:hidden;
     }
     .ad-progress-fill{
-      width:0%;
       height:100%;
-      background:linear-gradient(90deg,#22c55e,#38bdf8);
-      border-radius:999px;
-      transition:width .28s ease;
+      width:0%;
+      background:linear-gradient(90deg,#60a5fa,#22c55e);
     }
     .ad-guide{
+      padding:6px 16px 0;
+      color:#d8dfeb;
+      font-size:12px;
       display:flex;
       justify-content:space-between;
-      gap:8px;
-      font-size:12px;
-      color:#cbd5e1;
-      padding:10px 18px 0;
-      line-height:1.4;
+      gap:10px;
     }
-    .ad-guide strong{
-      color:#f8fafc;
-      font-weight:800;
-    }
-    .ad-btn-wrap{
-      padding:16px 18px 0;
-    }
+    .ad-btn-wrap{padding:12px 16px 0;}
+    #adSheet .ad-btn-wrap{margin-top:auto;}
     .ad-btn{
       width:100%;
-      min-height:52px;
+      min-height:50px;
       border:none;
-      border-radius:18px;
-      background:#1d4ed8;
-      color:#fff;
+      border-radius:16px;
       font-size:16px;
       font-weight:900;
-      cursor:pointer;
-      box-shadow:0 16px 30px rgba(29,78,216,.26);
-      transition:transform .16s ease, box-shadow .16s ease, background .16s ease, opacity .16s ease;
-    }
-    .ad-btn:disabled{
+      background:#374151;
+      color:#aeb8c7;
       cursor:not-allowed;
-      opacity:.52;
-      box-shadow:none;
-      background:#334155;
     }
     .ad-btn.ready{
-      background:linear-gradient(135deg,#22c55e,#16a34a);
-      box-shadow:0 18px 34px rgba(34,197,94,.28);
+      background:linear-gradient(180deg,#3b82f6,#2563eb);
+      color:#fff;
+      cursor:pointer;
     }
-    .ad-btn:not(:disabled):active{
-      transform:scale(.98);
+
+    .box-hero{display:none;}
+    .box-icon{
+      width:186px;
+      height:186px;
+      display:grid;
+      place-items:center;
+      position:relative;
+      transform-origin:center;
+      isolation:isolate;
+      --box-glow-color:rgba(96,165,250,.24);
+      --box-glow-soft:rgba(191,219,254,.22);
+      --box-shadow-color:rgba(8,15,30,.44);
+      --box-ribbon-color:rgba(255,255,255,.9);
+      --gift-body-top:#60a5fa;
+      --gift-body-bottom:#2563eb;
+      --gift-lid-top:#93c5fd;
+      --gift-lid-bottom:#3b82f6;
+      --gift-ribbon:#eff6ff;
+    }
+    .box-icon::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      bottom:8px;
+      width:134px;
+      height:30px;
+      transform:translateX(-50%);
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(6,10,18,.72) 0%, rgba(6,10,18,0) 72%);
+      filter:blur(9px);
+      opacity:.8;
+      z-index:0;
+    }
+    .box-icon::after{
+      content:"";
+      position:absolute;
+      inset:28px;
+      border-radius:50%;
+      background:radial-gradient(circle, var(--box-glow-soft) 0%, var(--box-glow-color) 38%, rgba(37,99,235,0) 76%);
+      opacity:.8;
+      transform:scale(.9);
+      z-index:1;
+    }
+    .gift-box{
+      width:132px;
+      height:132px;
+      position:relative;
+      z-index:4;
+      filter:drop-shadow(0 20px 30px var(--box-shadow-color));
+      transition:filter .3s ease, transform .3s ease, opacity .24s ease;
+    }
+    .gift-box::before,
+    .gift-box::after{
+      content:"";
+      position:absolute;
+      inset:8px;
+      border-radius:20px;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .22s ease;
+    }
+    .gift-box::before{
+      inset:18px 10px 20px;
+      background:
+        linear-gradient(112deg, rgba(255,255,255,0) 18%, rgba(255,255,255,.18) 38%, rgba(255,255,255,.46) 50%, rgba(255,255,255,.14) 62%, rgba(255,255,255,0) 82%);
+      filter:blur(.4px);
+      mix-blend-mode:screen;
+      transform:translateX(-26px) rotate(-8deg);
+    }
+    .gift-box::after{
+      inset:16px 12px 14px;
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:inset 0 0 20px rgba(255,255,255,.06), 0 0 22px rgba(191,219,254,.06);
+    }
+    .gift-box-part{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      border-radius:18px;
+    }
+    .gift-box-glow{
+      position:absolute;
+      left:50%;
+      top:24px;
+      width:84px;
+      height:84px;
+      transform:translateX(-50%) scale(.72);
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.72) 0%, rgba(191,219,254,.3) 34%, rgba(191,219,254,0) 76%);
+      opacity:0;
+      filter:blur(3px);
+      z-index:1;
+    }
+    .gift-lid{
+      top:18px;
+      width:120px;
+      height:34px;
+      background:linear-gradient(180deg, var(--gift-lid-top) 0%, var(--gift-lid-bottom) 100%);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 8px 16px rgba(30,64,175,.18);
+      transform-origin:22px 26px;
+      z-index:5;
+    }
+    .gift-lid::before,
+    .gift-lid::after,
+    .gift-body::before,
+    .gift-body::after{
+      content:"";
+      position:absolute;
+      background:linear-gradient(180deg, rgba(255,255,255,.98), var(--gift-ribbon));
+      box-shadow:0 0 0 1px rgba(191,219,254,.16);
+    }
+    .gift-lid::before,
+    .gift-body::before{
+      left:50%;
+      top:0;
+      bottom:0;
+      width:16px;
+      transform:translateX(-50%);
+      border-radius:999px;
+    }
+    .gift-lid::after,
+    .gift-body::after{
+      left:0;
+      right:0;
+      top:50%;
+      height:12px;
+      transform:translateY(-50%);
+      border-radius:999px;
+    }
+    .gift-body{
+      top:48px;
+      width:112px;
+      height:76px;
+      background:linear-gradient(180deg, var(--gift-body-top) 0%, var(--gift-body-bottom) 100%);
+      border-radius:16px 16px 20px 20px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.24), 0 16px 26px rgba(30,64,175,.22);
+      overflow:hidden;
+      z-index:3;
+    }
+    .gift-body::after{
+      top:26px;
+      transform:none;
+    }
+    .gift-ribbon-knot{
+      position:absolute;
+      left:50%;
+      top:8px;
+      width:30px;
+      height:16px;
+      transform:translateX(-50%);
+      z-index:6;
+    }
+    .gift-ribbon-knot::before,
+    .gift-ribbon-knot::after{
+      content:"";
+      position:absolute;
+      top:0;
+      width:16px;
+      height:14px;
+      border:3px solid rgba(255,255,255,.96);
+      border-radius:16px 16px 4px 16px;
+      background:rgba(255,255,255,.16);
+    }
+    .gift-ribbon-knot::before{
+      left:0;
+      transform:rotate(-26deg);
+    }
+    .gift-ribbon-knot::after{
+      right:0;
+      transform:scaleX(-1) rotate(-26deg);
+    }
+    .box-core-glow,
+    .box-lid-light,
+    .box-open-flash,
+    .box-spark,
+    .box-celebration-ring,
+    .box-celebration-confetti,
+    .result-sparkles{
+      position:absolute;
+      pointer-events:none;
+    }
+    .box-core-glow{
+      inset:30px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.22) 0%, var(--box-glow-color) 22%, rgba(96,165,250,0) 68%);
+      opacity:.74;
+      z-index:2;
+      filter:blur(8px);
+    }
+    .box-lid-light{
+      left:50%;
+      top:44px;
+      width:92px;
+      height:22px;
+      transform:translateX(-50%);
+      border-radius:999px;
+      background:linear-gradient(90deg, rgba(255,255,255,0) 0%, var(--box-ribbon-color) 48%, rgba(255,255,255,0) 100%);
+      opacity:.18;
+      z-index:5;
+      filter:blur(2px);
+    }
+    .box-open-flash{
+      left:50%;
+      top:28px;
+      width:108px;
+      height:118px;
+      transform:translateX(-50%) scale(.46);
+      border-radius:50% 50% 46% 46%;
+      background:radial-gradient(circle at 50% 72%, rgba(255,255,255,.98) 0%, rgba(255,255,255,.68) 18%, rgba(191,219,254,.36) 36%, rgba(96,165,250,0) 76%);
+      opacity:0;
+      z-index:5;
+      filter:blur(2px);
+    }
+    .box-spark{
+      width:14px;
+      height:14px;
+      border-radius:999px;
+      background:radial-gradient(circle, rgba(255,255,255,.98) 0%, var(--box-glow-soft) 44%, rgba(191,219,254,0) 74%);
+      opacity:0;
+      z-index:5;
+      box-shadow:0 0 16px var(--box-glow-soft);
+    }
+    .box-spark-a{left:28px;top:42px;}
+    .box-spark-b{right:30px;top:34px;}
+    .box-spark-c{left:34px;bottom:42px;}
+    .box-spark-d{right:28px;bottom:46px;}
+    .box-celebration-ring{
+      width:184px;
+      height:184px;
+      border-radius:50%;
+      border:1px solid rgba(253,224,71,.36);
+      opacity:0;
+      z-index:1;
+    }
+    .box-celebration-confetti{
+      inset:0;
+      opacity:0;
+      z-index:6;
+    }
+    .box-celebration-confetti span{
+      position:absolute;
+      width:10px;
+      height:16px;
+      border-radius:999px;
+      background:linear-gradient(180deg, rgba(253,224,71,.98), rgba(245,158,11,.54));
+      box-shadow:0 0 14px rgba(253,224,71,.24);
+    }
+    .box-celebration-confetti span:nth-child(1){left:26px;top:38px;transform:rotate(-18deg);}
+    .box-celebration-confetti span:nth-child(2){right:26px;top:48px;transform:rotate(18deg);}
+    .box-celebration-confetti span:nth-child(3){left:42px;bottom:40px;transform:rotate(28deg);}
+    .box-celebration-confetti span:nth-child(4){right:38px;bottom:34px;transform:rotate(-28deg);}
+    .box-icon.is-gold-box{
+      --box-glow-color:rgba(250,204,21,.28);
+      --box-glow-soft:rgba(253,224,71,.28);
+      --box-shadow-color:rgba(120,53,15,.36);
+      --box-ribbon-color:rgba(255,249,219,.96);
+      --gift-body-top:#fcd34d;
+      --gift-body-bottom:#f59e0b;
+      --gift-lid-top:#fde68a;
+      --gift-lid-bottom:#fbbf24;
+      --gift-ribbon:#fff7d6;
+    }
+    .box-icon.is-random-box{
+      --box-glow-color:rgba(168,85,247,.34);
+      --box-glow-soft:rgba(236,72,153,.3);
+      --box-shadow-color:rgba(49,46,129,.52);
+      --box-ribbon-color:rgba(255,255,255,.96);
+      --gift-ribbon:transparent;
+    }
+    .box-icon.is-random-box .gift-box{
+      transform:translateY(4px);
+      filter:drop-shadow(0 24px 34px rgba(49,46,129,.48));
+    }
+    .box-icon.is-random-box .gift-ribbon-knot{
+      opacity:0;
+    }
+    .box-icon.is-random-box .gift-lid{
+      top:12px;
+      width:124px;
+      height:40px;
+      border-radius:4px 4px 2px 2px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.42), 0 12px 18px rgba(49,46,129,.3);
+      transform-origin:20px 30px;
+      overflow:visible;
+      background:linear-gradient(168deg, rgba(255,255,255,.22), rgba(255,255,255,0) 46%);
+    }
+    .box-icon.is-random-box .gift-body{
+      top:48px;
+      width:114px;
+      height:80px;
+      border-radius:2px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 18px 30px rgba(49,46,129,.34);
+      background:linear-gradient(172deg, rgba(255,255,255,.14), rgba(255,255,255,0) 44%);
+      overflow:visible;
+    }
+    .box-icon.is-random-box .gift-lid::before,
+    .box-icon.is-random-box .gift-body::before{
+      inset:0;
+      width:auto;
+      transform:none;
+      border-radius:inherit;
+      box-shadow:none;
+      background:
+        linear-gradient(156deg, rgba(255,255,255,.38) 0%, rgba(255,255,255,0) 42%),
+        repeating-linear-gradient(128deg,
+          #ff335f 0 10px,
+          #ff8a00 10px 20px,
+          #ffe600 20px 30px,
+          #2de48a 30px 40px,
+          #2cb7ff 40px 50px,
+          #6b63ff 50px 60px,
+          #d54bff 60px 70px);
+    }
+    .box-icon.is-random-box .gift-lid::after,
+    .box-icon.is-random-box .gift-body::after{
+      display:none;
     }
 
     .box-open-stage{
-      min-height:300px;
-      padding:28px 18px 22px;
+      margin:8px 16px 0;
+      min-height:280px;
       display:flex;
-      flex-direction:column;
       align-items:center;
       justify-content:center;
-      gap:18px;
-      position:relative;
+      text-align:center;
+      padding:22px 18px 24px;
       overflow:hidden;
-      background:#0b1120;
-      color:#fff;
-      border-radius:0;
+      position:relative;
+      border-radius:26px;
+      border:none;
+      box-shadow:none;
+      transition:background .28s ease, box-shadow .28s ease, border-color .28s ease;
       isolation:isolate;
     }
-    .box-open-stage::before,
-    .box-open-stage::after{
+    .box-open-bg{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(180deg, #6f5cff 0%, #8f6bff 35%, #c77dff 65%, #f3a6ff 100%);
+    }
+    .box-open-bg::before{
       content:"";
       position:absolute;
-      inset:-18% -12%;
+      inset:0;
+      background:radial-gradient(circle at center, rgba(255,255,255,.35) 0%, rgba(255,255,255,.2) 25%, rgba(255,255,255,.08) 45%, rgba(255,255,255,.02) 60%, transparent 70%);
+      filter:blur(40px);
       pointer-events:none;
-      opacity:0;
-      transition:opacity .35s ease;
-      z-index:0;
-    }
-    .box-open-stage::before{
-      background:radial-gradient(circle at 50% 30%, rgba(96,165,250,.26), rgba(11,17,32,0) 58%);
-      transform:scale(1.05);
-    }
-    .box-open-stage::after{
-      background:radial-gradient(circle at 50% 70%, rgba(34,197,94,.22), rgba(11,17,32,0) 60%);
-      filter:blur(18px);
-    }
-    .box-open-stage.stage-video-playing::before,
-    .box-open-stage.stage-video-ready::before,
-    .box-open-stage.stage-video-playing::after,
-    .box-open-stage.stage-video-ready::after,
-    .box-open-stage.stage-show-result::before,
-    .box-open-stage.stage-show-result::after{
-      opacity:1;
-    }
-    .box-open-stage.stage-video-playing,
-    .box-open-stage.stage-video-ready{
-      justify-content:flex-start;
-      padding-top:18px;
-      gap:14px;
-    }
-    .box-open-stage.stage-animating{
-      background:
-        radial-gradient(circle at 50% 28%, rgba(96,165,250,.28), rgba(11,17,32,0) 56%),
-        linear-gradient(180deg,#101828,#070b14 100%);
-    }
-    .box-open-stage.reveal-random{
-      background:
-        radial-gradient(circle at 50% 26%, rgba(56,189,248,.28), rgba(11,17,32,0) 56%),
-        linear-gradient(180deg,#111827,#09111f 100%);
-    }
-    .box-open-stage.reveal-random-x{
-      background:
-        radial-gradient(circle at 50% 26%, rgba(248,113,113,.26), rgba(11,17,32,0) 58%),
-        linear-gradient(180deg,#16111a,#09060c 100%);
-    }
-    .box-open-stage.reveal-random-gold{
-      background:
-        radial-gradient(circle at 50% 26%, rgba(250,204,21,.3), rgba(11,17,32,0) 60%),
-        linear-gradient(180deg,#161424,#09070f 100%);
-    }
-    .box-open-stage.reveal-gold{
-      background:
-        radial-gradient(circle at 50% 22%, rgba(250,204,21,.34), rgba(11,17,32,0) 60%),
-        linear-gradient(180deg,#1c1230,#09070f 100%);
-    }
-    .box-open-stage.stage-video-playing.reveal-gold,
-    .box-open-stage.stage-video-ready.reveal-gold,
-    .box-open-stage.stage-show-result.reveal-gold{
-      background:
-        radial-gradient(circle at 50% 18%, rgba(250,204,21,.38), rgba(11,17,32,0) 62%),
-        linear-gradient(180deg,#150f21,#07050b 100%);
-    }
-    .box-open-stage.stage-show-result{
-      gap:14px;
-    }
-    .box-open-stage.stage-show-result .box-icon-stage,
-    .box-open-stage.stage-show-result .box-open-text{
-      opacity:0;
-      visibility:hidden;
-      transform:translateY(-10px) scale(.96);
-      pointer-events:none;
-    }
-    .box-open-stage.stage-show-result .box-open-result{
-      opacity:1;
-      visibility:visible;
-      transform:translateY(0) scale(1);
-    }
-    .box-open-stage .open-stage-video-wrap,
-    .box-open-stage .gold-reel-overlay{
-      position:relative;
       z-index:1;
     }
-    .box-open-stage .box-icon-stage,
-    .box-open-stage .box-open-text,
-    .box-open-stage .box-open-result{
+    .box-open-bg::after{
+      content:"";
+      position:absolute;
+      top:-10%;
+      left:50%;
+      transform:translateX(-50%);
+      width:120%;
+      height:40%;
+      background:radial-gradient(ellipse at center, rgba(255,255,255,.25), rgba(255,255,255,.08), transparent 70%);
+      filter:blur(30px);
+      pointer-events:none;
+      z-index:1;
+    }
+    .open-stage-backdrop{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 50% 32%, rgba(255,255,255,.04), transparent 16%),
+        radial-gradient(circle at 50% 82%, rgba(37,99,235,.06), transparent 24%);
+      opacity:.8;
+      z-index:0;
+      pointer-events:none;
+    }
+    .open-stage-box-wrap{
       position:relative;
-      z-index:2;
+      z-index:5;
+      display:grid;
+      place-items:center;
+      width:216px;
+      height:216px;
+      transition:transform .34s ease, opacity .28s ease, filter .28s ease;
     }
-
-    .open-stage-video-wrap{
-      position:relative;
-      width:min(100%, 286px);
-      border-radius:22px;
-      overflow:hidden;
-      background:#000;
-      box-shadow:0 18px 32px rgba(0,0,0,.34);
-      display:none;
+    .open-stage-box-wrap::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      bottom:18px;
+      width:164px;
+      height:46px;
+      transform:translateX(-50%);
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(59,130,246,.22) 0%, rgba(59,130,246,0) 72%);
+      opacity:.72;
+      filter:blur(10px);
+      transition:background .3s ease, opacity .3s ease;
     }
-    .box-open-stage.stage-video-playing .open-stage-video-wrap,
-    .box-open-stage.stage-video-ready .open-stage-video-wrap{
-      display:block;
+    .open-stage-box-wrap::after{
+      content:"";
+      position:absolute;
+      inset:18px;
+      border-radius:50%;
+      border:1px solid rgba(191,219,254,.12);
+      opacity:0;
+      transform:scale(.82);
+      transition:border-color .3s ease, opacity .3s ease;
     }
+    .box-open-stage.stage-show-result .open-stage-box-wrap{
+      opacity:1;
+      transform:translateY(-36px) scale(1);
+      filter:none;
+      z-index:6;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap{
+      animation:boxStoryEntrance .62s cubic-bezier(.22,1,.36,1) both;
+    }
+    .box-open-stage.stage-animating #boxIconStage{
+      animation:boxStoryStart .82s cubic-bezier(.22,1,.36,1) both;
+    }
+    .box-open-stage.stage-animating #boxIconStage .gift-box{
+      animation:boxStorySettle .44s ease-out .12s both;
+    }
+    .box-open-stage.stage-animating #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating #boxIconStage .gift-box-glow{
+      animation:boxSoftCharge .58s ease-out .32s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage{
+      animation:boxStoryStart .68s cubic-bezier(.22,1,.36,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-box{
+      animation:rainbowBoxFloat .92s cubic-bezier(.22,1,.36,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-box-glow{
+      animation:boxSoftCharge .42s ease-out .22s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-lid{
+      animation:giftBoxLidQuickOpen .42s cubic-bezier(.22,1,.36,1) .54s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .gift-ribbon-knot{
+      animation:giftRibbonQuickLift .42s cubic-bezier(.22,1,.36,1) .54s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-open-flash{
+      animation:boxOpenFlash .32s ease-out .58s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-a,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-b,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-c,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-d{
+      animation:boxSparkBurst .44s ease-out .62s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-b{animation-delay:.68s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-c{animation-delay:.74s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-random #boxIconStage .box-spark-d{animation-delay:.8s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage{
+      animation:
+        boxStoryStart .86s cubic-bezier(.22,1,.36,1) both,
+        boxTensionShake .76s ease-in-out .82s both,
+        boxSuspenseDrift var(--mystery-total, 1360ms) ease-in-out 1.44s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .gift-box,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .gift-box{
+      animation:boxStorySettle .44s ease-out .12s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .gift-lid,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .gift-lid{
+      animation:giftBoxLidTease .92s cubic-bezier(.22,1,.36,1) .82s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .gift-ribbon-knot,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .gift-ribbon-knot{
+      animation:giftRibbonTease .92s cubic-bezier(.22,1,.36,1) .82s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail #boxIconStage .gift-box-glow,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold #boxIconStage .gift-box-glow{
+      animation:boxSoftCharge .62s ease-out .32s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase::before{
+      animation:suspenseFloorGlow var(--mystery-cycle, 380ms) ease-in-out 0s var(--mystery-count, 4) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase::after{
+      animation:suspenseHaloPulse var(--mystery-cycle, 380ms) ease-in-out 0s var(--mystery-count, 4) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .gift-box::before{
+      animation:mysteryShimmerSweep var(--mystery-cycle, 320ms) cubic-bezier(.4,0,.2,1) 0s var(--mystery-count, 4) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .gift-box::after{
+      animation:mysteryEdgeBlink var(--mystery-cycle, 320ms) ease-in-out 0s var(--mystery-count, 4) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase #boxIconStage .gift-box-glow{
+      animation:mysteryGlowBreath var(--mystery-cycle, 320ms) ease-in-out 0s var(--mystery-count, 4) both;
+    }
+    /* RandomX: make the box feel like it is almost turning gold before it fails */
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-suspense-phase #boxIconStage .gift-box{
+      animation:boxAlmostGoldSurge var(--mystery-cycle, 260ms) cubic-bezier(.22,1,.36,1) 0s var(--mystery-count, 5) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-suspense-phase #boxIconStage .gift-box::before{
+      animation:boxAlmostGoldSweep var(--mystery-cycle, 260ms) cubic-bezier(.35,0,.2,1) 0s var(--mystery-count, 5) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-suspense-phase #boxIconStage .gift-box::after{
+      animation:boxAlmostGoldShell var(--mystery-cycle, 260ms) ease-in-out 0s var(--mystery-count, 5) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-suspense-phase #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-suspense-phase #boxIconStage .gift-box-glow{
+      animation:boxAlmostGoldGlow var(--mystery-cycle, 260ms) ease-in-out 0s var(--mystery-count, 5) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-suspense-phase #boxIconStage .gift-lid{
+      animation:giftBoxLidAlmostGold .68s cubic-bezier(.22,1,.36,1) 0s var(--mystery-count, 5) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-suspense-phase #boxIconStage .gift-ribbon-knot{
+      animation:giftRibbonAlmostGold .68s cubic-bezier(.22,1,.36,1) 0s var(--mystery-count, 5) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-suspense-gold #boxIconStage .gift-box::before{
+      animation:mysteryShimmerSweepGold var(--mystery-cycle, 300ms) cubic-bezier(.35,0,.2,1) 0s var(--mystery-count, 5) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-suspense-gold #boxIconStage .gift-box::after{
+      animation:mysteryEdgeBlinkGold var(--mystery-cycle, 300ms) ease-in-out 0s var(--mystery-count, 5) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-suspense-gold #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-suspense-phase.is-suspense-gold #boxIconStage .gift-box-glow{
+      animation:mysteryGlowBreathGold var(--mystery-cycle, 300ms) ease-in-out 0s var(--mystery-count, 5) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .gift-lid{
+      animation:giftBoxLidResolveOpen .66s cubic-bezier(.22,1,.36,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .gift-ribbon-knot{
+      animation:giftRibbonResolveOpen .66s cubic-bezier(.22,1,.36,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .gift-box-glow{
+      animation:boxResolveGlow .78s ease-out both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-open-flash{
+      animation:boxOpenFlash .38s ease-out .06s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-a,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-b,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-c,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-d{
+      animation:boxSparkBurst .58s ease-out .1s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-b{animation-delay:.16s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-c{animation-delay:.22s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-opening-final #boxIconStage .box-spark-d{animation-delay:.28s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage{
+      animation:boxFailDeflate .48s cubic-bezier(.2,.76,.32,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .gift-lid{
+      animation:giftBoxLidFailOpen .52s cubic-bezier(.24,.92,.38,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .gift-ribbon-knot{
+      animation:giftRibbonFailLift .52s cubic-bezier(.24,.92,.38,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .gift-box-glow{
+      animation:boxFailResolveGlow .68s ease-out both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-open-flash{
+      animation:boxFailFlash .3s ease-out both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-spark-a,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-spark-b,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-spark-c,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-fail.is-opening-final #boxIconStage .box-spark-d{
+      animation:boxFailSpark .38s ease-out both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold #boxIconStage{
+      animation:goldBoxHeroPulse .78s ease-out both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage{
+      animation:boxConfirmPulse .6s cubic-bezier(.18,.94,.24,1.24) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .gift-lid{
+      animation:giftBoxLidGoldOpen .52s cubic-bezier(.16,1,.3,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .gift-ribbon-knot{
+      animation:giftRibbonGoldLift .52s cubic-bezier(.16,1,.3,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-lid-light,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .gift-box-glow{
+      animation:boxConfirmResolveGlow .9s cubic-bezier(.18,.9,.24,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-open-flash{
+      animation:boxConfirmFlash .5s cubic-bezier(.18,.92,.24,1) both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-a,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-b,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-c,
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-d{
+      animation:goldSparkBurst .62s ease-out .08s both;
+    }
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-b{animation-delay:.14s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-c{animation-delay:.2s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-reveal-gold.is-final-gold.is-opening-final #boxIconStage .box-spark-d{animation-delay:.26s;}
+    .box-open-stage.stage-animating .open-stage-box-wrap.is-final-gold::before{
+      background:radial-gradient(circle, rgba(253,224,71,.26) 0%, rgba(245,158,11,0) 72%);
+    }
+    .box-open-text{
+      position:absolute;
+      left:50%;
+      bottom:22px;
+      transform:translateX(-50%);
+      min-height:18px;
+      padding:0 12px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:rgba(214,224,239,.72);
+      z-index:6;
+      transition:opacity .22s ease, transform .22s ease;
+      white-space:nowrap;
+    }
+    .box-open-text:empty{
+      opacity:0;
+    }
+    .box-open-stage.stage-show-result .box-open-text{
+      opacity:0;
+      transform:translateX(-50%) translateY(8px);
+      pointer-events:none;
+    }
+    .box-open-stage.stage-animating .box-open-text{
+      opacity:1;
+    }
+    .open-sheet-actions{
+      margin-top:auto;
+      padding:8px 16px 0;
+      transition:opacity .2s ease, transform .2s ease;
+    }
+    .open-sheet-actions.is-hidden{
+      opacity:0;
+      transform:translateY(8px);
+      pointer-events:none;
+    }
+    .open-stage-clouds{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      pointer-events:none;
+      z-index:3;
+    }
+    .open-stage-cloud{
+      position:absolute;
+      left:50%;
+      top:50%;
+      border-radius:999px;
+      background:radial-gradient(circle, rgba(255,255,255,.8) 0%, rgba(226,232,240,.52) 38%, rgba(148,163,184,.12) 76%, transparent 100%);
+      filter:blur(6px);
+      transform:translate(-50%, -50%) scale(.6);
+      opacity:0;
+    }
+    .open-stage-cloud.cloud-a{width:120px;height:48px;margin-left:-74px;margin-top:-28px;}
+    .open-stage-cloud.cloud-b{width:148px;height:56px;margin-left:72px;margin-top:-14px;}
+    .open-stage-cloud.cloud-c{width:132px;height:52px;margin-left:-54px;margin-top:26px;}
+    .open-stage-cloud.cloud-d{width:110px;height:44px;margin-left:64px;margin-top:34px;}
     .open-stage-video{
+      position:absolute;
+      inset:0;
       width:100%;
-      aspect-ratio:16/9;
+      height:100%;
       object-fit:cover;
-      display:block;
-      background:#000;
+      border-radius:26px;
+      z-index:1;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .24s ease;
+      background:transparent;
     }
-
-    .box-icon-stage{
-      width:188px;
-      height:188px;
-      position:relative;
+    .box-open-stage.stage-video-playing .open-stage-video{
+      opacity:1;
+    }
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing{
+      min-height:320px;
+    }
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing #openStageVideo{
+      opacity:0;
+      transform:translate(-1.5%, -1%) scale(1.09);
+      transform-origin:center center;
+      object-position:50% 46%;
+    }
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing.stage-video-ready #openStageVideo{
+      opacity:1;
+    }
+    .gold-reel-overlay{
+      position:absolute;
+      inset:0;
       display:flex;
       align-items:center;
       justify-content:center;
-      transition:opacity .24s ease, transform .24s ease, visibility .24s ease;
-    }
-    .box-icon-stage::before,
-    .box-icon-stage::after{
-      content:"";
-      position:absolute;
-      inset:16px;
-      border-radius:50%;
       opacity:0;
-      transform:scale(.86);
       pointer-events:none;
-    }
-    .box-icon-stage::before{
-      background:radial-gradient(circle, rgba(147,197,253,.34), rgba(59,130,246,0) 68%);
-      filter:blur(10px);
-    }
-    .box-icon-stage::after{
-      border:2px solid rgba(191,219,254,.34);
-      box-shadow:0 0 18px rgba(59,130,246,.22);
-    }
-    .box-open-stage.stage-animating .box-icon-stage::before,
-    .box-open-stage.stage-animating .box-icon-stage::after{
-      opacity:1;
-      animation:boxPulseLoop 2.4s ease-in-out infinite;
-    }
-    .box-open-stage.reveal-random-gold.stage-animating .box-icon-stage::before,
-    .box-open-stage.reveal-gold.stage-animating .box-icon-stage::before{
-      background:radial-gradient(circle, rgba(250,204,21,.4), rgba(250,204,21,0) 68%);
-    }
-    .box-open-stage.reveal-random-gold.stage-animating .box-icon-stage::after,
-    .box-open-stage.reveal-gold.stage-animating .box-icon-stage::after{
-      border-color:rgba(253,224,71,.42);
-      box-shadow:0 0 22px rgba(250,204,21,.28);
-    }
-
-    .box-icon{
-      width:188px;
-      height:188px;
-      object-fit:contain;
-      filter:drop-shadow(0 18px 26px rgba(0,0,0,.34));
-      display:block;
-      position:relative;
-      z-index:2;
-      transition:transform .22s ease, filter .22s ease;
-    }
-    .box-open-stage.stage-animating .box-icon{
-      animation:boxHover 2.2s ease-in-out infinite;
-      filter:drop-shadow(0 20px 28px rgba(0,0,0,.38));
-    }
-    .box-open-stage.reveal-random-gold.stage-animating .box-icon,
-    .box-open-stage.reveal-gold.stage-animating .box-icon{
-      filter:drop-shadow(0 22px 30px rgba(250,204,21,.28));
-    }
-    .box-open-stage.stage-show-result .box-icon{
-      animation:none;
-    }
-
-    .box-open-text{
-      min-height:20px;
-      font-size:15px;
-      font-weight:900;
-      color:#e2e8f0;
-      text-align:center;
-      line-height:1.5;
-      max-width:100%;
-      transition:opacity .24s ease, transform .24s ease, visibility .24s ease;
-    }
-    .box-open-stage.reveal-random-x .box-open-text{
-      color:#fecaca;
-    }
-    .box-open-stage.reveal-random-gold .box-open-text,
-    .box-open-stage.reveal-gold .box-open-text{
-      color:#fde68a;
-    }
-
-    .box-open-result{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:6px;
-      opacity:0;
-      visibility:hidden;
-      transform:translateY(12px) scale(.96);
-      transition:opacity .26s ease, transform .26s ease, visibility .26s ease;
-      text-align:center;
-      position:relative;
-      z-index:3;
-      padding:0 4px;
-    }
-    .box-open-result::before,
-    .box-open-result::after{
-      content:"";
-      position:absolute;
-      inset:-18px -28px;
-      pointer-events:none;
-      opacity:0;
-      transition:opacity .3s ease;
-    }
-    .box-open-result::before{
-      border-radius:28px;
-      background:radial-gradient(circle at center, rgba(96,165,250,.24), rgba(59,130,246,0) 66%);
-      filter:blur(10px);
-    }
-    .box-open-result::after{
-      border-radius:50%;
-      border:1px solid rgba(191,219,254,.3);
-      transform:scale(.92);
-    }
-    .box-open-stage.stage-show-result .box-open-result::before,
-    .box-open-stage.stage-show-result .box-open-result::after{
-      opacity:1;
-      animation:resultHaloPulse 1.6s ease-in-out infinite;
-    }
-    .box-open-result.gold-win::before,
-    .box-open-result.gold-win::after,
-    .box-open-stage.stage-show-result .box-open-result.show-gold-box::before,
-    .box-open-stage.stage-show-result .box-open-result.show-gold-box::after{
-      background:radial-gradient(circle at center, rgba(250,204,21,.3), rgba(250,204,21,0) 66%);
-      border-color:rgba(253,224,71,.34);
-    }
-
-    .box-open-result .amount{
-      font-size:42px;
-      font-weight:900;
-      line-height:1;
-      letter-spacing:-0.03em;
-      color:#f8fafc;
-      position:relative;
-      z-index:2;
-      text-shadow:0 8px 24px rgba(15,23,42,.35);
-    }
-    .box-open-result.gold-win .amount,
-    .box-open-stage.stage-show-result .box-open-result.show-gold-box .amount{
-      color:#fde68a;
-      text-shadow:0 0 18px rgba(250,204,21,.28), 0 8px 26px rgba(120,53,15,.3);
-    }
-    .box-open-result .sub{
-      font-size:15px;
-      font-weight:800;
-      color:#cbd5e1;
-      position:relative;
-      z-index:2;
-    }
-    .box-open-result.gold-win .sub,
-    .box-open-stage.stage-show-result .box-open-result.show-gold-box .sub{
-      color:#fde68a;
-    }
-
-    .box-open-result.show-gold-box .amount{
-      color:#fde68a;
-      text-shadow:0 0 18px rgba(250,204,21,.24), 0 8px 24px rgba(120,53,15,.28);
-    }
-    .box-open-result.show-gold-box .sub{
-      color:#fde68a;
-    }
-    .box-open-result.gold-win .amount{
-      font-size:44px;
-    }
-
-    @keyframes boxPulseLoop{
-      0%,100%{transform:scale(.88);opacity:.24;}
-      50%{transform:scale(1.08);opacity:.68;}
-    }
-    @keyframes boxHover{
-      0%,100%{transform:translateY(0) scale(1);}
-      50%{transform:translateY(-8px) scale(1.03);}
-    }
-    @keyframes resultHaloPulse{
-      0%,100%{transform:scale(.92);opacity:.18;}
-      50%{transform:scale(1.06);opacity:.42;}
-    }
-
-    .gold-reel-overlay{
-      display:none;
-      width:min(100%, 312px);
-      flex-direction:column;
-      align-items:center;
-      gap:14px;
-      padding:18px 20px 20px;
-      border-radius:24px;
-      background:radial-gradient(circle at top, rgba(250,204,21,.16), rgba(15,23,42,.92));
-      box-shadow:0 20px 40px rgba(2,6,23,.36);
-      position:relative;
-      overflow:hidden;
+      z-index:5;
+      transition:opacity .5s ease;
     }
     .gold-reel-overlay.show{
-      display:flex;
+      opacity:1;
     }
-    .gold-reel-overlay::before,
-    .gold-reel-overlay::after{
-      content:"";
-      position:absolute;
-      inset:-18%;
-      pointer-events:none;
-      opacity:.6;
+    @property --gold-border-angle{
+      syntax:"<angle>";
+      inherits:false;
+      initial-value:0deg;
     }
-    .gold-reel-overlay::before{
-      background:radial-gradient(circle at 50% 20%, rgba(250,204,21,.22), rgba(250,204,21,0) 58%);
-      filter:blur(4px);
-    }
-    .gold-reel-overlay::after{
-      background:conic-gradient(from 0deg, rgba(255,255,255,0), rgba(255,255,255,.16), rgba(255,255,255,0));
-      animation:goldShineSweep 2.6s linear infinite;
-    }
-    .gold-reel-head{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:4px;
-      text-align:center;
-      position:relative;
-      z-index:2;
-    }
-    .gold-reel-badge{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:76px;
-      height:28px;
-      padding:0 14px;
-      border-radius:999px;
-      background:rgba(253,224,71,.18);
-      color:#fef3c7;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-      box-shadow:inset 0 0 0 1px rgba(253,224,71,.24);
-    }
-    .gold-reel-title{
-      font-size:16px;
-      font-weight:900;
-      color:#fff7d6;
-      letter-spacing:-0.02em;
-      line-height:1.3;
-    }
-    .gold-reel-subtitle{
-      font-size:12px;
-      color:#dbeafe;
-      line-height:1.45;
-      max-width:220px;
-      word-break:keep-all;
-    }
-
     .gold-reel-window{
-      position:relative;
-      width:100%;
-      max-width:248px;
-      height:132px;
-      border-radius:24px;
-      padding:12px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:linear-gradient(180deg, rgba(15,23,42,.88), rgba(30,41,59,.96));
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.06),
-        inset 0 16px 28px rgba(255,255,255,.04),
-        inset 0 -18px 26px rgba(2,6,23,.24),
-        0 16px 30px rgba(0,0,0,.26);
+      width:min(72vw, 220px);
+      height:60px;
+      border-radius:16px;
       overflow:hidden;
+      background:linear-gradient(180deg, rgba(5,7,15,.72), rgba(5,7,15,.4));
+      border:1px solid rgba(255,255,255,.22);
+      box-shadow:0 14px 28px rgba(0,0,0,.28);
       position:relative;
-      z-index:2;
+    }
+    #openSheet.fx-gold-open .gold-reel-window{
+      border-radius:0;
+      transform:translate(-1%, 19%) scale(.98);
+      transform-origin:center center;
     }
     .gold-reel-window::before,
     .gold-reel-window::after{
       content:"";
       position:absolute;
-      left:14px;
-      right:14px;
-      height:2px;
-      border-radius:999px;
+      inset:0;
+      z-index:2;
       pointer-events:none;
-      z-index:3;
     }
     .gold-reel-window::before{
-      top:50%;
-      transform:translateY(calc(-50% - 22px));
-      background:linear-gradient(90deg, rgba(251,191,36,0), rgba(251,191,36,.9), rgba(251,191,36,0));
-      box-shadow:0 0 10px rgba(251,191,36,.32);
+      background:
+        linear-gradient(180deg, rgba(3,7,18,.76), rgba(3,7,18,0) 16px),
+        linear-gradient(0deg, rgba(3,7,18,.76), rgba(3,7,18,0) 16px);
     }
-    .gold-reel-window::after{
-      top:50%;
-      transform:translateY(calc(-50% + 22px));
-      background:linear-gradient(90deg, rgba(251,191,36,0), rgba(251,191,36,.9), rgba(251,191,36,0));
-      box-shadow:0 0 10px rgba(251,191,36,.32);
-    }
-
-    .gold-reel-window-glow{
-      position:absolute;
-      inset:8px;
-      border-radius:20px;
-      background:radial-gradient(circle at center, rgba(253,224,71,.12), rgba(253,224,71,0) 70%);
-      pointer-events:none;
-      z-index:1;
-    }
-
     .gold-reel-track{
-      position:relative;
-      width:100%;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:8px;
+      transform:translate3d(0, 0, 0);
       will-change:transform;
-      transform:translateY(0);
-      position:relative;
-      z-index:2;
-      transition:transform .16s linear;
     }
-
     .gold-reel-item{
-      width:100%;
-      height:42px;
-      border-radius:16px;
+      height:60px;
       display:flex;
       align-items:center;
       justify-content:center;
-      background:linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
+      position:relative;
+      overflow:hidden;
+      font-weight:900;
+      font-size:28px;
+      letter-spacing:.02em;
+      color:#fde68a;
+      text-shadow:0 6px 14px rgba(0,0,0,.45);
+      transform-origin:center center;
+    }
+    .gold-reel-item::after{
+      content:"";
+      position:absolute;
+      left:-72%;
+      top:50%;
+      width:108%;
+      height:7px;
+      background:linear-gradient(90deg, rgba(255,233,125,0), rgba(255,248,196,1) 16%, rgba(255,255,255,1) 50%, rgba(255,248,196,1) 84%, rgba(255,233,125,0));
+      box-shadow:0 0 18px rgba(255,248,196,1), 0 0 34px rgba(250,204,21,.82), 0 0 52px rgba(250,204,21,.52);
+      transform:translateY(-50%);
+      opacity:0;
+      pointer-events:none;
+    }
+    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-item{
+      animation:goldPrizeBurst .52s cubic-bezier(.2,.9,.3,1) 1, goldPrizeGlow 1.08s ease-in-out .52s infinite;
+    }
+    .box-open-stage.stage-video-playing .open-stage-box-wrap,
+    .box-open-stage.stage-video-playing .box-open-text,
+    .box-open-stage.stage-video-playing .open-stage-clouds{
+      opacity:0;
+    }
+    /* RandomX/RandomG mp4 재생 중에는 랜덤 박스 레이어를 완전히 숨김 */
+    #openSheet.fx-random-fail .box-open-stage.stage-video-playing .open-stage-box-wrap,
+    #openSheet.fx-random-fail .box-open-stage.stage-video-playing .box-open-text,
+    #openSheet.fx-random-fail .box-open-stage.stage-video-playing .open-stage-clouds,
+    #openSheet.fx-random-gold .box-open-stage.stage-video-playing .open-stage-box-wrap,
+    #openSheet.fx-random-gold .box-open-stage.stage-video-playing .box-open-text,
+    #openSheet.fx-random-gold .box-open-stage.stage-video-playing .open-stage-clouds{
+      display:none;
+    }
+    #openSheet.fx-random-fail .box-open-stage.stage-video-playing::before,
+    #openSheet.fx-random-fail .box-open-stage.stage-video-playing::after,
+    #openSheet.fx-random-fail .box-open-stage.stage-video-playing .open-stage-backdrop,
+    #openSheet.fx-random-gold .box-open-stage.stage-video-playing::before,
+    #openSheet.fx-random-gold .box-open-stage.stage-video-playing::after,
+    #openSheet.fx-random-gold .box-open-stage.stage-video-playing .open-stage-backdrop,
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing::before,
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing::after,
+    #openSheet.fx-gold-open .box-open-stage.stage-video-playing .open-stage-backdrop{
+      display:none;
+    }
+    .open-stage-result{
+      position:absolute;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:24px;
+      opacity:0;
+      pointer-events:none;
+      z-index:10;
+      transition:opacity .18s ease .16s;
+    }
+    .box-open-stage.stage-show-result .open-stage-result{
+      opacity:1;
+    }
+    .box-open-stage.stage-video-playing.is-random-gold-slowfx .open-stage-result{
+      opacity:1;
+      z-index:10;
+      transition:none;
+    }
+    .result-gold-box{
+      width:84px;
+      height:84px;
+      display:grid;
+      place-items:center;
+      opacity:0;
+      transform:translateY(16px) scale(.74);
+      position:relative;
+      z-index:5;
+    }
+    .box-open-stage.stage-show-result .open-stage-result.show-gold-box .result-gold-box{
+      opacity:1;
+      transform:translateY(0) scale(1);
+      filter:none;
+      z-index:6;
+    }
+    .box-open-stage.stage-show-result .open-stage-result.show-gold-box .result-gold-box .gift-box{
+      opacity:1;
+      filter:drop-shadow(0 10px 24px rgba(0,0,0,.32));
+    }
+    .open-stage-result:not(.show-gold-box) .result-gold-box{
+      display:none;
+    }
+    .result-gold-box .gift-box{
+      width:84px;
+      height:84px;
+      filter:drop-shadow(0 8px 24px rgba(0,0,0,.3));
+    }
+    .result-gold-box .gift-lid{
+      top:10px;
+      width:76px;
+      height:22px;
+      border-radius:12px;
+      transform-origin:16px 18px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 6px 12px rgba(120,53,15,.18);
+    }
+    .result-gold-box .gift-body{
+      top:30px;
+      width:72px;
+      height:46px;
+      border-radius:12px 12px 16px 16px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.24), 0 10px 18px rgba(120,53,15,.2);
+    }
+    .result-gold-box .gift-lid::before,
+    .result-gold-box .gift-body::before{width:10px;}
+    .result-gold-box .gift-lid::after,
+    .result-gold-box .gift-body::after{height:8px;}
+    .result-gold-box .gift-ribbon-knot{
+      top:4px;
+      width:22px;
+      height:12px;
+    }
+    .result-gold-box .gift-ribbon-knot::before,
+    .result-gold-box .gift-ribbon-knot::after{
+      width:12px;
+      height:10px;
+      border-width:2px;
+    }
+
+    .box-pop{animation:boxPop .7s cubic-bezier(.22,1,.36,1);}
+    @keyframes boxPop{
+      0%{transform:translateY(24px) scale(.68); opacity:0;}
+      54%{transform:translateY(-12px) scale(1.1); opacity:1;}
+      76%{transform:translateY(4px) scale(.96);}
+      100%{transform:translateY(0) scale(1); opacity:1;}
+    }
+    @keyframes boxStoryEntrance{
+      0%{transform:translateY(34px) scale(.78); opacity:0;}
+      52%{transform:translateY(-8px) scale(1.02); opacity:1;}
+      100%{transform:translateY(0) scale(1); opacity:1;}
+    }
+    @keyframes boxStorySettle{
+      0%{transform:translateY(10px) scale(.95);}
+      56%{transform:translateY(-5px) scale(1.02);}
+      100%{transform:translateY(0) scale(1);}
+    }
+    @keyframes boxStoryStart{
+      0%{transform:translateY(0) scale(.95) rotate(0deg);}
+      42%{transform:translateY(-3px) scale(1) rotate(0deg);}
+      100%{transform:translateY(0) scale(1) rotate(0deg);}
+    }
+    @keyframes boxTensionShake{
+      0%,18%,100%{transform:translateY(0) rotate(0deg);}
+      30%{transform:translateY(-1px) rotate(-1deg);}
+      46%{transform:translateY(1px) rotate(1deg);}
+      62%{transform:translateY(-2px) rotate(-1.3deg);}
+      78%{transform:translateY(0) rotate(.7deg);}
+    }
+    @keyframes boxSuspenseDrift{
+      0%,100%{transform:translateY(0) scale(1) rotate(0deg);}
+      35%{transform:translateY(-2px) scale(1.01) rotate(-.6deg);}
+      60%{transform:translateY(1px) scale(1) rotate(.4deg);}
+      82%{transform:translateY(-1px) scale(1.01) rotate(-.5deg);}
+    }
+    @keyframes boxSoftCharge{
+      0%{opacity:0; transform:translateX(-50%) scaleX(.82);}
+      56%{opacity:.5; transform:translateX(-50%) scaleX(1.04);}
+      100%{opacity:.18; transform:translateX(-50%) scaleX(.96);}
+    }
+    @keyframes boxResolveGlow{
+      0%{opacity:.12; transform:translateX(-50%) scaleX(.92);}
+      42%{opacity:.9; transform:translateX(-50%) scaleX(1.12);}
+      100%{opacity:0; transform:translateX(-50%) scaleX(1.2);}
+    }
+    @keyframes boxFailResolveGlow{
+      0%{opacity:.18; transform:translateX(-50%) scaleX(.96);}
+      28%{opacity:.34; transform:translateX(-50%) scaleX(1);}
+      100%{opacity:0; transform:translateX(-50%) scaleX(.88);}
+    }
+    @keyframes boxConfirmResolveGlow{
+      0%{opacity:.2; transform:translateX(-50%) scaleX(.96);}
+      26%{opacity:1; transform:translateX(-50%) scaleX(1.18);}
+      54%{opacity:.68; transform:translateX(-50%) scaleX(1.08);}
+      100%{opacity:0; transform:translateX(-50%) scaleX(1.34);}
+    }
+    @keyframes boxOpenFlash{
+      0%{opacity:0; transform:translateX(-50%) scale(.46) translateY(8px);}
+      38%{opacity:.72; transform:translateX(-50%) scale(.96) translateY(-4px);}
+      100%{opacity:0; transform:translateX(-50%) scale(1.2) translateY(-14px);}
+    }
+    @keyframes boxConfirmFlash{
+      0%{opacity:0; transform:translateX(-50%) scale(.46) translateY(10px); filter:blur(3px);}
+      28%{opacity:1; transform:translateX(-50%) scale(1.22) translateY(-8px); filter:blur(0);}
+      54%{opacity:.64; transform:translateX(-50%) scale(1.08) translateY(-14px); filter:blur(.4px);}
+      100%{opacity:0; transform:translateX(-50%) scale(1.56) translateY(-22px); filter:blur(1px);}
+    }
+    @keyframes boxFailFlash{
+      0%,100%{opacity:0; transform:translateX(-50%) scale(.42) translateY(8px);}
+      34%{opacity:.18; transform:translateX(-50%) scale(.62) translateY(-1px);}
+      100%{opacity:0; transform:translateX(-50%) scale(.7) translateY(2px);}
+    }
+    @keyframes boxSparkBurst{
+      0%{opacity:0; transform:translate3d(0,0,0) scale(.24);}
+      32%{opacity:.82; transform:translate3d(0,-6px,0) scale(.92);}
+      100%{opacity:0; transform:translate3d(var(--spark-x, 0), var(--spark-y, -20px), 0) scale(.52);}
+    }
+    @keyframes goldSparkBurst{
+      0%{opacity:0; transform:translate3d(0,0,0) scale(.28);}
+      32%{opacity:1; transform:translate3d(0,-9px,0) scale(1.12);}
+      100%{opacity:0; transform:translate3d(var(--spark-x, 0), var(--spark-y, -24px), 0) scale(.78);}
+    }
+    @keyframes goldPrizeBurst{
+      0%{transform:scale(.9);text-shadow:0 0 0 rgba(250,204,21,0);}
+      72%{transform:scale(1.08);text-shadow:0 0 26px rgba(250,204,21,.74), 0 0 42px rgba(255,244,181,.46);}
+      100%{transform:scale(1.02);text-shadow:0 0 18px rgba(250,204,21,.46), 0 6px 14px rgba(0,0,0,.45);}
+    }
+    @keyframes goldPrizeGlow{
+      0%,100%{filter:brightness(1);text-shadow:0 0 18px rgba(250,204,21,.42), 0 6px 14px rgba(0,0,0,.45);}
+      50%{filter:brightness(1.1);text-shadow:0 0 26px rgba(250,204,21,.65), 0 0 40px rgba(255,244,181,.42), 0 6px 14px rgba(0,0,0,.45);}
+    }
+    @keyframes goldReelEdgeLightCycle{
+      0%{background-position:-160% 0, 100% -160%, 160% 100%, 0 160%;}
+      24%{background-position:160% 0, 100% -160%, 160% 100%, 0 160%;}
+      25%{background-position:160% 0, 100% -160%, 160% 100%, 0 160%;}
+      49%{background-position:160% 0, 100% 160%, 160% 100%, 0 160%;}
+      50%{background-position:160% 0, 100% 160%, 160% 100%, 0 160%;}
+      74%{background-position:160% 0, 100% 160%, -160% 100%, 0 160%;}
+      75%{background-position:160% 0, 100% 160%, -160% 100%, 0 160%;}
+      100%{background-position:160% 0, 100% 160%, -160% 100%, 0 -160%;}
+    }
+    @keyframes goldAmountCenterSweep{
+      0%{left:-98%;opacity:0;}
+      18%{opacity:1;}
+      100%{left:148%;opacity:0;}
+    }
+    @keyframes boxFailSpark{
+      0%{opacity:0; transform:translate3d(0,0,0) scale(.2);}
+      30%{opacity:.24; transform:translate3d(0,-1px,0) scale(.42);}
+      100%{opacity:0; transform:translate3d(calc(var(--spark-x, 0) * .22), calc(var(--spark-y, -20px) * .16), 0) scale(.18);}
+    }
+    @keyframes giftBoxLidQuickOpen{
+      0%,24%{transform:translateX(-50%) translateY(0) rotate(0deg);}
+      44%{transform:translateX(-50%) translateY(-4px) rotate(-10deg);}
+      100%{transform:translateX(-50%) translateY(-18px) rotate(-22deg);}
+    }
+    @keyframes giftRibbonQuickLift{
+      0%,24%{transform:translateX(-50%) translateY(0) scale(1);}
+      44%{transform:translateX(-50%) translateY(-4px) scale(1.04);}
+      100%{transform:translateX(-50%) translateY(-13px) scale(.94);}
+    }
+    @keyframes giftBoxLidResolveOpen{
+      0%{transform:translateX(-50%) translateY(-2px) rotate(-7deg);}
+      36%{transform:translateX(-50%) translateY(-8px) rotate(-14deg);}
+      100%{transform:translateX(-50%) translateY(-20px) rotate(-24deg);}
+    }
+    @keyframes giftRibbonResolveOpen{
+      0%{transform:translateX(-50%) translateY(-1px) scale(.98);}
+      36%{transform:translateX(-50%) translateY(-5px) scale(1.02);}
+      100%{transform:translateX(-50%) translateY(-14px) scale(.94);}
+    }
+    @keyframes giftBoxLidFailOpen{
+      0%{transform:translateX(-50%) translateY(-2px) rotate(-6deg);}
+      38%{transform:translateX(-50%) translateY(-4px) rotate(-8deg);}
+      70%{transform:translateX(-50%) translateY(-8px) rotate(-11deg);}
+      100%{transform:translateX(-50%) translateY(-9px) rotate(-12deg);}
+    }
+    @keyframes giftRibbonFailLift{
+      0%{transform:translateX(-50%) translateY(-1px) scale(.99);}
+      38%{transform:translateX(-50%) translateY(-2px) scale(1);}
+      70%{transform:translateX(-50%) translateY(-5px) scale(.98);}
+      100%{transform:translateX(-50%) translateY(-6px) scale(.96);}
+    }
+    @keyframes giftBoxLidGoldOpen{
+      0%{transform:translateX(-50%) translateY(-2px) rotate(-8deg);}
+      26%{transform:translateX(-50%) translateY(-12px) rotate(-20deg);}
+      62%{transform:translateX(-50%) translateY(-20px) rotate(-30deg);}
+      100%{transform:translateX(-50%) translateY(-24px) rotate(-33deg);}
+    }
+    @keyframes giftRibbonGoldLift{
+      0%{transform:translateX(-50%) translateY(-1px) scale(.99);}
+      26%{transform:translateX(-50%) translateY(-7px) scale(1.06);}
+      62%{transform:translateX(-50%) translateY(-13px) scale(.98);}
+      100%{transform:translateX(-50%) translateY(-16px) scale(.9);}
+    }
+    @keyframes giftBoxLidTease{
+      0%,24%{transform:translateX(-50%) translateY(0) rotate(0deg);}
+      40%{transform:translateX(-50%) translateY(-3px) rotate(-7deg);}
+      58%{transform:translateX(-50%) translateY(-1px) rotate(-3deg);}
+      76%{transform:translateX(-50%) translateY(-5px) rotate(-10deg);}
+      100%{transform:translateX(-50%) translateY(-2px) rotate(-6deg);}
+    }
+    @keyframes giftRibbonTease{
+      0%,24%{transform:translateX(-50%) translateY(0) scale(1);}
+      40%{transform:translateX(-50%) translateY(-2px) scale(1.02);}
+      58%{transform:translateX(-50%) translateY(-1px) scale(1);}
+      76%{transform:translateX(-50%) translateY(-3px) scale(1.03);}
+      100%{transform:translateX(-50%) translateY(-1px) scale(.99);}
+    }
+    @keyframes mysteryGlowBreath{
+      0%,100%{opacity:.08; transform:translateX(-50%) scaleX(.86);}
+      40%{opacity:.32; transform:translateX(-50%) scaleX(1.04);}
+      64%{opacity:.14; transform:translateX(-50%) scaleX(.94);}
+    }
+    @keyframes boxAlmostGoldSurge{
+      0%,100%{filter:drop-shadow(0 20px 30px rgba(8,15,30,.44)) saturate(1); transform:scale(1);}
+      34%{filter:drop-shadow(0 22px 34px rgba(245,158,11,.28)) saturate(1.08); transform:scale(1.012);}
+      58%{filter:drop-shadow(0 24px 38px rgba(250,204,21,.34)) saturate(1.16); transform:scale(1.026);}
+      78%{filter:drop-shadow(0 21px 30px rgba(245,158,11,.16)) saturate(1.04); transform:scale(1.008);}
+    }
+    @keyframes boxAlmostGoldSweep{
+      0%,12%{opacity:0; transform:translateX(-34px) rotate(-11deg) scaleX(.92);}
+      34%{opacity:.3; transform:translateX(-10px) rotate(-7deg) scaleX(1);}
+      54%{opacity:1; transform:translateX(10px) rotate(-2deg) scaleX(1.08);}
+      72%{opacity:.22; transform:translateX(22px) rotate(1deg) scaleX(1.02);}
+      100%{opacity:0; transform:translateX(34px) rotate(3deg) scaleX(.96);}
+    }
+    @keyframes boxAlmostGoldShell{
+      0%,100%{opacity:.08; border-color:rgba(255,255,255,.12); box-shadow:inset 0 0 20px rgba(255,255,255,.06), 0 0 22px rgba(191,219,254,.06);}
+      36%{opacity:.28; border-color:rgba(253,224,71,.34); box-shadow:inset 0 0 24px rgba(255,248,220,.12), 0 0 24px rgba(245,158,11,.16);}
+      58%{opacity:.54; border-color:rgba(250,204,21,.58); box-shadow:inset 0 0 28px rgba(255,249,219,.18), 0 0 34px rgba(250,204,21,.26);}
+      82%{opacity:.16; border-color:rgba(255,255,255,.16); box-shadow:inset 0 0 18px rgba(255,255,255,.07), 0 0 16px rgba(191,219,254,.06);}
+    }
+    @keyframes boxAlmostGoldGlow{
+      0%,100%{opacity:.12; filter:blur(3px); transform:translateX(-50%) scale(.82);}
+      38%{opacity:.34; filter:blur(2.4px); transform:translateX(-50%) scale(.98);}
+      56%{opacity:.86; filter:blur(1.4px); transform:translateX(-50%) scale(1.16);}
+      74%{opacity:.22; filter:blur(2.6px); transform:translateX(-50%) scale(.94);}
+    }
+    @keyframes giftBoxLidAlmostGold{
+      0%,20%,100%{transform:translateX(-50%) translateY(0) rotate(0deg);}
+      36%{transform:translateX(-50%) translateY(-4px) rotate(-8deg);}
+      58%{transform:translateX(-50%) translateY(-2px) rotate(-5deg);}
+      76%{transform:translateX(-50%) translateY(-6px) rotate(-11deg);}
+    }
+    @keyframes giftRibbonAlmostGold{
+      0%,20%,100%{transform:translateX(-50%) translateY(0) scale(1);}
+      36%{transform:translateX(-50%) translateY(-2px) scale(1.03);}
+      58%{transform:translateX(-50%) translateY(-1px) scale(1.01);}
+      76%{transform:translateX(-50%) translateY(-4px) scale(1.05);}
+    }
+    @keyframes mysteryGlowBreathGold{
+      0%,100%{opacity:.12; transform:translateX(-50%) scaleX(.88);}
+      52%{opacity:.62; transform:translateX(-50%) scaleX(1.12);}
+      74%{opacity:.22; transform:translateX(-50%) scaleX(.98);}
+    }
+    @keyframes suspenseFloorGlow{
+      0%,100%{opacity:.28; transform:translateX(-50%) scale(.92);}
+      52%{opacity:.64; transform:translateX(-50%) scale(1.04);}
+    }
+    @keyframes suspenseHaloPulse{
+      0%,100%{opacity:0; transform:scale(.82);}
+      52%{opacity:.24; transform:scale(1.02);}
+    }
+    @keyframes mysteryShimmerSweep{
+      0%,18%{opacity:0; transform:translateX(-30px) rotate(-9deg);}
+      34%{opacity:.18; transform:translateX(-12px) rotate(-7deg);}
+      52%{opacity:.76; transform:translateX(8px) rotate(-3deg);}
+      70%{opacity:.12; transform:translateX(18px) rotate(-1deg);}
+      100%{opacity:0; transform:translateX(26px) rotate(0deg);}
+    }
+    @keyframes mysteryShimmerSweepGold{
+      0%,14%{opacity:0; transform:translateX(-28px) rotate(-9deg);}
+      34%{opacity:.28; transform:translateX(-8px) rotate(-6deg);}
+      56%{opacity:.96; transform:translateX(12px) rotate(-2deg);}
+      72%{opacity:.22; transform:translateX(22px) rotate(0deg);}
+      100%{opacity:0; transform:translateX(30px) rotate(2deg);}
+    }
+    @keyframes mysteryEdgeBlink{
+      0%,100%{opacity:.04; box-shadow:inset 0 0 18px rgba(255,255,255,.04), 0 0 14px rgba(191,219,254,.03);}
+      44%{opacity:.18; box-shadow:inset 0 0 18px rgba(255,255,255,.06), 0 0 18px rgba(191,219,254,.08);}
+      62%{opacity:.08; box-shadow:inset 0 0 14px rgba(255,255,255,.04), 0 0 12px rgba(191,219,254,.04);}
+    }
+    @keyframes mysteryEdgeBlinkGold{
+      0%,100%{opacity:.06; box-shadow:inset 0 0 18px rgba(255,248,220,.08), 0 0 16px rgba(250,204,21,.06);}
+      46%{opacity:.34; box-shadow:inset 0 0 24px rgba(255,249,219,.18), 0 0 28px rgba(250,204,21,.18);}
+      68%{opacity:.14; box-shadow:inset 0 0 18px rgba(255,248,220,.1), 0 0 18px rgba(250,204,21,.1);}
+    }
+    @keyframes boxFailDeflate{
+      0%{transform:translateY(0) scale(1); filter:saturate(1);}
+      42%{transform:translateY(1px) scale(.986); filter:saturate(.9);}
+      100%{transform:translateY(4px) scale(.95); filter:saturate(.72);}
+    }
+    @keyframes boxConfirmPulse{
+      0%{transform:translateY(0) scale(1);}
+      32%{transform:translateY(-6px) scale(1.1);}
+      62%{transform:translateY(-2px) scale(1.04);}
+      100%{transform:translateY(0) scale(1.06);}
+    }
+    @keyframes goldBoxHeroPulse{
+      0%{transform:translateY(0) scale(1);}
+      48%{transform:translateY(-6px) scale(1.08);}
+      100%{transform:translateY(0) scale(1.02);}
+    }
+    @keyframes resultAmountPop{
+      0%{transform:translateY(20px) scale(.78); opacity:0;}
+      58%{transform:translateY(-4px) scale(1.08); opacity:1;}
+      100%{transform:translateY(0) scale(1); opacity:1;}
+    }
+    @keyframes blueGlowPulse{
+      0%{box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 18px 36px rgba(2,6,23,.34);}
+      50%{box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(96,165,250,.12), 0 18px 36px rgba(2,6,23,.36), 0 0 34px rgba(59,130,246,.18);}
+      100%{box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 18px 36px rgba(2,6,23,.34);}
+    }
+    @keyframes goldGlowPulse{
+      0%{box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 18px 36px rgba(2,6,23,.34);}
+      50%{box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(250,204,21,.14), 0 18px 36px rgba(2,6,23,.34), 0 0 38px rgba(245,158,11,.2);}
+      100%{box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 18px 36px rgba(2,6,23,.34);}
+    }
+    @keyframes centerSmokeSweep{
+      0%{opacity:0; transform:translate(-50%, -50%) scale(.56) translateX(-18px);}
+      26%{opacity:.42; transform:translate(-50%, -50%) scale(.88) translateX(-8px);}
+      54%{opacity:.74; transform:translate(-50%, -50%) scale(1.02) translateX(0);}
+      100%{opacity:0; transform:translate(-50%, -50%) scale(1.12) translateX(18px);}
+    }
+    @keyframes goldCelebrateRing{
+      0%{opacity:0; transform:scale(.42);}
+      38%{opacity:.82; transform:scale(1);}
+      100%{opacity:0; transform:scale(1.32);}
+    }
+    @keyframes goldConfettiFloat{
+      0%{opacity:0; transform:translateY(12px) scale(.7) rotate(var(--confetti-rot, 0deg));}
+      26%{opacity:1; transform:translateY(0) scale(1) rotate(var(--confetti-rot, 0deg));}
+      100%{opacity:0; transform:translateY(-20px) scale(.74) rotate(calc(var(--confetti-rot, 0deg) + 12deg));}
+    }
+    @keyframes resultReveal{
+      0%{opacity:0; transform:translateY(16px) scale(.92);}
+      60%{opacity:1; transform:translateY(-2px) scale(1.03);}
+      100%{opacity:1; transform:translateY(0) scale(1);}
+    }
+    @keyframes randomGAmountReveal{
+      0%{opacity:0; transform:translateY(6px) scale(.95);}
+      100%{opacity:1; transform:translateY(0) scale(1);}
+    }
+    @keyframes randomGSubReveal{
+      0%{opacity:0; transform:scale(.9);}
+      60%{opacity:1; transform:scale(1.05);}
+      100%{opacity:1; transform:scale(1);}
+    }
+    @keyframes goldBoxReveal{
+      0%{opacity:0; transform:translateY(22px) scale(.68) rotate(-12deg);}
+      58%{opacity:1; transform:translateY(-4px) scale(1.08) rotate(4deg);}
+      100%{opacity:1; transform:translateY(0) scale(1) rotate(0);}
+    }
+    @keyframes rainbowBoxFloat{
+      0%{transform:translateY(16px) scale(.9);}
+      42%{transform:translateY(-10px) scale(1.02);}
+      100%{transform:translateY(0) scale(1);}
+    }
+    @keyframes goldWinTextPop{
+      0%{opacity:0;transform:translateY(8px) scale(.94);}
+      100%{opacity:1;transform:translateY(0) scale(1);}
+    }
+    @keyframes goldWinBoxPop{
+      0%{opacity:0;transform:translateY(18px) scale(.62);}
+      46%{opacity:1;transform:translateY(-4px) scale(1.08);}
+      100%{opacity:1;transform:translateY(0) scale(1);}
+    }
+    @keyframes randomGSlowBoxPop{
+      0%{opacity:0;transform:translateY(12px) scale(.8);}
+      56%{opacity:1;transform:translateY(-4px) scale(1.1);}
+      100%{opacity:1;transform:translateY(0) scale(1);}
+    }
+    @keyframes burstPulse{
+      from{transform:scale(.88); opacity:.36;}
+      to{transform:scale(1.08); opacity:.86;}
+    }
+    @keyframes burstRing{
+      0%{opacity:0; transform:scale(.34);}
+      30%{opacity:.82; transform:scale(.92);}
+      100%{opacity:0; transform:scale(1.32);}
+    }
+    @keyframes burstRays{
+      0%{opacity:0; transform:scale(.6) rotate(0deg);}
+      40%{opacity:.66; transform:scale(1) rotate(14deg);}
+      100%{opacity:0; transform:scale(1.16) rotate(28deg);}
+    }
+    @keyframes sparkleFloat{
+      0%{opacity:0; transform:translateY(10px) scale(.6);}
+      30%{opacity:.84; transform:translateY(0) scale(1);}
+      100%{opacity:0; transform:translateY(-16px) scale(.7);}
+    }
+
+    .glow-burst{
+      position:absolute;
+      width:176px;
+      height:176px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.22) 0%, rgba(59,130,246,.14) 38%, rgba(0,0,0,0) 74%);
+      opacity:.56;
+      z-index:1;
+      animation:burstPulse 1.1s ease infinite alternate;
+    }
+
+    .burst-ring{
+      inset:auto;
+      width:188px;
+      height:188px;
+      border-radius:50%;
+      border:1px solid rgba(191,219,254,.32);
+      opacity:0;
+      animation:burstRing .9s ease-out infinite;
+    }
+    .burst-rays{
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      background:conic-gradient(from 0deg, rgba(255,255,255,0) 0deg 24deg, rgba(191,219,254,.24) 32deg 42deg, rgba(255,255,255,0) 50deg 74deg, rgba(96,165,250,.18) 82deg 92deg, rgba(255,255,255,0) 100deg 124deg, rgba(191,219,254,.22) 132deg 142deg, rgba(255,255,255,0) 150deg 204deg, rgba(96,165,250,.18) 212deg 222deg, rgba(255,255,255,0) 230deg 360deg);
+      opacity:0;
+      filter:blur(1px);
+      animation:burstRays .9s ease-out infinite;
+    }
+    .result-sparkles{
+      inset:0;
+      z-index:1;
+    }
+    .result-sparkles span{
+      position:absolute;
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      background:radial-gradient(circle, rgba(255,255,255,.96) 0%, rgba(191,219,254,.72) 46%, rgba(191,219,254,0) 76%);
+      box-shadow:0 0 12px rgba(191,219,254,.34);
+      opacity:0;
+    }
+    .result-sparkles span:nth-child(1){left:calc(50% - 76px);top:calc(50% - 12px);animation:sparkleFloat .92s ease-out .08s infinite;}
+    .result-sparkles span:nth-child(2){left:calc(50% + 56px);top:calc(50% - 28px);animation:sparkleFloat .88s ease-out .18s infinite;}
+    .result-sparkles span:nth-child(3){left:calc(50% - 58px);top:calc(50% + 38px);animation:sparkleFloat .96s ease-out .26s infinite;}
+    .result-sparkles span:nth-child(4){left:calc(50% + 42px);top:calc(50% + 46px);animation:sparkleFloat 1s ease-out .34s infinite;}
+
+    .result-amount{
+      font-size:32px;
+      font-weight:1000;
+      color:#e5eefc;
+      letter-spacing:-1px;
+      text-shadow:0 10px 24px rgba(8,15,30,.28);
+      margin-bottom:2px;
+      position:relative;
+      z-index:2;
+    }
+
+    /* Open sheet result effect states */
+    #openSheet.fx-random-normal .box-open-stage{
+      border-color:rgba(96,165,250,.22);
+      background:linear-gradient(180deg, #6f5cff 0%, #8f6bff 35%, #c77dff 65%, #f3a6ff 100%);
+      animation:blueGlowPulse .9s ease 1;
+    }
+    #openSheet.fx-random-normal .open-stage-box-wrap::before{
+      background:radial-gradient(circle, rgba(59,130,246,.24) 0%, rgba(59,130,246,0) 72%);
+    }
+    #openSheet.fx-random-normal .glow-burst{
+      background:radial-gradient(circle, rgba(96,165,250,.28) 0%, rgba(59,130,246,.16) 42%, rgba(0,0,0,0) 76%);
+    }
+    #openSheet.fx-random-normal .result-amount{
+      color:#dbeafe;
+      text-shadow:0 0 18px rgba(96,165,250,.18);
+      animation:resultAmountPop .42s ease-out;
+    }
+    #openSheet.fx-random-normal .result-sub{
+      animation:resultReveal .28s ease-out .06s both;
+    }
+
+    #openSheet.fx-random-fail .box-open-stage,
+    #openSheet.fx-random-gold .box-open-stage{
+      border-color:rgba(148,163,184,.22);
+      background:linear-gradient(180deg, #6f5cff 0%, #8f6bff 35%, #c77dff 65%, #f3a6ff 100%);
+      animation:blueGlowPulse .72s ease 1;
+    }
+    #openSheet.fx-random-fail .box-open-stage.stage-animating .open-stage-clouds,
+    #openSheet.fx-random-gold .box-open-stage.stage-animating .open-stage-clouds{
+      opacity:1;
+    }
+    #openSheet.fx-random-fail .box-open-stage.stage-animating .open-stage-cloud,
+    #openSheet.fx-random-gold .box-open-stage.stage-animating .open-stage-cloud{
+      animation:centerSmokeSweep .82s ease-out forwards;
+    }
+    #openSheet.fx-random-fail .box-open-stage.stage-animating .cloud-a,
+    #openSheet.fx-random-gold .box-open-stage.stage-animating .cloud-a{animation-delay:1.98s;}
+    #openSheet.fx-random-fail .box-open-stage.stage-animating .cloud-b,
+    #openSheet.fx-random-gold .box-open-stage.stage-animating .cloud-b{animation-delay:2.08s;}
+    #openSheet.fx-random-fail .box-open-stage.stage-animating .cloud-c,
+    #openSheet.fx-random-gold .box-open-stage.stage-animating .cloud-c{animation-delay:2.18s;}
+    #openSheet.fx-random-fail .box-open-stage.stage-animating .cloud-d,
+    #openSheet.fx-random-gold .box-open-stage.stage-animating .cloud-d{animation-delay:2.28s;}
+    #openSheet.fx-random-fail .glow-burst{
+      background:radial-gradient(circle, rgba(226,232,240,.26) 0%, rgba(148,163,184,.12) 44%, rgba(0,0,0,0) 76%);
+    }
+    #openSheet.fx-random-fail .burst-ring,
+    #openSheet.fx-random-fail .burst-rays,
+    #openSheet.fx-random-fail .result-sparkles{
+      opacity:.55;
+      filter:saturate(.65);
+    }
+    #openSheet.fx-random-fail .result-amount{
       color:#f8fafc;
+      animation:resultReveal .42s ease-out both;
+    }
+    #openSheet.fx-random-fail .result-sub{
+      animation:resultReveal .32s ease-out .06s both;
+    }
+
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result{
+      border-color:rgba(250,204,21,.28);
+      background:linear-gradient(180deg, #6f5cff 0%, #8f6bff 35%, #c77dff 65%, #f3a6ff 100%);
+      animation:goldGlowPulse .9s ease 1;
+    }
+    #openSheet.fx-gold-open .box-open-stage{
+      border-color:transparent;
+      /* gold-open 전용: 비디오 전/후 공백 구간에서 검정 16:9 stage 프레임 노출 방지 */
+      background:transparent;
+      animation:none;
+    }
+    #openSheet.fx-gold-open .box-open-stage::before,
+    #openSheet.fx-gold-open .box-open-stage::after,
+    #openSheet.fx-gold-open .box-open-stage .open-stage-backdrop{
+      display:none;
+    }
+    /* Goldbox 오픈에서는 기존 박스/CSS 오픈 애니메이션 레이어를 완전히 숨기고 mp4만 노출 */
+    #openSheet.fx-gold-open .open-stage-box-wrap,
+    #openSheet.fx-gold-open .box-open-text,
+    #openSheet.fx-gold-open .open-stage-clouds{
+      display:none;
+    }
+    #openSheet.fx-random-gold .open-stage-box-wrap::before{
+      background:radial-gradient(circle, rgba(59,130,246,.18) 0%, rgba(59,130,246,0) 72%);
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .open-stage-box-wrap::before,
+    #openSheet.fx-gold-open .open-stage-box-wrap::before{
+      background:radial-gradient(circle, rgba(253,224,71,.24) 0%, rgba(245,158,11,0) 72%);
+    }
+    #openSheet.fx-random-gold .open-stage-box-wrap::after,
+    #openSheet.fx-gold-open .open-stage-box-wrap::after{
+      border-color:rgba(253,224,71,.24);
+      opacity:.44;
+    }
+    #openSheet.fx-random-gold .glow-burst,
+    #openSheet.fx-gold-open .glow-burst{
+      width:168px;
+      height:168px;
+      background:radial-gradient(circle, rgba(253,224,71,.34) 0%, rgba(245,158,11,.18) 46%, rgba(0,0,0,0) 76%);
+    }
+    #openSheet.fx-random-gold .burst-ring,
+    #openSheet.fx-gold-open .burst-ring{
+      border-color:rgba(253,224,71,.42);
+    }
+    #openSheet.fx-random-gold .burst-rays,
+    #openSheet.fx-gold-open .burst-rays,
+    #openSheet.fx-random-gold .result-sparkles span,
+    #openSheet.fx-gold-open .result-sparkles span{
+      filter:hue-rotate(-12deg) saturate(1.15);
+    }
+    #openSheet.fx-random-gold .result-amount,
+    #openSheet.fx-gold-open .result-amount{
+      color:#ffffff;
+      text-shadow:0 0 16px rgba(148,163,184,.24);
+      animation:resultAmountPop .46s ease-out;
+    }
+    #openSheet.fx-gold-open .result-amount{
+      display:none;
+    }
+    #openSheet.fx-gold-open .gold-reel-window::after{
+      inset:0;
+      border-radius:inherit;
+      opacity:0;
+      background:
+        linear-gradient(90deg, rgba(255,233,125,0) 0%, rgba(255,250,205,.98) 46%, rgba(255,255,255,1) 50%, rgba(255,250,205,.98) 54%, rgba(255,233,125,0) 100%) -160% 0 / 220% 2px no-repeat,
+        linear-gradient(180deg, rgba(255,233,125,0) 0%, rgba(255,250,205,.98) 46%, rgba(255,255,255,1) 50%, rgba(255,250,205,.98) 54%, rgba(255,233,125,0) 100%) 100% -160% / 2px 220% no-repeat,
+        linear-gradient(90deg, rgba(255,233,125,0) 0%, rgba(255,250,205,.98) 46%, rgba(255,255,255,1) 50%, rgba(255,250,205,.98) 54%, rgba(255,233,125,0) 100%) 160% 100% / 220% 2px no-repeat,
+        linear-gradient(180deg, rgba(255,233,125,0) 0%, rgba(255,250,205,.98) 46%, rgba(255,255,255,1) 50%, rgba(255,250,205,.98) 54%, rgba(255,233,125,0) 100%) 0 160% / 2px 220% no-repeat;
+      box-shadow:inset 0 0 0 1px rgba(251,191,36,.58);
+      filter:drop-shadow(0 0 7px rgba(251,191,36,.95)) drop-shadow(0 0 16px rgba(255,244,181,.82));
+    }
+    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-window::after{
+      opacity:1;
+      animation:goldReelEdgeLightCycle 1.02s linear infinite;
+    }
+    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-item::after{
+      animation:goldAmountCenterSweep .72s ease-out .18s 1;
+    }
+    #openSheet.fx-random-gold .result-sub,
+    #openSheet.fx-gold-open .result-sub{
+      animation:resultReveal .34s ease-out .06s both;
+    }
+    #openSheet.fx-gold-open .box-open-stage.stage-animating .open-stage-box-wrap,
+    #openSheet.fx-random-gold .box-open-stage.stage-animating .open-stage-box-wrap{
+      filter:drop-shadow(0 0 20px rgba(245,158,11,.16));
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box,
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .result-gold-box{
+      animation:goldBoxReveal .46s cubic-bezier(.22,1,.36,1) .04s both;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-ring,
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-ring{
+      animation:goldCelebrateRing .9s ease-out infinite;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti,
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti{
+      opacity:1;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span,
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span{
+      animation:goldConfettiFloat 1.12s ease-out infinite;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(1),
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(1){--confetti-rot:-18deg;animation-delay:.04s;}
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(2),
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(2){--confetti-rot:18deg;animation-delay:.16s;}
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(3),
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(3){--confetti-rot:28deg;animation-delay:.28s;}
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(4),
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result #boxIconStage .box-celebration-confetti span:nth-child(4){--confetti-rot:-28deg;animation-delay:.4s;}
+    /* RandomG 결과는 영상 + 텍스트만 사용 */
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .glow-burst,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .burst-ring,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .burst-rays,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-sparkles,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box{
+      display:none;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .open-stage-result{
+      gap:8px;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-amount{
+      order:2;
+      color:#fff;
+      opacity:0;
+      animation:randomGAmountReveal .34s ease-out .4s both;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-sub{
+      order:1;
+      opacity:0;
+      margin-bottom:4px;
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:.5px;
+      color:#e5e7eb;
+      background:rgba(0,0,0,.35);
+      backdrop-filter:blur(6px);
+      box-shadow:0 0 10px rgba(255,200,0,.4), 0 0 30px rgba(255,200,0,.3), 0 0 60px rgba(255,200,0,.2);
+      animation:randomGSubReveal .28s ease-out .72s both;
+    }
+    .result-sub{
+      min-width:24px;
+      font-size:13px;
+      font-weight:800;
+      color:#d6e0ef;
+      position:relative;
+      z-index:2;
+    }
+    .result-sub:empty{
+      display:none;
+    }
+    .open-stage-result.gold-win .result-sub{
+      color:#fde68a;
+      text-shadow:0 0 14px rgba(250,204,21,.42);
+      animation:goldWinTextPop .52s cubic-bezier(.22,1,.36,1) both;
+      font-size:30px;
+      font-weight:900;
+      letter-spacing:-.01em;
+      line-height:1.18;
+      text-align:center;
+      margin-top:18px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(8,15,30,.46);
+      box-shadow:0 10px 24px rgba(2,6,23,.3), 0 0 20px rgba(250,204,21,.12);
+    }
+    .open-stage-result.gold-win .result-gold-box{
+      animation:goldWinBoxPop .68s cubic-bezier(.16,1,.3,1) both;
+    }
+    .open-stage-result.gold-win .result-amount{
+      order:3;
+      margin-top:20px;
+      font-size:32px;
+      color:#fff;
+      text-shadow:0 0 16px rgba(148,163,184,.22);
+    }
+    .open-stage-result.gold-win .result-sub{order:2;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-basic{--gold-tier-glow:.52;--gold-tier-pulse:1.34s;--gold-tier-ring:1.18s;--gold-tier-sparkle:.58;--gold-tier-burst:1px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-good{--gold-tier-glow:1.08;--gold-tier-pulse:.9s;--gold-tier-ring:.76s;--gold-tier-sparkle:1.08;--gold-tier-burst:12px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-great{--gold-tier-glow:1.62;--gold-tier-pulse:.72s;--gold-tier-ring:.58s;--gold-tier-sparkle:1.44;--gold-tier-burst:22px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-best{--gold-tier-glow:2.15;--gold-tier-pulse:.58s;--gold-tier-ring:.46s;--gold-tier-sparkle:1.84;--gold-tier-burst:34px;}
+    #openSheet.fx-gold-open .open-stage-result.gold-tier-dream{--gold-tier-glow:2.86;--gold-tier-pulse:.44s;--gold-tier-ring:.36s;--gold-tier-sparkle:2.4;--gold-tier-burst:48px;}
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result{
+      --gold-tier-glow:1;
+      --gold-tier-pulse:.98s;
+      --gold-tier-ring:.84s;
+      --gold-tier-sparkle:1;
+      --gold-tier-burst:10px;
+    }
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .glow-burst{filter:brightness(var(--gold-tier-glow)) saturate(calc(1 + (var(--gold-tier-glow) - 1) * .9));animation-duration:var(--gold-tier-pulse);}
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .burst-ring{animation-duration:var(--gold-tier-ring);transform:translate(-50%,-50%) scale(calc(.92 + (var(--gold-tier-glow) - 1) * .46));}
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .burst-rays{filter:brightness(calc(.7 + var(--gold-tier-glow) * .36));}
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .result-sparkles{transform:translateY(calc(var(--gold-tier-burst) * -1));}
+    #openSheet.fx-gold-open .box-open-stage.stage-show-result .open-stage-result .result-sparkles span{opacity:calc(.02 + (var(--gold-tier-glow) - .52) * .56);animation-duration:calc(.98s / var(--gold-tier-sparkle));}
+    .open-stage-result.gold-win .result-gold-box{
+      order:1;
+      width:92px;
+      height:92px;
+    }
+    .open-stage-result.gold-win .result-gold-box .gift-box{
+      width:92px;
+      height:92px;
+      filter:drop-shadow(0 10px 22px rgba(0,0,0,.24));
+      animation:goldBoxHeroPulse 1.22s ease-in-out .16s infinite;
+    }
+    /* RandomG 결과 전용: 잔상 없이 단순한 네모 선물상자 + 리본 */
+    .result-gold-box .gift-box::before,
+    .result-gold-box .gift-box::after,
+    .result-gold-box .gift-box .gift-box-glow{
+      display:none;
+    }
+    .result-gold-box .gift-box .gift-lid{
+      top:18px;
+      width:84px;
+      height:20px;
+      border-radius:8px;
+      background:linear-gradient(180deg, #fde68a 0%, #fbbf24 100%);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.32), 0 6px 12px rgba(146,64,14,.16);
+    }
+    .result-gold-box .gift-box .gift-body{
+      top:36px;
+      width:78px;
+      height:50px;
+      border-radius:8px;
+      background:linear-gradient(180deg, #fcd34d 0%, #f59e0b 100%);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.24), 0 10px 16px rgba(146,64,14,.2);
+    }
+    .result-gold-box .gift-box .gift-lid::before,
+    .result-gold-box .gift-box .gift-body::before{
+      width:12px;
+      border-radius:2px;
+      background:linear-gradient(180deg, #fff7cc 0%, #ffef9a 100%);
+      box-shadow:none;
+    }
+    .result-gold-box .gift-box .gift-lid::after,
+    .result-gold-box .gift-box .gift-body::after{
+      height:8px;
+      border-radius:2px;
+      background:linear-gradient(180deg, #fff7cc 0%, #ffef9a 100%);
+      box-shadow:none;
+    }
+    .result-gold-box .gift-box .gift-ribbon-knot{
+      top:12px;
+      width:14px;
+      height:10px;
+      border-radius:2px;
+      background:#fff7cc;
+    }
+    .result-gold-box .gift-box .gift-ribbon-knot::before,
+    .result-gold-box .gift-box .gift-ribbon-knot::after{
+      display:none;
+    }
+    .box-open-stage.stage-video-playing.is-random-gold-slowfx .open-stage-result{
+      justify-content:flex-end;
+      padding:24px 20px 30px;
+    }
+    .box-open-stage.stage-video-playing.is-random-gold-slowfx .glow-burst{
+      display:none;
+    }
+    .box-open-stage.stage-video-playing.is-random-gold-slowfx .result-gold-box{
+      display:none;
+    }
+    .box-open-stage.stage-video-playing.is-random-gold-slowfx .result-sub{
+      margin-top:0;
+      padding:9px 16px;
+      border-radius:999px;
+      background:rgba(0,0,0,.55);
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+      color:#ffd700;
+      text-shadow:0 0 8px rgba(255,215,0,.56);
       font-size:24px;
       font-weight:900;
-      letter-spacing:-0.03em;
-      text-shadow:0 2px 6px rgba(15,23,42,.35);
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
-      backdrop-filter:blur(1px);
-      -webkit-backdrop-filter:blur(1px);
-      transition:transform .22s ease, background .22s ease, color .22s ease, box-shadow .22s ease, opacity .22s ease, filter .22s ease;
+      letter-spacing:-.01em;
+      animation:randomGSubReveal .28s ease-out both;
     }
-    .gold-reel-item.highlight{
-      background:linear-gradient(180deg,#fde68a,#f59e0b);
-      color:#111827;
-      box-shadow:0 18px 30px rgba(245,158,11,.26), inset 0 0 0 1px rgba(255,255,255,.55);
-      transform:scale(1.06);
-      filter:saturate(1.1);
+    .box-open-stage.stage-video-playing.is-random-gold-slowfx .result-amount{
+      display:none;
     }
-
-    .gold-reel-status{
-      font-size:12px;
-      font-weight:800;
-      color:#dbeafe;
-      letter-spacing:-0.01em;
-      min-height:17px;
-      position:relative;
-      z-index:2;
+    .box-open-stage.stage-video-playing.is-random-gold-slowfx .burst-ring,
+    .box-open-stage.stage-video-playing.is-random-gold-slowfx .burst-rays,
+    .box-open-stage.stage-video-playing.is-random-gold-slowfx .result-sparkles{
+      display:none;
     }
-
-    .gold-reel-overlay.reel-settled .gold-reel-status{
-      color:#fde68a;
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result.stage-video-playing .open-stage-result{
+      justify-content:flex-end;
+      padding:24px 20px 30px;
+      gap:0;
     }
-    .gold-reel-overlay.reel-settled .gold-reel-window{
-      box-shadow:
-        inset 0 0 0 1px rgba(253,224,71,.18),
-        inset 0 16px 28px rgba(255,255,255,.06),
-        inset 0 -18px 26px rgba(2,6,23,.24),
-        0 18px 34px rgba(250,204,21,.16);
-    }
-    .gold-reel-overlay.reel-settled .gold-reel-item{
-      opacity:.5;
-      filter:blur(.2px);
-    }
-    .gold-reel-overlay.reel-settled .gold-reel-item.highlight{
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result.stage-video-playing .result-sub{
       opacity:1;
-      filter:none;
-      animation:goldJackpotPulse .9s ease-in-out infinite alternate;
-    }
-    .gold-reel-overlay.reel-settled .gold-reel-window::before,
-    .gold-reel-overlay.reel-settled .gold-reel-window::after{
-      box-shadow:0 0 14px rgba(253,224,71,.42);
-    }
-
-    .gold-reel-overlay.reel-settled::before,
-    .gold-reel-overlay.reel-settled::after{
-      animation:goldCelebrationHalo 1.8s ease-in-out infinite alternate;
-    }
-
-    @keyframes goldShineSweep{
-      0%{transform:rotate(0deg) scale(1.2);opacity:.1;}
-      50%{opacity:.32;}
-      100%{transform:rotate(360deg) scale(1.2);opacity:.1;}
-    }
-    @keyframes goldJackpotPulse{
-      0%{transform:scale(1.03);filter:brightness(1);}
-      100%{transform:scale(1.08);filter:brightness(1.08);}
-    }
-    @keyframes goldCelebrationHalo{
-      0%{opacity:.42;transform:scale(1);}
-      100%{opacity:.7;transform:scale(1.08);}
-    }
-
-    #openSheet.fx-random-gold .gold-reel-overlay.show{
-      display:flex;
-    }
-    #openSheet.fx-random-gold .open-stage-video-wrap{
-      margin-top:2px;
-    }
-    #openSheet.fx-random-gold .box-open-stage.stage-show-result .open-stage-video-wrap,
-    #openSheet.fx-random-gold .box-open-stage.stage-show-result .gold-reel-overlay{
-      opacity:1;
-      visibility:visible;
-    }
-
-    #openSheet.fx-gold-open .gold-reel-overlay.show{
-      display:flex;
-      width:min(100%, 328px);
-      padding:22px 22px 24px;
-      gap:16px;
-      border-radius:28px;
-      background:
-        radial-gradient(circle at 50% 18%, rgba(250,204,21,.28), rgba(15,23,42,.96) 54%),
-        linear-gradient(180deg, rgba(30,41,59,.96), rgba(15,23,42,.98));
-      box-shadow:
-        0 24px 52px rgba(2,6,23,.42),
-        inset 0 0 0 1px rgba(255,255,255,.05),
-        inset 0 18px 30px rgba(255,255,255,.04),
-        inset 0 -24px 34px rgba(2,6,23,.28);
-      overflow:hidden;
-      isolation:isolate;
-    }
-    #openSheet.fx-gold-open .gold-reel-overlay::before,
-    #openSheet.fx-gold-open .gold-reel-overlay::after{
-      content:"";
       position:absolute;
-      pointer-events:none;
-      z-index:0;
-    }
-    #openSheet.fx-gold-open .gold-reel-overlay::before{
-      inset:-42% -18%;
-      background:
-        radial-gradient(circle at 50% 18%, rgba(250,204,21,.22), rgba(250,204,21,0) 42%),
-        conic-gradient(from 180deg at 50% 50%, rgba(253,224,71,0), rgba(253,224,71,.14), rgba(253,224,71,0) 60%, rgba(253,224,71,.08) 76%, rgba(253,224,71,0) 100%);
-      animation:goldHeroAura 7.2s linear infinite;
-      opacity:.72;
-    }
-    #openSheet.fx-gold-open .gold-reel-overlay::after{
-      inset:10px;
-      border-radius:24px;
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0));
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
-      opacity:.92;
-    }
-    #openSheet.fx-gold-open .gold-reel-head,
-    #openSheet.fx-gold-open .gold-reel-window,
-    #openSheet.fx-gold-open .gold-reel-status{
-      position:relative;
-      z-index:2;
-    }
-    #openSheet.fx-gold-open .gold-reel-head{
-      gap:6px;
-    }
-    #openSheet.fx-gold-open .gold-reel-badge{
-      min-width:88px;
-      height:30px;
-      background:linear-gradient(135deg, rgba(250,204,21,.36), rgba(217,119,6,.46));
-      color:#fef3c7;
-      box-shadow:0 10px 22px rgba(217,119,6,.24), inset 0 0 0 1px rgba(255,255,255,.16);
-      letter-spacing:.08em;
-      font-size:11px;
-    }
-    #openSheet.fx-gold-open .gold-reel-title{
-      font-size:18px;
-      color:#fff7d6;
-      text-shadow:0 0 16px rgba(250,204,21,.2);
-    }
-    #openSheet.fx-gold-open .gold-reel-subtitle{
-      font-size:12px;
-      color:#e5e7eb;
-      max-width:240px;
-      line-height:1.5;
-    }
-    #openSheet.fx-gold-open .gold-reel-window{
-      width:100%;
-      max-width:284px;
-      height:166px;
-      padding:18px 18px 18px;
-      border-radius:32px;
-      background:
-        radial-gradient(circle at 50% 16%, rgba(251,191,36,.2), rgba(15,23,42,0) 40%),
-        linear-gradient(180deg, rgba(15,23,42,.92), rgba(17,24,39,.98));
-      box-shadow:
-        0 24px 42px rgba(0,0,0,.38),
-        inset 0 0 0 1px rgba(255,255,255,.08),
-        inset 0 18px 26px rgba(255,255,255,.04),
-        inset 0 -24px 30px rgba(2,6,23,.3);
-    }
-    #openSheet.fx-gold-open .gold-reel-window::before,
-    #openSheet.fx-gold-open .gold-reel-window::after{
-      content:"";
-      position:absolute;
-      left:16px;
-      right:16px;
-      height:2px;
+      left:50%;
+      bottom:30px;
+      transform:translateX(-50%);
+      margin:0;
+      padding:9px 16px;
       border-radius:999px;
-      background:linear-gradient(90deg, rgba(251,191,36,0), rgba(251,191,36,.94), rgba(251,191,36,0));
-      box-shadow:0 0 16px rgba(251,191,36,.46);
-      z-index:3;
+      background:rgba(0,0,0,.55);
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+      color:#ffd700;
+      text-shadow:0 0 8px rgba(255,215,0,.56);
+      font-size:24px;
+      font-weight:900;
+      letter-spacing:-.01em;
+      animation:none;
+      z-index:8;
     }
-    #openSheet.fx-gold-open .gold-reel-window::before{
-      top:50%;
-      transform:translateY(calc(-50% - 24px));
-    }
-    #openSheet.fx-gold-open .gold-reel-window::after{
-      top:50%;
-      transform:translateY(calc(-50% + 24px));
-    }
-    #openSheet.fx-gold-open .gold-reel-window-glow{
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result.stage-video-playing .result-amount{
       position:absolute;
-      inset:12px;
-      border-radius:24px;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(251,191,36,.14), rgba(251,191,36,0) 62%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      left:50%;
+      top:calc(50% + 24px);
+      transform:translate(-50%,-50%);
+      margin:0;
+      display:block;
+      opacity:1;
+      animation:none;
+      text-align:center;
+      z-index:8;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .open-stage-box-wrap,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .open-stage-clouds,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .glow-burst,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .burst-ring,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .burst-rays,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-sparkles{
+      display:none;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .open-stage-result{
+      gap:12px;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box{
+      width:118px;
+      height:118px;
+      margin-top:4px;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box .gift-box{
+      width:118px;
+      height:118px;
+      filter:drop-shadow(0 16px 24px rgba(92,43,9,.32));
+      animation:goldWinBoxPop .68s cubic-bezier(.16,1,.3,1) both;
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box .gift-lid{
+      top:25px;
+      width:104px;
+      height:22px;
+      border-radius:3px;
+      background:linear-gradient(180deg, #ffe7a3 0%, #f2b934 52%, #dd951a 100%);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.36), 0 4px 10px rgba(120,53,15,.18);
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box .gift-body{
+      top:47px;
+      width:98px;
+      height:62px;
+      border-radius:3px;
+      background:linear-gradient(180deg, #f9d35f 0%, #e5a51f 58%, #cc8610 100%);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.24), 0 10px 14px rgba(120,53,15,.2);
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box .gift-lid::before,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box .gift-body::before{
+      width:11px;
+      border-radius:1px;
+      background:linear-gradient(180deg, #fff8db 0%, #f6d773 100%);
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box .gift-lid::after,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box .gift-body::after{
+      height:6px;
+      border-radius:1px;
+      background:linear-gradient(180deg, #fff8db 0%, #f6d773 100%);
+    }
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box .gift-ribbon-knot{
+      top:16px;
+      width:16px;
+      height:12px;
+      border-radius:1px;
+      background:#fff5ca;
+    }
+
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box::before,
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box::after{
+      content:"";
+      position:absolute;
+      inset:0;
       pointer-events:none;
       z-index:1;
     }
-    #openSheet.fx-gold-open .gold-reel-track{
-      gap:10px;
-      transition:transform .1s linear;
-    }
-    #openSheet.fx-gold-open .gold-reel-item{
-      height:48px;
-      border-radius:18px;
-      font-size:26px;
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box::before{
       background:
-        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
-        linear-gradient(180deg, rgba(30,41,59,.86), rgba(15,23,42,.92));
-      color:#f8fafc;
-      text-shadow:0 3px 10px rgba(15,23,42,.36);
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.04),
-        0 12px 22px rgba(2,6,23,.2);
-      filter:none;
-      transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, opacity .2s ease;
+        radial-gradient(circle at 18% 24%, rgba(255,251,220,1) 0 2.4px, transparent 3.4px),
+        radial-gradient(circle at 86% 20%, rgba(255,247,186,.96) 0 2.2px, transparent 3.2px),
+        radial-gradient(circle at 12% 74%, rgba(255,240,168,.92) 0 1.9px, transparent 3px),
+        radial-gradient(circle at 90% 78%, rgba(255,250,222,.96) 0 1.9px, transparent 3px),
+        radial-gradient(circle at 48% 14%, rgba(255,253,236,.88) 0 1.6px, transparent 2.8px),
+        radial-gradient(circle at 50% 88%, rgba(255,244,176,.86) 0 1.6px, transparent 2.8px);
+      opacity:.9;
+      animation:goldSparkleTwinkle 1.22s ease-in-out infinite;
     }
-    #openSheet.fx-gold-open .gold-reel-item.highlight{
-      background:
-        linear-gradient(180deg, #fff3b0, #f59e0b),
-        linear-gradient(180deg, rgba(255,255,255,.3), rgba(255,255,255,0));
-      color:#1f2937;
-      box-shadow:
-        0 22px 34px rgba(245,158,11,.3),
-        inset 0 0 0 1px rgba(255,255,255,.58),
-        inset 0 12px 18px rgba(255,255,255,.22);
-      transform:scale(1.08);
-    }
-    #openSheet.fx-gold-open .gold-reel-status{
-      min-height:18px;
-      font-size:12px;
-      font-weight:900;
-      color:#e5e7eb;
-      text-shadow:0 2px 8px rgba(15,23,42,.24);
-    }
-    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-window{
-      box-shadow:
-        0 26px 48px rgba(245,158,11,.18),
-        inset 0 0 0 1px rgba(253,224,71,.14),
-        inset 0 18px 26px rgba(255,255,255,.06),
-        inset 0 -26px 34px rgba(2,6,23,.32);
-    }
-    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-item{
-      opacity:.45;
-      filter:saturate(.86) blur(.18px);
-    }
-    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-item.highlight{
-      opacity:1;
-      filter:none;
-      transform:scale(1.08);
-      animation:goldHeroJackpot 1.05s ease-in-out infinite alternate;
-    }
-    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-status{
-      color:#fde68a;
-      text-shadow:0 0 12px rgba(253,224,71,.24);
-    }
-    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled::before{
-      opacity:.95;
-      animation:goldHeroAura 4.8s linear infinite;
-    }
-    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled::after{
-      animation:goldHeroCardPulse 1.8s ease-in-out infinite alternate;
-    }
-    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-window::before,
-    #openSheet.fx-gold-open .gold-reel-overlay.reel-settled .gold-reel-window::after{
-      box-shadow:0 0 18px rgba(253,224,71,.52);
+    #openSheet.fx-random-gold .box-open-stage.stage-show-result .result-gold-box::after{
+      background:radial-gradient(circle, rgba(250,204,21,.42) 0%, rgba(250,204,21,.14) 44%, rgba(250,204,21,0) 72%);
+      transform:scale(1.12);
+      filter:blur(1px);
+      opacity:.72;
+      animation:goldSparkleHalo 1.45s ease-in-out infinite;
     }
 
-    #openSheet.fx-gold-open .box-open-stage.stage-show-result .gold-reel-overlay{
-      display:none;
-    }
 
-    #openSheet.fx-gold-open .box-open-stage.stage-show-result::before,
-    #openSheet.fx-gold-open .box-open-stage.stage-show-result::after{
-      opacity:1;
-    }
-    #openSheet.fx-gold-open .box-open-stage.stage-show-result::before{
-      background:
-        radial-gradient(circle at 50% 18%, rgba(251,191,36,.32), rgba(251,191,36,0) 62%),
-        radial-gradient(circle at 18% 72%, rgba(250,204,21,.14), rgba(250,204,21,0) 46%),
-        radial-gradient(circle at 82% 72%, rgba(250,204,21,.14), rgba(250,204,21,0) 46%);
-    }
-    #openSheet.fx-gold-open .box-open-stage.stage-show-result::after{
-      display:none;
-    }
-
-    .gold-tier-basic .amount{
-      color:#f8fafc;
-    }
-    .gold-tier-good .amount{
-      color:#fde68a;
-      text-shadow:0 0 14px rgba(250,204,21,.22), 0 8px 26px rgba(120,53,15,.26);
-    }
-    .gold-tier-great .amount{
-      color:#facc15;
-      text-shadow:0 0 18px rgba(250,204,21,.28), 0 8px 26px rgba(120,53,15,.28);
-    }
-    .gold-tier-best .amount,
-    .gold-tier-dream .amount{
-      color:#fbbf24;
-      text-shadow:0 0 20px rgba(251,191,36,.32), 0 8px 28px rgba(120,53,15,.3);
-    }
-    .gold-tier-best::before,
-    .gold-tier-best::after,
-    .gold-tier-dream::before,
-    .gold-tier-dream::after{
-      opacity:1;
-    }
-    .gold-tier-best::before,
-    .gold-tier-dream::before{
-      background:
-        radial-gradient(circle at center, rgba(251,191,36,.34), rgba(251,191,36,0) 64%),
-        radial-gradient(circle at 18% 60%, rgba(255,255,255,.16), rgba(255,255,255,0) 30%),
-        radial-gradient(circle at 82% 60%, rgba(255,255,255,.16), rgba(255,255,255,0) 30%);
-      filter:blur(6px);
-      animation:goldResultHalo 1.9s ease-in-out infinite;
-    }
-    .gold-tier-best::after,
-    .gold-tier-dream::after{
-      background:
-        radial-gradient(circle, rgba(255,255,255,.18) 0 22%, rgba(255,255,255,0) 23%),
-        radial-gradient(circle, rgba(255,255,255,.12) 0 18%, rgba(255,255,255,0) 19%);
-      background-size:92px 92px, 120px 120px;
-      background-position:12% 22%, 84% 78%;
-      animation:goldSparkleTwinkle 1.4s ease-in-out infinite;
-    }
-    .gold-tier-dream::after{
-      background:
-        radial-gradient(circle, rgba(255,255,255,.2) 0 22%, rgba(255,255,255,0) 23%),
-        radial-gradient(circle, rgba(255,255,255,.16) 0 18%, rgba(255,255,255,0) 19%),
-        radial-gradient(circle, rgba(255,255,255,.12) 0 14%, rgba(255,255,255,0) 15%);
-      background-size:92px 92px, 120px 120px, 84px 84px;
-      background-position:10% 18%, 88% 74%, 54% 88%;
-    }
-    .gold-tier-dream::before{
-      animation:goldSparkleHalo 1.6s ease-in-out infinite;
-    }
-
-    @keyframes goldHeroAura{
-      0%{transform:rotate(0deg) scale(1);}
-      100%{transform:rotate(360deg) scale(1.04);}
-    }
-    @keyframes goldHeroCardPulse{
-      0%{opacity:.78;transform:scale(1);}
-      100%{opacity:1;transform:scale(1.015);}
-    }
-    @keyframes goldHeroJackpot{
-      0%{transform:scale(1.05) translateY(0);filter:brightness(1);}
-      100%{transform:scale(1.1) translateY(-2px);filter:brightness(1.08);}
-    }
-    @keyframes goldResultHalo{
-      0%,100%{opacity:.4;transform:scale(.96);}
-      50%{opacity:.86;transform:scale(1.03);}
-    }
     @keyframes goldSparkleTwinkle{
       0%,100%{opacity:.4;transform:scale(.96);}
       50%{opacity:.86;transform:scale(1.03);}
@@ -2532,42 +3433,62 @@
       .ad-btn{min-height:46px;font-size:15px;}
       .box-open-stage{min-height:250px;padding:18px 16px 20px;}
       .box-icon{width:156px;height:156px;}
-      .box-icon-stage{width:156px;height:156px;}
-      .box-open-result .amount{font-size:36px;}
-      .gold-reel-overlay,
-      #openSheet.fx-gold-open .gold-reel-overlay{max-width:290px;padding:18px 18px 20px;}
-      .gold-reel-window,
-      #openSheet.fx-gold-open .gold-reel-window{max-width:250px;height:146px;}
-      .gold-reel-item,
-      #openSheet.fx-gold-open .gold-reel-item{font-size:22px;height:44px;}
-      .gold-reel-title{font-size:15px;}
-      .gold-reel-subtitle{font-size:11px;}
+      .open-stage-box-wrap{width:180px;height:180px;}
+      .result-gold-box{width:72px;height:72px;}
+      .result-amount{font-size:28px;}
+      .result-sub{font-size:12px;}
+      .open-stage-result.gold-win .result-sub{font-size:24px;}
     }
 
     .toast{
-      position:fixed;
+      position:absolute;
       left:50%;
-      bottom:calc(20px + env(safe-area-inset-bottom, 0px));
+      bottom:92px;
       transform:translateX(-50%) translateY(20px);
-      max-width:min(86vw, 360px);
-      background:rgba(17,24,39,.94);
+      min-width:220px;
+      max-width:85%;
+      background:rgba(17,24,39,.96);
       color:#fff;
-      border-radius:999px;
-      padding:10px 14px;
-      font-size:13px;
+      padding:13px 15px;
+      border-radius:16px;
+      z-index:70;
+      font-size:14px;
       font-weight:800;
       text-align:center;
-      z-index:100;
       opacity:0;
       pointer-events:none;
-      transition:opacity .2s ease, transform .2s ease;
-      box-shadow:0 16px 30px rgba(2,6,23,.24);
-      word-break:keep-all;
+      transition:.25s ease;
+      box-shadow:0 10px 30px rgba(0,0,0,.22);
     }
     .toast.show{
       opacity:1;
       transform:translateX(-50%) translateY(0);
     }
+
+    .loading{
+      padding:26px 16px;
+      color:#6b7280;
+      text-align:center;
+      font-size:14px;
+      font-weight:700;
+    }
+#watchScreen.mini-mode .player-float-controls,
+#watchScreen.mini-mode .mini-ad-wrap{
+  cursor:grab;
+  touch-action:none;
+}
+
+#watchScreen.mini-mode .top-fixed.dragging .player-float-controls,
+#watchScreen.mini-mode .top-fixed.dragging .mini-ad-wrap{
+  cursor:grabbing;
+}
+
+#watchScreen.mini-mode .top-fixed{
+  user-select:none;
+}
+#watchScreen.mini-mode .player-float-controls{
+  pointer-events:none;
+}
   </style>
 </head>
 <body>
@@ -2575,33 +3496,37 @@
     <section class="screen active" id="homeScreen">
       <header class="header">
         <div class="header-left">
-          <div class="brand"><img src="assets/logo.png" alt="VIEWSTER" onerror="this.style.display='none'">VIEWSTER</div>
+          <button class="icon-btn" aria-label="메뉴">
+            <svg fill="none" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <div class="brand">
+            <img src="assets/icon-reward.svg" alt="VIEWSTER" onerror="this.style.display='none'">
+            <span>VIEWSTER</span>
+          </div>
         </div>
-        <div class="header-test-tools">
-          <button class="tool-btn" data-add="60">+1분</button>
-          <button class="tool-btn" data-reward-set="595">+보상</button>
-          <button class="tool-btn" data-open-speed="0.8">x0.8</button>
-          <button class="tool-btn" data-open-speed="0.9">x0.9</button>
-          <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.3.07</span>
+        <div class="header-right">
+          <button class="icon-btn" aria-label="검색">
+            <svg fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" stroke-width="2"/><path d="M16 16l4 4" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
         </div>
       </header>
 
+      <div class="tabs-wrap">
+        <div class="tabs">
+          <button class="tab active">전체</button>
+          <button class="tab">Live</button>
+          <button class="tab">동영상</button>
+          <button class="tab">숏폼</button>
+        </div>
+      </div>
+
       <div class="main-scroll">
-        <div class="tabs-wrap">
-          <div class="tabs">
-            <button class="tab active">추천</button>
-            <button class="tab">라이브</button>
-            <button class="tab">뉴스</button>
-            <button class="tab">게임</button>
-            <button class="tab">스포츠</button>
-          </div>
+        <div class="promo-banner">
+          <img src="assets/hero_banner_01.png" alt="배너" onerror="this.src='assets/hero_banner_02.png'">
         </div>
 
-        <div class="promo-banner"><img src="assets/hero_banner_01.png" alt="배너" onerror="this.src='assets/hero_banner_02.png'"></div>
-
         <div class="list" id="homeList">
-          <div class="loading">영상을 불러오는 중입니다...</div>
+          <div class="loading">유튜브 영상을 불러오는 중입니다...</div>
         </div>
       </div>
     </section>
@@ -2609,18 +3534,22 @@
     <section class="screen" id="watchScreen">
       <header class="header">
         <div class="header-left">
-          <button class="icon-btn" id="backToHome" aria-label="뒤로가기">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+          <button class="icon-btn" aria-label="뒤로" id="backToHome">
+            <svg fill="none" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <div class="brand"><img src="assets/logo.png" alt="VIEWSTER" onerror="this.style.display='none'">VIEWSTER</div>
+          <div class="brand">
+            <img src="assets/icon-reward.svg" alt="VIEWSTER" onerror="this.style.display='none'">
+            <span>VIEWSTER</span>
+          </div>
         </div>
-        <div class="header-test-tools">
+
+        <div class="header-right header-test-tools">
           <button class="tool-btn" data-add="60">+1분</button>
           <button class="tool-btn" data-reward-set="595">+보상</button>
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.3.07</span>
+          <span class="dev-version-label">DEV v0.3.08</span>
         </div>
       </header>
 
@@ -2630,7 +3559,7 @@
             <div class="player">
               <div class="player-float-controls">
                 <div class="player-left-controls">
-                  <button class="player-fab icon-only" id="enterMiniBtn" aria-label="PIP 열기">▣</button>
+                  <button class="player-fab icon-only" id="enterMiniBtn" aria-label="PIP 열기">⌄</button>
                   <button class="player-fab" id="toggleMiniSizeBtn" style="display:none;">확대</button>
                 </div>
 
@@ -2660,7 +3589,7 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.3.07</span>
+            <span class="dev-version-label">DEV v0.3.08</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -2737,84 +3666,46 @@
         <button class="wallet-ui-switch-btn" data-wallet-ui="4">UI4</button>
         <button class="wallet-ui-switch-btn" data-wallet-ui="5">UI5</button>
       </div>
-      <div class="gold-reel-tune-panel collapsed" id="goldReelTunePanel">
-        <div class="gold-reel-tune-head">
-          <div class="gold-reel-tune-title">황금박스 릴 감속 세팅</div>
-          <div class="gold-reel-tune-note">단계별 속도와 유지 시간을 조정해<br>정지 연출을 테스트할 수 있어요.</div>
-        </div>
-        <div class="gold-reel-tune-grid">
-          <div class="gold-reel-tune-card">
-            <div class="gold-reel-tune-card-title">1단계</div>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">최대 속도</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS1Max" min="0.1" step="0.1" />
-            </label>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">최소 속도</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS1Min" min="0.1" step="0.1" />
-            </label>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">유지 시간 (ms)</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS1Dur" min="100" step="50" />
-            </label>
+      <div class="gold-reel-tune-panel collapsed" id="goldReelTunePanel" aria-label="황금박스 릴 감속 테스트">
+        <div class="gold-reel-tune-content">
+          <div class="gold-reel-tune-grid">
+            <div class="gold-reel-tune-grid-header">단계</div>
+            <div class="gold-reel-tune-grid-header">최고</div>
+            <div class="gold-reel-tune-grid-header">최저</div>
+            <div class="gold-reel-tune-grid-header">시간(ms)</div>
+
+            <div class="gold-reel-tune-grid-stage">1</div>
+            <input type="number" id="reelS1Max" aria-label="1단계 최고속도">
+            <input type="number" id="reelS1Min" aria-label="1단계 최저속도">
+            <input type="number" id="reelS1Dur" aria-label="1단계 유지시간(ms)">
+
+            <div class="gold-reel-tune-grid-stage">2</div>
+            <input type="number" id="reelS2Max" aria-label="2단계 최고속도">
+            <input type="number" id="reelS2Min" aria-label="2단계 최저속도">
+            <input type="number" id="reelS2Dur" aria-label="2단계 유지시간(ms)">
+
+            <div class="gold-reel-tune-grid-stage">3</div>
+            <input type="number" id="reelS3Max" aria-label="3단계 최고속도">
+            <input type="number" id="reelS3Min" aria-label="3단계 최저속도">
+            <div class="gold-reel-tune-range">
+              <input type="number" id="reelS3DurMin" aria-label="3단계 유지시간 최소(ms)">
+              <span>~</span>
+              <input type="number" id="reelS3DurMax" aria-label="3단계 유지시간 최대(ms)">
+            </div>
+
+            <div class="gold-reel-tune-grid-stage">4</div>
+            <input type="number" id="reelS4Max" aria-label="4단계 최고속도">
+            <input type="number" id="reelS4Min" aria-label="4단계 최저속도">
+            <div class="gold-reel-tune-range">
+              <input type="number" id="reelS4DurMin" aria-label="4단계 유지시간 최소(ms)">
+              <span>~</span>
+              <input type="number" id="reelS4DurMax" aria-label="4단계 유지시간 최대(ms)">
+            </div>
           </div>
-          <div class="gold-reel-tune-card">
-            <div class="gold-reel-tune-card-title">2단계</div>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">최대 속도</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS2Max" min="0.1" step="0.1" />
-            </label>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">최소 속도</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS2Min" min="0.1" step="0.1" />
-            </label>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">유지 시간 (ms)</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS2Dur" min="100" step="50" />
-            </label>
+          <div class="gold-reel-tune-actions">
+            <button class="gold-reel-tune-btn apply" id="applyReelTuneBtn">적용</button>
+            <button class="gold-reel-tune-btn reset" id="resetReelTuneBtn">기본값 복원</button>
           </div>
-          <div class="gold-reel-tune-card">
-            <div class="gold-reel-tune-card-title">3단계</div>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">최대 속도</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS3Max" min="0.05" step="0.05" />
-            </label>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">최소 속도</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS3Min" min="0.05" step="0.05" />
-            </label>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">최소 시간 (ms)</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS3DurMin" min="100" step="50" />
-            </label>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">최대 시간 (ms)</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS3DurMax" min="100" step="50" />
-            </label>
-          </div>
-          <div class="gold-reel-tune-card">
-            <div class="gold-reel-tune-card-title">4단계</div>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">최대 속도</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS4Max" min="0.05" step="0.05" />
-            </label>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">최소 속도</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS4Min" min="0.05" step="0.05" />
-            </label>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">최소 시간 (ms)</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS4DurMin" min="100" step="50" />
-            </label>
-            <label class="gold-reel-tune-field">
-              <span class="gold-reel-tune-label">최대 시간 (ms)</span>
-              <input type="number" class="gold-reel-tune-input" id="reelS4DurMax" min="100" step="50" />
-            </label>
-          </div>
-        </div>
-        <div class="gold-reel-tune-actions">
-          <button class="gold-reel-tune-btn reset" id="resetReelTuneBtn">기본값 복원</button>
-          <button class="gold-reel-tune-btn apply" id="applyReelTuneBtn">적용</button>
         </div>
       </div>
       <div class="wallet-content-block">
@@ -2832,6 +3723,7 @@
             <div class="wallet-value" id="rewardPoint">0 P</div>
           </div>
         </div>
+
         <div class="wallet-action-row">
           <button class="wallet-open-btn" id="walletOpenRandom">랜덤</button>
           <button class="wallet-open-btn" id="walletOpenRandomFail">랜덤X</button>
@@ -2859,6 +3751,7 @@
             </div>
             <button class="wallet-open-btn" type="button">출금하기</button>
           </div>
+
           <div class="wallet-card">
             <div class="wallet-card-left">
               <img class="wallet-icon-img" src="./assets/randombox.png" alt="랜덤박스" />
@@ -2869,6 +3762,7 @@
             </div>
             <button class="wallet-open-btn" id="walletLiveOpenRandom">열기</button>
           </div>
+
           <div class="wallet-card">
             <div class="wallet-card-left">
               <img class="wallet-icon-img is-gold" src="./assets/goldbox.png" alt="황금박스" />
@@ -2929,9 +3823,11 @@
     </div>
     <div class="sheet-body">
       <div class="sheet-title">댓글 <span id="sheetCommentCount">0개</span></div>
-      <div id="commentList">
-        <div class="loading">댓글을 준비하는 중입니다...</div>
+      <div class="comment-tab">
+        <button class="chip active">인기순</button>
+        <button class="chip">최신순</button>
       </div>
+      <div id="commentList"></div>
     </div>
   </section>
 
@@ -2940,20 +3836,22 @@
       <button class="sheet-close" data-close="adSheet" style="background:#1f2937;color:#fff;">×</button>
     </div>
     <div class="sheet-body sheet-body--plain">
-      <div class="ad-top">보상형 광고 시청</div>
-      <div class="ad-desc">광고를 끝까지 시청하거나 5초 후 직접 받기 버튼을 눌러 랜덤박스를 획득해보세요.</div>
-      <div class="ad-video-wrap">
-        <div class="ad-video-shell">
-          <video class="ad-video" id="rewardAdVideo" muted playsinline autoplay loop preload="auto">
-            <source src="./assets/ad_reward.mp4" type="video/mp4" />
-          </video>
-        </div>
+      <div class="ad-top">광고 시청 후 랜덤박스를 받을 수 있어요</div>
+      <div class="ad-desc">
+        5초 후 직접 받을 수 있고, 누르지 않아도 15초 후 자동으로 지급됩니다.
+      </div>
+      <div class="ad-frame">
+        <video id="rewardAdVideo" muted playsinline webkit-playsinline>
+          <source src="assets/preroll.mp4" type="video/mp4" />
+        </video>
       </div>
       <div class="ad-progress-wrap">
-        <div class="ad-progress-track"><div class="ad-progress-fill" id="rewardAdProgress"></div></div>
+        <div class="ad-progress-track">
+          <div class="ad-progress-fill" id="rewardAdProgress"></div>
+        </div>
       </div>
       <div class="ad-guide">
-        <span id="rewardAdGuideLeft"><strong>5초 후</strong> 직접 받기가 열립니다.</span>
+        <span id="rewardAdGuideLeft">광고 재생중...</span>
         <span id="rewardAdGuideRight">15초 후 자동 지급</span>
       </div>
       <div class="ad-btn-wrap">
@@ -2967,31 +3865,67 @@
       <button class="sheet-close" data-close="openSheet" style="background:#1f2937;color:#fff;">×</button>
     </div>
     <div class="sheet-body sheet-body--plain">
-      <div class="box-open-stage" id="openStage">
-        <div class="open-stage-video-wrap" id="openStageVideoWrap">
-          <video class="open-stage-video" id="openStageVideo" muted playsinline preload="auto">
-            <source id="openStageVideoSource" src="" type="video/mp4" />
-          </video>
-        </div>
+      <div class="box-open-stage box-open-bg" id="openStage">
+        <div class="open-stage-backdrop" aria-hidden="true"></div>
+        <video class="open-stage-video" id="openStageVideo" autoplay muted playsinline webkit-playsinline preload="auto" aria-hidden="true">
+          <source id="openStageVideoSource" src="" type="video/mp4" />
+        </video>
         <div class="gold-reel-overlay" id="goldReelOverlay" aria-hidden="true">
-          <div class="gold-reel-head">
-            <div class="gold-reel-badge">GOLD</div>
-            <div class="gold-reel-title">황금박스 릴 오픈</div>
-            <div class="gold-reel-subtitle">릴이 천천히 멈추면 최종 보상 포인트가 결정됩니다.</div>
-          </div>
           <div class="gold-reel-window">
-            <div class="gold-reel-window-glow"></div>
             <div class="gold-reel-track" id="goldReelTrack"></div>
           </div>
-          <div class="gold-reel-status" id="goldReelStatus">릴을 회전하는 중입니다...</div>
         </div>
-        <div class="box-icon-stage" id="boxIconStage">
-          <img class="box-icon" src="assets/randombox.png" alt="박스" id="boxIconImg">
+        <div class="open-stage-box-wrap" id="openStageBoxWrap">
+          <div class="box-icon box-pop is-random-box" id="boxIconStage">
+            <span class="box-core-glow" aria-hidden="true"></span>
+            <span class="box-lid-light" aria-hidden="true"></span>
+            <span class="box-open-flash" aria-hidden="true"></span>
+            <span class="box-spark box-spark-a" style="--spark-x:-20px;--spark-y:-26px;" aria-hidden="true"></span>
+            <span class="box-spark box-spark-b" style="--spark-x:24px;--spark-y:-30px;" aria-hidden="true"></span>
+            <span class="box-spark box-spark-c" style="--spark-x:-18px;--spark-y:18px;" aria-hidden="true"></span>
+            <span class="box-spark box-spark-d" style="--spark-x:22px;--spark-y:14px;" aria-hidden="true"></span>
+            <span class="box-celebration-ring" aria-hidden="true"></span>
+            <span class="box-celebration-confetti" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+            <div class="gift-box" aria-hidden="true">
+              <span class="gift-box-glow"></span>
+              <span class="gift-ribbon-knot"></span>
+              <span class="gift-box-part gift-lid"></span>
+              <span class="gift-box-part gift-body"></span>
+            </div>
+          </div>
         </div>
         <div class="box-open-text" id="openStageText"></div>
-        <div class="box-open-result" id="openStageResult">
-          <div class="amount" id="openResultAmount"></div>
-          <div class="sub" id="openResultSub"></div>
+        <div class="open-stage-clouds" id="openStageClouds" aria-hidden="true">
+          <span class="open-stage-cloud cloud-a"></span>
+          <span class="open-stage-cloud cloud-b"></span>
+          <span class="open-stage-cloud cloud-c"></span>
+          <span class="open-stage-cloud cloud-d"></span>
+        </div>
+        <div class="open-stage-result" id="openStageResult" aria-live="polite">
+          <div class="glow-burst"></div>
+          <div class="burst-ring" aria-hidden="true"></div>
+          <div class="burst-rays" aria-hidden="true"></div>
+          <div class="result-sparkles" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="result-gold-box" id="resultGoldBox" aria-hidden="true">
+            <div class="gift-box" aria-hidden="true">
+              <span class="gift-box-glow"></span>
+              <span class="gift-ribbon-knot"></span>
+              <span class="gift-box-part gift-lid"></span>
+              <span class="gift-box-part gift-body"></span>
+            </div>
+          </div>
+          <div class="result-amount" id="openResultAmount"></div>
+          <div class="result-sub" id="openResultSub"></div>
         </div>
       </div>
       <div class="ad-btn-wrap open-sheet-actions" id="openSheetActions">
@@ -3002,10 +3936,65 @@
 
   <script>
     const YT_API_KEY = "AIzaSyDJsG19IyawKlfAALJMIjcb2KGMk5hvX14";
+
     const VIDEO_URL_POOL = [
-      "https://www.youtube.com/watch?v=ZxwEWuM2jdo",
-      "https://www.youtube.com/watch?v=fLexgOxsZu0",
-      "https://www.youtube.com/watch?v=ewp2p5n0sGw",
+      "https://www.youtube.com/watch?v=-hh1iRtk4E8",
+      "https://www.youtube.com/watch?v=mFgAw3t91-E",
+      "https://www.youtube.com/watch?v=vBMrB873-Pk",
+      "https://www.youtube.com/watch?v=9PGim3h5Uz8",
+      "https://www.youtube.com/watch?v=ccgbANWUEOc",
+      "https://www.youtube.com/watch?v=iFI44wD0HDg",
+      "https://www.youtube.com/watch?v=i9sxWSHEoNg",
+      "https://www.youtube.com/watch?v=72Y_aGVf3Ms",
+      "https://www.youtube.com/watch?v=dKag1a6t2_I",
+      "https://www.youtube.com/watch?v=pz6Jv3o8_nU",
+      "https://www.youtube.com/watch?v=sWMLVArSiWo",
+      "https://www.youtube.com/watch?v=Z6oru_WK8uQ",
+      "https://www.youtube.com/watch?v=0w78sKSucUE",
+      "https://www.youtube.com/watch?v=O-xOEGLO7-E",
+      "https://www.youtube.com/watch?v=qPl9PceKVHk",
+      "https://www.youtube.com/watch?v=mz3swK7JsGM",
+      "https://www.youtube.com/watch?v=3QkNE0pZUp0",
+      "https://www.youtube.com/watch?v=Kmx2TPuIL9E",
+      "https://www.youtube.com/watch?v=k8F_qxbC0zE",
+      "https://www.youtube.com/watch?v=inZsde6VTNM",
+      "https://www.youtube.com/watch?v=7YeLRl-gbhs",
+      "https://www.youtube.com/watch?v=R4GRera7LRI",
+      "https://www.youtube.com/watch?v=ZPvVtQQr_Ds",
+      "https://www.youtube.com/watch?v=N7svI7jHu20",
+      "https://www.youtube.com/watch?v=fll5ItofMlQ",
+      "https://www.youtube.com/watch?v=oC-s1fiFfy4",
+      "https://www.youtube.com/watch?v=24Kp_5HWGF0",
+      "https://www.youtube.com/watch?v=vLMkGa4es64",
+      "https://www.youtube.com/watch?v=A47f5LTeGoI",
+      "https://www.youtube.com/watch?v=2UES8U6z4YU",
+      "https://www.youtube.com/watch?v=tdETE07_wZo",
+      "https://www.youtube.com/watch?v=MXtFhP0D1Wk",
+      "https://www.youtube.com/watch?v=ftmE4QjLDmk",
+      "https://www.youtube.com/watch?v=Gt8-liDl51M",
+      "https://www.youtube.com/watch?v=RFJlOvhvUZo",
+      "https://www.youtube.com/watch?v=XB_AXTMeFIM",
+      "https://www.youtube.com/watch?v=gKq8kERiP4U",
+      "https://www.youtube.com/watch?v=kUdGKBOI49o",
+      "https://www.youtube.com/watch?v=_X_02V4ZROE",
+      "https://www.youtube.com/watch?v=ZXlkt1jJw-A",
+      "https://www.youtube.com/watch?v=rQhdSQeWrQE",
+      "https://www.youtube.com/watch?v=OdfrgES12HM",
+      "https://www.youtube.com/watch?v=PnUkKkJZf_A",
+      "https://www.youtube.com/watch?v=fuEf_kn3bPg",
+      "https://www.youtube.com/watch?v=UmQBviQkx3s",
+      "https://www.youtube.com/watch?v=spT3aW-56mw",
+      "https://www.youtube.com/watch?v=FwnvA-SFNKQ",
+      "https://www.youtube.com/watch?v=KxwLBPNG3ZY",
+      "https://www.youtube.com/watch?v=FyQMnGdKMjs",
+      "https://www.youtube.com/watch?v=oacsbG0bnOk",
+      "https://www.youtube.com/watch?v=8BBYhWmAANg",
+      "https://www.youtube.com/watch?v=jzHmFOjrK6w",
+      "https://www.youtube.com/watch?v=KQ1KjiWeoOs",
+      "https://www.youtube.com/watch?v=tVj5RFyl5o4",
+      "https://www.youtube.com/watch?v=NLMfjwTrdDA",
+      "https://www.youtube.com/watch?v=C9Fczy4Fc4U",
+      "https://www.youtube.com/watch?v=qCmI_rsjsNI",
       "https://www.youtube.com/watch?v=i8-l_WdKN9k",
       "https://www.youtube.com/watch?v=xxs7npWudLc",
       "https://www.youtube.com/watch?v=wJCnYIdmDmw",
@@ -3052,10 +4041,30 @@
     let lastWatchScrollTop = 0;
     let upwardScrollDistance = 0;
     let miniSizeLevel = 1;
+
+    let miniDragActive = false;
+    let miniDragOffsetX = 0;
+    let miniDragOffsetY = 0;
+    let currentWalletUI = 1;
+
     const SHEET_IDLE_CLOSE_MS = 10000;
-    let commentSheetIdleTimer = null;
     let walletSheetIdleTimer = null;
-    const currentWalletUI = 1;
+    let commentSheetIdleTimer = null;
+
+    function applyWalletUI(nextUI){
+      const walletSheets = [document.getElementById("walletSheet"), document.getElementById("walletSheetLive")].filter(Boolean);
+      if(!walletSheets.length) return;
+      const parsedUI = Number(nextUI);
+      if(parsedUI < 1 || parsedUI > 5) return;
+      currentWalletUI = parsedUI;
+      walletSheets.forEach(sheet => {
+        sheet.classList.remove("wallet-ui-1", "wallet-ui-2", "wallet-ui-3", "wallet-ui-4", "wallet-ui-5");
+        sheet.classList.add(`wallet-ui-${currentWalletUI}`);
+      });
+      document.querySelectorAll(".wallet-ui-switch-btn").forEach(btn => {
+        btn.classList.toggle("active", Number(btn.dataset.walletUi) === currentWalletUI);
+      });
+    }
 
     function isWalletSheetId(id){
       return id === "walletSheet" || id === "walletSheetLive";
@@ -3178,11 +4187,10 @@
     const openStage = document.getElementById("openStage");
     const openStageVideo = document.getElementById("openStageVideo");
     const openStageVideoSource = document.getElementById("openStageVideoSource");
-    const openStageBoxWrap = document.getElementById("boxIconStage");
+    const openStageBoxWrap = document.getElementById("openStageBoxWrap");
     const openStageResult = document.getElementById("openStageResult");
     const goldReelOverlay = document.getElementById("goldReelOverlay");
     const goldReelTrack = document.getElementById("goldReelTrack");
-    const goldReelStatus = document.getElementById("goldReelStatus");
     const openResultAmount = document.getElementById("openResultAmount");
     const openResultSub = document.getElementById("openResultSub");
     const openBoxBtn = document.getElementById("openBoxBtn");
@@ -3190,7 +4198,6 @@
     const topFixed = document.getElementById("topFixed");
     const playerWrap = document.getElementById("playerWrap");
     const boxIconStage = document.getElementById("boxIconStage");
-    const boxIconImg = document.getElementById("boxIconImg");
     const openSheetEl = document.getElementById("openSheet");
     const watchInfoFixed = document.getElementById("watchInfoFixed");
     const watchCollapseArea = document.getElementById("watchCollapseArea");
@@ -3200,6 +4207,7 @@
     const miniRestoreHit = document.getElementById("miniRestoreHit");
     const toggleMiniSizeBtn = document.getElementById("toggleMiniSizeBtn");
     const miniAdWrap = document.getElementById("miniAdWrap");
+    const paidBadge = document.getElementById("paidBadge");
     const playerFloatControls = document.querySelector(".player-float-controls");
     const reelS1MaxInput = document.getElementById("reelS1Max");
     const reelS1MinInput = document.getElementById("reelS1Min");
@@ -3222,12 +4230,6 @@
     const walletSheetLiveEl = document.getElementById("walletSheetLive");
     const walletSheetLiveHead = walletSheetLiveEl ? walletSheetLiveEl.querySelector(".sheet-head") : null;
     const donationAmountButtons = [...document.querySelectorAll("[data-donation-amount]")];
-    const paidBadge = document.createElement("div");
-    paidBadge.className = "paid-badge";
-    paidBadge.id = "paidBadge";
-    paidBadge.innerHTML = "<span>💎</span><span>혜택 ON</span>";
-    playerWrap.appendChild(paidBadge);
-
     let watchTimerPolling = null;
     let watchTimerRunning = false;
     let boundTimerVideo = null;
@@ -3236,9 +4238,6 @@
     let walletLiveDragStartY = 0;
     let walletLiveDragDeltaY = 0;
     let walletLiveDragging = false;
-    let goldReelAnimation = null;
-    let goldReelStartTimer = null;
-    let goldOpenVideoStartedAt = 0;
 
     function extractVideoId(url){
       try{
@@ -3641,18 +4640,18 @@
         paidBadge.classList.add("hide-after");
       }, 3000);
     }
-    function wakePlayerControls(){
-      if(!playerFloatControls) return;
+function wakePlayerControls(){
+  if(!playerFloatControls) return;
 
-      playerFloatControls.classList.add("controls-awake");
+  playerFloatControls.classList.add("controls-awake");
 
-      clearTimeout(wakePlayerControls._timer);
-      wakePlayerControls._timer = setTimeout(() => {
-        if(!watchScreen.classList.contains("mini-mode")){
-          playerFloatControls.classList.remove("controls-awake");
-        }
-      }, 2500);
+  clearTimeout(wakePlayerControls._timer);
+  wakePlayerControls._timer = setTimeout(() => {
+    if(!watchScreen.classList.contains("mini-mode")){
+      playerFloatControls.classList.remove("controls-awake");
     }
+  }, 2500);
+}
     function setBenefitEnabled(enabled){
       state.benefitEnabled = enabled;
       openWalletBtn.textContent = enabled ? "🎁 지갑" : "🎯 미션";
@@ -3680,9 +4679,63 @@
       clearInterval(autoWatchTimer);
     }
 
+    async function loadVideosFromOEmbedFallback(){
+      const fallbackVideos = [];
+
+      for(const sourceUrl of VIDEO_URL_POOL){
+        const videoId = extractVideoId(sourceUrl);
+        if(!videoId) continue;
+
+        const canonicalUrl = `https://www.youtube.com/watch?v=${videoId}`;
+        const fallbackItem = {
+          id: videoId,
+          videoId,
+          title: "영상 제목",
+          channel: "채널 정보",
+          channelId: "",
+          views: "조회수 준비중",
+          commentCount: 0,
+          thumb: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+          avatar: "",
+          comments: []
+        };
+
+        try{
+          const response = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(canonicalUrl)}&format=json`);
+          if(response.ok){
+            const json = await response.json();
+            fallbackItem.title = json.title || fallbackItem.title;
+            fallbackItem.channel = json.author_name || fallbackItem.channel;
+            fallbackItem.thumb = json.thumbnail_url || fallbackItem.thumb;
+          }
+        }catch(error){
+          // Keep the fallback card shape even if oEmbed is temporarily unavailable.
+        }
+
+        fallbackVideos.push(fallbackItem);
+      }
+
+      if(!fallbackVideos.length){
+        return false;
+      }
+
+      state.videos = fallbackVideos;
+      renderHome();
+
+      if(state.videos.length > 0){
+        openWatch(state.videos[0].id);
+      }
+      return true;
+    }
+
     async function loadVideosFromYouTube(){
       const ids = VIDEO_URL_POOL.map(extractVideoId).filter(Boolean);
       if(!YT_API_KEY){
+        const restored = await loadVideosFromOEmbedFallback();
+        if(restored){
+          showToast("기본 영상 목록 로더로 복구했습니다.");
+          return;
+        }
         homeList.innerHTML = '<div class="loading">YT_API_KEY를 넣어주세요.</div>';
         recommendList.innerHTML = '<div class="loading">YT_API_KEY를 넣어주세요.</div>';
         return;
@@ -3748,7 +4801,21 @@
         }
       }catch(err){
         console.error(err);
-        homeList.innerHTML = `<div class="loading">영상 목록을 불러오지 못했습니다.<br>${escapeHtml(err.message)}</div>`;
+        const message = String(err?.message || "");
+        const shouldFallback =
+          message.includes("API key not valid") ||
+          message.includes("API_KEY_INVALID") ||
+          message.includes("badRequest");
+
+        if(shouldFallback){
+          const restored = await loadVideosFromOEmbedFallback();
+          if(restored){
+            showToast("YouTube API 오류로 기본 영상 목록 로더를 사용합니다.");
+            return;
+          }
+        }
+
+        homeList.innerHTML = `<div class="loading">영상 목록을 불러오지 못했습니다.<br>${escapeHtml(message)}</div>`;
       }
     }
 
@@ -3874,22 +4941,22 @@
       }
     }
 
-    function updateFixedLayout(){
-      requestAnimationFrame(() => {
-        const rootRect = document.querySelector(".watch-root").getBoundingClientRect();
-        const subRect = document.getElementById("watchSub").getBoundingClientRect();
-        const topFixedRect = document.getElementById("topFixed").getBoundingClientRect();
+function updateFixedLayout(){
+  requestAnimationFrame(() => {
+    const rootRect = document.querySelector(".watch-root").getBoundingClientRect();
+    const subRect = document.getElementById("watchSub").getBoundingClientRect();
+    const topFixedRect = document.getElementById("topFixed").getBoundingClientRect();
 
-        const fullTop = infoCollapsed
-          ? (subRect.bottom - rootRect.top + 6)
-          : (topFixedRect.bottom - rootRect.top);
+    const fullTop = infoCollapsed
+      ? (subRect.bottom - rootRect.top + 6)
+      : (topFixedRect.bottom - rootRect.top);
 
-        const sheetTop = subRect.bottom - rootRect.top;
+    const sheetTop = subRect.bottom - rootRect.top;
 
-        document.documentElement.style.setProperty("--scroll-top", `${fullTop}px`);
-        document.documentElement.style.setProperty("--sheet-top", `${sheetTop}px`);
-      });
-    }
+    document.documentElement.style.setProperty("--scroll-top", `${fullTop}px`);
+    document.documentElement.style.setProperty("--sheet-top", `${sheetTop}px`);
+  });
+}
 
     function collapseInfoPanel(){
       if (infoCollapsed) return;
@@ -3904,7 +4971,8 @@
 
       watchCollapseArea.classList.remove("collapsed");
       infoCollapsed = false;
-      updateFixedLayout();
+
+
     }
 
     function setupWatchScrollBehavior(){
@@ -3934,11 +5002,10 @@
 
         lastWatchScrollTop = y;
 
-        clearTimeout(scrollIdleTimer);
         scrollIdleTimer = setTimeout(() => {
-          upwardScrollDistance = 0;
-        }, 120);
-      }, { passive: true });
+          expandInfoPanel();
+        }, 5000);
+      });
     }
 
     async function openWatch(id){
@@ -3994,28 +5061,132 @@
     function syncMiniSizeButton(){
       if(!toggleMiniSizeBtn) return;
       if(miniSizeLevel === 1) toggleMiniSizeBtn.textContent = "확대";
-      else if(miniSizeLevel === 2) toggleMiniSizeBtn.textContent = "더확대";
+      else if(miniSizeLevel === 2) toggleMiniSizeBtn.textContent = "더 확대";
       else toggleMiniSizeBtn.textContent = "축소";
     }
+function clampMiniPosition(){
+  if(!watchScreen.classList.contains("mini-mode")) return;
+  if(!topFixed.style.left) return;
+
+  const rect = topFixed.getBoundingClientRect();
+
+  let left = parseFloat(topFixed.style.left) || 12;
+  let top = parseFloat(topFixed.style.top) || 12;
+
+  const maxLeft = Math.max(12, window.innerWidth - rect.width - 12);
+  const maxTop = Math.max(12, window.innerHeight - rect.height - 12);
+
+  left = Math.min(Math.max(12, left), maxLeft);
+  top = Math.min(Math.max(12, top), maxTop);
+
+  topFixed.style.left = `${left}px`;
+  topFixed.style.top = `${top}px`;
+  topFixed.style.right = "auto";
+  topFixed.style.bottom = "auto";
+}
+
+function startMiniDrag(e){
+  if(!watchScreen.classList.contains("mini-mode")) return;
+  if(e.button !== undefined && e.button !== 0) return;
+  if(e.target.closest('button')) return;
+
+  const rect = topFixed.getBoundingClientRect();
+
+  topFixed.style.left = `${rect.left}px`;
+  topFixed.style.top = `${rect.top}px`;
+  topFixed.style.right = "auto";
+  topFixed.style.bottom = "auto";
+
+  miniDragActive = true;
+  miniDragOffsetX = e.clientX - rect.left;
+  miniDragOffsetY = e.clientY - rect.top;
+
+  topFixed.classList.add("dragging");
+
+  document.addEventListener("pointermove", moveMiniDrag);
+  document.addEventListener("pointerup", endMiniDrag);
+
+  e.preventDefault();
+}
+
+function moveMiniDrag(e){
+  if(!miniDragActive) return;
+
+  const rect = topFixed.getBoundingClientRect();
+  const maxLeft = Math.max(12, window.innerWidth - rect.width - 12);
+  const maxTop = Math.max(12, window.innerHeight - rect.height - 12);
+
+  const nextLeft = Math.min(Math.max(12, e.clientX - miniDragOffsetX), maxLeft);
+  const nextTop = Math.min(Math.max(12, e.clientY - miniDragOffsetY), maxTop);
+
+  topFixed.style.left = `${nextLeft}px`;
+  topFixed.style.top = `${nextTop}px`;
+  topFixed.style.right = "auto";
+  topFixed.style.bottom = "auto";
+}
+
+function endMiniDrag(){
+  if(!miniDragActive) return;
+
+  miniDragActive = false;
+  topFixed.classList.remove("dragging");
+
+  document.removeEventListener("pointermove", moveMiniDrag);
+  document.removeEventListener("pointerup", endMiniDrag);
+}
 
     function enterMiniMode(){
+      if(!state.currentVideo) return;
+
+      closeAllSheets();
+      clearTimeout(scrollIdleTimer);
+
       watchScreen.classList.add("mini-mode");
+      homeScreen.classList.add("active");
+      watchScreen.classList.add("active");
+
+      miniSizeLevel = 1;
       applyMiniSizeClass();
       syncMiniSizeButton();
+    }
+
+    function toggleMiniSize(e){
+      if(e){
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      if(!watchScreen.classList.contains("mini-mode")) return;
+
+      miniSizeLevel += 1;
+      if(miniSizeLevel > 3) miniSizeLevel = 1;
+
+      applyMiniSizeClass();
+      syncMiniSizeButton();
+       requestAnimationFrame(clampMiniPosition);
+       if(playerFloatControls){
+  playerFloatControls.addEventListener("pointerdown", startMiniDrag);
+}
+
+if(miniAdWrap){
+  miniAdWrap.addEventListener("pointerdown", startMiniDrag);
+}
+
+window.addEventListener("resize", clampMiniPosition);
     }
 
     function exitMiniMode(){
       watchScreen.classList.remove("mini-mode", "mini-size-1", "mini-size-2", "mini-size-3");
+      homeScreen.classList.remove("active");
+      watchScreen.classList.add("active");
+
       miniSizeLevel = 1;
       syncMiniSizeButton();
-      wakePlayerControls();
-    }
+      resetPaidBadge();
 
-    function toggleMiniSize(){
-      miniSizeLevel += 1;
-      if(miniSizeLevel > 3) miniSizeLevel = 1;
-      applyMiniSizeClass();
-      syncMiniSizeButton();
+      setTimeout(() => {
+        updateFixedLayout();
+      }, 80);
     }
 
     function backToHome(){
@@ -4100,11 +5271,153 @@
       walletLiveDragDeltaY = 0;
     }
 
+    let goldReelStartTimer = null;
+    let goldReelAnimation = null;
+    let goldOpenVideoStartedAt = 0;
+
+    function resetGoldReelOverlay(){
+      if(!goldReelOverlay || !goldReelTrack) return;
+      clearTimeout(goldReelStartTimer);
+      goldReelStartTimer = null;
+      if(goldReelAnimation){
+        goldReelAnimation.cancel();
+        goldReelAnimation = null;
+      }
+      goldOpenVideoStartedAt = 0;
+      goldReelOverlay.classList.remove("show", "reel-settled");
+      goldReelTrack.style.transition = "none";
+      goldReelTrack.style.transform = "translate3d(0, 0, 0)";
+      goldReelTrack.innerHTML = "";
+    }
+
+    function playGoldReelOverlay(targetReward, onDone){
+      if(!goldReelOverlay || !goldReelTrack){
+        onDone();
+        return;
+      }
+
+      const otherValues = GOLD_BOX_REEL_VALUES.filter(value => value !== targetReward);
+      const shuffledOthers = [...otherValues];
+      for(let i = shuffledOthers.length - 1; i > 0; i -= 1){
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledOthers[i], shuffledOthers[j]] = [shuffledOthers[j], shuffledOthers[i]];
+      }
+      const activeGoldReelValues = [targetReward, ...shuffledOthers.slice(0, GOLD_REEL_ACTIVE_COUNT - 1)];
+      for(let i = activeGoldReelValues.length - 1; i > 0; i -= 1){
+        const j = Math.floor(Math.random() * (i + 1));
+        [activeGoldReelValues[i], activeGoldReelValues[j]] = [activeGoldReelValues[j], activeGoldReelValues[i]];
+      }
+      const targetIndex = Math.max(activeGoldReelValues.indexOf(targetReward), 0);
+      const loops = 18;
+      const totalItems = [];
+      for(let i = 0; i < loops; i += 1){
+        totalItems.push(...activeGoldReelValues);
+      }
+
+      goldReelTrack.innerHTML = totalItems
+        .map(value => `<div class="gold-reel-item">${value.toLocaleString()}</div>`)
+        .join("");
+
+      const reelItem = goldReelTrack.querySelector(".gold-reel-item");
+      const itemHeight = reelItem ? reelItem.offsetHeight : 60;
+      const startLoop = loops - 1;
+      const endLoop = 1;
+      const startIndex = (startLoop * activeGoldReelValues.length) + targetIndex;
+      const endIndex = (endLoop * activeGoldReelValues.length) + targetIndex;
+      const startY = -(startIndex * itemHeight);
+      const reelAppearDelay = 0;
+      const settleFinalIndex = endIndex + activeGoldReelValues.length;
+      const stageConfig = state.goldReelStageConfig || GOLD_REEL_STAGE_DEFAULTS;
+      const stageDurationMs = [
+        stageConfig.stage1.duration,
+        stageConfig.stage2.duration,
+        randomInt(stageConfig.stage3.durationMin, stageConfig.stage3.durationMax),
+        randomInt(stageConfig.stage4.durationMin, stageConfig.stage4.durationMax)
+      ];
+      const reelDuration = stageDurationMs.reduce((sum, duration) => sum + duration, 0);
+      const stageDurationTotal = reelDuration || 1;
+      const stageDurations = stageDurationMs.map(duration => duration / stageDurationTotal);
+      const stageSpeeds = [
+        { startSpeed: stageConfig.stage1.maxSpeed, endSpeed: stageConfig.stage1.minSpeed },
+        { startSpeed: stageConfig.stage2.maxSpeed, endSpeed: stageConfig.stage2.minSpeed },
+        { startSpeed: stageConfig.stage3.maxSpeed, endSpeed: stageConfig.stage3.minSpeed },
+        { startSpeed: stageConfig.stage4.maxSpeed, endSpeed: stageConfig.stage4.minSpeed }
+      ];
+
+      goldReelTrack.style.transition = "none";
+      goldReelTrack.style.transform = `translate3d(0, ${startY}px, 0)`;
+
+      goldReelStartTimer = setTimeout(() => {
+        requestAnimationFrame(() => {
+          goldReelOverlay.classList.add("show");
+          goldReelOverlay.classList.remove("reel-settled");
+          requestAnimationFrame(() => {
+            const finalY = -(settleFinalIndex * itemHeight);
+            const totalTravel = startY - finalY;
+            const stageEnds = [];
+            let stageCursor = 0;
+            stageDurations.forEach(duration => {
+              stageCursor += duration;
+              stageEnds.push(stageCursor);
+            });
+            stageEnds[stageEnds.length - 1] = 1;
+            const stageWeights = stageDurations.map((duration, idx) => {
+              const stage = stageSpeeds[idx];
+              return duration * ((stage.startSpeed + stage.endSpeed) / 2);
+            });
+            const totalWeight = stageWeights.reduce((sum, weight) => sum + weight, 0) || 1;
+            const buildTravelRatio = (offset) => {
+              let coveredWeight = 0;
+              let startOffset = 0;
+              for(let i = 0; i < stageDurations.length; i += 1){
+                const stageOffset = stageEnds[i];
+                const stage = stageSpeeds[i];
+                if(offset >= stageOffset){
+                  coveredWeight += stageWeights[i];
+                  startOffset = stageOffset;
+                  continue;
+                }
+                const localDuration = stageDurations[i] || 1;
+                const localT = Math.max(0, Math.min(1, (offset - startOffset) / localDuration));
+                const localWeight = localDuration * ((stage.startSpeed * localT) + ((stage.endSpeed - stage.startSpeed) * localT * localT / 2));
+                coveredWeight += localWeight;
+                break;
+              }
+              return coveredWeight / totalWeight;
+            };
+            const offsets = [0, stageEnds[0] * 0.5, stageEnds[0], stageEnds[0] + (stageDurations[1] * 0.5), stageEnds[1], stageEnds[1] + (stageDurations[2] * 0.5), stageEnds[2], stageEnds[2] + (stageDurations[3] * 0.5), 1];
+            const keyframes = offsets.map(offset => {
+              const y = startY - (totalTravel * buildTravelRatio(offset));
+              return { offset, transform: `translate3d(0, ${y}px, 0)` };
+            });
+            goldReelAnimation = goldReelTrack.animate(keyframes, {
+              duration: reelDuration,
+              fill: "forwards",
+              easing: "linear"
+            });
+            goldReelAnimation.onfinish = () => {
+              goldReelAnimation = null;
+              goldReelOverlay.classList.add("reel-settled");
+              onDone();
+            };
+          });
+        });
+      }, reelAppearDelay);
+    }
+
     function getGoldResultCelebrateMeta(reward){
-      if(reward >= 500000) return { tierClass: "gold-tier-dream" };
-      if(reward >= 100000) return { tierClass: "gold-tier-best" };
-      if(reward >= 10000) return { tierClass: "gold-tier-great" };
-      if(reward >= 5000) return { tierClass: "gold-tier-good" };
+      if(reward >= 1000000){
+        return { tierClass: "gold-tier-dream" };
+      }
+      if(reward >= 100000){
+        return { tierClass: "gold-tier-best" };
+      }
+      if(reward >= 50000){
+        return { tierClass: "gold-tier-great" };
+      }
+      if(reward >= 10000){
+        return { tierClass: "gold-tier-good" };
+      }
       return { tierClass: "gold-tier-basic" };
     }
 
@@ -4112,138 +5425,199 @@
       openStageResult.classList.remove(...GOLD_RESULT_TIER_CLASSES);
     }
 
-    function setOpenStageVariant(variant){
-      openStage.classList.remove("reveal-random", "reveal-random-x", "reveal-random-gold", "reveal-gold");
-      if(variant === "random") openStage.classList.add("reveal-random");
-      if(variant === "reveal-random") openStage.classList.add("reveal-random");
-      if(variant === "reveal-random-x") openStage.classList.add("reveal-random-x");
-      if(variant === "reveal-random-gold") openStage.classList.add("reveal-random-gold");
-      if(variant === "gold" || variant === "reveal-gold") openStage.classList.add("reveal-gold");
-    }
-
-    function resetGoldReelOverlay(){
-      goldReelOverlay.classList.remove("show", "reel-settled");
-      goldReelTrack.innerHTML = "";
-      goldReelStatus.textContent = "릴을 회전하는 중입니다...";
-      goldReelTrack.style.transform = "translateY(0)";
-      cancelAnimationFrame(goldReelAnimation);
-      clearTimeout(goldReelStartTimer);
-      goldReelAnimation = null;
-      goldReelStartTimer = null;
-    }
-
-    function buildGoldReelItems(targetReward){
-      const values = [];
-      for(let i = 0; i < 16; i += 1){
-        values.push(GOLD_BOX_REEL_VALUES[randomInt(0, GOLD_BOX_REEL_VALUES.length - 1)]);
-      }
-      const highlightIndex = values.length - 4;
-      values[highlightIndex] = targetReward;
-      return { values, highlightIndex };
-    }
-
-    function renderGoldReelItems(values, highlightIndex){
-      goldReelTrack.innerHTML = values.map((value, index) => `
-        <div class="gold-reel-item ${index === highlightIndex ? 'highlight' : ''}">${value.toLocaleString()} P</div>
-      `).join("");
-    }
-
-    function playGoldReelOverlay(targetReward, onSettled){
-      resetGoldReelOverlay();
-      const { values, highlightIndex } = buildGoldReelItems(targetReward);
-      renderGoldReelItems(values, highlightIndex);
-      goldReelOverlay.classList.add("show");
-      goldReelStatus.textContent = "릴을 회전하는 중입니다...";
-
-      const config = state.goldReelStageConfig;
-      const itemHeight = 58;
-      const targetY = -(highlightIndex * itemHeight - (itemHeight * 1.5));
-      const startTime = performance.now();
-      const totalDuration = config.stage1.duration + config.stage2.duration + randomInt(config.stage3.durationMin, config.stage3.durationMax) + randomInt(config.stage4.durationMin, config.stage4.durationMax);
-      const overshoot = 24;
-
-      const animate = (now) => {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / totalDuration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const currentY = (targetY - overshoot) * eased;
-        goldReelTrack.style.transform = `translateY(${currentY}px)`;
-
-        if(progress < 1){
-          goldReelAnimation = requestAnimationFrame(animate);
-          return;
-        }
-
-        goldReelTrack.style.transform = `translateY(${targetY}px)`;
-        goldReelOverlay.classList.add("reel-settled");
-        goldReelStatus.textContent = `${targetReward.toLocaleString()}P 당첨!`;
-        if(typeof onSettled === "function"){
-          onSettled();
-        }
-      };
-
-      goldReelStartTimer = setTimeout(() => {
-        goldReelAnimation = requestAnimationFrame(animate);
-      }, 220);
+    function resetRewardAdState(){
+      clearInterval(state.rewardAdTimer);
+      rewardAdVideo.pause();
+      rewardAdVideo.currentTime = 0;
+      rewardAdProgress.style.width = "0%";
+      rewardAdBtn.disabled = true;
+      rewardAdBtn.classList.remove("ready");
+      rewardAdBtn.textContent = "받기 (5s)";
+      rewardAdGuideLeft.textContent = "광고 재생중...";
+      rewardAdGuideRight.textContent = "15초 후 자동 지급";
+      resetSheetScroll("adSheet");
     }
 
     function stopOpenStageVideo(){
-      if(!openStageVideo) return;
+      bindVideoTimer(null);
+      openStage.classList.remove("is-random-gold-slowfx", "stage-video-ready");
+      openStage.classList.remove("stage-video-playing");
       openStageVideo.pause();
-      openStageVideo.currentTime = 0;
-      openStage.classList.remove("stage-video-playing", "stage-video-ready");
+      openStageVideo.playbackRate = 1;
+      if(openStageVideoSource){
+        openStageVideoSource.removeAttribute("src");
+      }
+      openStageVideo.removeAttribute("src");
+      openStageVideo.load();
+      openStageVideo.onended = null;
+      openStageVideo.onerror = null;
     }
 
     function applyOpenStagePlaybackRate(){
-      if(openStageVideo){
-        openStageVideo.playbackRate = state.openStageMidPlaybackRate || 1;
+      const isRandomXVideo = openStageVideo.currentSrc.includes("X_view.mp4");
+      const isRandomGVideo = openStageVideo.currentSrc.includes("G_view.mp4");
+      if(isRandomXVideo || isRandomGVideo){
+        openStageVideo.playbackRate = state.openStageMidPlaybackRate;
       }
     }
 
-    function playOpenStageVideo(src, onEnded, onNearEnd, options = {}){
-      if(!openStageVideo || !openStageVideoSource) {
-        if(typeof onEnded === "function") onEnded();
+    function playOpenStageVideo(src, onDone, onRandomGoldLead, options = {}){
+      if(!src){
+        onDone();
         return;
       }
-      resetGoldReelOverlay();
-      openStageVideoSource.src = src;
-      openStageVideo.load();
-      openStage.classList.add("stage-video-ready", "stage-video-playing");
-      applyOpenStagePlaybackRate();
 
-      let nearEndTriggered = false;
-      let endedTriggered = false;
-
+      let done = false;
+      const isRandomGoldVideo = src === RANDOM_G_VIDEO_SRC;
+      const isRandomXVideo = src === RANDOM_X_VIDEO_SRC;
+      const keepLastFrame = !!options.keepLastFrame;
+      let slowFxShown = false;
+      let goldLeadTextShown = false;
       const handleTimeUpdate = () => {
-        if(!nearEndTriggered && typeof onNearEnd === "function" && openStageVideo.duration && (openStageVideo.duration - openStageVideo.currentTime) <= 0.4){
-          nearEndTriggered = true;
-          onNearEnd();
+        if(!isRandomGoldVideo){
+          return;
+        }
+        if(!Number.isFinite(openStageVideo.duration) || openStageVideo.duration <= 0){
+          return;
+        }
+        const remaining = openStageVideo.duration - openStageVideo.currentTime;
+        if(remaining <= 1.5 && !slowFxShown){
+          slowFxShown = true;
+          openStage.classList.add("is-random-gold-slowfx");
+        }
+        if(remaining <= 1.5 && !goldLeadTextShown){
+          goldLeadTextShown = true;
+          if(typeof onRandomGoldLead === "function"){
+            onRandomGoldLead();
+          }
         }
       };
-
-      const handleEnded = () => {
-        if(endedTriggered) return;
-        endedTriggered = true;
+      const finish = () => {
+        if(done) return;
+        done = true;
         openStageVideo.removeEventListener("timeupdate", handleTimeUpdate);
-        openStageVideo.removeEventListener("ended", handleEnded);
-        if(!options.keepLastFrame){
-          openStage.classList.remove("stage-video-playing", "stage-video-ready");
+        openStageVideo.onended = null;
+        openStageVideo.onerror = null;
+        openStage.classList.remove("is-random-gold-slowfx");
+        if((isRandomGoldVideo || keepLastFrame) && Number.isFinite(openStageVideo.duration) && openStageVideo.duration > 0){
+          openStageVideo.pause();
+          openStageVideo.currentTime = Math.max(openStageVideo.duration - 0.03, 0);
         }
-        if(typeof onEnded === "function") onEnded();
+        openStage.style.removeProperty("background");
+        openStageVideo.playbackRate = 1;
+        onDone();
       };
 
+      const isGoldOpenFx = openSheetEl.classList.contains("fx-gold-open");
+      if(isGoldOpenFx){
+        let goldVideoReadyMarked = false;
+        openStage.style.background = "transparent";
+        const markGoldVideoReady = () => {
+          if(goldVideoReadyMarked) return;
+          goldVideoReadyMarked = true;
+          openStage.style.removeProperty("background");
+          openStage.classList.add("stage-video-ready", "stage-video-playing");
+        };
+        const supportsFrameCallback = typeof openStageVideo.requestVideoFrameCallback === "function";
+        openStageVideo.addEventListener("playing", () => {
+          goldOpenVideoStartedAt = Date.now();
+          if(typeof options.onGoldReelStart === "function"){
+            scheduleOpenStageTimer(() => options.onGoldReelStart(), 3500);
+          }
+          if(supportsFrameCallback){
+            openStageVideo.requestVideoFrameCallback(() => markGoldVideoReady());
+            return;
+          }
+          markGoldVideoReady();
+        }, { once:true });
+      } else {
+        goldOpenVideoStartedAt = 0;
+        openStage.classList.add("stage-video-ready", "stage-video-playing");
+      }
+      openStageVideo.muted = true;
+      openStageVideo.autoplay = true;
+      openStageVideo.playsInline = true;
+      openStageVideo.setAttribute("muted", "");
+      openStageVideo.setAttribute("autoplay", "");
+      openStageVideo.setAttribute("playsinline", "");
+      openStageVideo.setAttribute("webkit-playsinline", "");
+      openStageVideo.onended = finish;
+      openStageVideo.onerror = finish;
+      openStageVideo.playbackRate = (isRandomGoldVideo || isRandomXVideo) ? state.openStageMidPlaybackRate : 1;
       openStageVideo.addEventListener("timeupdate", handleTimeUpdate);
-      openStageVideo.addEventListener("ended", handleEnded);
-      openStageVideo.play().then(() => {
-        goldOpenVideoStartedAt = performance.now();
-        if(typeof options.onGoldReelStart === "function"){
-          setTimeout(() => {
-            options.onGoldReelStart();
-          }, 760);
+      bindVideoTimer(openStageVideo);
+
+      if(openStageVideoSource){
+        openStageVideoSource.src = src;
+      }
+      openStageVideo.src = src;
+      openStageVideo.load();
+      openStageVideo.currentTime = 0;
+      applyOpenStagePlaybackRate();
+      openStageVideo.play().catch(() => finish());
+    }
+
+    function syncOpenStageBoxAsset(variant = state.openType === "gold" ? "gold" : "random"){
+      const isGold = variant === "gold";
+      boxIconStage.classList.toggle("is-gold-box", isGold);
+      boxIconStage.classList.toggle("is-random-box", !isGold);
+      resultGoldBox.classList.toggle("is-gold-box", isGold);
+    }
+
+    function setOpenStageVariant(variant = "random"){
+      syncOpenStageBoxAsset(variant === "gold" ? "gold" : "random");
+      openStageBoxWrap.classList.remove("is-reveal-random", "is-reveal-fail", "is-reveal-gold", "is-opening-final", "is-final-gold", "is-suspense-phase", "is-suspense-gold");
+      openStageBoxWrap.style.removeProperty("--mystery-count");
+      openStageBoxWrap.style.removeProperty("--mystery-cycle");
+      openStageBoxWrap.style.removeProperty("--mystery-total");
+
+      if(variant === "reveal-random"){
+        openStageBoxWrap.classList.add("is-reveal-random");
+        return;
+      }
+
+      if(variant === "reveal-fail"){
+        openStageBoxWrap.classList.add("is-reveal-fail");
+        return;
+      }
+
+      if(variant === "reveal-gold"){
+        openStageBoxWrap.classList.add("is-reveal-gold");
+      }
+    }
+
+    function startMysterySuspense(sequence){
+      if(!sequence.suspenseCount || !sequence.suspenseInterval) return;
+
+      const suspenseWindow = sequence.suspenseCount * sequence.suspenseInterval;
+      const finalOpenAt = Math.max(sequence.revealDelay - sequence.suspenseOpenLead, 0);
+      const finalConfirmAt = Math.max(finalOpenAt - sequence.suspenseConfirmLead, 0);
+      const suspenseStartAt = Math.max(finalConfirmAt - suspenseWindow, 0);
+      const suspenseTotal = Math.max(finalConfirmAt - suspenseStartAt, sequence.suspenseInterval);
+      const isGoldResult = sequence.revealVariant === "reveal-gold";
+
+      scheduleOpenStageTimer(() => {
+        openStageBoxWrap.style.setProperty("--mystery-count", sequence.suspenseCount);
+        openStageBoxWrap.style.setProperty("--mystery-cycle", `${sequence.suspenseInterval}ms`);
+        openStageBoxWrap.style.setProperty("--mystery-total", `${suspenseTotal}ms`);
+        openStageBoxWrap.classList.add("is-suspense-phase");
+        openStageBoxWrap.classList.toggle("is-suspense-gold", isGoldResult);
+      }, suspenseStartAt);
+
+      scheduleOpenStageTimer(() => {
+        openStageBoxWrap.classList.toggle("is-final-gold", isGoldResult);
+        if(isGoldResult){
+          syncOpenStageBoxAsset("gold");
         }
-      }).catch(() => {
-        handleEnded();
-      });
+      }, finalConfirmAt);
+
+      scheduleOpenStageTimer(() => {
+        if(!isGoldResult){
+          syncOpenStageBoxAsset("random");
+        }
+        openStageBoxWrap.classList.remove("is-suspense-phase");
+        openStageBoxWrap.classList.add("is-opening-final");
+      }, finalOpenAt);
     }
 
     function getOpenSequenceConfig({ openType, resultType }){
@@ -4252,8 +5626,9 @@
           fxClass: "fx-gold-open",
           stageVariant: "gold",
           revealVariant: "gold",
-          busyLabel: "황금박스 오픈 중",
-          revealDelay: 0,
+          busyLabel: "황금상자 준비 중",
+          duration: 3000,
+          revealDelay: 2200,
           autoCloseDelay: 5200,
           videoSrc: GOLD_BOX_OPEN_VIDEO_SRC
         };
@@ -4263,10 +5638,10 @@
         return {
           fxClass: "fx-random-fail",
           stageVariant: "random",
-          revealVariant: "reveal-random-x",
+          revealVariant: "random",
           busyLabel: "랜덤X 재생 중",
           revealDelay: 0,
-          autoCloseDelay: 4200,
+          autoCloseDelay: 2400,
           videoSrc: RANDOM_X_VIDEO_SRC
         };
       }
@@ -4275,7 +5650,7 @@
         return {
           fxClass: "fx-random-gold",
           stageVariant: "random",
-          revealVariant: "reveal-random-gold",
+          revealVariant: "random",
           busyLabel: "랜덤G 재생 중",
           revealDelay: 0,
           autoCloseDelay: 4600,
@@ -4309,20 +5684,6 @@
       openBoxBtn.textContent = label || (mode === "close" ? "닫기" : (state.openType === "gold" ? "황금박스 오픈" : "랜덤박스 오픈"));
     }
 
-    function resetRewardAdState(){
-      clearInterval(state.rewardAdTimer);
-      state.rewardAdTimer = null;
-      state.rewardAdSeconds = 0;
-      rewardAdProgress.style.width = "0%";
-      rewardAdBtn.disabled = true;
-      rewardAdBtn.classList.remove("ready");
-      rewardAdBtn.textContent = "받기 (5s)";
-      rewardAdGuideLeft.innerHTML = "<strong>5초 후</strong> 직접 받기 버튼이 열립니다.";
-      rewardAdGuideRight.textContent = "15초 후 자동 지급";
-      rewardAdVideo.pause();
-      rewardAdVideo.currentTime = 0;
-    }
-
     function resetOpenSheetState(options = {}){
       const preserveFlowState = !!options.preserveFlowState;
       clearInterval(state.openTimer);
@@ -4348,8 +5709,7 @@
 
       managedSheetIds.forEach(id => {
         if(keepWallet && isWalletSheetId(id)) return;
-        const el = document.getElementById(id);
-        if(el) el.classList.remove("show");
+        document.getElementById(id).classList.remove("show");
       });
 
       resetRewardAdState();
@@ -4404,12 +5764,11 @@
     function resetOpenStageState(){
       setOpenStageVariant(state.openType === "gold" ? "gold" : "random");
       openStage.classList.remove("stage-show-result", "stage-animating", "stage-video-playing", "stage-video-ready");
-      openStageBoxWrap.classList.remove("is-opening-final", "is-final-gold", "is-suspense-phase");
+      openStageBoxWrap.classList.remove("is-opening-final", "is-final-gold");
       openStageResult.classList.remove("show-gold-box", "gold-win");
       openStageText.textContent = "";
       openResultAmount.textContent = "";
       openResultSub.textContent = "";
-      clearGoldResultTierClass();
       resetGoldReelOverlay();
       stopOpenStageVideo();
     }
@@ -4632,6 +5991,9 @@
             });
           }
         } else {
+          const goldResultCelebrateMeta = state.openType === "gold"
+            ? getGoldResultCelebrateMeta(result.reward)
+            : null;
           showOpenStageResult({
             amountText: `${result.reward.toLocaleString()} P`,
             subText: "",
@@ -4693,8 +6055,9 @@
     toggleMiniSizeBtn.addEventListener("click", toggleMiniSize);
     playerWrap.addEventListener("click", wakePlayerControls);
     playerWrap.addEventListener("click", handleWatchTimerActivation);
-    playerFloatControls.addEventListener("click", wakePlayerControls);
-    playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive: true });
+playerFloatControls.addEventListener("click", wakePlayerControls);
+playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive: true });
+
 
     openWalletBtn.addEventListener("click", () => {
       if(!state.benefitEnabled){
@@ -4739,6 +6102,7 @@
     document.querySelectorAll(".wallet-ui-switch-btn").forEach(btn => {
       btn.addEventListener("click", () => applyWalletUI(btn.dataset.walletUi));
     });
+    applyWalletUI(currentWalletUI);
     document.querySelectorAll("[data-gold-reward-test]").forEach(btn => {
       btn.addEventListener("click", () => startOpenFlow("gold", { fromWallet: true, forcedGoldReward: Number(btn.dataset.goldRewardTest) }));
     });
