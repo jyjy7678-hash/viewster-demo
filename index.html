@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.08 -->
+<!-- Version: DEV v0.3.16 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -625,11 +625,6 @@
     #openCommentBtn{
       min-width:0;
     }
-    .donation-pill{
-      background:#fff3e6;
-      color:#b45309;
-      box-shadow:inset 0 0 0 1px rgba(245,158,11,.18);
-    }
     .donation-pill:active{
       transform:scale(.98);
     }
@@ -960,6 +955,14 @@
       gap:14px;
       padding-top:8px;
     }
+    .donation-view{
+      display:none;
+      flex-direction:column;
+      gap:14px;
+    }
+    .donation-view.active{
+      display:flex;
+    }
     .donation-channel-card{
       display:flex;
       align-items:center;
@@ -983,6 +986,12 @@
       flex-direction:column;
       gap:3px;
     }
+    .donation-channel-topline{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
     .donation-channel-name{
       font-size:16px;
       font-weight:900;
@@ -990,10 +999,109 @@
       line-height:1.25;
       word-break:break-word;
     }
-    .donation-channel-id{
+    .donation-channel-id{display:none;}
+    .donation-channel-link{
+      border:1px solid #e5e7eb;
+      background:#f8fafc;
+      color:#475569;
+      border-radius:999px;
+      min-height:30px;
+      padding:0 10px;
       font-size:12px;
-      color:#6b7280;
-      word-break:break-all;
+      font-weight:800;
+      cursor:pointer;
+      flex-shrink:0;
+    }
+    .donation-channel-guide{
+      font-size:12px;
+      color:#64748b;
+      font-weight:700;
+      line-height:1.45;
+      word-break:keep-all;
+    }
+    .donation-ranking-panel{
+      padding:14px;
+      border-radius:20px;
+      background:#fff;
+      box-shadow:0 8px 22px rgba(15,23,42,.06);
+      border:1px solid #eef2f7;
+    }
+    .donation-ranking-title{
+      font-size:14px;
+      font-weight:900;
+      color:#111827;
+      margin-bottom:10px;
+    }
+    .donation-ranking-list{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .donation-rank-item{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:11px 12px;
+      border-radius:16px;
+      background:#f8fafc;
+      border:1px solid #e5e7eb;
+    }
+    .donation-rank-item.is-me{
+      border-color:#93c5fd;
+      background:#eff6ff;
+      box-shadow:0 8px 18px rgba(59,130,246,.12);
+    }
+    .donation-rank-item.is-rank-1{
+      background:linear-gradient(180deg,#fff7d6,#fffdf3);
+      border-color:#f4c64f;
+      box-shadow:0 10px 22px rgba(234,179,8,.18);
+    }
+    .donation-rank-item.is-rank-2{
+      background:linear-gradient(180deg,#f8fafc,#f1f5f9);
+      border-color:#cbd5e1;
+      box-shadow:0 10px 22px rgba(100,116,139,.14);
+    }
+    .donation-rank-item.is-rank-3{
+      background:linear-gradient(180deg,#fff1e8,#fff7f1);
+      border-color:#d6a37d;
+      box-shadow:0 10px 22px rgba(180,83,9,.14);
+    }
+    .donation-rank-num{
+      min-width:52px;
+      font-size:13px;
+      font-weight:900;
+      color:#111827;
+    }
+    .donation-rank-item.is-rank-1 .donation-rank-num{ color:#a16207; }
+    .donation-rank-item.is-rank-2 .donation-rank-num{ color:#475569; }
+    .donation-rank-item.is-rank-3 .donation-rank-num{ color:#9a3412; }
+    .donation-rank-name{
+      min-width:0;
+      flex:1;
+      font-size:14px;
+      font-weight:800;
+      color:#111827;
+      word-break:break-word;
+    }
+    .donation-rank-divider{
+      margin:6px 0 2px;
+      border-top:1px dashed #cbd5e1;
+    }
+    .donation-empty-note{
+      padding:8px 4px 0;
+      text-align:center;
+      font-size:12px;
+      color:#64748b;
+      font-weight:700;
+    }
+    .donation-action-row{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:10px;
+      align-items:stretch;
+    }
+    .donation-action-row.is-stacked{
+      grid-template-columns:minmax(0,1fr);
     }
     .donation-balance-card{
       display:flex;
@@ -1090,6 +1198,59 @@
       color:#16a34a;
       font-weight:800;
       text-align:center;
+    }
+    .donation-sub-btn{
+      min-height:54px;
+      border-radius:18px;
+      border:1px solid #d1d5db;
+      background:#fff;
+      color:#334155;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+      padding:0 16px;
+    }
+    .donation-random-btn{
+      min-width:108px;
+    }
+    .donation-complete-card{
+      padding:22px 18px;
+      border-radius:22px;
+      background:linear-gradient(180deg,#fff7ed,#ffffff);
+      box-shadow:0 14px 28px rgba(249,115,22,.12);
+      border:1px solid #fed7aa;
+      text-align:center;
+    }
+    .donation-complete-icon{
+      font-size:38px;
+      line-height:1;
+      margin-bottom:12px;
+      animation:donationPop .5s ease both;
+    }
+    .donation-complete-title{
+      font-size:22px;
+      font-weight:900;
+      color:#111827;
+      margin-bottom:8px;
+    }
+    .donation-complete-text{
+      font-size:15px;
+      font-weight:800;
+      color:#1f2937;
+      line-height:1.5;
+      word-break:keep-all;
+    }
+    .donation-complete-sub{
+      margin-top:10px;
+      font-size:13px;
+      font-weight:800;
+      color:#b45309;
+      line-height:1.5;
+    }
+    @keyframes donationPop{
+      0%{transform:scale(.78) translateY(8px);opacity:0;}
+      60%{transform:scale(1.08) translateY(-2px);opacity:1;}
+      100%{transform:scale(1) translateY(0);opacity:1;}
     }
 
     .wallet-content-block{
@@ -3445,24 +3606,49 @@
       left:50%;
       bottom:92px;
       transform:translateX(-50%) translateY(20px);
-      min-width:220px;
+      min-width:240px;
       max-width:85%;
-      background:rgba(17,24,39,.96);
+      background:linear-gradient(135deg,rgba(15,23,42,.98),rgba(30,41,59,.96));
       color:#fff;
-      padding:13px 15px;
-      border-radius:16px;
+      padding:14px 16px;
+      border-radius:18px;
       z-index:70;
-      font-size:14px;
-      font-weight:800;
-      text-align:center;
+      text-align:left;
       opacity:0;
       pointer-events:none;
-      transition:.25s ease;
-      box-shadow:0 10px 30px rgba(0,0,0,.22);
+      transition:opacity .28s ease, transform .28s ease;
+      box-shadow:0 16px 40px rgba(0,0,0,.28);
     }
     .toast.show{
       opacity:1;
       transform:translateX(-50%) translateY(0);
+    }
+    .toast-icon{
+      font-size:20px;
+      line-height:1;
+      animation:toastBounce .45s ease;
+    }
+    .toast-title{
+      font-size:14px;
+      font-weight:900;
+      color:#fff;
+      margin-bottom:3px;
+    }
+    .toast-body{
+      font-size:12px;
+      font-weight:700;
+      color:#dbeafe;
+      line-height:1.45;
+    }
+    .toast-row{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+    }
+    @keyframes toastBounce{
+      0%{transform:scale(.8) translateY(6px);}
+      50%{transform:scale(1.08) translateY(-2px);}
+      100%{transform:scale(1) translateY(0);}
     }
 
     .loading{
@@ -3549,7 +3735,8 @@
           <button class="tool-btn" data-open-speed="0.8">x0.8</button>
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-          <span class="dev-version-label">DEV v0.3.08</span>
+          <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
+          <span class="dev-version-label">DEV v0.3.16</span>
         </div>
       </header>
 
@@ -3589,7 +3776,8 @@
             <button class="tool-btn" data-open-speed="0.8">x0.8</button>
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
-            <span class="dev-version-label">DEV v0.3.08</span>
+            <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
+            <span class="dev-version-label">DEV v0.3.16</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3599,12 +3787,12 @@
 
               <div class="watch-collapse-area" id="watchCollapseArea">
                 <div class="small-actions">
+                  <button class="small-pill" id="openCommentBtn">💬 댓글 <span id="commentCountText">0</span></button>
                   <div class="wallet-entry-overlay">
                     <button class="wallet-test-hit" id="openWalletTestHit" aria-label="테스트 지갑 열기"></button>
                     <button class="small-pill" id="openWalletBtn">🎯 미션</button>
                   </div>
                   <button class="small-pill donation-pill" id="openDonationBtn">🎁 후원</button>
-                  <button class="small-pill" id="openCommentBtn">💬 댓글 <span id="commentCountText">0</span></button>
                 </div>
 
                 <div class="reward-inline" id="rewardInline">
@@ -3783,36 +3971,87 @@
       <button class="sheet-close" data-close="donationSheet">×</button>
     </div>
     <div class="sheet-body">
-      <div class="sheet-title">이 채널 후원하기</div>
+      <div class="sheet-title" id="donationSheetTitle">이 채널 후원 현황</div>
       <div class="donation-sheet-content">
-        <div class="donation-channel-card">
-          <img class="donation-channel-avatar" id="donationChannelAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
-          <div class="donation-channel-info">
-            <div class="donation-channel-name" id="donationChannelName">채널명</div>
-            <div class="donation-channel-id" id="donationChannelId">channelId</div>
+        <div class="donation-view active" id="donationStatusView">
+          <div class="donation-channel-card">
+            <img class="donation-channel-avatar" id="donationChannelAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
+            <div class="donation-channel-info">
+              <div class="donation-channel-topline">
+                <div class="donation-channel-name" id="donationChannelName">채널명</div>
+                <button class="donation-channel-link" id="donationChannelLinkBtn" type="button">▶ YouTube 채널</button>
+              </div>
+              <div class="donation-channel-guide" id="donationChannelGuide">뷰스터에서 후원하고 랭킹에 참여해보세요.</div>
+            </div>
+          </div>
+          <div class="donation-ranking-panel">
+            <div class="donation-ranking-title">뷰스터 후원 랭킹 TOP 10</div>
+            <div class="donation-ranking-list" id="donationRankingList"></div>
+            <div class="donation-empty-note" id="donationRankingEmptyNote"></div>
+          </div>
+          <div class="donation-action-row">
+            <button class="donation-submit-btn" id="openDonationAmountViewBtn" type="button">후원하기</button>
+            <button class="donation-sub-btn donation-random-btn" id="donationRandomizeBtn" type="button">랜덤설정</button>
           </div>
         </div>
 
-        <div class="donation-balance-card">
-          <div>
-            <div class="donation-balance-label">내 보유 포인트</div>
-            <div class="donation-balance-value" id="donationBalanceText">0P</div>
+        <div class="donation-view" id="donationAmountView">
+          <div class="donation-channel-card">
+            <img class="donation-channel-avatar" id="donationAmountAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
+            <div class="donation-channel-info">
+              <div class="donation-channel-topline">
+                <div class="donation-channel-name" id="donationAmountChannelName">채널명</div>
+                <button class="donation-channel-link" id="donationAmountChannelLinkBtn" type="button">▶ YouTube 채널</button>
+              </div>
+              <div class="donation-channel-guide" id="donationAmountChannelGuide">뷰스터에서 후원하고 랭킹에 참여해보세요.</div>
+            </div>
           </div>
-          <div class="donation-balance-note">선택한 금액만큼<br>즉시 차감됩니다</div>
+
+          <div class="donation-balance-card">
+            <div>
+              <div class="donation-balance-label">내 보유 포인트</div>
+              <div class="donation-balance-value" id="donationBalanceText">0P</div>
+            </div>
+            <div class="donation-balance-note">선택한 금액만큼<br>즉시 차감됩니다</div>
+          </div>
+
+          <div class="donation-section-label">후원 금액 선택</div>
+          <div class="donation-amount-grid" id="donationAmountGrid">
+            <button class="donation-amount-btn" type="button" data-donation-amount="1000">1,000P</button>
+            <button class="donation-amount-btn" type="button" data-donation-amount="2000">2,000P</button>
+            <button class="donation-amount-btn" type="button" data-donation-amount="3000">3,000P</button>
+            <button class="donation-amount-btn" type="button" data-donation-amount="5000">5,000P</button>
+            <button class="donation-amount-btn" type="button" data-donation-amount="10000">10,000P</button>
+          </div>
+
+          <div class="donation-selected-text" id="donationSelectedText">후원 금액을 선택해주세요.</div>
+          <button class="donation-submit-btn" id="submitDonationBtn" type="button" disabled>후원하기</button>
+          <button class="donation-sub-btn" id="backToDonationStatusBtn" type="button">랭킹으로 돌아가기</button>
+          <div class="donation-feedback" id="donationFeedback"></div>
         </div>
 
-        <div class="donation-section-label">후원 금액 선택</div>
-        <div class="donation-amount-grid" id="donationAmountGrid">
-          <button class="donation-amount-btn" type="button" data-donation-amount="1000">1,000P</button>
-          <button class="donation-amount-btn" type="button" data-donation-amount="2000">2,000P</button>
-          <button class="donation-amount-btn" type="button" data-donation-amount="3000">3,000P</button>
-          <button class="donation-amount-btn" type="button" data-donation-amount="5000">5,000P</button>
-          <button class="donation-amount-btn" type="button" data-donation-amount="10000">10,000P</button>
+        <div class="donation-view" id="donationCompletionView">
+          <div class="donation-channel-card">
+            <img class="donation-channel-avatar" id="donationCompleteAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
+            <div class="donation-channel-info">
+              <div class="donation-channel-topline">
+                <div class="donation-channel-name" id="donationCompleteChannelName">채널명</div>
+                <button class="donation-channel-link" id="donationCompleteChannelLinkBtn" type="button">▶ YouTube 채널</button>
+              </div>
+              <div class="donation-channel-guide" id="donationCompleteChannelGuide">뷰스터에서 후원하고 랭킹에 참여해보세요.</div>
+            </div>
+          </div>
+          <div class="donation-complete-card">
+            <div class="donation-complete-icon" id="donationCompleteIcon">🎁</div>
+            <div class="donation-complete-title" id="donationCompleteTitle">후원 완료</div>
+            <div class="donation-complete-text" id="donationCompleteText">10,000P 후원이 완료되었습니다.</div>
+            <div class="donation-complete-sub" id="donationCompleteSub">내 후원 순위가 갱신되었습니다.</div>
+          </div>
+          <div class="donation-action-row is-stacked">
+            <button class="donation-submit-btn" id="donationViewRankingBtn" type="button">랭킹 확인하기</button>
+            <button class="donation-sub-btn" id="donationAddMoreBtn" type="button">추가 후원하기</button>
+          </div>
         </div>
-
-        <div class="donation-selected-text" id="donationSelectedText">후원 금액을 선택해주세요.</div>
-        <button class="donation-submit-btn" id="submitDonationBtn" type="button" disabled>후원하기</button>
-        <div class="donation-feedback" id="donationFeedback"></div>
       </div>
     </div>
   </section>
@@ -4008,9 +4247,32 @@
       "https://www.youtube.com/watch?v=yw8j2Zrq6WU",
       "https://www.youtube.com/watch?v=ScOYniOhy7s"
     ];
+    const VIDEO_POOL_STORAGE_KEY = "viewster_video_url_pool";
+    const WALLET_VERSION = "v0.3.12_wallet_1000000";
+    const DEFAULT_WALLET_BALANCE = 1000000;
+    const DEFAULT_RANDOM_BOX_COUNT = 100;
+    const DEFAULT_GOLD_BOX_COUNT = 100;
+    const CURRENT_DONATION_USER = {
+      userId: "viewer7678",
+      viewsterNickname: "viewer7678",
+      youtubeNickname: "YouTube7678"
+    };
+    const DONATION_RANKING_SEED = [
+      ["7678G2", "HoldemTVFan", 10000],
+      ["pokerfan", "PokerKing", 9000],
+      ["holdemking", "HoldemKingYT", 8000],
+      ["viewer01", "ViewerOne", 7000],
+      ["fan1004", "FanTube", 6000],
+      ["luckybox", "LuckyViewer", 5000],
+      ["bluechip", "BlueTube", 4000],
+      ["goodviewer", "GoodTube", 3000],
+      ["watchman", "WatchManYT", 2000],
+      ["cardmaster", "CardMasterYT", 1000]
+    ];
 
     const state = {
       videos: [],
+      videoUrlPool: [],
       currentVideo: null,
       integratedWatchSeconds: 0,
       rewardGoalSeconds: 600,
@@ -4031,8 +4293,11 @@
       openStageTimers: [],
       openStageMidPlaybackRate: 1,
       donationSelectedAmount: 0,
+      donationView: "status",
+      donationCompletion: null,
       donationHistory: [],
       donationChannelTotals: {},
+      donationRankings: {},
     };
 
     let autoWatchTimer = null;
@@ -4156,6 +4421,8 @@
     const rewardInline = document.getElementById("rewardInline");
     const openWalletBtn = document.getElementById("openWalletBtn");
     const openDonationBtn = document.getElementById("openDonationBtn");
+    const refreshLatestVideosBtnTop = document.getElementById("refreshLatestVideosBtnTop");
+    const refreshLatestVideosBtnFloat = document.getElementById("refreshLatestVideosBtnFloat");
     const openWalletTestHit = document.getElementById("openWalletTestHit");
     const benefitBanner = document.getElementById("benefitBanner");
     const closeBenefitBtn = document.getElementById("closeBenefitBtn");
@@ -4174,10 +4441,35 @@
     const donationChannelAvatar = document.getElementById("donationChannelAvatar");
     const donationChannelName = document.getElementById("donationChannelName");
     const donationChannelId = document.getElementById("donationChannelId");
+    const donationSheetTitle = document.getElementById("donationSheetTitle");
+    const donationAmountAvatar = document.getElementById("donationAmountAvatar");
+    const donationAmountChannelName = document.getElementById("donationAmountChannelName");
+    const donationCompleteAvatar = document.getElementById("donationCompleteAvatar");
+    const donationCompleteChannelName = document.getElementById("donationCompleteChannelName");
+    const donationChannelGuide = document.getElementById("donationChannelGuide");
+    const donationAmountChannelGuide = document.getElementById("donationAmountChannelGuide");
+    const donationCompleteChannelGuide = document.getElementById("donationCompleteChannelGuide");
+    const donationAmountChannelId = document.getElementById("donationAmountChannelId");
     const donationBalanceText = document.getElementById("donationBalanceText");
     const donationSelectedText = document.getElementById("donationSelectedText");
     const donationFeedback = document.getElementById("donationFeedback");
     const submitDonationBtn = document.getElementById("submitDonationBtn");
+    const donationStatusView = document.getElementById("donationStatusView");
+    const donationAmountView = document.getElementById("donationAmountView");
+    const donationCompletionView = document.getElementById("donationCompletionView");
+    const donationRankingList = document.getElementById("donationRankingList");
+    const donationRankingEmptyNote = document.getElementById("donationRankingEmptyNote");
+    const openDonationAmountViewBtn = document.getElementById("openDonationAmountViewBtn");
+    const donationRandomizeBtn = document.getElementById("donationRandomizeBtn");
+    const donationChannelLinkBtn = document.getElementById("donationChannelLinkBtn");
+    const donationAmountChannelLinkBtn = document.getElementById("donationAmountChannelLinkBtn");
+    const donationCompleteChannelLinkBtn = document.getElementById("donationCompleteChannelLinkBtn");
+    const backToDonationStatusBtn = document.getElementById("backToDonationStatusBtn");
+    const donationViewRankingBtn = document.getElementById("donationViewRankingBtn");
+    const donationAddMoreBtn = document.getElementById("donationAddMoreBtn");
+    const donationCompleteTitle = document.getElementById("donationCompleteTitle");
+    const donationCompleteText = document.getElementById("donationCompleteText");
+    const donationCompleteSub = document.getElementById("donationCompleteSub");
     const rewardAdVideo = document.getElementById("rewardAdVideo");
     const rewardAdProgress = document.getElementById("rewardAdProgress");
     const rewardAdBtn = document.getElementById("rewardAdBtn");
@@ -4393,15 +4685,56 @@
       return `조회수 ${n.toLocaleString()}회`;
     }
 
-    function showToast(message){
-      toast.textContent = message;
+    function showToast(message, options = {}){
+      const title = options.title || "";
+      const icon = options.icon || "";
+      const duration = Number(options.duration) || 4600;
+
+      if(title || icon){
+        toast.innerHTML = `
+          <div class="toast-row">
+            <div class="toast-icon">${escapeHtml(icon || "🎁")}</div>
+            <div>
+              <div class="toast-title">${escapeHtml(title || "알림")}</div>
+              <div class="toast-body">${escapeHtml(message).replace(/\n/g, "<br>")}</div>
+            </div>
+          </div>
+        `;
+      } else {
+        toast.textContent = message;
+      }
       toast.classList.add("show");
       clearTimeout(showToast._timer);
-      showToast._timer = setTimeout(() => toast.classList.remove("show"), 1800);
+      showToast._timer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, duration);
+    }
+
+    function getActiveVideoUrlPool(){
+      return Array.isArray(state.videoUrlPool) && state.videoUrlPool.length ? state.videoUrlPool : VIDEO_URL_POOL;
+    }
+
+    function saveVideoUrlPool(urls){
+      try{
+        localStorage.setItem(VIDEO_POOL_STORAGE_KEY, JSON.stringify(urls));
+      }catch(error){
+        console.warn("Failed to save video pool", error);
+      }
+    }
+
+    function loadStoredVideoUrlPool(){
+      try{
+        const parsed = JSON.parse(localStorage.getItem(VIDEO_POOL_STORAGE_KEY) || "null");
+        if(Array.isArray(parsed) && parsed.length){
+          return parsed.filter(url => typeof url === "string" && url.includes("youtube.com/watch?v="));
+        }
+      }catch(error){
+        console.warn("Failed to load stored video pool", error);
+      }
+      return [...VIDEO_URL_POOL];
     }
 
     const DONATION_STORAGE_KEY = "viewster_donation_state";
-    const DEFAULT_DONATION_BALANCE = 12000;
 
     function getCurrentDonationVideo(){
       return state.currentVideo || state.videos[0] || null;
@@ -4411,11 +4744,30 @@
       return video?.avatar || "https://via.placeholder.com/80x80?text=%20";
     }
 
+    function getDonationChannelSecondaryText(video){
+      const rawHandle = String(video?.channelHandle || "").trim();
+      if(rawHandle){
+        return rawHandle.startsWith("@") ? rawHandle : `@${rawHandle}`;
+      }
+      return "뷰스터에서 후원하고 랭킹에 참여해보세요.";
+    }
+
+    function openDonationChannelPage(){
+      const video = getCurrentDonationVideo();
+      const channelId = String(video?.channelId || "").trim();
+      if(!channelId) return;
+      window.open(`https://www.youtube.com/channel/${encodeURIComponent(channelId)}`, "_blank", "noopener");
+    }
+
     function buildDonationStorageSnapshot(){
       return {
+        walletVersion: WALLET_VERSION,
         balance: Number(state.totalRewardPoint) || 0,
+        randomBoxCount: Number(state.randomBoxCount) || DEFAULT_RANDOM_BOX_COUNT,
+        goldBoxCount: Number(state.goldBoxCount) || DEFAULT_GOLD_BOX_COUNT,
         donations: Array.isArray(state.donationHistory) ? state.donationHistory : [],
-        channelTotals: state.donationChannelTotals || {}
+        channelTotals: state.donationChannelTotals || {},
+        channelRankings: state.donationRankings || {}
       };
     }
 
@@ -4435,15 +4787,47 @@
         parsed = null;
       }
 
-      const savedBalance = Number(parsed?.balance);
-      state.totalRewardPoint = Number.isFinite(savedBalance)
-        ? Math.max(0, savedBalance)
-        : Math.max(0, Number(state.totalRewardPoint) || DEFAULT_DONATION_BALANCE);
+      if(parsed?.walletVersion === WALLET_VERSION){
+        const savedBalance = Number(parsed?.balance);
+        state.totalRewardPoint = Number.isFinite(savedBalance) ? Math.max(0, savedBalance) : DEFAULT_WALLET_BALANCE;
+        state.randomBoxCount = Number.isFinite(Number(parsed?.randomBoxCount)) ? Math.max(0, Number(parsed.randomBoxCount)) : DEFAULT_RANDOM_BOX_COUNT;
+        state.goldBoxCount = Number.isFinite(Number(parsed?.goldBoxCount)) ? Math.max(0, Number(parsed.goldBoxCount)) : DEFAULT_GOLD_BOX_COUNT;
+      } else {
+        state.totalRewardPoint = DEFAULT_WALLET_BALANCE;
+        state.randomBoxCount = DEFAULT_RANDOM_BOX_COUNT;
+        state.goldBoxCount = DEFAULT_GOLD_BOX_COUNT;
+      }
       state.donationHistory = Array.isArray(parsed?.donations) ? parsed.donations : [];
       state.donationChannelTotals = parsed?.channelTotals && typeof parsed.channelTotals === "object"
         ? parsed.channelTotals
         : {};
+      state.donationRankings = parsed?.channelRankings && typeof parsed.channelRankings === "object"
+        ? parsed.channelRankings
+        : {};
+      if(!(parsed?.channelRankings && typeof parsed.channelRankings === "object")){
+        state.donationHistory.forEach(donation => {
+          const videoLike = {
+            channelId: donation.channelId,
+            channel: donation.channelName,
+            avatar: donation.channelProfile
+          };
+          const ranking = ensureDonationRanking(videoLike);
+          let me = ranking.find(entry => entry.userId === CURRENT_DONATION_USER.userId);
+          if(!me){
+            me = {
+              userId: CURRENT_DONATION_USER.userId,
+              viewsterNickname: CURRENT_DONATION_USER.viewsterNickname,
+              youtubeNickname: CURRENT_DONATION_USER.youtubeNickname,
+              amount: 0
+            };
+            ranking.push(me);
+          }
+          me.amount += Number(donation.amount || 0);
+        });
+      }
       state.donationSelectedAmount = 0;
+      state.donationView = "status";
+      state.donationCompletion = null;
     }
 
     function resetDonationSelection(message = "후원 금액을 선택해주세요."){
@@ -4452,13 +4836,187 @@
       donationFeedback.textContent = "";
     }
 
+    function clearDonationCompletion(){
+      state.donationCompletion = null;
+    }
+
+    function setDonationView(view){
+      state.donationView = view;
+    }
+
+    function getDonationChannelKey(video){
+      return video?.channelId || video?.channel || "unknown_channel";
+    }
+
+    function createSeedRankingEntries(channelKey){
+      return DONATION_RANKING_SEED.map(([viewsterNickname, youtubeNickname, amount], index) => ({
+        userId: `${channelKey}_seed_${index + 1}`,
+        viewsterNickname,
+        youtubeNickname,
+        amount
+      }));
+    }
+
+    function createRandomDonationRankingEntries(channelKey){
+      const sourcePool = [
+        ["7678G2", "HoldemTVFan"],
+        ["pokerfan", "PokerKing"],
+        ["holdemking", "HoldemKingYT"],
+        ["viewer01", "ViewerOne"],
+        ["fan1004", "FanTube"],
+        ["luckybox", "LuckyViewer"],
+        ["bluechip", "BlueTube"],
+        ["goodviewer", "GoodTube"],
+        ["watchman", "WatchManYT"],
+        ["cardmaster", "CardMasterYT"],
+        ["riverace", "RiverAceYT"],
+        ["allinpro", "AllInTube"],
+        ["chiphero", "ChipHeroTV"],
+        ["royalfan", "RoyalTube"],
+        ["spadeup", "SpadeUpYT"],
+        ["flushman", "FlushTube"],
+        ["pocket99", "PocketNines"],
+        ["kingcall", "KingCallYT"],
+        ["snapraise", "SnapRaise"],
+        ["finaltable", "FinalTableTV"]
+      ];
+      const count = randomInt(5, 50);
+      const entries = [];
+      for(let i = 0; i < count; i += 1){
+        const pair = sourcePool[i % sourcePool.length];
+        const suffix = i >= sourcePool.length ? `${i + 1}` : "";
+        entries.push({
+          userId: `${channelKey}_random_${i + 1}`,
+          viewsterNickname: `${pair[0]}${suffix}`,
+          youtubeNickname: `${pair[1]}${suffix}`,
+          amount: randomInt(1000, 50000)
+        });
+      }
+      return entries;
+    }
+
+    function randomizeDonationRanking(video){
+      const channelKey = getDonationChannelKey(video);
+      state.donationRankings[channelKey] = createRandomDonationRankingEntries(channelKey);
+      state.donationHistory = state.donationHistory.filter(donation => getDonationChannelKey({
+        channelId: donation.channelId,
+        channel: donation.channelName
+      }) !== channelKey);
+      if(state.donationChannelTotals[channelKey]){
+        delete state.donationChannelTotals[channelKey];
+      }
+      clearDonationCompletion();
+      setDonationView("status");
+      saveDonationState();
+    }
+
+    function ensureDonationRanking(video){
+      const channelKey = getDonationChannelKey(video);
+      if(!Array.isArray(state.donationRankings[channelKey]) || !state.donationRankings[channelKey].length){
+        state.donationRankings[channelKey] = createSeedRankingEntries(channelKey);
+      }
+      return state.donationRankings[channelKey];
+    }
+
+    function getSortedDonationRanking(video){
+      const entries = [...ensureDonationRanking(video)];
+      entries.sort((a, b) => {
+        const amountDiff = Number(b.amount || 0) - Number(a.amount || 0);
+        if(amountDiff !== 0) return amountDiff;
+        return String(a.viewsterNickname || "").localeCompare(String(b.viewsterNickname || ""));
+      });
+      return entries;
+    }
+
+    function findMyDonationRank(video){
+      const ranking = getSortedDonationRanking(video);
+      const index = ranking.findIndex(entry => entry.userId === CURRENT_DONATION_USER.userId);
+      return {
+        ranking,
+        index,
+        position: index >= 0 ? index + 1 : null,
+        entry: index >= 0 ? ranking[index] : null
+      };
+    }
+
+    function getRankBadge(position){
+      if(position === 1) return "🏆";
+      if(position === 2) return "🥈";
+      if(position === 3) return "🥉";
+      return "";
+    }
+
+    function formatDonationRankName(entry){
+      return `${entry.viewsterNickname}(${entry.youtubeNickname})`;
+    }
+
+    function renderDonationRanking(video){
+      const { ranking, position, entry } = findMyDonationRank(video);
+      const topTen = ranking.slice(0, 10);
+      const isMeInTopTen = position != null && position <= 10;
+
+      donationRankingList.innerHTML = topTen.map((item, index) => {
+        const rank = index + 1;
+        const isMe = item.userId === CURRENT_DONATION_USER.userId;
+        const badge = getRankBadge(rank);
+        const extraClass = [`donation-rank-item`, `is-rank-${Math.min(rank, 3)}`];
+        if(rank > 3) extraClass.pop();
+        if(isMe) extraClass.push("is-me");
+        return `
+          <div class="${extraClass.join(" ")}">
+            <div class="donation-rank-num">${rank}위 ${badge}</div>
+            <div class="donation-rank-name">${escapeHtml(formatDonationRankName(item))}${isMe ? " <span>(나)</span>" : ""}</div>
+          </div>
+        `;
+      }).join("");
+
+      if(position == null){
+        donationRankingEmptyNote.textContent = "후원하면 랭킹에 참여할 수 있어요.";
+      } else {
+        donationRankingEmptyNote.textContent = "";
+      }
+
+      if(position != null && !isMeInTopTen && entry){
+        donationRankingList.insertAdjacentHTML("beforeend", `
+          <div class="donation-rank-divider"></div>
+          <div class="donation-rank-item is-me">
+            <div class="donation-rank-num">${position}위</div>
+            <div class="donation-rank-name">${escapeHtml(formatDonationRankName(entry))} <span>(나)</span></div>
+          </div>
+        `);
+      }
+    }
+
+    function renderDonationCompletion(){
+      const completion = state.donationCompletion;
+      if(!completion) return;
+      donationCompleteTitle.textContent = "후원 완료";
+      donationCompleteText.textContent = `${completion.amount.toLocaleString()}P 후원이 완료되었습니다.`;
+      donationCompleteSub.textContent = completion.rankMessage || "내 후원 순위가 갱신되었습니다.";
+    }
+
     function renderDonationSheet(){
       const video = getCurrentDonationVideo();
       const balance = Math.max(0, Number(state.totalRewardPoint) || 0);
+      ensureDonationRanking(video);
+
+      donationSheetTitle.textContent =
+        state.donationView === "amount"
+          ? "후원 금액 선택"
+          : state.donationView === "completion"
+            ? "후원 완료"
+            : "이 채널 후원 현황";
+
       donationBalanceText.textContent = `${balance.toLocaleString()}P`;
       donationChannelName.textContent = video?.channel || "채널명 없음";
-      donationChannelId.textContent = video?.channelId || "channelId 없음";
       donationChannelAvatar.src = getSafeDonationAvatar(video);
+      donationAmountAvatar.src = getSafeDonationAvatar(video);
+      donationAmountChannelName.textContent = video?.channel || "채널명 없음";
+      donationCompleteAvatar.src = getSafeDonationAvatar(video);
+      donationCompleteChannelName.textContent = video?.channel || "채널명 없음";
+      donationChannelGuide.textContent = getDonationChannelSecondaryText(video);
+      donationAmountChannelGuide.textContent = getDonationChannelSecondaryText(video);
+      donationCompleteChannelGuide.textContent = getDonationChannelSecondaryText(video);
 
       donationAmountButtons.forEach(button => {
         const amount = Number(button.dataset.donationAmount);
@@ -4479,6 +5037,11 @@
       }
 
       submitDonationBtn.disabled = !(state.donationSelectedAmount > 0 && state.donationSelectedAmount <= balance);
+      donationStatusView.classList.toggle("active", state.donationView === "status");
+      donationAmountView.classList.toggle("active", state.donationView === "amount");
+      donationCompletionView.classList.toggle("active", state.donationView === "completion");
+      renderDonationRanking(video);
+      renderDonationCompletion();
     }
 
     function recordDonation(video, amount){
@@ -4507,12 +5070,26 @@
       currentTotal.channelProfile = donation.channelProfile;
       currentTotal.totalAmount = Number(currentTotal.totalAmount || 0) + amount;
       state.donationChannelTotals[channelKey] = currentTotal;
+
+      const ranking = ensureDonationRanking(video);
+      let me = ranking.find(entry => entry.userId === CURRENT_DONATION_USER.userId);
+      if(!me){
+        me = {
+          userId: CURRENT_DONATION_USER.userId,
+          viewsterNickname: CURRENT_DONATION_USER.viewsterNickname,
+          youtubeNickname: CURRENT_DONATION_USER.youtubeNickname,
+          amount: 0
+        };
+        ranking.push(me);
+      }
+      me.amount = Number(me.amount || 0) + amount;
     }
 
     function submitDonation(){
       const video = getCurrentDonationVideo();
       const amount = Number(state.donationSelectedAmount || 0);
       const balance = Number(state.totalRewardPoint || 0);
+      const beforeRankInfo = findMyDonationRank(video);
 
       if(!video){
         showToast("후원할 영상 정보를 찾지 못했습니다.");
@@ -4535,9 +5112,26 @@
       saveDonationState();
 
       state.donationSelectedAmount = 0;
-      donationFeedback.textContent = `${video.channel} 채널에 ${amount.toLocaleString()}P 후원 완료`;
+      const afterRankInfo = findMyDonationRank(video);
+      let rankMessage = "내 후원 순위가 갱신되었습니다.";
+      if(beforeRankInfo.position == null && afterRankInfo.position != null && afterRankInfo.position <= 10){
+        rankMessage = "TOP 10 랭킹에 진입했습니다.";
+      } else if(beforeRankInfo.position != null && afterRankInfo.position != null && afterRankInfo.position !== beforeRankInfo.position){
+        rankMessage = `내 순위가 ${beforeRankInfo.position}위 → ${afterRankInfo.position}위로 상승했습니다.`;
+      }
+      state.donationCompletion = {
+        amount,
+        beforeRank: beforeRankInfo.position,
+        afterRank: afterRankInfo.position,
+        rankMessage
+      };
+      donationFeedback.textContent = "";
+      setDonationView("completion");
       renderDonationSheet();
-      showToast(`${video.channel} 채널에 ${amount.toLocaleString()}P 후원했습니다.`);
+      showToast(
+        `${amount.toLocaleString()}P 후원이 반영되었습니다.\n${rankMessage}`,
+        { title: "후원 완료!", icon: "🎁", duration: 4800 }
+      );
     }
 
     function weightedRandom(items){
@@ -4654,7 +5248,7 @@ function wakePlayerControls(){
 }
     function setBenefitEnabled(enabled){
       state.benefitEnabled = enabled;
-      openWalletBtn.textContent = enabled ? "🎁 지갑" : "🎯 미션";
+      openWalletBtn.textContent = enabled ? "💵 지갑" : "🎯 미션";
       benefitBanner.classList.toggle("hidden", !enabled);
       rewardInline.classList.toggle("hidden", !enabled);
       if(enabled){
@@ -4682,7 +5276,7 @@ function wakePlayerControls(){
     async function loadVideosFromOEmbedFallback(){
       const fallbackVideos = [];
 
-      for(const sourceUrl of VIDEO_URL_POOL){
+      for(const sourceUrl of getActiveVideoUrlPool()){
         const videoId = extractVideoId(sourceUrl);
         if(!videoId) continue;
 
@@ -4693,6 +5287,7 @@ function wakePlayerControls(){
           title: "영상 제목",
           channel: "채널 정보",
           channelId: "",
+          channelHandle: "",
           views: "조회수 준비중",
           commentCount: 0,
           thumb: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
@@ -4729,7 +5324,7 @@ function wakePlayerControls(){
     }
 
     async function loadVideosFromYouTube(){
-      const ids = VIDEO_URL_POOL.map(extractVideoId).filter(Boolean);
+      const ids = getActiveVideoUrlPool().map(extractVideoId).filter(Boolean);
       if(!YT_API_KEY){
         const restored = await loadVideosFromOEmbedFallback();
         if(restored){
@@ -4762,6 +5357,7 @@ function wakePlayerControls(){
               title: item.snippet?.title || "제목 없음",
               channel: item.snippet?.channelTitle || "채널명 없음",
               channelId: item.snippet?.channelId || "",
+              channelHandle: "",
               views: formatViews(item.statistics?.viewCount || 0),
               commentCount: Number(item.statistics?.commentCount || 0),
               thumb: item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url || "",
@@ -4772,6 +5368,7 @@ function wakePlayerControls(){
         }
 
         const channelAvatarById = {};
+        const channelHandleById = {};
         const channelIds = [...new Set(results.map(video => video.channelId).filter(Boolean))];
 
         for(let i = 0; i < channelIds.length; i += chunkSize){
@@ -4786,11 +5383,13 @@ function wakePlayerControls(){
               channel.snippet?.thumbnails?.medium?.url ||
               channel.snippet?.thumbnails?.default?.url ||
               "";
+            channelHandleById[channel.id] = channel.snippet?.customUrl || "";
           }
         }
 
         results.forEach(video => {
           video.avatar = channelAvatarById[video.channelId] || "";
+          video.channelHandle = channelHandleById[video.channelId] || "";
         });
 
         state.videos = results;
@@ -4816,6 +5415,40 @@ function wakePlayerControls(){
         }
 
         homeList.innerHTML = `<div class="loading">영상 목록을 불러오지 못했습니다.<br>${escapeHtml(message)}</div>`;
+      }
+    }
+
+    async function refreshLatestVideosFromYouTube(){
+      if(!YT_API_KEY){
+        showToast("YT API key가 없어 최신영상을 불러올 수 없습니다.");
+        return;
+      }
+
+      try{
+        const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=KR&maxResults=50&key=${YT_API_KEY}`;
+        const res = await fetch(url);
+        const json = await res.json();
+
+        if(json.error){
+          throw new Error(json.error.message || "YouTube API 오류");
+        }
+
+        const urls = (json.items || [])
+          .map(item => item?.id)
+          .filter(Boolean)
+          .map(videoId => `https://www.youtube.com/watch?v=${videoId}`);
+
+        if(!urls.length){
+          throw new Error("최신 영상 목록을 가져오지 못했습니다.");
+        }
+
+        state.videoUrlPool = urls;
+        saveVideoUrlPool(urls);
+        await loadVideosFromYouTube();
+        showToast("↻ 최신영상 50개를 불러왔습니다.");
+      }catch(error){
+        console.error(error);
+        showToast("최신영상 갱신에 실패해 기존 목록을 유지합니다.");
       }
     }
 
@@ -6068,8 +6701,47 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     });
     openDonationBtn.addEventListener("click", () => {
       resetDonationSelection();
+      clearDonationCompletion();
+      setDonationView("status");
       renderDonationSheet();
       openSheet("donationSheet");
+    });
+    openDonationAmountViewBtn.addEventListener("click", () => {
+      clearDonationCompletion();
+      setDonationView("amount");
+      resetDonationSelection();
+      renderDonationSheet();
+    });
+    donationRandomizeBtn.addEventListener("click", () => {
+      const video = getCurrentDonationVideo();
+      if(!video) return;
+      randomizeDonationRanking(video);
+      updateWallet();
+      renderDonationSheet();
+      showToast("랜덤 후원 랭킹을 새로 설정했습니다.", {
+        title: "랜덤설정 완료",
+        icon: "🎲",
+        duration: 4200
+      });
+    });
+    [donationChannelLinkBtn, donationAmountChannelLinkBtn, donationCompleteChannelLinkBtn].forEach(button => {
+      if(!button) return;
+      button.addEventListener("click", openDonationChannelPage);
+    });
+    backToDonationStatusBtn.addEventListener("click", () => {
+      clearDonationCompletion();
+      setDonationView("status");
+      renderDonationSheet();
+    });
+    donationViewRankingBtn.addEventListener("click", () => {
+      setDonationView("status");
+      renderDonationSheet();
+    });
+    donationAddMoreBtn.addEventListener("click", () => {
+      clearDonationCompletion();
+      setDonationView("amount");
+      resetDonationSelection();
+      renderDonationSheet();
     });
     openWalletTestHit.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -6157,6 +6829,11 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       });
     });
 
+    [refreshLatestVideosBtnTop, refreshLatestVideosBtnFloat].forEach(button => {
+      if(!button) return;
+      button.addEventListener("click", refreshLatestVideosFromYouTube);
+    });
+
     syncGoldReelTuneInputs(state.goldReelStageConfig);
 
     goldReelTuneToggleBtn.addEventListener("click", () => {
@@ -6227,6 +6904,7 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     bindSheetIdleInteractions("commentSheet");
 
     setupWatchScrollBehavior();
+    state.videoUrlPool = loadStoredVideoUrlPool();
     loadDonationState();
     updateWallet();
     setBenefitEnabled(false);
