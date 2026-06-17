@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.18 -->
+<!-- Version: DEV v0.3.32 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -980,6 +980,15 @@
       background:#e5e7eb;
       flex-shrink:0;
     }
+    .donation-channel-avatar.is-clickable{
+      cursor:pointer;
+      box-shadow:0 0 0 2px rgba(37,99,235,.12);
+      transition:transform .16s ease, box-shadow .16s ease;
+    }
+    .donation-channel-avatar.is-clickable:active{
+      transform:scale(.97);
+      box-shadow:0 0 0 2px rgba(37,99,235,.2);
+    }
     .donation-channel-info{
       min-width:0;
       display:flex;
@@ -1018,6 +1027,636 @@
       color:#64748b;
       font-weight:700;
       line-height:1.45;
+      word-break:keep-all;
+    }
+    .donation-owner-screen{
+      position:fixed;
+      inset:0;
+      width:100%;
+      max-width:430px;
+      margin:0 auto;
+      background:var(--bg);
+      z-index:80;
+      display:none;
+      flex-direction:column;
+    }
+    .donation-owner-screen.active{
+      display:flex;
+    }
+    .donation-owner-page{
+      flex:1;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      padding:20px 16px calc(28px + env(safe-area-inset-bottom, 0px));
+    }
+    .donation-owner-title-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:6px;
+    }
+    .donation-owner-title{
+      font-size:24px;
+      font-weight:900;
+      color:#111827;
+      line-height:1.15;
+    }
+    .donation-owner-close{
+      border:none;
+      background:#eef2f6;
+      color:#334155;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+      flex-shrink:0;
+    }
+    .donation-owner-hint{
+      margin-bottom:16px;
+      font-size:11px;
+      line-height:1.45;
+      color:#94a3b8;
+      word-break:keep-all;
+    }
+    .donation-owner-card{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:18px 16px;
+      border-radius:24px;
+      background:linear-gradient(180deg,#fffdf9,#ffffff);
+      border:1px solid #f3e8dc;
+      box-shadow:0 10px 26px rgba(15,23,42,.06);
+    }
+    .donation-owner-avatar{
+      width:68px;
+      height:68px;
+      border-radius:50%;
+      object-fit:cover;
+      background:#e5e7eb;
+      flex-shrink:0;
+    }
+    .donation-owner-card-info{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:5px;
+    }
+    .donation-owner-card-name{
+      font-size:19px;
+      font-weight:900;
+      color:#111827;
+      line-height:1.2;
+      word-break:break-word;
+    }
+    .donation-owner-card-sub{
+      font-size:13px;
+      font-weight:700;
+      color:#64748b;
+      word-break:break-word;
+    }
+    .donation-owner-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:fit-content;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid #e2e8f0;
+      color:#475569;
+      font-size:11px;
+      font-weight:800;
+    }
+    .donation-owner-section-title{
+      margin:20px 4px 10px;
+      font-size:16px;
+      font-weight:900;
+      color:#111827;
+    }
+    .donation-owner-summary-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:10px;
+    }
+    .donation-owner-summary-card{
+      background:#fff;
+      border:1px solid #eef2f7;
+      border-radius:20px;
+      box-shadow:0 8px 22px rgba(15,23,42,.05);
+      padding:16px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      min-width:0;
+    }
+    .donation-owner-summary-label{
+      font-size:12px;
+      line-height:1.4;
+      font-weight:700;
+      color:#94a3b8;
+      word-break:keep-all;
+    }
+    .donation-owner-summary-value{
+      font-size:22px;
+      line-height:1.15;
+      font-weight:900;
+      color:#111827;
+      word-break:break-word;
+    }
+    .donation-owner-live-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .donation-owner-live-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin:20px 4px 10px;
+      flex-wrap:wrap;
+    }
+    .donation-owner-subpage-btn{
+      min-height:30px;
+      padding:0 12px;
+      border:none;
+      border-radius:999px;
+      background:#f8fafc;
+      color:#475569;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:inset 0 0 0 1px #e2e8f0;
+      white-space:nowrap;
+    }
+    .donation-owner-live-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 14px;
+      background:#fff;
+      border:1px solid #eef2f7;
+      border-radius:20px;
+      box-shadow:0 8px 22px rgba(15,23,42,.05);
+    }
+    .donation-owner-live-main{
+      min-width:0;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .donation-owner-live-name{
+      font-size:14px;
+      line-height:1.4;
+      font-weight:800;
+      color:#111827;
+      word-break:break-word;
+    }
+    .donation-owner-live-meta{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .donation-owner-live-amount{
+      font-size:16px;
+      line-height:1.2;
+      font-weight:900;
+      color:#ea580c;
+      white-space:nowrap;
+    }
+    .donation-owner-live-time{
+      font-size:12px;
+      line-height:1.2;
+      font-weight:700;
+      color:#94a3b8;
+      white-space:nowrap;
+    }
+    .donation-owner-thanks-btn{
+      border:none;
+      background:#f8fafc;
+      color:#475569;
+      min-height:32px;
+      padding:0 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+      flex-shrink:0;
+      box-shadow:inset 0 0 0 1px #e2e8f0;
+    }
+    .donation-owner-thanks-btn:disabled{
+      cursor:default;
+      color:#a8b3c2;
+      background:#f1f5f9;
+      box-shadow:inset 0 0 0 1px #e5e7eb;
+      opacity:.95;
+    }
+    .donation-owner-rank-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .donation-owner-rank-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin:20px 4px 10px;
+      flex-wrap:wrap;
+    }
+    .donation-owner-rank-head-main{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      min-width:0;
+    }
+    .donation-owner-rank-total{
+      font-size:12px;
+      font-weight:800;
+      color:#64748b;
+      white-space:nowrap;
+    }
+    .donation-owner-rank-tools{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+    .donation-owner-rank-tool-btn{
+      min-height:30px;
+      padding:0 10px;
+      border:none;
+      border-radius:999px;
+      background:#f8fafc;
+      color:#475569;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:inset 0 0 0 1px #e2e8f0;
+    }
+    .donation-owner-rank-item{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 14px;
+      background:#fff;
+      border:1px solid #eef2f7;
+      border-radius:20px;
+      box-shadow:0 8px 22px rgba(15,23,42,.05);
+    }
+    .donation-owner-rank-item:not(.is-rank-1):not(.is-rank-2):not(.is-rank-3){
+      gap:10px;
+      padding:8px 12px;
+      border-radius:13px;
+      box-shadow:none;
+      background:#fbfcfe;
+      border-color:#edf1f5;
+    }
+    .donation-owner-rank-item.is-rank-1{
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.92), transparent 38%),
+        linear-gradient(180deg,#fff5cf,#ffe79a 55%,#fffaf0 100%);
+      border-color:#e7b945;
+      box-shadow:0 12px 26px rgba(234,179,8,.2);
+    }
+    .donation-owner-rank-item.is-rank-2{
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.9), transparent 38%),
+        linear-gradient(180deg,#f4f8fc,#dfe7f1 55%,#fbfdff 100%);
+      border-color:#b6c2d0;
+      box-shadow:0 12px 26px rgba(100,116,139,.16);
+    }
+    .donation-owner-rank-item.is-rank-3{
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.88), transparent 38%),
+        linear-gradient(180deg,#ffe2cf,#efbe9d 55%,#fff5ee 100%);
+      border-color:#d19774;
+      box-shadow:0 12px 26px rgba(180,83,9,.16);
+    }
+    .donation-owner-rank-num{
+      min-width:48px;
+      font-size:13px;
+      line-height:1.2;
+      font-weight:900;
+      color:#111827;
+      white-space:nowrap;
+    }
+    .donation-owner-rank-item.is-rank-1 .donation-owner-rank-num{color:#8a5a00;}
+    .donation-owner-rank-item.is-rank-2 .donation-owner-rank-num{color:#42556d;}
+    .donation-owner-rank-item.is-rank-3 .donation-owner-rank-num{color:#8f4b22;}
+    .donation-owner-rank-main{
+      min-width:0;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .donation-owner-rank-item:not(.is-rank-1):not(.is-rank-2):not(.is-rank-3) .donation-owner-rank-main{
+      gap:2px;
+    }
+    .donation-owner-rank-name{
+      font-size:14px;
+      line-height:1.4;
+      font-weight:800;
+      color:#111827;
+      word-break:break-word;
+    }
+    .donation-owner-rank-item:not(.is-rank-1):not(.is-rank-2):not(.is-rank-3) .donation-owner-rank-name{
+      font-size:13px;
+      line-height:1.25;
+      font-weight:700;
+    }
+    .donation-owner-rank-meta{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .donation-owner-rank-item:not(.is-rank-1):not(.is-rank-2):not(.is-rank-3) .donation-owner-rank-meta{
+      gap:5px;
+    }
+    .donation-owner-rank-item:not(.is-rank-1):not(.is-rank-2):not(.is-rank-3) .donation-owner-rank-meta::before{
+      content:"";
+      display:none;
+    }
+    .donation-owner-rank-amount{
+      font-size:16px;
+      line-height:1.2;
+      font-weight:900;
+      color:#111827;
+      white-space:nowrap;
+    }
+    .donation-owner-rank-item:not(.is-rank-1):not(.is-rank-2):not(.is-rank-3) .donation-owner-rank-amount{
+      font-size:13px;
+      font-weight:800;
+      color:#334155;
+    }
+    .donation-owner-rank-time{
+      font-size:12px;
+      line-height:1.2;
+      font-weight:700;
+      color:#94a3b8;
+      white-space:nowrap;
+    }
+    .donation-owner-rank-item:not(.is-rank-1):not(.is-rank-2):not(.is-rank-3) .donation-owner-rank-time{
+      font-size:11px;
+      font-weight:700;
+    }
+    .donation-owner-rank-item:not(.is-rank-1):not(.is-rank-2):not(.is-rank-3) .donation-owner-rank-num{
+      min-width:34px;
+      font-size:12px;
+      align-self:flex-start;
+      padding-top:2px;
+    }
+    .donation-owner-rank-more{
+      margin:12px auto 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:38px;
+      padding:0 18px;
+      border:none;
+      border-radius:999px;
+      background:#f8fafc;
+      color:#475569;
+      font-size:13px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:inset 0 0 0 1px #e2e8f0;
+    }
+    .donation-owner-rank-more[hidden]{
+      display:none;
+    }
+    .donation-owner-rank-more:disabled{
+      cursor:default;
+      opacity:.55;
+    }
+    .donation-owner-rank-note{
+      margin:10px 4px 0;
+      font-size:11px;
+      line-height:1.45;
+      font-weight:700;
+      color:#94a3b8;
+      text-align:center;
+      word-break:keep-all;
+    }
+    .donation-owner-rank-note[hidden]{
+      display:none;
+    }
+    .donation-owner-view-all{
+      margin:10px auto 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:40px;
+      padding:0 18px;
+      border:none;
+      border-radius:999px;
+      background:#fff7ed;
+      color:#c2410c;
+      font-size:13px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:inset 0 0 0 1px rgba(251,146,60,.24);
+    }
+    .donation-owner-view-all[hidden]{
+      display:none;
+    }
+    .donation-owner-rank-empty{
+      padding:14px 4px 2px;
+      font-size:13px;
+      line-height:1.45;
+      font-weight:700;
+      color:#94a3b8;
+      text-align:center;
+    }
+    .donation-owner-rank-empty[hidden]{
+      display:none;
+    }
+    .donation-owner-subscreen{
+      position:absolute;
+      inset:0;
+      display:none;
+      background:var(--bg);
+      z-index:2;
+    }
+    .donation-owner-subscreen.active{
+      display:block;
+    }
+    .donation-owner-subscreen-page{
+      height:100%;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      padding:20px 16px calc(28px + env(safe-area-inset-bottom, 0px));
+    }
+    .donation-owner-fullrank-desc{
+      margin:4px 4px 0;
+      font-size:12px;
+      line-height:1.5;
+      font-weight:700;
+      color:#64748b;
+      word-break:keep-all;
+    }
+    .donation-owner-fullrank-summary{
+      margin:16px 4px 12px;
+      font-size:13px;
+      font-weight:800;
+      color:#475569;
+    }
+    .donation-owner-fullrank-list{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .donation-owner-fullrank-item{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:9px 12px;
+      background:#fff;
+      border:1px solid #edf1f5;
+      border-radius:14px;
+      box-shadow:0 4px 14px rgba(15,23,42,.04);
+    }
+    .donation-owner-fullrank-num{
+      min-width:42px;
+      padding-top:2px;
+      font-size:12px;
+      line-height:1.2;
+      font-weight:900;
+      color:#334155;
+      white-space:nowrap;
+    }
+    .donation-owner-fullrank-main{
+      min-width:0;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .donation-owner-fullrank-name{
+      font-size:13px;
+      line-height:1.3;
+      font-weight:800;
+      color:#111827;
+      word-break:break-word;
+    }
+    .donation-owner-fullrank-meta{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+    .donation-owner-fullrank-amount{
+      font-size:13px;
+      line-height:1.2;
+      font-weight:800;
+      color:#334155;
+      white-space:nowrap;
+    }
+    .donation-owner-fullrank-time{
+      font-size:11px;
+      line-height:1.2;
+      font-weight:700;
+      color:#94a3b8;
+      white-space:nowrap;
+    }
+    .donation-owner-history-toolbar{
+      margin:10px 4px 0;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .donation-owner-history-placeholder{
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      background:#f8fafc;
+      color:#94a3b8;
+      font-size:11px;
+      font-weight:800;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:inset 0 0 0 1px #e2e8f0;
+    }
+    .donation-owner-history-summary{
+      margin:16px 4px 12px;
+      font-size:13px;
+      font-weight:800;
+      color:#475569;
+    }
+    .donation-owner-history-list{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .donation-owner-history-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 12px;
+      background:#fff;
+      border:1px solid #edf1f5;
+      border-radius:14px;
+      box-shadow:0 4px 14px rgba(15,23,42,.04);
+    }
+    .donation-owner-history-main{
+      min-width:0;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+    }
+    .donation-owner-history-name{
+      font-size:13px;
+      line-height:1.3;
+      font-weight:800;
+      color:#111827;
+      word-break:break-word;
+    }
+    .donation-owner-history-meta{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+    .donation-owner-history-amount{
+      font-size:13px;
+      line-height:1.2;
+      font-weight:900;
+      color:#ea580c;
+      white-space:nowrap;
+    }
+    .donation-owner-history-time,
+    .donation-owner-history-status{
+      font-size:11px;
+      line-height:1.2;
+      font-weight:700;
+      color:#94a3b8;
+      white-space:nowrap;
+    }
+    .donation-owner-guide{
+      margin-top:16px;
+      padding:16px 18px;
+      border-radius:20px;
+      background:#fff;
+      border:1px solid #eef2f7;
+      box-shadow:0 8px 22px rgba(15,23,42,.05);
+      font-size:14px;
+      font-weight:800;
+      color:#475569;
+      line-height:1.5;
       word-break:keep-all;
     }
     .donation-ranking-panel{
@@ -3614,7 +4253,7 @@
     }
 
     .toast{
-      position:absolute;
+      position:fixed;
       left:50%;
       bottom:92px;
       transform:translateX(-50%) translateY(20px);
@@ -3624,7 +4263,7 @@
       color:#fff;
       padding:14px 16px;
       border-radius:18px;
-      z-index:70;
+      z-index:120;
       text-align:left;
       opacity:0;
       pointer-events:none;
@@ -3748,7 +4387,7 @@
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.18</span>
+          <span class="dev-version-label">DEV v0.3.32</span>
         </div>
       </header>
 
@@ -3789,7 +4428,7 @@
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.18</span>
+            <span class="dev-version-label">DEV v0.3.32</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -3987,7 +4626,7 @@
       <div class="donation-sheet-content">
         <div class="donation-view active" id="donationStatusView">
           <div class="donation-channel-card">
-            <img class="donation-channel-avatar" id="donationChannelAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
+            <img class="donation-channel-avatar is-clickable" id="donationChannelAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
             <div class="donation-channel-info">
               <div class="donation-channel-topline">
                 <div class="donation-channel-name" id="donationChannelName">채널명</div>
@@ -4064,6 +4703,132 @@
             <button class="donation-sub-btn" id="donationAddMoreBtn" type="button">추가 후원하기</button>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="donation-owner-screen" id="donationOwnerScreen">
+    <div class="donation-owner-page">
+      <div class="donation-owner-title-row">
+        <div class="donation-owner-title">채널 후원관리</div>
+        <button class="donation-owner-close" id="closeDonationOwnerScreenBtn" type="button">후원 화면으로 돌아가기</button>
+      </div>
+      <div class="donation-owner-hint">데모페이지입니다. 경로는 마이페이지 &gt; 채널관리 &gt; 채널 후원관리 입니다.</div>
+      <div class="donation-owner-card">
+        <img class="donation-owner-avatar" id="donationOwnerAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
+        <div class="donation-owner-card-info">
+          <div class="donation-owner-card-name" id="donationOwnerChannelName">채널명</div>
+          <div class="donation-owner-card-sub" id="donationOwnerChannelSub">@channel</div>
+          <div class="donation-owner-badge">연결된 YouTube 채널</div>
+        </div>
+      </div>
+      <div class="donation-owner-section-title">후원 요약</div>
+      <div class="donation-owner-summary-grid">
+        <div class="donation-owner-summary-card">
+          <div class="donation-owner-summary-label">오늘 받은 후원</div>
+          <div class="donation-owner-summary-value">12,000P</div>
+        </div>
+        <div class="donation-owner-summary-card">
+          <div class="donation-owner-summary-label">이번 달 받은 후원</div>
+          <div class="donation-owner-summary-value">128,000P</div>
+        </div>
+        <div class="donation-owner-summary-card">
+          <div class="donation-owner-summary-label">누적 후원</div>
+          <div class="donation-owner-summary-value">742,000P</div>
+        </div>
+        <div class="donation-owner-summary-card">
+          <div class="donation-owner-summary-label">후원 참여자</div>
+          <div class="donation-owner-summary-value">38명</div>
+        </div>
+      </div>
+      <div class="donation-owner-live-head">
+        <div class="donation-owner-section-title" style="margin:0;">실시간 후원 내역</div>
+        <button class="donation-owner-subpage-btn" id="donationOwnerViewHistoryBtn" type="button">전체 내역 보기</button>
+      </div>
+      <div class="donation-owner-live-list">
+        <div class="donation-owner-live-item">
+          <div class="donation-owner-live-main">
+            <div class="donation-owner-live-name">viewer7678(YouTube7678)</div>
+            <div class="donation-owner-live-meta">
+              <div class="donation-owner-live-amount">10,000P</div>
+              <div class="donation-owner-live-time">방금 전</div>
+            </div>
+          </div>
+          <button class="donation-owner-thanks-btn" type="button" data-action="send-thanks" data-recipient="viewer7678(YouTube7678)">감사 보내기</button>
+        </div>
+        <div class="donation-owner-live-item">
+          <div class="donation-owner-live-main">
+            <div class="donation-owner-live-name">fan1004(FanTube)</div>
+            <div class="donation-owner-live-meta">
+              <div class="donation-owner-live-amount">7,777P</div>
+              <div class="donation-owner-live-time">3분 전</div>
+            </div>
+          </div>
+          <button class="donation-owner-thanks-btn" type="button" data-action="send-thanks" data-recipient="fan1004(FanTube)">감사 보내기</button>
+        </div>
+        <div class="donation-owner-live-item">
+          <div class="donation-owner-live-main">
+            <div class="donation-owner-live-name">luckybox(LuckyViewer)</div>
+            <div class="donation-owner-live-meta">
+              <div class="donation-owner-live-amount">5,000P</div>
+              <div class="donation-owner-live-time">12분 전</div>
+            </div>
+          </div>
+          <button class="donation-owner-thanks-btn" type="button" data-action="send-thanks" data-recipient="luckybox(LuckyViewer)">감사 보내기</button>
+        </div>
+        <div class="donation-owner-live-item">
+          <div class="donation-owner-live-main">
+            <div class="donation-owner-live-name">pokerfan(PokerKing)</div>
+            <div class="donation-owner-live-meta">
+              <div class="donation-owner-live-amount">1,004P</div>
+              <div class="donation-owner-live-time">28분 전</div>
+            </div>
+          </div>
+          <button class="donation-owner-thanks-btn" type="button" data-action="send-thanks" data-recipient="pokerfan(PokerKing)">감사 보내기</button>
+        </div>
+      </div>
+      <div class="donation-owner-rank-head">
+        <div class="donation-owner-rank-head-main">
+          <div class="donation-owner-section-title" style="margin:0;">후원 랭킹 현황</div>
+          <div class="donation-owner-rank-total" id="donationOwnerRankTotalText">총 10명</div>
+        </div>
+        <div class="donation-owner-rank-tools">
+          <button class="donation-owner-rank-tool-btn" id="donationOwnerAddOneBtn" type="button">+1명</button>
+          <button class="donation-owner-rank-tool-btn" id="donationOwnerAddTenBtn" type="button">+10명</button>
+          <button class="donation-owner-rank-tool-btn" id="donationOwnerRankResetBtn" type="button">초기화</button>
+        </div>
+      </div>
+      <div class="donation-owner-rank-list" id="donationOwnerRankList"></div>
+      <div class="donation-owner-rank-empty" id="donationOwnerRankEmpty" hidden>아직 후원 랭킹이 없습니다.</div>
+      <button class="donation-owner-rank-more" id="donationOwnerRankMoreBtn" type="button">10명 더보기</button>
+      <button class="donation-owner-view-all" id="donationOwnerViewAllBtn" type="button" hidden>전체 후원자 랭킹 보기</button>
+      <div class="donation-owner-rank-note" id="donationOwnerRankNote" hidden>전체 후원 내역 검색/필터 기능은 추후 관리 메뉴에 추가됩니다.</div>
+      <div class="donation-owner-guide">후원 관리 기능을 준비 중입니다.</div>
+    </div>
+    <div class="donation-owner-subscreen" id="donationOwnerFullRankScreen">
+      <div class="donation-owner-subscreen-page">
+        <div class="donation-owner-title-row">
+          <div class="donation-owner-title">전체 후원자 랭킹</div>
+          <button class="donation-owner-close" id="closeDonationOwnerFullRankBtn" type="button">채널 후원관리로 돌아가기</button>
+        </div>
+        <div class="donation-owner-fullrank-desc">누적 후원 금액 기준으로 전체 후원자를 확인할 수 있습니다.</div>
+        <div class="donation-owner-fullrank-summary" id="donationOwnerFullRankTotalText">총 0명</div>
+        <div class="donation-owner-fullrank-list" id="donationOwnerFullRankList"></div>
+      </div>
+    </div>
+    <div class="donation-owner-subscreen" id="donationOwnerHistoryScreen">
+      <div class="donation-owner-subscreen-page">
+        <div class="donation-owner-title-row">
+          <div class="donation-owner-title">전체 후원 내역</div>
+          <button class="donation-owner-close" id="closeDonationOwnerHistoryBtn" type="button">채널 후원관리로 돌아가기</button>
+        </div>
+        <div class="donation-owner-fullrank-desc">채널에 들어온 건별 후원 기록을 확인할 수 있습니다.</div>
+        <div class="donation-owner-history-toolbar">
+          <div class="donation-owner-history-placeholder">검색 준비중</div>
+          <div class="donation-owner-history-placeholder">기간 필터 준비중</div>
+        </div>
+        <div class="donation-owner-history-summary" id="donationOwnerHistorySummaryText">총 0건 · 0P</div>
+        <div class="donation-owner-history-list" id="donationOwnerHistoryList"></div>
       </div>
     </div>
   </section>
@@ -4461,6 +5226,29 @@
     const donationChannelGuide = document.getElementById("donationChannelGuide");
     const donationAmountChannelGuide = document.getElementById("donationAmountChannelGuide");
     const donationCompleteChannelGuide = document.getElementById("donationCompleteChannelGuide");
+    const donationOwnerScreen = document.getElementById("donationOwnerScreen");
+    const closeDonationOwnerScreenBtn = document.getElementById("closeDonationOwnerScreenBtn");
+    const donationOwnerAvatar = document.getElementById("donationOwnerAvatar");
+    const donationOwnerChannelName = document.getElementById("donationOwnerChannelName");
+    const donationOwnerChannelSub = document.getElementById("donationOwnerChannelSub");
+    const donationOwnerRankList = document.getElementById("donationOwnerRankList");
+    const donationOwnerRankEmpty = document.getElementById("donationOwnerRankEmpty");
+    const donationOwnerRankMoreBtn = document.getElementById("donationOwnerRankMoreBtn");
+    const donationOwnerViewAllBtn = document.getElementById("donationOwnerViewAllBtn");
+    const donationOwnerRankNote = document.getElementById("donationOwnerRankNote");
+    const donationOwnerRankTotalText = document.getElementById("donationOwnerRankTotalText");
+    const donationOwnerAddOneBtn = document.getElementById("donationOwnerAddOneBtn");
+    const donationOwnerAddTenBtn = document.getElementById("donationOwnerAddTenBtn");
+    const donationOwnerRankResetBtn = document.getElementById("donationOwnerRankResetBtn");
+    const donationOwnerViewHistoryBtn = document.getElementById("donationOwnerViewHistoryBtn");
+    const donationOwnerFullRankScreen = document.getElementById("donationOwnerFullRankScreen");
+    const closeDonationOwnerFullRankBtn = document.getElementById("closeDonationOwnerFullRankBtn");
+    const donationOwnerFullRankTotalText = document.getElementById("donationOwnerFullRankTotalText");
+    const donationOwnerFullRankList = document.getElementById("donationOwnerFullRankList");
+    const donationOwnerHistoryScreen = document.getElementById("donationOwnerHistoryScreen");
+    const closeDonationOwnerHistoryBtn = document.getElementById("closeDonationOwnerHistoryBtn");
+    const donationOwnerHistorySummaryText = document.getElementById("donationOwnerHistorySummaryText");
+    const donationOwnerHistoryList = document.getElementById("donationOwnerHistoryList");
     const donationAmountChannelId = document.getElementById("donationAmountChannelId");
     const donationBalanceText = document.getElementById("donationBalanceText");
     const donationSelectedText = document.getElementById("donationSelectedText");
@@ -4542,6 +5330,100 @@
     let walletLiveDragStartY = 0;
     let walletLiveDragDeltaY = 0;
     let walletLiveDragging = false;
+    let donationOwnerRankVisibleCount = 10;
+
+    const DONATION_OWNER_RANKING_BASE = [
+      { rank: 1, name: "viewer7678(YouTube7678)", amount: "120,000P", recent: "최근 후원 방금 전" },
+      { rank: 2, name: "fan1004(FanTube)", amount: "88,777P", recent: "최근 후원 3분 전" },
+      { rank: 3, name: "luckybox(LuckyViewer)", amount: "72,000P", recent: "최근 후원 12분 전" },
+      { rank: 4, name: "pokerfan(PokerKing)", amount: "51,004P", recent: "최근 후원 28분 전" },
+      { rank: 5, name: "holdemking(HoldemKingYT)", amount: "35,000P", recent: "최근 후원 1시간 전" },
+      { rank: 6, name: "bluechip(BlueTube)", amount: "31,500P", recent: "최근 후원 1시간 전" },
+      { rank: 7, name: "goodviewer(GoodTube)", amount: "28,000P", recent: "최근 후원 2시간 전" },
+      { rank: 8, name: "watchman(WatchManYT)", amount: "26,500P", recent: "최근 후원 2시간 전" },
+      { rank: 9, name: "cardmaster(CardMasterYT)", amount: "24,000P", recent: "최근 후원 3시간 전" },
+      { rank: 10, name: "riverace(RiverAceYT)", amount: "21,750P", recent: "최근 후원 3시간 전" },
+      { rank: 11, name: "allinpro(AllInTube)", amount: "20,000P", recent: "최근 후원 4시간 전" },
+      { rank: 12, name: "chiphero(ChipHeroTV)", amount: "18,400P", recent: "최근 후원 4시간 전" },
+      { rank: 13, name: "royalfan(RoyalTube)", amount: "17,800P", recent: "최근 후원 5시간 전" },
+      { rank: 14, name: "spadeup(SpadeUpYT)", amount: "16,250P", recent: "최근 후원 5시간 전" },
+      { rank: 15, name: "flushman(FlushTube)", amount: "15,900P", recent: "최근 후원 6시간 전" },
+      { rank: 16, name: "pocket99(PocketNines)", amount: "14,600P", recent: "최근 후원 6시간 전" },
+      { rank: 17, name: "kingcall(KingCallYT)", amount: "13,850P", recent: "최근 후원 7시간 전" },
+      { rank: 18, name: "snapraise(SnapRaise)", amount: "12,990P", recent: "최근 후원 7시간 전" },
+      { rank: 19, name: "finaltable(FinalTableTV)", amount: "12,200P", recent: "최근 후원 8시간 전" },
+      { rank: 20, name: "acehigh(AceHighYT)", amount: "11,880P", recent: "최근 후원 9시간 전" },
+      { rank: 21, name: "stackboss(StackBossTV)", amount: "11,100P", recent: "최근 후원 9시간 전" },
+      { rank: 22, name: "nutdraw(NutDrawYT)", amount: "10,750P", recent: "최근 후원 10시간 전" },
+      { rank: 23, name: "boardrun(BoardRunTV)", amount: "9,980P", recent: "최근 후원 10시간 전" },
+      { rank: 24, name: "chiprush(ChipRushYT)", amount: "9,250P", recent: "최근 후원 11시간 전" },
+      { rank: 25, name: "diamondbet(DiamondBet)", amount: "8,500P", recent: "최근 후원 11시간 전" },
+      { rank: 26, name: "fullhouse(FullHouseTV)", amount: "7,900P", recent: "최근 후원 12시간 전" },
+      { rank: 27, name: "callstation(CallStation)", amount: "7,350P", recent: "최근 후원 12시간 전" },
+      { rank: 28, name: "rivershark(RiverSharkYT)", amount: "6,980P", recent: "최근 후원 13시간 전" },
+      { rank: 29, name: "triplebar(TripleBarTV)", amount: "6,400P", recent: "최근 후원 13시간 전" },
+      { rank: 30, name: "glorypot(GloryPotYT)", amount: "5,950P", recent: "최근 후원 14시간 전" }
+    ];
+    let donationOwnerRankingMock = DONATION_OWNER_RANKING_BASE.slice(0, 10).map(item => ({ ...item }));
+    const DONATION_OWNER_HISTORY_BASE = [
+      { name: "viewer7678(YouTube7678)", amount: 10000, recent: "방금 전", status: "감사 발송 가능" },
+      { name: "fan1004(FanTube)", amount: 7777, recent: "3분 전", status: "감사 발송 가능" },
+      { name: "luckybox(LuckyViewer)", amount: 5000, recent: "12분 전", status: "감사 발송 가능" },
+      { name: "pokerfan(PokerKing)", amount: 1004, recent: "28분 전", status: "감사 발송 가능" },
+      { name: "holdemking(HoldemKingYT)", amount: 3000, recent: "35분 전", status: "감사 발송 가능" },
+      { name: "bluechip(BlueTube)", amount: 2000, recent: "42분 전", status: "감사 발송 가능" },
+      { name: "goodviewer(GoodTube)", amount: 5000, recent: "1시간 전", status: "감사 발송 가능" },
+      { name: "watchman(WatchManYT)", amount: 12345, recent: "1시간 전", status: "감사 발송 가능" },
+      { name: "cardmaster(CardMasterYT)", amount: 1000, recent: "1시간 전", status: "감사 발송 가능" },
+      { name: "riverace(RiverAceYT)", amount: 2000, recent: "2시간 전", status: "감사 발송 가능" },
+      { name: "allinpro(AllInTube)", amount: 3000, recent: "2시간 전", status: "감사 발송 가능" },
+      { name: "chiphero(ChipHeroTV)", amount: 5000, recent: "2시간 전", status: "감사 발송 가능" },
+      { name: "royalfan(RoyalTube)", amount: 7000, recent: "3시간 전", status: "감사 발송 가능" },
+      { name: "spadeup(SpadeUpYT)", amount: 1004, recent: "3시간 전", status: "감사 발송 가능" },
+      { name: "flushman(FlushTube)", amount: 1500, recent: "3시간 전", status: "감사 발송 가능" },
+      { name: "pocket99(PocketNines)", amount: 2500, recent: "4시간 전", status: "감사 발송 가능" },
+      { name: "kingcall(KingCallYT)", amount: 4000, recent: "4시간 전", status: "감사 발송 가능" },
+      { name: "snapraise(SnapRaise)", amount: 5500, recent: "4시간 전", status: "감사 발송 가능" },
+      { name: "finaltable(FinalTableTV)", amount: 10000, recent: "5시간 전", status: "감사 발송 가능" },
+      { name: "acehigh(AceHighYT)", amount: 7777, recent: "5시간 전", status: "감사 발송 가능" },
+      { name: "stackboss(StackBossTV)", amount: 1000, recent: "5시간 전", status: "감사 발송 가능" },
+      { name: "nutdraw(NutDrawYT)", amount: 2000, recent: "6시간 전", status: "감사 발송 가능" },
+      { name: "boardrun(BoardRunTV)", amount: 3000, recent: "6시간 전", status: "감사 발송 가능" },
+      { name: "chiprush(ChipRushYT)", amount: 5000, recent: "6시간 전", status: "감사 발송 가능" },
+      { name: "diamondbet(DiamondBet)", amount: 7000, recent: "7시간 전", status: "감사 발송 가능" },
+      { name: "fullhouse(FullHouseTV)", amount: 8888, recent: "7시간 전", status: "감사 발송 가능" },
+      { name: "callstation(CallStation)", amount: 1004, recent: "8시간 전", status: "감사 발송 가능" },
+      { name: "rivershark(RiverSharkYT)", amount: 4321, recent: "8시간 전", status: "감사 발송 가능" },
+      { name: "triplebar(TripleBarTV)", amount: 15000, recent: "8시간 전", status: "감사 발송 가능" },
+      { name: "glorypot(GloryPotYT)", amount: 5000, recent: "9시간 전", status: "감사 발송 가능" },
+      { name: "testfan31(TestFan31TV)", amount: 1000, recent: "9시간 전", status: "감사 발송 가능" },
+      { name: "testfan32(TestFan32TV)", amount: 2100, recent: "10시간 전", status: "감사 발송 가능" },
+      { name: "testfan33(TestFan33TV)", amount: 3200, recent: "10시간 전", status: "감사 발송 가능" },
+      { name: "testfan34(TestFan34TV)", amount: 5400, recent: "11시간 전", status: "감사 발송 가능" },
+      { name: "testfan35(TestFan35TV)", amount: 7600, recent: "11시간 전", status: "감사 발송 가능" },
+      { name: "testfan36(TestFan36TV)", amount: 9999, recent: "12시간 전", status: "감사 발송 가능" }
+    ].map((item, index) => ({ ...item, id: `donation-owner-history-${index + 1}` }));
+
+    function registerGlobalSendThanksHandler(){
+      if(window.__donationSendThanksBound) return;
+      window.__donationSendThanksBound = true;
+      document.addEventListener("click", function(event) {
+        const thanksButton = event.target.closest("[data-action='send-thanks']");
+        if(!thanksButton) return;
+        if(thanksButton.disabled) return;
+        const recipient = String(thanksButton.dataset.recipient || "").trim() || "\ud6c4\uc6d0\uc790";
+        console.log("\uac10\uc0ac \ubcf4\ub0b4\uae30 \ud074\ub9ad\ub428");
+        event.preventDefault();
+        event.stopPropagation();
+        thanksButton.disabled = true;
+        thanksButton.textContent = "\ubc1c\uc1a1\uc644\ub8cc";
+        showToast(`${recipient}\ub2d8\uc5d0\uac8c \uac10\uc0ac \uba54\uc2dc\uc9c0\ub97c \ubcf4\ub0c8\uc2b5\ub2c8\ub2e4.`, {
+          title: "\uac10\uc0ac \ubcf4\ub0b4\uae30 \uc644\ub8cc",
+          icon: "\ud83d\udc8c",
+          duration: 3000
+        });
+      }, true);
+    }
 
     function extractVideoId(url){
       try{
@@ -4769,6 +5651,181 @@
       const channelId = String(video?.channelId || "").trim();
       if(!channelId) return;
       window.open(`https://www.youtube.com/channel/${encodeURIComponent(channelId)}`, "_blank", "noopener");
+    }
+
+    function renderDonationOwnerScreen(){
+      const video = getCurrentDonationVideo();
+      donationOwnerAvatar.src = getSafeDonationAvatar(video);
+      donationOwnerChannelName.textContent = video?.channel || "채널명 없음";
+      donationOwnerChannelSub.textContent = getDonationChannelSecondaryText(video);
+      renderDonationOwnerRankList();
+    }
+
+    function formatOwnerRankButtonText(totalCount){
+      if(totalCount <= 10){
+        return "";
+      }
+      if(totalCount <= 20){
+        if(donationOwnerRankVisibleCount <= 10){
+          return `나머지 ${Math.max(totalCount - 10, 0)}명 더보기`;
+        }
+        return "처음 10명만 보기";
+      }
+      if(totalCount <= 30){
+        if(donationOwnerRankVisibleCount <= 10){
+          return "10명 더보기";
+        }
+        if(donationOwnerRankVisibleCount < totalCount){
+          return `나머지 ${Math.max(totalCount - donationOwnerRankVisibleCount, 0)}명 더보기`;
+        }
+        return "처음 10명만 보기";
+      }
+      if(donationOwnerRankVisibleCount < 30){
+        return "10명 더보기";
+      }
+      return "처음 10명만 보기";
+    }
+
+    function createDonationOwnerTestEntry(){
+      const nextRank = donationOwnerRankingMock.length + 1;
+      const safeAmount = donationOwnerRankingMock.length
+        ? Math.max(parseInt(String(donationOwnerRankingMock[donationOwnerRankingMock.length - 1].amount).replace(/[^0-9]/g, ""), 10) - randomInt(200, 800), 100)
+        : 1200;
+      return {
+        rank: nextRank,
+        name: `testuser${nextRank}(TestUser${nextRank}TV)`,
+        amount: `${safeAmount.toLocaleString()}P`,
+        recent: `최근 후원 ${Math.max(nextRank - 10, 1)}분 전`
+      };
+    }
+
+    function addDonationOwnerTestEntries(count){
+      for(let i = 0; i < count; i += 1){
+        donationOwnerRankingMock.push(createDonationOwnerTestEntry());
+      }
+      donationOwnerRankingMock = donationOwnerRankingMock.map((item, index) => ({
+        ...item,
+        rank: index + 1
+      }));
+      renderDonationOwnerRankList();
+      renderDonationOwnerFullRankList();
+    }
+
+    function resetDonationOwnerRankingMock(){
+      donationOwnerRankingMock = DONATION_OWNER_RANKING_BASE.slice(0, 10).map(item => ({ ...item }));
+      donationOwnerRankVisibleCount = 10;
+      renderDonationOwnerRankList();
+      renderDonationOwnerFullRankList();
+    }
+
+    function renderDonationOwnerRankList(){
+      const totalCount = donationOwnerRankingMock.length;
+      const maxVisible = totalCount >= 31 ? 30 : totalCount;
+      const currentVisible = Math.min(donationOwnerRankVisibleCount, maxVisible);
+      const visibleItems = donationOwnerRankingMock.slice(0, currentVisible);
+      donationOwnerRankList.innerHTML = visibleItems.map(item => {
+        const rankClass = item.rank <= 3 ? ` is-rank-${item.rank}` : "";
+        const badge = item.rank === 1 ? " 🏆" : item.rank === 2 ? " 🥈" : item.rank === 3 ? " 🥉" : "";
+        return `
+          <div class="donation-owner-rank-item${rankClass}">
+            <div class="donation-owner-rank-num">${item.rank}위${badge}</div>
+            <div class="donation-owner-rank-main">
+              <div class="donation-owner-rank-name">${escapeHtml(item.name)}</div>
+              <div class="donation-owner-rank-meta">
+                <div class="donation-owner-rank-amount">${escapeHtml(item.amount)}</div>
+                <div class="donation-owner-rank-time">${escapeHtml(item.recent)}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      donationOwnerRankTotalText.textContent = `총 ${totalCount}명`;
+      donationOwnerRankEmpty.hidden = totalCount !== 0;
+      donationOwnerRankList.hidden = totalCount === 0;
+
+      const buttonText = formatOwnerRankButtonText(totalCount);
+      donationOwnerRankMoreBtn.hidden = !buttonText;
+      donationOwnerRankMoreBtn.disabled = !buttonText;
+      donationOwnerRankMoreBtn.textContent = buttonText || "10명 더보기";
+      donationOwnerViewAllBtn.hidden = totalCount < 31;
+      donationOwnerViewAllBtn.textContent = `전체 후원자 랭킹 보기 ${totalCount}명`;
+      donationOwnerRankNote.hidden = !(totalCount >= 31 && currentVisible >= 30);
+    }
+
+    function renderDonationOwnerFullRankList(){
+      const totalCount = donationOwnerRankingMock.length;
+      donationOwnerFullRankTotalText.textContent = `총 ${totalCount}명`;
+      donationOwnerFullRankList.innerHTML = donationOwnerRankingMock.map(item => {
+        const badge = item.rank === 1 ? " 🏆" : item.rank === 2 ? " 🥈" : item.rank === 3 ? " 🥉" : "";
+        return `
+          <div class="donation-owner-fullrank-item">
+            <div class="donation-owner-fullrank-num">${item.rank}위${badge}</div>
+            <div class="donation-owner-fullrank-main">
+              <div class="donation-owner-fullrank-name">${escapeHtml(item.name)}</div>
+              <div class="donation-owner-fullrank-meta">
+                <div class="donation-owner-fullrank-amount">${escapeHtml(item.amount)}</div>
+                <div class="donation-owner-fullrank-time">${escapeHtml(item.recent)}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderDonationOwnerHistoryList(){
+      const totalCount = DONATION_OWNER_HISTORY_BASE.length;
+      const totalAmount = DONATION_OWNER_HISTORY_BASE.reduce((sum, item) => sum + item.amount, 0);
+      donationOwnerHistorySummaryText.textContent = `총 ${totalCount}건 · ${totalAmount.toLocaleString()}P`;
+      donationOwnerHistoryList.innerHTML = DONATION_OWNER_HISTORY_BASE.map(item => `
+        <div class="donation-owner-history-item">
+          <div class="donation-owner-history-main">
+            <div class="donation-owner-history-name">${escapeHtml(item.name)}</div>
+            <div class="donation-owner-history-meta">
+              <div class="donation-owner-history-amount">${Number(item.amount).toLocaleString()}P</div>
+              <div class="donation-owner-history-time">${escapeHtml(item.recent)}</div>
+              <div class="donation-owner-history-status">${escapeHtml(item.status)}</div>
+            </div>
+          </div>
+          <button class="donation-owner-thanks-btn" type="button" data-action="send-thanks" data-recipient="${escapeHtml(item.name)}">감사 보내기</button>
+        </div>
+      `).join("");
+    }
+
+    function openDonationOwnerScreen(){
+      donationOwnerRankVisibleCount = 10;
+      renderDonationOwnerScreen();
+      donationOwnerScreen.classList.add("active");
+      donationOwnerFullRankScreen.classList.remove("active");
+      donationOwnerHistoryScreen.classList.remove("active");
+    }
+
+    function closeDonationOwnerScreen(){
+      donationOwnerScreen.classList.remove("active");
+      donationOwnerFullRankScreen.classList.remove("active");
+      donationOwnerHistoryScreen.classList.remove("active");
+    }
+
+    function openDonationOwnerFullRankScreen(){
+      renderDonationOwnerFullRankList();
+      donationOwnerHistoryScreen.classList.remove("active");
+      donationOwnerFullRankScreen.classList.add("active");
+    }
+
+    function closeDonationOwnerFullRankScreen(){
+      donationOwnerRankVisibleCount = 10;
+      renderDonationOwnerRankList();
+      donationOwnerFullRankScreen.classList.remove("active");
+    }
+
+    function openDonationOwnerHistoryScreen(){
+      renderDonationOwnerHistoryList();
+      donationOwnerFullRankScreen.classList.remove("active");
+      donationOwnerHistoryScreen.classList.add("active");
+    }
+
+    function closeDonationOwnerHistoryScreen(){
+      donationOwnerHistoryScreen.classList.remove("active");
     }
 
     function buildDonationStorageSnapshot(){
@@ -6741,6 +7798,29 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       if(!button) return;
       button.addEventListener("click", openDonationChannelPage);
     });
+    donationChannelAvatar.addEventListener("click", openDonationOwnerScreen);
+    closeDonationOwnerScreenBtn.addEventListener("click", closeDonationOwnerScreen);
+    donationOwnerViewHistoryBtn.addEventListener("click", openDonationOwnerHistoryScreen);
+    donationOwnerViewAllBtn.addEventListener("click", openDonationOwnerFullRankScreen);
+    closeDonationOwnerFullRankBtn.addEventListener("click", closeDonationOwnerFullRankScreen);
+    closeDonationOwnerHistoryBtn.addEventListener("click", closeDonationOwnerHistoryScreen);
+    donationOwnerRankMoreBtn.addEventListener("click", () => {
+      const totalCount = donationOwnerRankingMock.length;
+      const maxVisible = totalCount >= 31 ? 30 : totalCount;
+      donationOwnerRankVisibleCount = donationOwnerRankVisibleCount >= maxVisible
+        ? 10
+        : Math.min(donationOwnerRankVisibleCount + 10, maxVisible);
+      renderDonationOwnerRankList();
+    });
+    donationOwnerAddOneBtn.addEventListener("click", () => {
+      addDonationOwnerTestEntries(1);
+    });
+    donationOwnerAddTenBtn.addEventListener("click", () => {
+      addDonationOwnerTestEntries(10);
+    });
+    donationOwnerRankResetBtn.addEventListener("click", () => {
+      resetDonationOwnerRankingMock();
+    });
     backToDonationStatusBtn.addEventListener("click", () => {
       clearDonationCompletion();
       setDonationView("status");
@@ -6915,6 +7995,7 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     bindSheetIdleInteractions("walletSheetLive");
     bindSheetIdleInteractions("donationSheet");
     bindSheetIdleInteractions("commentSheet");
+    registerGlobalSendThanksHandler();
 
     setupWatchScrollBehavior();
     state.videoUrlPool = loadStoredVideoUrlPool();
