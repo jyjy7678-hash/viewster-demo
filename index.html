@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.43 -->
+<!-- Version: DEV v0.3.54 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -989,6 +989,14 @@
       transform:scale(.97);
       box-shadow:0 0 0 2px rgba(37,99,235,.2);
     }
+    .donation-channel-info.is-clickable{
+      cursor:pointer;
+      min-height:44px;
+      justify-content:center;
+    }
+    .donation-channel-info.is-clickable:active{
+      opacity:.82;
+    }
     .donation-channel-info{
       min-width:0;
       display:flex;
@@ -1029,6 +1037,40 @@
       line-height:1.45;
       word-break:keep-all;
     }
+    .completion-compact-channel{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-height:32px;
+      padding:0 2px;
+      margin-bottom:10px;
+    }
+    .completion-compact-channel .donation-channel-avatar{
+      width:30px;
+      height:30px;
+      box-shadow:none;
+    }
+    .completion-compact-channel .donation-channel-info{
+      flex:1;
+      min-width:0;
+      gap:0;
+    }
+    .completion-compact-channel .donation-channel-topline{
+      justify-content:flex-start;
+      gap:8px;
+    }
+    .completion-compact-channel .donation-channel-name{
+      font-size:14px;
+      line-height:1.2;
+      font-weight:900;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .completion-compact-channel .donation-channel-link,
+    .completion-compact-channel .donation-channel-guide{
+      display:none;
+    }
     .donation-owner-screen{
       position:fixed;
       inset:0;
@@ -1063,16 +1105,18 @@
       line-height:1.15;
     }
     .donation-owner-close{
-      border:none;
-      background:#eef2f6;
+      border:1px solid #d9e1ec;
+      background:#ffffff;
       color:#334155;
-      min-height:34px;
+      min-height:36px;
       padding:0 12px;
       border-radius:999px;
       font-size:12px;
       font-weight:800;
       cursor:pointer;
       flex-shrink:0;
+      box-shadow:0 4px 12px rgba(15,23,42,.06);
+      white-space:nowrap;
     }
     .donation-owner-hint{
       margin-bottom:16px;
@@ -1178,6 +1222,21 @@
       justify-content:space-between;
       gap:10px;
       margin:20px 4px 10px;
+      flex-wrap:wrap;
+    }
+    .donation-owner-live-tools,
+    .donation-owner-rank-head-right{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .donation-owner-rank-test-actions{
+      margin:0 4px 10px;
+      display:flex;
+      align-items:center;
+      gap:6px;
       flex-wrap:wrap;
     }
     .donation-owner-subpage-btn{
@@ -1291,13 +1350,13 @@
       flex-wrap:wrap;
     }
     .donation-owner-rank-tool-btn{
-      min-height:30px;
-      padding:0 10px;
+      min-height:26px;
+      padding:0 9px;
       border:none;
       border-radius:999px;
-      background:#f8fafc;
-      color:#475569;
-      font-size:12px;
+      background:#f1f5f9;
+      color:#64748b;
+      font-size:11px;
       font-weight:800;
       cursor:pointer;
       box-shadow:inset 0 0 0 1px #e2e8f0;
@@ -1451,6 +1510,22 @@
     .donation-owner-rank-note[hidden]{
       display:none;
     }
+    .donation-owner-section-toggle{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:30px;
+      padding:0 10px;
+      border:none;
+      border-radius:999px;
+      background:#fff;
+      color:#c2410c;
+      font-size:12px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:inset 0 0 0 1px rgba(251,146,60,.22);
+      white-space:nowrap;
+    }
     .donation-owner-view-all{
       margin:10px auto 0;
       display:flex;
@@ -1477,6 +1552,11 @@
       font-weight:700;
       color:#94a3b8;
       text-align:center;
+    }
+    .donation-owner-live-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
     }
     .donation-owner-rank-empty[hidden]{
       display:none;
@@ -1788,6 +1868,13 @@
       color:#94a3b8;
       word-break:keep-all;
     }
+    .donation-owner-thankyou-download{
+      font-size:11px;
+      line-height:1.45;
+      font-weight:800;
+      color:#c2410c;
+      word-break:keep-all;
+    }
     .donation-owner-custom-section{
       margin-top:18px;
       padding:16px;
@@ -1882,6 +1969,17 @@
     .donation-owner-editor-group.is-hidden{
       display:none;
     }
+    .thankyou-media-fallback-icon{
+      width:100%;
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:36px;
+      line-height:1;
+      font-weight:900;
+      color:inherit;
+    }
     .donation-owner-thankyou-preview.is-basic{
       background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 45%,#fef3c7 100%);
       color:#9a3412;
@@ -1922,6 +2020,22 @@
       object-fit:contain;
       border-radius:12px;
       background:#fff;
+    }
+    .thankyou-media-video{
+      pointer-events:none;
+    }
+    .thankyou-media-video::-webkit-media-controls{
+      display:none !important;
+    }
+    .thankyou-media-video::-webkit-media-controls-panel{
+      display:none !important;
+    }
+    .thankyou-media-video::-webkit-media-controls-play-button{
+      display:none !important;
+    }
+    .thankyou-media-video::-webkit-media-controls-start-playback-button{
+      display:none !important;
+      -webkit-appearance:none;
     }
     .donation-owner-editor-card{
       margin-top:16px;
@@ -2005,6 +2119,13 @@
       background:#f8fafc;
       box-shadow:inset 0 0 0 1px #e2e8f0;
     }
+    .donation-owner-editor-help{
+      margin-top:6px;
+      font-size:12px;
+      line-height:1.45;
+      color:#64748b;
+      word-break:keep-all;
+    }
     .donation-owner-editor-switch{
       appearance:none;
       width:50px;
@@ -2076,11 +2197,18 @@
       flex-direction:column;
       gap:10px;
     }
+    .donation-owner-editor-file.is-disabled{
+      opacity:.76;
+    }
     .donation-owner-editor-file input[type="file"]{
       position:absolute;
       inset:0;
       opacity:0;
       cursor:pointer;
+    }
+    .donation-owner-editor-file.is-disabled input[type="file"]{
+      pointer-events:none;
+      cursor:not-allowed;
     }
     .donation-owner-editor-file-cta{
       display:inline-flex;
@@ -2108,19 +2236,6 @@
       display:flex;
       justify-content:flex-end;
       margin-top:-2px;
-    }
-    .donation-owner-guide{
-      margin-top:16px;
-      padding:16px 18px;
-      border-radius:20px;
-      background:#fff;
-      border:1px solid #eef2f7;
-      box-shadow:0 8px 22px rgba(15,23,42,.05);
-      font-size:14px;
-      font-weight:800;
-      color:#475569;
-      line-height:1.5;
-      word-break:keep-all;
     }
     .donation-ranking-panel{
       padding:14px;
@@ -2328,7 +2443,7 @@
       min-width:108px;
     }
     .donation-complete-card{
-      padding:22px 18px;
+      padding:14px 14px;
       border-radius:22px;
       background:linear-gradient(180deg,#fff7ed,#ffffff);
       box-shadow:0 14px 28px rgba(249,115,22,.12);
@@ -2338,10 +2453,10 @@
     .donation-complete-hero{
       display:flex;
       flex-direction:column;
-      gap:10px;
+      gap:6px;
       align-items:center;
       justify-content:center;
-      margin-bottom:12px;
+      margin-bottom:8px;
     }
     .donation-complete-icon{
       font-size:38px;
@@ -2350,7 +2465,8 @@
     }
     .donation-complete-media-wrap{
       width:100%;
-      max-width:220px;
+      max-width:200px;
+      max-height:200px;
       margin:0 auto;
       border-radius:18px;
       overflow:hidden;
@@ -2359,7 +2475,9 @@
     }
     .donation-complete-media{
       width:100%;
-      aspect-ratio:1 / 1;
+      height:min(200px, 52vw);
+      max-height:200px;
+      min-height:160px;
       display:block;
       object-fit:contain;
       background:#fff;
@@ -2371,7 +2489,7 @@
       font-size:16px;
       font-weight:900;
       color:#7c2d12;
-      line-height:1.5;
+      line-height:1.45;
       word-break:keep-all;
     }
     .donation-complete-title{
@@ -2381,15 +2499,48 @@
       font-size:15px;
       font-weight:800;
       color:#1f2937;
-      line-height:1.5;
+      line-height:1.4;
       word-break:keep-all;
     }
     .donation-complete-sub{
-      margin-top:10px;
+      margin-top:6px;
       font-size:13px;
       font-weight:800;
       color:#b45309;
-      line-height:1.5;
+      line-height:1.4;
+    }
+    .donation-complete-download-wrap{
+      margin-top:10px;
+      display:flex;
+      justify-content:center;
+    }
+    .donation-complete-download-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:40px;
+      padding:0 14px;
+      border-radius:999px;
+      border:1px solid #fdba74;
+      background:#fff7ed;
+      color:#9a3412;
+      font-size:13px;
+      font-weight:800;
+      text-decoration:none;
+      box-shadow:0 8px 18px rgba(249,115,22,.08);
+    }
+    .donation-complete-download-btn[hidden]{
+      display:none;
+    }
+    @media (min-width:431px){
+      .donation-complete-media-wrap{
+        max-width:220px;
+        max-height:220px;
+      }
+      .donation-complete-media{
+        height:220px;
+        max-height:220px;
+      }
     }
     @keyframes donationPop{
       0%{transform:scale(.78) translateY(8px);opacity:0;}
@@ -4880,7 +5031,7 @@
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.43</span>
+          <span class="dev-version-label">DEV v0.3.54</span>
         </div>
       </header>
 
@@ -4921,7 +5072,7 @@
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.43</span>
+            <span class="dev-version-label">DEV v0.3.54</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -5141,8 +5292,8 @@
 
         <div class="donation-view" id="donationAmountView">
           <div class="donation-channel-card">
-            <img class="donation-channel-avatar" id="donationAmountAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
-            <div class="donation-channel-info">
+            <img class="donation-channel-avatar is-clickable" id="donationAmountAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" aria-label="채널 후원관리로 이동" />
+            <div class="donation-channel-info is-clickable" id="donationAmountChannelInfo" role="button" tabindex="0" aria-label="채널 후원관리로 이동">
               <div class="donation-channel-topline">
                 <div class="donation-channel-name" id="donationAmountChannelName">채널명</div>
                 <button class="donation-channel-link" id="donationAmountChannelLinkBtn" type="button">▶ YouTube 채널</button>
@@ -5175,7 +5326,7 @@
         </div>
 
         <div class="donation-view" id="donationCompletionView">
-          <div class="donation-channel-card">
+          <div class="completion-compact-channel">
             <img class="donation-channel-avatar" id="donationCompleteAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
             <div class="donation-channel-info">
               <div class="donation-channel-topline">
@@ -5191,9 +5342,12 @@
               <div class="donation-complete-card-title" id="donationCompleteCardTitle">기본 감사 카드</div>
               <div class="donation-complete-card-message" id="donationCompleteCardMessage">후원 감사합니다!</div>
             </div>
-            <div class="donation-complete-title" id="donationCompleteTitle">후원 완료</div>
+            <div class="donation-complete-title" id="donationCompleteTitle" hidden>후원 완료</div>
             <div class="donation-complete-text" id="donationCompleteText">10,000P 후원이 완료되었습니다.</div>
             <div class="donation-complete-sub" id="donationCompleteSub">내 후원 순위가 갱신되었습니다.</div>
+            <div class="donation-complete-download-wrap">
+              <a class="donation-complete-download-btn" id="donationCompleteDownloadBtn" href="#" download hidden>감사카드 저장</a>
+            </div>
           </div>
           <div class="donation-action-row is-stacked">
             <button class="donation-submit-btn" id="donationViewRankingBtn" type="button">랭킹 확인하기</button>
@@ -5240,55 +5394,23 @@
       </div>
       <div class="donation-owner-live-head">
         <div class="donation-owner-section-title" style="margin:0;">실시간 후원 내역</div>
-        <button class="donation-owner-subpage-btn" id="donationOwnerViewHistoryBtn" type="button">전체 내역 보기</button>
-      </div>
-      <div class="donation-owner-live-list">
-        <div class="donation-owner-live-item">
-          <div class="donation-owner-live-main">
-            <div class="donation-owner-live-name">viewer7678(YouTube7678)</div>
-            <div class="donation-owner-live-meta">
-              <div class="donation-owner-live-amount">10,000P</div>
-              <div class="donation-owner-live-time">방금 전</div>
-            </div>
-          </div>
-          <button class="donation-owner-thanks-btn" type="button" data-action="send-thanks" data-recipient="viewer7678(YouTube7678)">감사 보내기</button>
-        </div>
-        <div class="donation-owner-live-item">
-          <div class="donation-owner-live-main">
-            <div class="donation-owner-live-name">fan1004(FanTube)</div>
-            <div class="donation-owner-live-meta">
-              <div class="donation-owner-live-amount">7,777P</div>
-              <div class="donation-owner-live-time">3분 전</div>
-            </div>
-          </div>
-          <button class="donation-owner-thanks-btn" type="button" data-action="send-thanks" data-recipient="fan1004(FanTube)">감사 보내기</button>
-        </div>
-        <div class="donation-owner-live-item">
-          <div class="donation-owner-live-main">
-            <div class="donation-owner-live-name">luckybox(LuckyViewer)</div>
-            <div class="donation-owner-live-meta">
-              <div class="donation-owner-live-amount">5,000P</div>
-              <div class="donation-owner-live-time">12분 전</div>
-            </div>
-          </div>
-          <button class="donation-owner-thanks-btn" type="button" data-action="send-thanks" data-recipient="luckybox(LuckyViewer)">감사 보내기</button>
-        </div>
-        <div class="donation-owner-live-item">
-          <div class="donation-owner-live-main">
-            <div class="donation-owner-live-name">pokerfan(PokerKing)</div>
-            <div class="donation-owner-live-meta">
-              <div class="donation-owner-live-amount">1,004P</div>
-              <div class="donation-owner-live-time">28분 전</div>
-            </div>
-          </div>
-          <button class="donation-owner-thanks-btn" type="button" data-action="send-thanks" data-recipient="pokerfan(PokerKing)">감사 보내기</button>
+        <div class="donation-owner-live-tools">
+          <button class="donation-owner-subpage-btn" id="donationOwnerViewHistoryBtn" type="button">전체 내역 보기</button>
+          <button class="donation-owner-section-toggle" id="donationOwnerLiveToggleBtn" type="button">더보기 ▼</button>
         </div>
       </div>
+      <div class="donation-owner-live-list" id="donationOwnerLiveList"></div>
       <div class="donation-owner-rank-head">
         <div class="donation-owner-rank-head-main">
           <div class="donation-owner-section-title" style="margin:0;">후원 랭킹 현황</div>
           <div class="donation-owner-rank-total" id="donationOwnerRankTotalText">총 10명</div>
         </div>
+        <div class="donation-owner-rank-head-right">
+          <button class="donation-owner-subpage-btn" id="donationOwnerViewAllBtn" type="button">전체 내역 보기</button>
+          <button class="donation-owner-section-toggle" id="donationOwnerRankToggleBtn" type="button">더보기 ▼</button>
+        </div>
+      </div>
+      <div class="donation-owner-rank-test-actions">
         <div class="donation-owner-rank-tools">
           <button class="donation-owner-rank-tool-btn" id="donationOwnerAddOneBtn" type="button">+1명</button>
           <button class="donation-owner-rank-tool-btn" id="donationOwnerAddTenBtn" type="button">+10명</button>
@@ -5297,10 +5419,8 @@
       </div>
       <div class="donation-owner-rank-list" id="donationOwnerRankList"></div>
       <div class="donation-owner-rank-empty" id="donationOwnerRankEmpty" hidden>아직 후원 랭킹이 없습니다.</div>
-      <button class="donation-owner-rank-more" id="donationOwnerRankMoreBtn" type="button">10명 더보기</button>
-      <button class="donation-owner-view-all" id="donationOwnerViewAllBtn" type="button" hidden>전체 후원자 랭킹 보기</button>
+      <button class="donation-owner-rank-more" id="donationOwnerRankMoreBtn" type="button" hidden>10명 더보기</button>
       <div class="donation-owner-rank-note" id="donationOwnerRankNote" hidden>전체 후원 내역 검색/필터 기능은 추후 관리 메뉴에 추가됩니다.</div>
-      <div class="donation-owner-guide">후원 관리 기능을 준비 중입니다.</div>
       <div class="donation-owner-section-title">후원 감사 카드</div>
       <div class="donation-owner-thankyou-intro">
         <div class="donation-owner-thankyou-copy">
@@ -5313,7 +5433,7 @@
       <div class="donation-owner-subscreen-page donation-completion-preview-layout">
         <div class="donation-owner-title-row">
           <div class="donation-owner-title">전체 후원자 랭킹</div>
-          <button class="donation-owner-close" id="closeDonationOwnerFullRankBtn" type="button">채널 후원관리로 돌아가기</button>
+          <button class="donation-owner-close" id="closeDonationOwnerFullRankBtn" type="button">← 후원관리</button>
         </div>
         <div class="donation-owner-fullrank-desc">누적 후원 금액 기준으로 전체 후원자를 확인할 수 있습니다.</div>
         <div class="donation-owner-fullrank-summary" id="donationOwnerFullRankTotalText">총 0명</div>
@@ -5324,7 +5444,7 @@
       <div class="donation-owner-subscreen-page">
         <div class="donation-owner-title-row">
           <div class="donation-owner-title">전체 후원 내역</div>
-          <button class="donation-owner-close" id="closeDonationOwnerHistoryBtn" type="button">채널 후원관리로 돌아가기</button>
+          <button class="donation-owner-close" id="closeDonationOwnerHistoryBtn" type="button">← 후원관리</button>
         </div>
         <div class="donation-owner-fullrank-desc">채널에 들어온 건별 후원 기록을 확인할 수 있습니다.</div>
         <div class="donation-owner-history-toolbar">
@@ -5382,12 +5502,17 @@
           </div>
           <div class="donation-owner-editor-group">
             <div class="donation-owner-editor-label">카드 자료 업로드</div>
-            <label class="donation-owner-editor-file">
-              <input id="donationOwnerEditMediaFile" type="file" accept="image/png,image/gif,video/mp4" />
-              <div class="donation-owner-editor-file-cta">파일 선택</div>
-              <div class="donation-owner-editor-file-note">PNG, GIF, MP4 파일을 사용할 수 있습니다.</div>
+            <label class="donation-owner-editor-file is-disabled">
+              <input id="donationOwnerEditMediaFile" type="file" accept="image/png,image/gif,video/mp4" disabled />
+              <div class="donation-owner-editor-file-cta">서버 연동 후 지원 예정</div>
+              <div class="donation-owner-editor-file-note">직접 업로드는 서버 연동 후 지원 예정입니다. 현재는 assets/thankyou/ 파일명 규칙 기반으로 연결됩니다.</div>
               <div class="donation-owner-editor-file-meta" id="donationOwnerEditMediaMeta">업로드된 파일이 없습니다.</div>
             </label>
+          </div>
+          <div class="donation-owner-editor-group">
+            <div class="donation-owner-editor-label">샘플 감사카드 선택</div>
+            <div class="donation-owner-style-options" id="donationOwnerEditPresetOptions"></div>
+            <div class="donation-owner-editor-file-meta" id="donationOwnerEditPresetMeta">선택된 카드: 기본 카드</div>
           </div>
           <div class="donation-owner-editor-group">
             <div class="donation-owner-editor-label">미리보기</div>
@@ -5407,6 +5532,14 @@
               <input class="donation-owner-editor-switch" id="donationOwnerEditEnabled" type="checkbox" checked />
             </div>
           </div>
+          <div class="donation-owner-editor-group">
+            <div class="donation-owner-editor-label">다운로드 허용</div>
+            <div class="donation-owner-editor-toggle">
+              <div>다운로드 허용</div>
+              <input class="donation-owner-editor-switch" id="donationOwnerEditAllowDownload" type="checkbox" />
+            </div>
+            <div class="donation-owner-editor-help">후원자가 후원 완료 후 이 감사카드를 저장할 수 있습니다.</div>
+          </div>
           <div class="donation-owner-editor-actions">
             <button class="donation-submit-btn" id="saveDonationOwnerThankYouBtn" type="button">저장하기</button>
             <button class="donation-sub-btn" id="cancelDonationOwnerThankYouBtn" type="button">취소</button>
@@ -5422,7 +5555,7 @@
         </div>
         <div class="donation-owner-fullrank-desc">후원자에게 실제로 보여질 화면입니다.</div>
         <div class="thank-preview-completion-layout">
-        <div class="donation-channel-card">
+        <div class="completion-compact-channel">
           <img class="donation-channel-avatar" id="donationOwnerPreviewAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
           <div class="donation-channel-info">
             <div class="donation-channel-topline">
@@ -5440,6 +5573,9 @@
           </div>
           <div class="donation-complete-text" id="donationOwnerPreviewAmountLabel">1,000P 후원이 완료되었습니다.</div>
           <div class="donation-complete-sub" id="donationOwnerPreviewRankMessage">내 순위가 25위 → 21위로 상승했습니다.</div>
+          <div class="donation-complete-download-wrap">
+            <a class="donation-complete-download-btn" id="donationOwnerPreviewDownloadBtn" href="#" download hidden>감사카드 저장</a>
+          </div>
         </div>
         <div class="thank-preview-action-area">
           <button class="donation-submit-btn" id="donationOwnerPreviewRankingBtn" type="button">랭킹 확인하기</button>
@@ -5838,6 +5974,7 @@
     const donationSheetTitle = document.getElementById("donationSheetTitle");
     const donationAmountAvatar = document.getElementById("donationAmountAvatar");
     const donationAmountChannelName = document.getElementById("donationAmountChannelName");
+    const donationAmountChannelInfo = document.getElementById("donationAmountChannelInfo");
     const donationCompleteAvatar = document.getElementById("donationCompleteAvatar");
     const donationCompleteChannelName = document.getElementById("donationCompleteChannelName");
     const donationChannelGuide = document.getElementById("donationChannelGuide");
@@ -5851,6 +5988,7 @@
     const donationOwnerRankList = document.getElementById("donationOwnerRankList");
     const donationOwnerRankEmpty = document.getElementById("donationOwnerRankEmpty");
     const donationOwnerRankMoreBtn = document.getElementById("donationOwnerRankMoreBtn");
+    const donationOwnerRankToggleBtn = document.getElementById("donationOwnerRankToggleBtn");
     const donationOwnerViewAllBtn = document.getElementById("donationOwnerViewAllBtn");
     const donationOwnerRankNote = document.getElementById("donationOwnerRankNote");
     const donationOwnerRankTotalText = document.getElementById("donationOwnerRankTotalText");
@@ -5858,6 +5996,8 @@
     const donationOwnerAddTenBtn = document.getElementById("donationOwnerAddTenBtn");
     const donationOwnerRankResetBtn = document.getElementById("donationOwnerRankResetBtn");
     const donationOwnerViewHistoryBtn = document.getElementById("donationOwnerViewHistoryBtn");
+    const donationOwnerLiveList = document.getElementById("donationOwnerLiveList");
+    const donationOwnerLiveToggleBtn = document.getElementById("donationOwnerLiveToggleBtn");
     const donationOwnerFullRankScreen = document.getElementById("donationOwnerFullRankScreen");
     const closeDonationOwnerFullRankBtn = document.getElementById("closeDonationOwnerFullRankBtn");
     const donationOwnerFullRankTotalText = document.getElementById("donationOwnerFullRankTotalText");
@@ -5886,7 +6026,10 @@
     const donationOwnerEditPreviewMessage = document.getElementById("donationOwnerEditPreviewMessage");
     const donationOwnerEditMediaFile = document.getElementById("donationOwnerEditMediaFile");
     const donationOwnerEditMediaMeta = document.getElementById("donationOwnerEditMediaMeta");
+    const donationOwnerEditPresetOptions = document.getElementById("donationOwnerEditPresetOptions");
+    const donationOwnerEditPresetMeta = document.getElementById("donationOwnerEditPresetMeta");
     const donationOwnerEditEnabled = document.getElementById("donationOwnerEditEnabled");
+    const donationOwnerEditAllowDownload = document.getElementById("donationOwnerEditAllowDownload");
     const openDonationOwnerThankYouPreviewBtn = document.getElementById("openDonationOwnerThankYouPreviewBtn");
     const saveDonationOwnerThankYouBtn = document.getElementById("saveDonationOwnerThankYouBtn");
     const cancelDonationOwnerThankYouBtn = document.getElementById("cancelDonationOwnerThankYouBtn");
@@ -5902,6 +6045,7 @@
     const donationOwnerModalPreviewTitle = document.getElementById("donationOwnerModalPreviewTitle");
     const donationOwnerModalPreviewMessage = document.getElementById("donationOwnerModalPreviewMessage");
     const donationOwnerPreviewRankMessage = document.getElementById("donationOwnerPreviewRankMessage");
+    const donationOwnerPreviewDownloadBtn = document.getElementById("donationOwnerPreviewDownloadBtn");
     const donationOwnerPreviewRankingBtn = document.getElementById("donationOwnerPreviewRankingBtn");
     const donationOwnerPreviewAddMoreBtn = document.getElementById("donationOwnerPreviewAddMoreBtn");
     const donationAmountChannelId = document.getElementById("donationAmountChannelId");
@@ -5929,6 +6073,7 @@
     const donationCompleteHero = document.getElementById("donationCompleteHero");
     const donationCompleteCardTitle = document.getElementById("donationCompleteCardTitle");
     const donationCompleteCardMessage = document.getElementById("donationCompleteCardMessage");
+    const donationCompleteDownloadBtn = document.getElementById("donationCompleteDownloadBtn");
     const rewardAdVideo = document.getElementById("rewardAdVideo");
     const rewardAdProgress = document.getElementById("rewardAdProgress");
     const rewardAdBtn = document.getElementById("rewardAdBtn");
@@ -5990,6 +6135,8 @@
     let walletLiveDragDeltaY = 0;
     let walletLiveDragging = false;
     let donationOwnerRankVisibleCount = 10;
+    let donationOwnerLiveExpanded = false;
+    let donationOwnerRankExpanded = false;
 
     const DONATION_OWNER_RANKING_BASE = [
       { rank: 1, name: "viewer7678(YouTube7678)", amount: "120,000P", recent: "최근 후원 방금 전" },
@@ -6086,6 +6233,227 @@
       5000: "9,999P",
       10000: "+"
     };
+    const THANK_YOU_PRESET_MEDIA = [
+      { id: "1000-a", amount: 1000, cardType: "range", label: "1000P A", fileName: "thankyou-1000-a.gif", mediaType: "image/gif" },
+      { id: "1000-b", amount: 1000, cardType: "range", label: "1000P B", fileName: "thankyou-1000-b.gif", mediaType: "image/gif" },
+      { id: "1000-c", amount: 1000, cardType: "range", label: "1000P C", fileName: "thankyou-1000-c.gif", mediaType: "image/gif" },
+      { id: "2000-a", amount: 2000, cardType: "range", label: "2000P A", fileName: "thankyou-2000-a.gif", mediaType: "image/gif" },
+      { id: "2000-b", amount: 2000, cardType: "range", label: "2000P B", fileName: "thankyou-2000-b.gif", mediaType: "image/gif" },
+      { id: "2000-c", amount: 2000, cardType: "range", label: "2000P C", fileName: "thankyou-2000-c.gif", mediaType: "image/gif" },
+      { id: "3000-a", amount: 3000, cardType: "range", label: "3000P A", fileName: "thankyou-3000-a.gif", mediaType: "image/gif" },
+      { id: "3000-b", amount: 3000, cardType: "range", label: "3000P B", fileName: "thankyou-3000-b.gif", mediaType: "image/gif" },
+      { id: "3000-c", amount: 3000, cardType: "range", label: "3000P C", fileName: "thankyou-3000-c.gif", mediaType: "image/gif" },
+      { id: "5000-a", amount: 5000, cardType: "range", label: "5000P A", fileName: "thankyou-5000-a.gif", mediaType: "image/gif" },
+      { id: "5000-b", amount: 5000, cardType: "range", label: "5000P B", fileName: "thankyou-5000-b.gif", mediaType: "image/gif" },
+      { id: "5000-c", amount: 5000, cardType: "range", label: "5000P C", fileName: "thankyou-5000-c.mp4", mediaType: "video/mp4" },
+      { id: "10000-a", amount: 10000, cardType: "range", label: "골드 10000P A", fileName: "thankyou-10000-a.mp4", mediaType: "video/mp4" },
+      { id: "10000-b", amount: 10000, cardType: "range", label: "골드 10000P B", fileName: "thankyou-10000-b.mp4", mediaType: "video/mp4" },
+      { id: "10000-c", amount: 10000, cardType: "range", label: "골드 10000P C", fileName: "thankyou-10000-c.mp4", mediaType: "video/mp4" },
+      { id: "custom-a", amount: 0, cardType: "custom", label: "커스텀 A", fileName: "thankyou-custom-a.mp4", mediaType: "video/mp4" },
+      { id: "custom-b", amount: 0, cardType: "custom", label: "커스텀 B", fileName: "thankyou-custom-b.mp4", mediaType: "video/mp4" },
+      { id: "custom-c", amount: 0, cardType: "custom", label: "커스텀 C", fileName: "thankyou-custom-c.mp4", mediaType: "video/mp4" }
+    ];
+    const THANK_YOU_DEFAULT_PRESET_BY_AMOUNT = {
+      1000: "1000-a",
+      2000: "2000-a",
+      3000: "3000-a",
+      5000: "5000-a",
+      10000: "10000-a"
+    };
+    const THANK_YOU_DEFAULT_CUSTOM_PRESET_ID = "custom-a";
+
+    function getThankYouPresetById(presetId){
+      return THANK_YOU_PRESET_MEDIA.find(preset => preset.id === String(presetId || "").trim()) || null;
+    }
+
+    function getDefaultThankYouPresetId(card){
+      if(card?.cardType === "custom"){
+        return THANK_YOU_DEFAULT_CUSTOM_PRESET_ID;
+      }
+      return THANK_YOU_DEFAULT_PRESET_BY_AMOUNT[Number(card?.amount) || 0] || "1000-a";
+    }
+
+    function getThankYouPresetOptions(card){
+      const amount = Number(card?.amount) || 0;
+      const cardType = String(card?.cardType || "range");
+      return THANK_YOU_PRESET_MEDIA.filter(preset => {
+        if(cardType === "custom"){
+          return preset.cardType === "custom";
+        }
+        return preset.cardType === "range" && preset.amount === amount;
+      });
+    }
+
+    function getThankYouPresetLabel(card){
+      const preset = getThankYouPresetById(card?.mediaPresetId);
+      return preset?.label || "기본 카드";
+    }
+
+    function applyThankYouPresetToCard(card, presetId){
+      if(!card) return card;
+      const resolvedPresetId = presetId || getDefaultThankYouPresetId(card);
+      const preset = getThankYouPresetById(resolvedPresetId) || getThankYouPresetById(getDefaultThankYouPresetId(card));
+      if(!preset) return card;
+      card.mediaSource = "preset";
+      card.mediaPresetId = preset.id;
+      card.mediaType = preset.mediaType;
+      card.mediaName = preset.fileName;
+      if(!String(card.mediaUrl || "").startsWith("blob:")){
+        card.mediaUrl = "";
+      }
+      return card;
+    }
+
+    function migrateThankYouCardMedia(card){
+      if(!card) return card;
+      const mediaUrl = String(card.mediaUrl || "").trim();
+      const mediaName = String(card.mediaName || "").trim();
+      const mediaSource = String(card.mediaSource || "").trim();
+      const mediaPresetId = String(card.mediaPresetId || "").trim();
+      const presetFromName = THANK_YOU_PRESET_MEDIA.find(preset => preset.fileName === mediaName);
+
+      if(mediaUrl.startsWith("blob:")){
+        card.mediaSource = "upload";
+        card.mediaPresetId = mediaPresetId || "";
+        return card;
+      }
+
+      if(mediaPresetId && getThankYouPresetById(mediaPresetId)){
+        return applyThankYouPresetToCard(card, mediaPresetId);
+      }
+
+      if(presetFromName){
+        return applyThankYouPresetToCard(card, presetFromName.id);
+      }
+
+      if(mediaSource === "upload" || (mediaName && !mediaUrl)){
+        card.mediaType = "default";
+        card.mediaName = "기본 카드";
+        card.mediaUrl = "";
+        return applyThankYouPresetToCard(card, getDefaultThankYouPresetId(card));
+      }
+
+      if(!mediaName && !mediaUrl){
+        return applyThankYouPresetToCard(card, getDefaultThankYouPresetId(card));
+      }
+
+      return card;
+    }
+
+    function getThankYouAssetCandidates(card){
+      const preset = getThankYouPresetById(card?.mediaPresetId);
+      if(preset){
+        return [preset.fileName];
+      }
+
+      const explicitMediaName = String(card?.mediaName || "").trim();
+      if(explicitMediaName){
+        return [explicitMediaName];
+      }
+
+      const fallbackPreset = getThankYouPresetById(getDefaultThankYouPresetId(card));
+      return fallbackPreset ? [fallbackPreset.fileName] : [];
+    }
+
+    function inferThankYouMediaTypeFromName(fileName){
+      const lowerName = String(fileName || "").trim().toLowerCase();
+      if(lowerName.endsWith(".mp4")) return "video/mp4";
+      if(lowerName.endsWith(".png")) return "image/png";
+      if(lowerName.endsWith(".gif")) return "image/gif";
+      return "";
+    }
+
+    function buildThankYouAssetSources(fileName){
+      const lowerName = String(fileName || "").trim().toLowerCase();
+      if(!lowerName) return [];
+      return [`assets/thankyou/${lowerName}`];
+    }
+
+    function resolveThankYouMediaConfig(card){
+      const explicitMediaUrl = String(card?.mediaUrl || "").trim();
+      const explicitMediaType = String(card?.mediaType || "").trim();
+      if(explicitMediaUrl){
+        return {
+          primarySrc: explicitMediaUrl,
+          candidates: [explicitMediaUrl],
+          mediaType: explicitMediaType || inferThankYouMediaTypeFromName(card?.mediaName || "")
+        };
+      }
+
+      const assetCandidates = getThankYouAssetCandidates(card).flatMap(buildThankYouAssetSources);
+      if(!assetCandidates.length){
+        return null;
+      }
+
+      const inferredType = inferThankYouMediaTypeFromName(assetCandidates[0]);
+      return {
+        primarySrc: assetCandidates[0],
+        candidates: assetCandidates,
+        mediaType: explicitMediaType || inferredType
+      };
+    }
+
+    function escapeAttributeJson(value){
+      return escapeHtml(JSON.stringify(value)).replace(/"/g, "&quot;");
+    }
+
+    function buildThankYouMediaDataset(config){
+      if(!config?.candidates?.length){
+        return "";
+      }
+      return ` data-thankyou-candidates="${escapeAttributeJson(config.candidates)}" data-thankyou-index="0"`;
+    }
+
+    window.handleThankYouMediaError = function(event, fallbackIcon){
+      const mediaEl = event?.target;
+      if(!mediaEl) return;
+
+      try{
+        const candidates = JSON.parse(mediaEl.dataset?.thankyouCandidates || "[]");
+        const currentIndex = Number(mediaEl.dataset?.thankyouIndex || 0);
+        const nextIndex = currentIndex + 1;
+        if(Array.isArray(candidates) && nextIndex < candidates.length){
+          const nextSrc = candidates[nextIndex];
+          const nextType = inferThankYouMediaTypeFromName(nextSrc);
+          const needsVideo = nextType.includes("video");
+          const currentIsVideo = mediaEl.tagName === "VIDEO";
+          mediaEl.dataset.thankyouIndex = String(nextIndex);
+
+          if(needsVideo !== currentIsVideo){
+            const replacementEl = document.createElement(needsVideo ? "video" : "img");
+            replacementEl.className = mediaEl.className;
+            replacementEl.dataset.thankyouCandidates = JSON.stringify(candidates);
+            replacementEl.dataset.thankyouIndex = String(nextIndex);
+            replacementEl.onerror = errorEvent => window.handleThankYouMediaError(errorEvent, fallbackIcon);
+
+            if(needsVideo){
+              replacementEl.muted = true;
+              replacementEl.loop = true;
+              replacementEl.playsInline = true;
+              replacementEl.autoplay = true;
+              replacementEl.controls = false;
+              replacementEl.removeAttribute("controls");
+              replacementEl.src = nextSrc;
+            }else{
+              replacementEl.alt = mediaEl.getAttribute("alt") || "thank you card";
+              replacementEl.src = nextSrc;
+            }
+
+            mediaEl.replaceWith(replacementEl);
+            return;
+          }
+
+          mediaEl.src = nextSrc;
+          return;
+        }
+      }catch(error){
+        // Fall through to the default icon fallback.
+      }
+
+      const wrapper = mediaEl.closest(".donation-complete-media-wrap, .donation-owner-thankyou-media-wrap, .donation-owner-editor-media-wrap");
+      if(!wrapper) return;
+      wrapper.outerHTML = `<div class="thankyou-media-fallback-icon">${escapeHtml(fallbackIcon || "🎁")}</div>`;
+    };
 
     function registerGlobalSendThanksHandler(){
       if(window.__donationSendThanksBound) return;
@@ -6139,6 +6507,15 @@
         event.stopPropagation();
         if(!donationOwnerThankYouDraft) return;
         donationOwnerThankYouDraft.style = String(styleButton.dataset.style || "basic");
+        renderDonationOwnerThankYouEditForm();
+      }, true);
+      document.addEventListener("click", function(event) {
+        const presetButton = event.target.closest("[data-action='select-thankyou-preset']");
+        if(!presetButton) return;
+        event.preventDefault();
+        event.stopPropagation();
+        if(!donationOwnerThankYouDraft) return;
+        applyThankYouPresetToCard(donationOwnerThankYouDraft, String(presetButton.dataset.presetId || ""));
         renderDonationOwnerThankYouEditForm();
       }, true);
     }
@@ -6377,7 +6754,27 @@
       donationOwnerAvatar.src = getSafeDonationAvatar(video);
       donationOwnerChannelName.textContent = video?.channel || "채널명 없음";
       donationOwnerChannelSub.textContent = getDonationChannelSecondaryText(video);
+      renderDonationOwnerLiveList();
       renderDonationOwnerRankList();
+    }
+
+    function renderDonationOwnerLiveList(){
+      if(!donationOwnerLiveList || !donationOwnerLiveToggleBtn) return;
+      const visibleItems = (donationOwnerLiveExpanded ? DONATION_OWNER_HISTORY_BASE.slice(0, 4) : DONATION_OWNER_HISTORY_BASE.slice(0, 1));
+      donationOwnerLiveList.innerHTML = visibleItems.map(item => `
+        <div class="donation-owner-live-item">
+          <div class="donation-owner-live-main">
+            <div class="donation-owner-live-name">${escapeHtml(item.name)}</div>
+            <div class="donation-owner-live-meta">
+              <div class="donation-owner-live-amount">${Number(item.amount).toLocaleString()}P</div>
+              <div class="donation-owner-live-time">${escapeHtml(item.recent)}</div>
+            </div>
+          </div>
+          <button class="donation-owner-thanks-btn" type="button" data-action="send-thanks" data-recipient="${escapeHtml(item.name)}">감사 보내기</button>
+        </div>
+      `).join("");
+      donationOwnerLiveToggleBtn.textContent = donationOwnerLiveExpanded ? "접기 ▲" : "더보기 ▼";
+      donationOwnerLiveToggleBtn.hidden = DONATION_OWNER_HISTORY_BASE.length <= 1;
     }
 
     function formatOwnerRankButtonText(totalCount){
@@ -6433,6 +6830,7 @@
     function resetDonationOwnerRankingMock(){
       donationOwnerRankingMock = DONATION_OWNER_RANKING_BASE.slice(0, 10).map(item => ({ ...item }));
       donationOwnerRankVisibleCount = 10;
+      donationOwnerRankExpanded = false;
       renderDonationOwnerRankList();
       renderDonationOwnerFullRankList();
     }
@@ -6440,7 +6838,7 @@
     function renderDonationOwnerRankList(){
       const totalCount = donationOwnerRankingMock.length;
       const maxVisible = totalCount >= 31 ? 30 : totalCount;
-      const currentVisible = Math.min(donationOwnerRankVisibleCount, maxVisible);
+      const currentVisible = donationOwnerRankExpanded ? Math.min(10, maxVisible) : Math.min(1, maxVisible);
       const visibleItems = donationOwnerRankingMock.slice(0, currentVisible);
       donationOwnerRankList.innerHTML = visibleItems.map(item => {
         const rankClass = item.rank <= 3 ? ` is-rank-${item.rank}` : "";
@@ -6462,14 +6860,15 @@
       donationOwnerRankTotalText.textContent = `총 ${totalCount}명`;
       donationOwnerRankEmpty.hidden = totalCount !== 0;
       donationOwnerRankList.hidden = totalCount === 0;
+      donationOwnerRankToggleBtn.hidden = totalCount <= 1;
+      donationOwnerRankToggleBtn.textContent = donationOwnerRankExpanded ? "접기 ▲" : "더보기 ▼";
 
-      const buttonText = formatOwnerRankButtonText(totalCount);
-      donationOwnerRankMoreBtn.hidden = !buttonText;
-      donationOwnerRankMoreBtn.disabled = !buttonText;
-      donationOwnerRankMoreBtn.textContent = buttonText || "10명 더보기";
-      donationOwnerViewAllBtn.hidden = totalCount < 31;
-      donationOwnerViewAllBtn.textContent = `전체 후원자 랭킹 보기 ${totalCount}명`;
-      donationOwnerRankNote.hidden = !(totalCount >= 31 && currentVisible >= 30);
+      donationOwnerRankMoreBtn.hidden = true;
+      donationOwnerRankMoreBtn.disabled = true;
+      donationOwnerRankMoreBtn.textContent = "10명 더보기";
+      donationOwnerViewAllBtn.hidden = false;
+      donationOwnerViewAllBtn.textContent = "전체 내역 보기";
+      donationOwnerRankNote.hidden = true;
     }
 
     function renderDonationOwnerFullRankList(){
@@ -6518,17 +6917,20 @@
             <div class="donation-owner-thankyou-range">${getDonationOwnerAmountRangeHtml(card.amount)}</div>
             <div class="donation-owner-thankyou-badge">${escapeHtml(card.status)}</div>
           </div>
-          <div class="donation-owner-thankyou-preview ${escapeHtml(getDonationOwnerThankYouStyleMeta(card.style).className)}${card.mediaUrl ? " has-media" : ""}">
-            ${card.mediaUrl ? buildDonationOwnerMediaPreview(card, "donation-owner-thankyou") : escapeHtml(card.preview)}
+          <div class="donation-owner-thankyou-preview ${escapeHtml(getDonationOwnerThankYouStyleMeta(card.style).className)}${resolveThankYouMediaConfig(card) ? " has-media" : ""}">
+            ${buildSafeDonationOwnerMediaPreview(card, "donation-owner-thankyou") || escapeHtml(card.preview)}
           </div>
           <div class="donation-owner-thankyou-message"><strong>${escapeHtml(card.title)}</strong><br>${escapeHtml(card.message)}</div>
-          ${card.mediaName && !card.mediaUrl ? `<div class="donation-owner-thankyou-file-note">이전에 선택한 파일: ${escapeHtml(card.mediaName)}<br>새로고침 후에는 파일을 다시 선택해야 합니다.</div>` : ""}
+          <div class="donation-owner-thankyou-file-note">선택된 카드: ${escapeHtml(getThankYouPresetLabel(card))}</div>
+          <div class="donation-owner-thankyou-download">${card.allowDownload === true ? "다운로드 허용" : "다운로드 비허용"}</div>
           <div class="donation-owner-thankyou-actions">
             <button class="donation-owner-subpage-btn" type="button" data-action="edit-thankyou-card" data-amount="${card.amount}">설정하기</button>
           </div>
         </div>
       `).join("");
       renderDonationOwnerCustomThankYouCards();
+      normalizeThankYouMediaVideos(donationOwnerThankYouGrid);
+      normalizeThankYouMediaVideos(donationOwnerCustomThankYouList);
     }
 
     function formatCustomDonationOwnerAmountHtml(amount){
@@ -6556,11 +6958,12 @@
               <div class="donation-owner-custom-amount">${formatCustomDonationOwnerAmountHtml(card.amount)}</div>
               <div class="donation-owner-thankyou-badge">${escapeHtml(card.status || "사용중")}</div>
             </div>
-            <div class="donation-owner-thankyou-preview ${escapeHtml(getDonationOwnerThankYouStyleMeta(card.style).className)}${card.mediaUrl ? " has-media" : ""}">
-              ${card.mediaUrl ? buildDonationOwnerMediaPreview(card, "donation-owner-thankyou") : escapeHtml(card.preview || "🎁 기본 감사 카드")}
+            <div class="donation-owner-thankyou-preview ${escapeHtml(getDonationOwnerThankYouStyleMeta(card.style).className)}${resolveThankYouMediaConfig(card) ? " has-media" : ""}">
+              ${buildSafeDonationOwnerMediaPreview(card, "donation-owner-thankyou") || escapeHtml(card.preview || "🎁 기본 감사 카드")}
             </div>
             <div class="donation-owner-thankyou-message"><strong>${escapeHtml(card.title)}</strong><br>${escapeHtml(card.message)}</div>
-            ${card.mediaName && !card.mediaUrl ? `<div class="donation-owner-thankyou-file-note">이전에 선택한 파일: ${escapeHtml(card.mediaName)}<br>새로고침 후에는 파일을 다시 선택해야 합니다.</div>` : ""}
+            <div class="donation-owner-thankyou-file-note">선택된 카드: ${escapeHtml(getThankYouPresetLabel(card))}</div>
+            <div class="donation-owner-thankyou-download">${card.allowDownload === true ? "다운로드 허용" : "다운로드 비허용"}</div>
             <div class="donation-owner-custom-actions">
               <button class="donation-owner-subpage-btn" type="button" data-action="edit-custom-thankyou-card" data-amount="${card.amount}">설정하기</button>
               <button class="donation-owner-subpage-btn is-danger" type="button" data-action="delete-custom-thankyou-card" data-amount="${card.amount}">삭제</button>
@@ -6630,16 +7033,54 @@
       return `${Number(card?.amount || 0).toLocaleString()}P 감사카드`;
     }
 
-    function buildThankYouCardStorageEntry(card, cardType = "range"){
+    function normalizeThankYouCardDownload(card){
+      if(!card) return card;
+      card.allowDownload = card.allowDownload === true;
+      return card;
+    }
+
+    function getThankYouDownloadInfo(card){
+      if(!card || card.allowDownload !== true) return null;
+      const resolvedMedia = resolveThankYouMediaConfig(card);
+      if(!resolvedMedia?.primarySrc) return null;
+      const fileName = String(card.mediaName || resolvedMedia.primarySrc.split("/").pop() || "thankyou-card").trim();
       return {
-        amount: Number(card?.amount) || 0,
+        href: resolvedMedia.primarySrc,
+        fileName
+      };
+    }
+
+    function renderThankYouDownloadButton(button, card, options = {}){
+      if(!button) return;
+      const isPreview = options.preview === true;
+      const downloadInfo = getThankYouDownloadInfo(card);
+      if(!downloadInfo){
+        button.hidden = true;
+        button.removeAttribute("href");
+        button.removeAttribute("download");
+        button.dataset.previewDownload = "false";
+        return;
+      }
+      button.hidden = false;
+      button.href = downloadInfo.href;
+      button.setAttribute("download", downloadInfo.fileName);
+      button.dataset.previewDownload = isPreview ? "true" : "false";
+    }
+
+    function buildThankYouCardStorageEntry(card, cardType = "range"){
+      const normalizedCard = normalizeThankYouCardDownload(migrateThankYouCardMedia({ ...card, cardType }));
+      return {
+        amount: Number(normalizedCard?.amount) || 0,
         cardType,
-        title: String(card?.title || "기본 감사 카드"),
-        message: String(card?.message || "후원 감사합니다!"),
-        style: String(card?.style || "basic"),
-        enabled: card?.enabled !== false,
-        mediaType: String(card?.mediaType || ""),
-        mediaName: String(card?.mediaName || "")
+        title: String(normalizedCard?.title || "기본 감사 카드"),
+        message: String(normalizedCard?.message || "후원 감사합니다!"),
+        style: String(normalizedCard?.style || "basic"),
+        enabled: normalizedCard?.enabled !== false,
+        allowDownload: normalizedCard?.allowDownload === true,
+        mediaSource: String(normalizedCard?.mediaSource || "preset"),
+        mediaPresetId: String(normalizedCard?.mediaPresetId || getDefaultThankYouPresetId(normalizedCard)),
+        mediaType: String(normalizedCard?.mediaType || ""),
+        mediaName: String(normalizedCard?.mediaName || "")
       };
     }
 
@@ -6659,13 +7100,16 @@
             status: card?.enabled === false ? "사용안함" : "사용중",
             style: String(card?.style || "basic"),
             enabled: card?.enabled !== false,
+            allowDownload: card?.allowDownload === true,
+            mediaSource: String(card?.mediaSource || ""),
+            mediaPresetId: String(card?.mediaPresetId || ""),
             mediaType: String(card?.mediaType || ""),
             mediaName: String(card?.mediaName || ""),
             mediaUrl: ""
           };
         })
         .filter(Boolean);
-      targetCards.splice(0, targetCards.length, ...restored);
+      targetCards.splice(0, targetCards.length, ...restored.map(restoredCard => normalizeThankYouCardDownload(migrateThankYouCardMedia(restoredCard))));
     }
 
     function saveThankYouCardSettings(){
@@ -6686,13 +7130,21 @@
       }catch(error){
         parsed = null;
       }
-      if(!parsed || typeof parsed !== "object") return;
+      if(!parsed || typeof parsed !== "object"){
+        DONATION_OWNER_THANK_YOU_CARDS.forEach(card => normalizeThankYouCardDownload(migrateThankYouCardMedia(card)));
+        DONATION_OWNER_CUSTOM_THANK_YOU_CARDS.forEach(card => normalizeThankYouCardDownload(migrateThankYouCardMedia(card)));
+        saveThankYouCardSettings();
+        return;
+      }
       restoreThankYouCardsFromStorage(DONATION_OWNER_THANK_YOU_CARDS, parsed.rangeCards, "range");
       restoreThankYouCardsFromStorage(DONATION_OWNER_CUSTOM_THANK_YOU_CARDS, parsed.customCards, "custom");
+      DONATION_OWNER_THANK_YOU_CARDS.forEach(card => normalizeThankYouCardDownload(migrateThankYouCardMedia(card)));
+      DONATION_OWNER_CUSTOM_THANK_YOU_CARDS.forEach(card => normalizeThankYouCardDownload(migrateThankYouCardMedia(card)));
+      saveThankYouCardSettings();
     }
 
     function createDonationOwnerThankYouDraft(card){
-      return {
+      return normalizeThankYouCardDownload(migrateThankYouCardMedia({
         amount: Number(card.amount),
         cardType: String(card.cardType || "range"),
         title: String(card.title || "기본 감사 카드"),
@@ -6701,10 +7153,13 @@
         status: String(card.status || "사용중"),
         style: String(card.style || "basic"),
         enabled: card.enabled !== false,
+        allowDownload: card.allowDownload === true,
+        mediaSource: String(card.mediaSource || "preset"),
+        mediaPresetId: String(card.mediaPresetId || getDefaultThankYouPresetId(card)),
         mediaType: card.mediaType || "",
         mediaName: card.mediaName || "",
         mediaUrl: card.mediaUrl || ""
-      };
+      }));
     }
 
     function syncDonationOwnerThankYouDraftFromForm(){
@@ -6717,18 +7172,24 @@
       donationOwnerThankYouDraft.title = String(donationOwnerEditTitle.value || "").trim() || "기본 감사 카드";
       donationOwnerThankYouDraft.message = String(donationOwnerEditMessage.value || "").trim() || "후원 감사합니다!";
       donationOwnerThankYouDraft.enabled = Boolean(donationOwnerEditEnabled.checked);
+      donationOwnerThankYouDraft.allowDownload = Boolean(donationOwnerEditAllowDownload.checked);
       donationOwnerThankYouDraft.status = donationOwnerThankYouDraft.enabled ? "사용중" : "사용안함";
       donationOwnerThankYouDraft.preview = `${styleMeta.icon} ${donationOwnerThankYouDraft.title}`;
     }
 
     function buildDonationOwnerMediaPreview(card, scope){
-      if(!card?.mediaUrl || !card?.mediaType){
+      const resolvedMedia = resolveThankYouMediaConfig(card);
+      if(!resolvedMedia?.primarySrc || !resolvedMedia?.mediaType){
         return "";
       }
-      if(String(card.mediaType).includes("video")){
+      const fallbackIcon = escapeHtml(getDonationOwnerThankYouStyleMeta(card?.style).icon || "🎁");
+      const candidateDataset = buildThankYouMediaDataset(resolvedMedia);
+      const escapedSrc = escapeHtml(resolvedMedia.primarySrc);
+      const escapedAlt = escapeHtml(card?.mediaName || card?.title || "감사 카드");
+      if(String(resolvedMedia.mediaType).includes("video")){
         return `
           <div class="${scope}-media-wrap">
-            <video class="${scope}-media" src="${card.mediaUrl}" muted loop playsinline autoplay controls></video>
+            <video class="${scope}-media thankyou-media-video" src="${escapedSrc}" muted loop playsinline autoplay onerror="window.handleThankYouMediaError(event, '${fallbackIcon}')"${candidateDataset}></video>
           </div>
         `;
       }
@@ -6739,9 +7200,36 @@
       `;
     }
 
+    function buildSafeDonationOwnerMediaPreview(card, scope){
+      const resolvedMedia = resolveThankYouMediaConfig(card);
+      if(!resolvedMedia?.primarySrc || !resolvedMedia?.mediaType){
+        return "";
+      }
+
+      const styleMeta = getDonationOwnerThankYouStyleMeta(card?.style);
+      const fallbackIcon = escapeHtml(styleMeta.icon || "🎁");
+      const candidateDataset = buildThankYouMediaDataset(resolvedMedia);
+      const escapedSrc = escapeHtml(resolvedMedia.primarySrc);
+      const escapedAlt = escapeHtml(card?.mediaName || card?.title || "감사 카드");
+
+      if(String(resolvedMedia.mediaType).includes("video")){
+        return `
+          <div class="${scope}-media-wrap">
+            <video class="${scope}-media thankyou-media-video" src="${escapedSrc}" muted loop playsinline autoplay onerror="window.handleThankYouMediaError(event, '${fallbackIcon}')"${candidateDataset}></video>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="${scope}-media-wrap">
+          <img class="${scope}-media" src="${escapedSrc}" alt="${escapedAlt}" onerror="window.handleThankYouMediaError(event, '${fallbackIcon}')"${candidateDataset} />
+        </div>
+      `;
+    }
+
     function updateDonationOwnerThankYouPreview(target, iconEl, titleEl, messageEl, card){
       const styleMeta = getDonationOwnerThankYouStyleMeta(card.style);
-      const mediaMarkup = buildDonationOwnerMediaPreview(card, "donation-owner-editor");
+      const mediaMarkup = buildSafeDonationOwnerMediaPreview(card, "donation-owner-editor");
       target.className = `donation-owner-editor-preview ${styleMeta.className}${mediaMarkup ? " has-media" : ""}`;
       if(mediaMarkup){
         target.innerHTML = `
@@ -6761,6 +7249,19 @@
       if(messageEl) messageEl.textContent = card.message;
     }
 
+    function normalizeThankYouMediaVideos(root = document){
+      if(!root?.querySelectorAll) return;
+      root.querySelectorAll(".thankyou-media-video").forEach(video => {
+        video.muted = true;
+        video.defaultMuted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.autoplay = true;
+        video.controls = false;
+        video.removeAttribute("controls");
+      });
+    }
+
     function getDonationCompletionHeroMarkup(card, amount){
       if(!card){
         return `
@@ -6771,10 +7272,35 @@
       }
 
       const styleMeta = getDonationOwnerThankYouStyleMeta(card.style);
-      const mediaMarkup = card.mediaUrl
-        ? (String(card.mediaType || "").includes("video")
-            ? `<div class="donation-complete-media-wrap"><video class="donation-complete-media" src="${card.mediaUrl}" muted autoplay loop playsinline controls></video></div>`
+      const resolvedMedia = resolveThankYouMediaConfig(card);
+      const mediaMarkup = resolvedMedia?.primarySrc
+        ? (String(resolvedMedia.mediaType || "").includes("video")
+            ? `<div class="donation-complete-media-wrap"><video class="donation-complete-media thankyou-media-video" src="${escapeHtml(resolvedMedia.primarySrc)}" muted autoplay loop playsinline onerror="window.handleThankYouMediaError(event, '${escapeHtml(styleMeta.icon || "🎁")}')"${buildThankYouMediaDataset(resolvedMedia)}></video></div>`
             : `<div class="donation-complete-media-wrap"><img class="donation-complete-media" src="${card.mediaUrl}" alt="${escapeHtml(card.mediaName || card.title || "감사 카드")}" /></div>`)
+        : `<div class="donation-complete-icon">${styleMeta.icon || "🎁"}</div>`;
+
+      return `
+        ${mediaMarkup}
+        <div class="donation-complete-card-title">${escapeHtml(card.title || "감사 카드")}</div>
+        <div class="donation-complete-card-message">${escapeHtml(card.message || `${Number(amount || 0).toLocaleString()}P 후원 감사합니다!`)}</div>
+      `;
+    }
+
+    function getSafeDonationCompletionHeroMarkup(card, amount){
+      if(!card){
+        return `
+          <div class="donation-complete-icon">🎁</div>
+          <div class="donation-complete-card-title">기본 감사 카드</div>
+          <div class="donation-complete-card-message">후원 감사합니다!</div>
+        `;
+      }
+
+      const styleMeta = getDonationOwnerThankYouStyleMeta(card.style);
+      const resolvedMedia = resolveThankYouMediaConfig(card);
+      const mediaMarkup = resolvedMedia?.primarySrc
+        ? (String(resolvedMedia.mediaType || "").includes("video")
+            ? `<div class="donation-complete-media-wrap"><video class="donation-complete-media thankyou-media-video" src="${escapeHtml(resolvedMedia.primarySrc)}" muted autoplay loop playsinline onerror="window.handleThankYouMediaError(event, '${escapeHtml(styleMeta.icon || "🎁")}')"${buildThankYouMediaDataset(resolvedMedia)}></video></div>`
+            : `<div class="donation-complete-media-wrap"><img class="donation-complete-media" src="${escapeHtml(resolvedMedia.primarySrc)}" alt="${escapeHtml(card.mediaName || card.title || "감사 카드")}" onerror="window.handleThankYouMediaError(event, '${escapeHtml(styleMeta.icon || "🎁")}')"${buildThankYouMediaDataset(resolvedMedia)} /></div>`)
         : `<div class="donation-complete-icon">${styleMeta.icon || "🎁"}</div>`;
 
       return `
@@ -6786,12 +7312,16 @@
 
     function renderDonationCompletionCard(card, amount){
       if(!donationCompleteHero) return;
-      donationCompleteHero.innerHTML = getDonationCompletionHeroMarkup(card, amount);
+      donationCompleteHero.innerHTML = getSafeDonationCompletionHeroMarkup(card, amount);
+      normalizeThankYouMediaVideos(donationCompleteHero);
+      renderThankYouDownloadButton(donationCompleteDownloadBtn, card);
     }
 
     function renderDonationCompletionPreviewCard(card, amount){
       if(!donationOwnerModalPreview) return;
-      donationOwnerModalPreview.innerHTML = getDonationCompletionHeroMarkup(card, amount);
+      donationOwnerModalPreview.innerHTML = getSafeDonationCompletionHeroMarkup(card, amount);
+      normalizeThankYouMediaVideos(donationOwnerModalPreview);
+      renderThankYouDownloadButton(donationOwnerPreviewDownloadBtn, card, { preview: true });
     }
 
     function renderDonationOwnerThankYouEditForm(){
@@ -6808,14 +7338,17 @@
       donationOwnerEditTitle.value = donationOwnerThankYouDraft.title;
       donationOwnerEditMessage.value = donationOwnerThankYouDraft.message;
       donationOwnerEditEnabled.checked = donationOwnerThankYouDraft.enabled;
-      donationOwnerEditMediaMeta.textContent = donationOwnerThankYouDraft.mediaUrl
-        ? `${donationOwnerThankYouDraft.mediaName || "선택된 파일"} · ${getDonationOwnerMediaTypeLabel(donationOwnerThankYouDraft.mediaType)}`
-        : donationOwnerThankYouDraft.mediaName
-          ? `이전에 선택한 파일: ${donationOwnerThankYouDraft.mediaName} · 새로고침 후에는 파일을 다시 선택해야 합니다.`
-          : "업로드된 파일이 없습니다.";
+      const presetOptions = getThankYouPresetOptions(donationOwnerThankYouDraft);
+      const selectedPresetId = donationOwnerThankYouDraft.mediaPresetId || getDefaultThankYouPresetId(donationOwnerThankYouDraft);
+      donationOwnerEditMediaMeta.textContent = `직접 업로드는 비활성화되어 있습니다. 현재 선택: ${getThankYouPresetLabel(donationOwnerThankYouDraft)} · ${getDonationOwnerMediaTypeLabel(donationOwnerThankYouDraft.mediaType)}`;
+      donationOwnerEditPresetOptions.innerHTML = presetOptions.map(preset => `
+        <button class="donation-owner-style-btn${preset.id === selectedPresetId ? " active" : ""}" type="button" data-action="select-thankyou-preset" data-preset-id="${preset.id}">${preset.label}</button>
+      `).join("");
+      donationOwnerEditPresetMeta.textContent = `선택된 카드: ${getThankYouPresetLabel(donationOwnerThankYouDraft)}`;
       donationOwnerEditStyleOptions.innerHTML = DONATION_OWNER_THANK_YOU_STYLES.map(style => `
         <button class="donation-owner-style-btn${style.key === donationOwnerThankYouDraft.style ? " active" : ""}" type="button" data-action="select-thankyou-style" data-style="${style.key}">${style.label}</button>
       `).join("");
+      donationOwnerEditAllowDownload.checked = donationOwnerThankYouDraft.allowDownload === true;
       updateDonationOwnerThankYouPreview(
         donationOwnerEditPreview,
         donationOwnerEditPreviewIcon,
@@ -6823,10 +7356,13 @@
         donationOwnerEditPreviewMessage,
         donationOwnerThankYouDraft
       );
+      normalizeThankYouMediaVideos(donationOwnerEditPreview);
     }
 
     function openDonationOwnerScreen(){
       donationOwnerRankVisibleCount = 10;
+      donationOwnerLiveExpanded = false;
+      donationOwnerRankExpanded = false;
       renderDonationOwnerScreen();
       donationOwnerScreen.classList.add("active");
       donationOwnerFullRankScreen.classList.remove("active");
@@ -6906,8 +7442,11 @@
         status: "사용중",
         style: "basic",
         enabled: true,
-        mediaType: "",
-        mediaName: "",
+        allowDownload: false,
+        mediaSource: "preset",
+        mediaPresetId: THANK_YOU_DEFAULT_CUSTOM_PRESET_ID,
+        mediaType: "video/mp4",
+        mediaName: "thankyou-custom-a.mp4",
         mediaUrl: ""
       });
       renderDonationOwnerThankYouEditForm();
@@ -6993,7 +7532,10 @@
             targetCard.style = donationOwnerThankYouDraft.style;
             targetCard.preview = donationOwnerThankYouDraft.preview;
             targetCard.enabled = donationOwnerThankYouDraft.enabled;
+            targetCard.allowDownload = donationOwnerThankYouDraft.allowDownload === true;
             targetCard.status = donationOwnerThankYouDraft.status;
+            targetCard.mediaSource = donationOwnerThankYouDraft.mediaSource;
+            targetCard.mediaPresetId = donationOwnerThankYouDraft.mediaPresetId;
             targetCard.mediaType = donationOwnerThankYouDraft.mediaType;
             targetCard.mediaName = donationOwnerThankYouDraft.mediaName;
             targetCard.mediaUrl = donationOwnerThankYouDraft.mediaUrl;
@@ -7007,7 +7549,10 @@
           targetCard.style = donationOwnerThankYouDraft.style;
           targetCard.preview = donationOwnerThankYouDraft.preview;
           targetCard.enabled = donationOwnerThankYouDraft.enabled;
+          targetCard.allowDownload = donationOwnerThankYouDraft.allowDownload === true;
           targetCard.status = donationOwnerThankYouDraft.status;
+          targetCard.mediaSource = donationOwnerThankYouDraft.mediaSource;
+          targetCard.mediaPresetId = donationOwnerThankYouDraft.mediaPresetId;
           targetCard.mediaType = donationOwnerThankYouDraft.mediaType;
           targetCard.mediaName = donationOwnerThankYouDraft.mediaName;
           targetCard.mediaUrl = donationOwnerThankYouDraft.mediaUrl;
@@ -7272,6 +7817,7 @@
           : state.donationView === "completion"
             ? "후원 완료"
             : "이 채널 후원 현황";
+      donationSheetTitle.hidden = state.donationView === "completion";
 
       donationBalanceText.textContent = `${balance.toLocaleString()}P`;
       donationChannelName.textContent = video?.channel || "채널명 없음";
@@ -9000,6 +9546,17 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       button.addEventListener("click", openDonationChannelPage);
     });
     donationChannelAvatar.addEventListener("click", openDonationOwnerScreen);
+    [donationAmountAvatar, donationAmountChannelInfo].forEach(target => {
+      if(!target) return;
+      target.addEventListener("click", openDonationOwnerScreen);
+    });
+    if(donationAmountChannelInfo){
+      donationAmountChannelInfo.addEventListener("keydown", (event) => {
+        if(event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        openDonationOwnerScreen();
+      });
+    }
     closeDonationOwnerScreenBtn.addEventListener("click", closeDonationOwnerScreen);
     donationOwnerViewHistoryBtn.addEventListener("click", openDonationOwnerHistoryScreen);
     donationOwnerThankYouConfigBtn.addEventListener("click", openDonationOwnerThankYouScreen);
@@ -9011,6 +9568,14 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     closeDonationOwnerThankYouEditBtn.addEventListener("click", closeDonationOwnerThankYouEditScreen);
     closeDonationOwnerThankYouPreviewBtn.addEventListener("click", closeDonationOwnerThankYouPreviewScreen);
     openDonationOwnerThankYouPreviewBtn.addEventListener("click", openDonationOwnerThankYouPreviewScreen);
+    donationOwnerPreviewDownloadBtn.addEventListener("click", event => {
+      event.preventDefault();
+      showToast("미리보기 화면입니다.", {
+        title: "감사카드 미리보기",
+        icon: "💾",
+        duration: 2600
+      });
+    });
     [donationOwnerPreviewRankingBtn, donationOwnerPreviewAddMoreBtn].forEach(button => {
       if(!button) return;
       button.addEventListener("click", () => {
@@ -9041,9 +9606,15 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       syncDonationOwnerThankYouDraftFromForm();
       renderDonationOwnerThankYouEditForm();
     });
+    donationOwnerEditAllowDownload.addEventListener("change", () => {
+      syncDonationOwnerThankYouDraftFromForm();
+      renderDonationOwnerThankYouEditForm();
+    });
     donationOwnerEditMediaFile.addEventListener("change", () => {
       if(!donationOwnerThankYouDraft || !donationOwnerEditMediaFile.files?.[0]) return;
       const file = donationOwnerEditMediaFile.files[0];
+      donationOwnerThankYouDraft.mediaSource = "upload";
+      donationOwnerThankYouDraft.mediaPresetId = "";
       donationOwnerThankYouDraft.mediaName = file.name;
       donationOwnerThankYouDraft.mediaType = file.type;
       donationOwnerThankYouDraft.mediaUrl = URL.createObjectURL(file);
@@ -9056,6 +9627,14 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       donationOwnerRankVisibleCount = donationOwnerRankVisibleCount >= maxVisible
         ? 10
         : Math.min(donationOwnerRankVisibleCount + 10, maxVisible);
+      renderDonationOwnerRankList();
+    });
+    donationOwnerLiveToggleBtn.addEventListener("click", () => {
+      donationOwnerLiveExpanded = !donationOwnerLiveExpanded;
+      renderDonationOwnerLiveList();
+    });
+    donationOwnerRankToggleBtn.addEventListener("click", () => {
+      donationOwnerRankExpanded = !donationOwnerRankExpanded;
       renderDonationOwnerRankList();
     });
     donationOwnerAddOneBtn.addEventListener("click", () => {
