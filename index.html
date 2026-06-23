@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.55 -->
+<!-- Version: DEV v0.3.57 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -5057,7 +5057,7 @@
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.55</span>
+          <span class="dev-version-label">DEV v0.3.57</span>
         </div>
       </header>
 
@@ -5101,7 +5101,7 @@
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.55</span>
+            <span class="dev-version-label">DEV v0.3.57</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -6605,7 +6605,6 @@
         miniPipSub.textContent = currentVideo?.channel || "채널명";
       }
     }
-
     function resetSwipePipPreview(){
       swipePipPointerActive = false;
       swipePipTracking = false;
@@ -6616,8 +6615,8 @@
       topFixed.style.opacity = "";
     }
 
-    function maybeEnterMiniModeFromSwipe(){
-      if(swipePipDeltaY >= 80){
+    function maybeEnterMiniModeFromSwipe(sourceLabel = "unknown"){
+      if(swipePipDeltaY >= 50){
         resetSwipePipPreview();
         enterMiniMode();
         return;
@@ -6625,24 +6624,28 @@
       resetSwipePipPreview();
     }
 
-    function handleSwipePipPointerDown(event){
-      if(!state.currentVideo || watchScreen.classList.contains("mini-mode")) return;
-      if(document.querySelector(".sheet.show")) return;
-      if(event.pointerType === "mouse" && event.button !== 0) return;
-      if(event.target.closest("button, a, input, textarea, label")) return;
+    function canStartSwipePip(target){
+      if(!state.currentVideo || watchScreen.classList.contains("mini-mode")) return false;
+      if(document.querySelector(".sheet.show")) return false;
+      if(target && target.closest("button, a, input, textarea, label")) return false;
+      return true;
+    }
+
+    function handleSwipePipStart(clientX, clientY, target, sourceLabel = "pointerstart"){
+      if(!canStartSwipePip(target)) return;
       swipePipPointerActive = true;
       swipePipTracking = false;
-      swipePipStartX = event.clientX;
-      swipePipStartY = event.clientY;
+      swipePipStartX = clientX;
+      swipePipStartY = clientY;
       swipePipDeltaY = 0;
     }
 
-    function handleSwipePipPointerMove(event){
+    function handleSwipePipMove(clientX, clientY, preventDefault, sourceLabel = "pointermove"){
       if(!swipePipPointerActive || !topFixed || watchScreen.classList.contains("mini-mode")) return;
-      const deltaX = event.clientX - swipePipStartX;
-      const deltaY = event.clientY - swipePipStartY;
+      const deltaX = clientX - swipePipStartX;
+      const deltaY = clientY - swipePipStartY;
       if(!swipePipTracking){
-        if(Math.abs(deltaY) < 8) return;
+        if(Math.abs(deltaY) < 6) return;
         if(Math.abs(deltaY) <= Math.abs(deltaX) || deltaY <= 0){
           resetSwipePipPreview();
           return;
@@ -6650,17 +6653,43 @@
         swipePipTracking = true;
       }
       swipePipDeltaY = Math.max(0, deltaY);
-      const previewOffset = Math.min(swipePipDeltaY * 0.28, 32);
-      const previewOpacity = Math.max(0.82, 1 - (swipePipDeltaY / 320));
+      const previewOffset = Math.min(swipePipDeltaY * 0.36, 42);
+      const previewOpacity = Math.max(0.74, 1 - (swipePipDeltaY / 220));
       topFixed.classList.add("swipe-pip-preview");
       topFixed.style.transform = `translateY(${previewOffset}px)`;
       topFixed.style.opacity = String(previewOpacity);
-      event.preventDefault();
+      if(typeof preventDefault === "function") preventDefault();
+    }
+
+    function handleSwipePipPointerDown(event){
+      if(event.pointerType === "mouse" && event.button !== 0) return;
+      handleSwipePipStart(event.clientX, event.clientY, event.target, "pointerdown");
+    }
+
+    function handleSwipePipPointerMove(event){
+      handleSwipePipMove(event.clientX, event.clientY, () => event.preventDefault(), "pointermove");
     }
 
     function handleSwipePipPointerUp(){
       if(!swipePipPointerActive) return;
-      maybeEnterMiniModeFromSwipe();
+      maybeEnterMiniModeFromSwipe("pointerup");
+    }
+
+    function handleSwipePipTouchStart(event){
+      const touch = event.touches && event.touches[0];
+      if(!touch) return;
+      handleSwipePipStart(touch.clientX, touch.clientY, event.target, "touchstart");
+    }
+
+    function handleSwipePipTouchMove(event){
+      const touch = event.touches && event.touches[0];
+      if(!touch) return;
+      handleSwipePipMove(touch.clientX, touch.clientY, () => event.preventDefault(), "touchmove");
+    }
+
+    function handleSwipePipTouchEnd(){
+      if(!swipePipPointerActive) return;
+      maybeEnterMiniModeFromSwipe("touchend");
     }
 
     function resetWatchTimer(){
@@ -8701,6 +8730,15 @@ function endMiniDrag(){
       miniSizeLevel = 1;
       applyMiniSizeClass();
       syncMiniSizeButton();
+
+      if(topFixed){
+        topFixed.style.position = "fixed";
+        topFixed.style.right = "12px";
+        topFixed.style.bottom = "16px";
+        topFixed.style.left = "auto";
+        topFixed.style.top = "auto";
+        topFixed.style.zIndex = "9999";
+      }
     }
 
     function toggleMiniSize(e){
@@ -8733,6 +8771,15 @@ window.addEventListener("resize", clampMiniPosition);
       watchScreen.classList.remove("mini-mode", "mini-size-1", "mini-size-2", "mini-size-3");
       homeScreen.classList.remove("active");
       watchScreen.classList.add("active");
+
+      if(topFixed){
+        topFixed.style.position = "";
+        topFixed.style.right = "";
+        topFixed.style.bottom = "";
+        topFixed.style.left = "";
+        topFixed.style.top = "";
+        topFixed.style.zIndex = "";
+      }
 
       miniSizeLevel = 1;
       syncMiniSizeButton();
@@ -9614,6 +9661,17 @@ playerFloatControls.addEventListener("click", wakePlayerControls);
 playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive: true });
     if(watchInfoFixed){
       watchInfoFixed.addEventListener("pointerdown", handleSwipePipPointerDown);
+      watchInfoFixed.addEventListener("touchstart", handleSwipePipTouchStart, { passive: true });
+      watchInfoFixed.addEventListener("touchmove", handleSwipePipTouchMove, { passive: false });
+      watchInfoFixed.addEventListener("touchend", handleSwipePipTouchEnd);
+      watchInfoFixed.addEventListener("touchcancel", handleSwipePipTouchEnd);
+    }
+    if(watchScroll){
+      watchScroll.addEventListener("pointerdown", handleSwipePipPointerDown);
+      watchScroll.addEventListener("touchstart", handleSwipePipTouchStart, { passive: true });
+      watchScroll.addEventListener("touchmove", handleSwipePipTouchMove, { passive: false });
+      watchScroll.addEventListener("touchend", handleSwipePipTouchEnd);
+      watchScroll.addEventListener("touchcancel", handleSwipePipTouchEnd);
     }
     document.addEventListener("pointermove", handleSwipePipPointerMove, { passive: false });
     document.addEventListener("pointerup", handleSwipePipPointerUp);
