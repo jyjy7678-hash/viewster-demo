@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<!-- Version: DEV v0.3.57 -->
+﻿<!DOCTYPE html>
+<!-- Version: DEV v0.3.55 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -200,10 +200,6 @@
       top:var(--safe-top); left:0; right:0;
       z-index:20;
       background:transparent;
-      transition:transform .18s ease, opacity .18s ease;
-    }
-    .top-fixed.swipe-pip-preview{
-      will-change:transform, opacity;
     }
 
     .player-wrap{background:#000;}
@@ -382,33 +378,11 @@
     .mini-ad-wrap{
       display:none;
     }
-    .mini-pip-meta{
+    .mini-ad-wrap img{
       width:100%;
       height:100%;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      gap:2px;
-      padding:7px 10px 8px;
-      background:linear-gradient(180deg,#ffffff,#f8fafc);
-      pointer-events:none;
-    }
-    .mini-pip-title,
-    .mini-pip-sub{
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      word-break:keep-all;
-    }
-    .mini-pip-title{
-      font-size:11px;
-      font-weight:800;
-      color:#0f172a;
-    }
-    .mini-pip-sub{
-      font-size:10px;
-      font-weight:700;
-      color:#64748b;
+      object-fit:cover;
+      display:block;
     }
 
     #watchScreen.mini-mode{
@@ -2423,6 +2397,55 @@
       box-shadow:none;
       transform:none;
     }
+    .donation-custom-input-wrap{
+      margin-top:12px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .donation-custom-input-wrap.hidden{
+      display:none;
+    }
+    .donation-custom-input-label{
+      font-size:12px;
+      font-weight:800;
+      color:#475569;
+    }
+    .donation-custom-input-field{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-height:54px;
+      padding:0 16px;
+      border-radius:18px;
+      border:1px solid #e5e7eb;
+      background:#fff;
+      transition:border-color .18s ease, box-shadow .18s ease;
+    }
+    .donation-custom-input-field:focus-within{
+      border-color:#f59e0b;
+      box-shadow:0 10px 20px rgba(245,158,11,.12);
+    }
+    .donation-custom-input{
+      flex:1;
+      min-width:0;
+      border:none;
+      outline:none;
+      background:transparent;
+      color:#111827;
+      font-size:17px;
+      font-weight:800;
+    }
+    .donation-custom-input::placeholder{
+      color:#94a3b8;
+      font-weight:700;
+    }
+    .donation-custom-input-unit{
+      flex-shrink:0;
+      color:#64748b;
+      font-size:15px;
+      font-weight:900;
+    }
     .donation-selected-text{
       min-height:20px;
       font-size:12px;
@@ -2453,6 +2476,9 @@
       color:#16a34a;
       font-weight:800;
       text-align:center;
+    }
+    .donation-feedback.is-error{
+      color:#dc2626;
     }
     .donation-sub-btn{
       min-height:54px;
@@ -5057,7 +5083,7 @@
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.57</span>
+          <span class="dev-version-label">DEV v0.3.55</span>
         </div>
       </header>
 
@@ -5087,11 +5113,8 @@
             </div>
           </div>
 
-          <div class="mini-ad-wrap" id="miniAdWrap" aria-label="PIP 영상 정보">
-            <div class="mini-pip-meta">
-              <div class="mini-pip-title" id="miniPipTitle">현재 재생중인 영상</div>
-              <div class="mini-pip-sub" id="miniPipSub">채널명</div>
-            </div>
+          <div class="mini-ad-wrap" id="miniAdWrap" aria-label="PIP 광고배너">
+            <img src="assets/hero_banner_02.png" alt="광고 배너" onerror="this.src='assets/side_banner.png'">
           </div>
 
           <div class="player-test-tools">
@@ -5101,7 +5124,7 @@
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.57</span>
+            <span class="dev-version-label">DEV v0.3.55</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -5346,6 +5369,14 @@
             <button class="donation-amount-btn" type="button" data-donation-amount="3000">3,000P</button>
             <button class="donation-amount-btn" type="button" data-donation-amount="5000">5,000P</button>
             <button class="donation-amount-btn" type="button" data-donation-amount="10000">10,000P</button>
+            <button class="donation-amount-btn" id="donationCustomToggleBtn" type="button">직접 입력</button>
+          </div>
+          <div class="donation-custom-input-wrap hidden" id="donationCustomInputWrap">
+            <label class="donation-custom-input-label" for="donationCustomAmountInput">직접 후원 금액</label>
+            <div class="donation-custom-input-field">
+              <input class="donation-custom-input" id="donationCustomAmountInput" type="text" inputmode="numeric" placeholder="예: 7,777" aria-label="직접 후원 금액 입력" />
+              <span class="donation-custom-input-unit">P</span>
+            </div>
           </div>
 
           <div class="donation-selected-text" id="donationSelectedText">후원 금액을 선택해주세요.</div>
@@ -5852,6 +5883,8 @@
       openStageTimers: [],
       openStageMidPlaybackRate: 1,
       donationSelectedAmount: 0,
+      donationCustomMode: false,
+      donationCustomAmountRaw: "",
       donationView: "status",
       donationCompletion: null,
       donationHistory: [],
@@ -5869,11 +5902,6 @@
     let miniDragActive = false;
     let miniDragOffsetX = 0;
     let miniDragOffsetY = 0;
-    let swipePipPointerActive = false;
-    let swipePipStartX = 0;
-    let swipePipStartY = 0;
-    let swipePipDeltaY = 0;
-    let swipePipTracking = false;
     let currentWalletUI = 1;
 
     const SHEET_IDLE_CLOSE_MS = 10000;
@@ -6087,6 +6115,9 @@
     const donationSelectedText = document.getElementById("donationSelectedText");
     const donationFeedback = document.getElementById("donationFeedback");
     const submitDonationBtn = document.getElementById("submitDonationBtn");
+    const donationCustomToggleBtn = document.getElementById("donationCustomToggleBtn");
+    const donationCustomInputWrap = document.getElementById("donationCustomInputWrap");
+    const donationCustomAmountInput = document.getElementById("donationCustomAmountInput");
     const donationStatusView = document.getElementById("donationStatusView");
     const donationAmountView = document.getElementById("donationAmountView");
     const donationCompletionView = document.getElementById("donationCompletionView");
@@ -6137,8 +6168,6 @@
     const miniRestoreHit = document.getElementById("miniRestoreHit");
     const toggleMiniSizeBtn = document.getElementById("toggleMiniSizeBtn");
     const miniAdWrap = document.getElementById("miniAdWrap");
-    const miniPipTitle = document.getElementById("miniPipTitle");
-    const miniPipSub = document.getElementById("miniPipSub");
     const paidBadge = document.getElementById("paidBadge");
     const playerFloatControls = document.querySelector(".player-float-controls");
     const reelS1MaxInput = document.getElementById("reelS1Max");
@@ -6594,102 +6623,6 @@
       const mediaClock = formatTimerClock(mediaSeconds);
       const realClock = formatTimerClock(realSeconds == null ? mediaSeconds : realSeconds);
       watchTimerOverlay.textContent = `media ${mediaClock} / real ${realClock}`;
-    }
-
-    function syncMiniPipMeta(){
-      const currentVideo = state.currentVideo;
-      if(miniPipTitle){
-        miniPipTitle.textContent = currentVideo?.title || "현재 재생중인 영상";
-      }
-      if(miniPipSub){
-        miniPipSub.textContent = currentVideo?.channel || "채널명";
-      }
-    }
-    function resetSwipePipPreview(){
-      swipePipPointerActive = false;
-      swipePipTracking = false;
-      swipePipDeltaY = 0;
-      if(!topFixed) return;
-      topFixed.classList.remove("swipe-pip-preview");
-      topFixed.style.transform = "";
-      topFixed.style.opacity = "";
-    }
-
-    function maybeEnterMiniModeFromSwipe(sourceLabel = "unknown"){
-      if(swipePipDeltaY >= 50){
-        resetSwipePipPreview();
-        enterMiniMode();
-        return;
-      }
-      resetSwipePipPreview();
-    }
-
-    function canStartSwipePip(target){
-      if(!state.currentVideo || watchScreen.classList.contains("mini-mode")) return false;
-      if(document.querySelector(".sheet.show")) return false;
-      if(target && target.closest("button, a, input, textarea, label")) return false;
-      return true;
-    }
-
-    function handleSwipePipStart(clientX, clientY, target, sourceLabel = "pointerstart"){
-      if(!canStartSwipePip(target)) return;
-      swipePipPointerActive = true;
-      swipePipTracking = false;
-      swipePipStartX = clientX;
-      swipePipStartY = clientY;
-      swipePipDeltaY = 0;
-    }
-
-    function handleSwipePipMove(clientX, clientY, preventDefault, sourceLabel = "pointermove"){
-      if(!swipePipPointerActive || !topFixed || watchScreen.classList.contains("mini-mode")) return;
-      const deltaX = clientX - swipePipStartX;
-      const deltaY = clientY - swipePipStartY;
-      if(!swipePipTracking){
-        if(Math.abs(deltaY) < 6) return;
-        if(Math.abs(deltaY) <= Math.abs(deltaX) || deltaY <= 0){
-          resetSwipePipPreview();
-          return;
-        }
-        swipePipTracking = true;
-      }
-      swipePipDeltaY = Math.max(0, deltaY);
-      const previewOffset = Math.min(swipePipDeltaY * 0.36, 42);
-      const previewOpacity = Math.max(0.74, 1 - (swipePipDeltaY / 220));
-      topFixed.classList.add("swipe-pip-preview");
-      topFixed.style.transform = `translateY(${previewOffset}px)`;
-      topFixed.style.opacity = String(previewOpacity);
-      if(typeof preventDefault === "function") preventDefault();
-    }
-
-    function handleSwipePipPointerDown(event){
-      if(event.pointerType === "mouse" && event.button !== 0) return;
-      handleSwipePipStart(event.clientX, event.clientY, event.target, "pointerdown");
-    }
-
-    function handleSwipePipPointerMove(event){
-      handleSwipePipMove(event.clientX, event.clientY, () => event.preventDefault(), "pointermove");
-    }
-
-    function handleSwipePipPointerUp(){
-      if(!swipePipPointerActive) return;
-      maybeEnterMiniModeFromSwipe("pointerup");
-    }
-
-    function handleSwipePipTouchStart(event){
-      const touch = event.touches && event.touches[0];
-      if(!touch) return;
-      handleSwipePipStart(touch.clientX, touch.clientY, event.target, "touchstart");
-    }
-
-    function handleSwipePipTouchMove(event){
-      const touch = event.touches && event.touches[0];
-      if(!touch) return;
-      handleSwipePipMove(touch.clientX, touch.clientY, () => event.preventDefault(), "touchmove");
-    }
-
-    function handleSwipePipTouchEnd(){
-      if(!swipePipPointerActive) return;
-      maybeEnterMiniModeFromSwipe("touchend");
     }
 
     function resetWatchTimer(){
@@ -7767,14 +7700,34 @@
         });
       }
       state.donationSelectedAmount = 0;
+      state.donationCustomMode = false;
+      state.donationCustomAmountRaw = "";
       state.donationView = "status";
       state.donationCompletion = null;
     }
 
     function resetDonationSelection(message = "후원 금액을 선택해주세요."){
       state.donationSelectedAmount = 0;
+      state.donationCustomMode = false;
+      state.donationCustomAmountRaw = "";
+      donationCustomAmountInput.value = "";
       donationSelectedText.textContent = message;
       donationFeedback.textContent = "";
+      donationFeedback.classList.remove("is-error");
+    }
+
+    function sanitizeDonationDigits(value){
+      const digits = String(value || "").replace(/\D/g, "");
+      return digits ? String(Number(digits)) : "";
+    }
+
+    function getCustomDonationAmount(){
+      return Number(sanitizeDonationDigits(state.donationCustomAmountRaw)) || 0;
+    }
+
+    function setDonationFeedback(message = "", type = ""){
+      donationFeedback.textContent = message;
+      donationFeedback.classList.toggle("is-error", type === "error");
     }
 
     function clearDonationCompletion(){
@@ -7965,20 +7918,53 @@
       donationAmountButtons.forEach(button => {
         const amount = Number(button.dataset.donationAmount);
         const disabled = amount > balance;
-        if(disabled && state.donationSelectedAmount === amount){
+        if(!state.donationCustomMode && disabled && state.donationSelectedAmount === amount){
           state.donationSelectedAmount = 0;
         }
         button.disabled = disabled;
-        button.classList.toggle("active", !disabled && state.donationSelectedAmount === amount);
+        button.classList.toggle("active", !state.donationCustomMode && !disabled && state.donationSelectedAmount === amount);
       });
 
-      if(state.donationSelectedAmount > 0){
+      donationCustomToggleBtn.classList.toggle("active", state.donationCustomMode);
+      donationCustomInputWrap.classList.toggle("hidden", !state.donationCustomMode);
+
+      let effectiveAmount = state.donationCustomMode ? getCustomDonationAmount() : Number(state.donationSelectedAmount || 0);
+      let isDonationValid = effectiveAmount > 0 && effectiveAmount <= balance;
+
+      if(state.donationCustomMode){
+        const customAmountRaw = sanitizeDonationDigits(state.donationCustomAmountRaw);
+        state.donationCustomAmountRaw = customAmountRaw;
+        donationCustomAmountInput.value = customAmountRaw ? Number(customAmountRaw).toLocaleString() : "";
+
+        if(!customAmountRaw){
+          effectiveAmount = 0;
+          isDonationValid = false;
+          donationSelectedText.textContent = "직접 후원 금액을 입력해주세요.";
+          setDonationFeedback("", "");
+        } else if(effectiveAmount < 1000){
+          isDonationValid = false;
+          donationSelectedText.textContent = `${effectiveAmount.toLocaleString()}P를 입력했습니다.`;
+          setDonationFeedback("최소 후원 금액은 1,000P입니다.", "error");
+        } else if(effectiveAmount > balance){
+          isDonationValid = false;
+          donationSelectedText.textContent = `${effectiveAmount.toLocaleString()}P를 입력했습니다.`;
+          setDonationFeedback("보유 포인트가 부족합니다.", "error");
+        } else {
+          donationSelectedText.textContent = `직접 입력한 ${effectiveAmount.toLocaleString()}P를 후원합니다.`;
+          setDonationFeedback("", "");
+        }
+      } else if(state.donationSelectedAmount > 0){
         donationSelectedText.textContent = `${state.donationSelectedAmount.toLocaleString()}P를 후원합니다.`;
+        setDonationFeedback("", "");
       } else if(balance <= 0){
         donationSelectedText.textContent = "보유 포인트가 부족합니다.";
+        setDonationFeedback("", "");
       } else {
         donationSelectedText.textContent = "후원 금액을 선택해주세요.";
+        setDonationFeedback("", "");
       }
+
+      state.donationSelectedAmount = isDonationValid ? effectiveAmount : 0;
 
       submitDonationBtn.disabled = !(state.donationSelectedAmount > 0 && state.donationSelectedAmount <= balance);
       donationStatusView.classList.toggle("active", state.donationView === "status");
@@ -8593,7 +8579,6 @@ function updateFixedLayout(){
       resetWatchTimer();
       stopWatchTimerPolling();
       state.currentVideo = video;
-      syncMiniPipMeta();
       watchTitle.textContent = video.title;
       watchTitle.title = video.title;
       watchTitle.classList.remove("expanded");
@@ -8616,7 +8601,6 @@ function updateFixedLayout(){
 
       infoCollapsed = false;
       watchCollapseArea.classList.remove("collapsed");
-      resetSwipePipPreview();
       lastWatchScrollTop = 0;
       upwardScrollDistance = 0;
 
@@ -8718,10 +8702,8 @@ function endMiniDrag(){
     function enterMiniMode(){
       if(!state.currentVideo) return;
 
-      resetSwipePipPreview();
       closeAllSheets();
       clearTimeout(scrollIdleTimer);
-      syncMiniPipMeta();
 
       watchScreen.classList.add("mini-mode");
       homeScreen.classList.add("active");
@@ -8730,15 +8712,6 @@ function endMiniDrag(){
       miniSizeLevel = 1;
       applyMiniSizeClass();
       syncMiniSizeButton();
-
-      if(topFixed){
-        topFixed.style.position = "fixed";
-        topFixed.style.right = "12px";
-        topFixed.style.bottom = "16px";
-        topFixed.style.left = "auto";
-        topFixed.style.top = "auto";
-        topFixed.style.zIndex = "9999";
-      }
     }
 
     function toggleMiniSize(e){
@@ -8767,19 +8740,9 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     function exitMiniMode(){
-      resetSwipePipPreview();
       watchScreen.classList.remove("mini-mode", "mini-size-1", "mini-size-2", "mini-size-3");
       homeScreen.classList.remove("active");
       watchScreen.classList.add("active");
-
-      if(topFixed){
-        topFixed.style.position = "";
-        topFixed.style.right = "";
-        topFixed.style.bottom = "";
-        topFixed.style.left = "";
-        topFixed.style.top = "";
-        topFixed.style.zIndex = "";
-      }
 
       miniSizeLevel = 1;
       syncMiniSizeButton();
@@ -8791,7 +8754,6 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     function backToHome(){
-      resetSwipePipPreview();
       stopAutoWatchTimer();
       stopWatchTimerPolling();
       resetWatchTimer();
@@ -9659,23 +9621,6 @@ window.addEventListener("resize", clampMiniPosition);
     playerWrap.addEventListener("click", handleWatchTimerActivation);
 playerFloatControls.addEventListener("click", wakePlayerControls);
 playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive: true });
-    if(watchInfoFixed){
-      watchInfoFixed.addEventListener("pointerdown", handleSwipePipPointerDown);
-      watchInfoFixed.addEventListener("touchstart", handleSwipePipTouchStart, { passive: true });
-      watchInfoFixed.addEventListener("touchmove", handleSwipePipTouchMove, { passive: false });
-      watchInfoFixed.addEventListener("touchend", handleSwipePipTouchEnd);
-      watchInfoFixed.addEventListener("touchcancel", handleSwipePipTouchEnd);
-    }
-    if(watchScroll){
-      watchScroll.addEventListener("pointerdown", handleSwipePipPointerDown);
-      watchScroll.addEventListener("touchstart", handleSwipePipTouchStart, { passive: true });
-      watchScroll.addEventListener("touchmove", handleSwipePipTouchMove, { passive: false });
-      watchScroll.addEventListener("touchend", handleSwipePipTouchEnd);
-      watchScroll.addEventListener("touchcancel", handleSwipePipTouchEnd);
-    }
-    document.addEventListener("pointermove", handleSwipePipPointerMove, { passive: false });
-    document.addEventListener("pointerup", handleSwipePipPointerUp);
-    document.addEventListener("pointercancel", handleSwipePipPointerUp);
 
 
     openWalletBtn.addEventListener("click", () => {
@@ -9846,10 +9791,24 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     donationAmountButtons.forEach(button => {
       button.addEventListener("click", () => {
         if(button.disabled) return;
+        state.donationCustomMode = false;
+        state.donationCustomAmountRaw = "";
+        donationCustomAmountInput.value = "";
         state.donationSelectedAmount = Number(button.dataset.donationAmount || 0);
-        donationFeedback.textContent = "";
+        setDonationFeedback("", "");
         renderDonationSheet();
       });
+    });
+    donationCustomToggleBtn.addEventListener("click", () => {
+      state.donationCustomMode = true;
+      state.donationSelectedAmount = 0;
+      renderDonationSheet();
+      donationCustomAmountInput.focus();
+    });
+    donationCustomAmountInput.addEventListener("input", () => {
+      state.donationCustomMode = true;
+      state.donationCustomAmountRaw = sanitizeDonationDigits(donationCustomAmountInput.value);
+      renderDonationSheet();
     });
     submitDonationBtn.addEventListener("click", submitDonation);
     document.getElementById("walletOpenRandom").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "normal" }));
@@ -10007,3 +9966,6 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
   </script>
 </body>
 </html>
+
+
+
