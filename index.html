@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.63 -->
+<!-- Version: DEV v0.3.64 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1044,6 +1044,26 @@
       flex-direction:column;
       gap:10px;
       margin-top:4px;
+    }
+    #promoSheet .sheet-body{
+      overflow-y:auto;
+      max-height:calc(100dvh - var(--sheet-top) - 48px);
+      padding-bottom:calc(104px + env(safe-area-inset-bottom, 0px));
+      -webkit-overflow-scrolling:touch;
+    }
+    #promoSheet .promo-preview-placeholder{
+      min-height:136px;
+    }
+    #promoSheet .promo-preview-card-thumb{
+      max-height:240px;
+    }
+    #promoSheet .promo-sheet-actions{
+      position:sticky;
+      bottom:calc(env(safe-area-inset-bottom, 0px) * -1);
+      margin-top:auto;
+      padding-top:12px;
+      padding-bottom:calc(12px + env(safe-area-inset-bottom, 0px));
+      background:linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.92) 18px, #fff 100%);
     }
     .promo-primary-btn,
     .promo-secondary-btn{
@@ -5262,7 +5282,7 @@
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.63</span>
+          <span class="dev-version-label">DEV v0.3.64</span>
         </div>
       </header>
 
@@ -5303,7 +5323,7 @@
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.63</span>
+            <span class="dev-version-label">DEV v0.3.64</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -9760,6 +9780,8 @@ window.addEventListener("resize", clampMiniPosition);
         targetVideo = promoVideo;
       }
 
+      targetVideo.isLive = promoVideo.isLive === true;
+      targetVideo.title = getPromoDisplayTitle(targetVideo);
       renderHome();
       resetPromoSheetState();
       closeAllSheets();
