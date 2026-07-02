@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<!-- Version: DEV v0.3.55 -->
+<!DOCTYPE html>
+<!-- Version: DEV v0.3.63 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -113,6 +113,29 @@
     .tool-btn.active-speed{
       background:#2457d6;
       color:#fff;
+    }
+    .promo-fab{
+      position:fixed;
+      left:50%;
+      bottom:calc(18px + env(safe-area-inset-bottom, 0px));
+      transform:translateX(-50%);
+      width:58px;
+      height:58px;
+      border:none;
+      border-radius:50%;
+      background:linear-gradient(135deg,#ff8a00,#ff575d);
+      color:#fff;
+      font-size:32px;
+      line-height:1;
+      font-weight:500;
+      display:grid;
+      place-items:center;
+      box-shadow:0 14px 28px rgba(255,87,93,.34);
+      z-index:36;
+      cursor:pointer;
+    }
+    .promo-fab:active{
+      transform:translateX(-50%) scale(.97);
     }
     .main-scroll{
       flex:1;
@@ -915,17 +938,173 @@
       font-weight:900;
       margin:8px 0 14px;
     }
+    .sheet-head .sheet-title{
+      margin:0;
+      font-size:17px;
+    }
+    .promo-sheet-copy{
+      margin:-4px 0 14px;
+      font-size:13px;
+      line-height:1.55;
+      color:#64748b;
+      word-break:keep-all;
+    }
+    .promo-form{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .promo-field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .promo-label{
+      font-size:13px;
+      font-weight:800;
+      color:#334155;
+    }
+    .promo-link-input{
+      width:100%;
+      min-height:52px;
+      padding:0 16px;
+      border:1px solid #dbe3ee;
+      border-radius:16px;
+      background:#fff;
+      color:#111827;
+      font-size:15px;
+      font-weight:700;
+      outline:none;
+    }
+    .promo-link-input:focus{
+      border-color:#ff8a00;
+      box-shadow:0 0 0 4px rgba(255,138,0,.12);
+    }
+    .promo-preview-placeholder{
+      min-height:150px;
+      border-radius:20px;
+      border:1px dashed #d5deea;
+      background:linear-gradient(180deg,#f8fafc,#f1f5f9);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:18px;
+      color:#94a3b8;
+      font-size:13px;
+      font-weight:700;
+      line-height:1.6;
+    }
+    .promo-preview-placeholder.is-error{
+      border-color:#fecaca;
+      background:linear-gradient(180deg,#fff7f7,#fff1f2);
+      color:#dc2626;
+    }
+    .promo-preview-placeholder.is-card{
+      display:block;
+      padding:0;
+      border-style:solid;
+      border-color:#e2e8f0;
+      background:#fff;
+      color:#111827;
+      text-align:left;
+      overflow:hidden;
+    }
+    .promo-preview-card-thumb{
+      width:100%;
+      aspect-ratio:16 / 9;
+      object-fit:cover;
+      background:#e5e7eb;
+    }
+    .promo-preview-card-body{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      padding:14px;
+    }
+    .promo-preview-card-title{
+      font-size:15px;
+      line-height:1.45;
+      font-weight:900;
+      color:#0f172a;
+      word-break:keep-all;
+    }
+    .promo-preview-card-channel{
+      font-size:13px;
+      font-weight:800;
+      color:#475569;
+    }
+    .promo-preview-card-status{
+      font-size:12px;
+      font-weight:800;
+      color:#f97316;
+    }
+    .promo-sheet-actions{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:4px;
+    }
+    .promo-primary-btn,
+    .promo-secondary-btn{
+      width:100%;
+      min-height:52px;
+      border-radius:16px;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .promo-primary-btn{
+      border:none;
+      background:linear-gradient(135deg,#ff8a00,#ff575d);
+      color:#fff;
+      box-shadow:0 10px 20px rgba(255,87,93,.18);
+    }
+    .promo-primary-btn:disabled{
+      background:#e5e7eb;
+      color:#94a3b8;
+      box-shadow:none;
+      cursor:not-allowed;
+    }
+    .promo-secondary-btn{
+      border:1px solid #dbe3ee;
+      background:#fff;
+      color:#334155;
+    }
 
-    #commentSheet .sheet-body{
+    #commentSheet .sheet-body,
+    #liveChatSheet .sheet-body{
       overflow-y:auto;
     }
 
     #commentSheet{z-index:50;}
-    #walletSheet{z-index:51;}
-    #walletSheetLive{z-index:52;}
-    #donationSheet{z-index:53;}
-    #adSheet{z-index:54;}
-    #openSheet{z-index:55;}
+    #liveChatSheet{z-index:51;}
+    #walletSheet{z-index:52;}
+    #walletSheetLive{z-index:53;}
+    #donationSheet{z-index:54;}
+    #adSheet{z-index:55;}
+    #openSheet{z-index:56;}
+    .live-chat-frame-wrap{
+      overflow:hidden;
+      border-radius:16px;
+      border:1px solid #e5e7eb;
+      background:#fff;
+      min-height:320px;
+      margin-top:12px;
+    }
+    .live-chat-frame{
+      width:100%;
+      height:420px;
+      border:0;
+      display:block;
+      background:#fff;
+    }
+    .live-chat-note{
+      margin-top:12px;
+      font-size:12px;
+      color:var(--sub);
+      line-height:1.5;
+    }
 
     #walletSheet,
     #walletSheetLive,
@@ -5083,7 +5262,7 @@
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.55</span>
+          <span class="dev-version-label">DEV v0.3.63</span>
         </div>
       </header>
 
@@ -5124,7 +5303,7 @@
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.55</span>
+            <span class="dev-version-label">DEV v0.3.63</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -5134,7 +5313,7 @@
 
               <div class="watch-collapse-area" id="watchCollapseArea">
                 <div class="small-actions">
-                  <button class="small-pill" id="openCommentBtn">💬 댓글 <span id="commentCountText">0</span></button>
+                  <button class="small-pill" id="openCommentBtn"><span id="commentButtonLabel">💬 댓글</span> <span id="commentCountText">0</span></button>
                   <div class="wallet-entry-overlay">
                     <button class="wallet-test-hit" id="openWalletTestHit" aria-label="테스트 지갑 열기"></button>
                     <button class="small-pill" id="openWalletBtn">🎯 미션</button>
@@ -5171,6 +5350,7 @@
       </div>
     </section>
 
+    <button class="promo-fab" id="openPromoSheetBtn" type="button" aria-label="홍보하기 열기">+</button>
     <div class="toast" id="toast"></div>
   </div>
 
@@ -5264,6 +5444,32 @@
           <button class="wallet-open-btn" id="walletOpenRandomFail">랜덤X</button>
           <button class="wallet-open-btn" id="walletOpenRandomGold">랜덤G</button>
           <button class="wallet-open-btn gold" id="walletOpenGold">황금</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet sheet--action" id="promoSheet">
+    <div class="sheet-head">
+      <div class="sheet-title">홍보하기</div>
+      <button class="sheet-close" data-close="promoSheet">×</button>
+    </div>
+    <div class="sheet-body">
+      <p class="promo-sheet-copy">Viewster에 등록할 YouTube 영상 링크를 입력해 주세요.</p>
+      <div class="promo-form">
+        <div class="promo-field">
+          <label class="promo-label" for="promoYoutubeLinkInput">YouTube 링크</label>
+          <input class="promo-link-input" id="promoYoutubeLinkInput" type="url" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off" />
+        </div>
+        <div class="promo-field">
+          <div class="promo-label">영상 미리보기</div>
+          <div class="promo-preview-placeholder" id="promoPreviewPlaceholder">
+            링크 확인 후 이 영역에<br />영상 미리보기가 표시될 예정입니다.
+          </div>
+        </div>
+        <div class="promo-sheet-actions">
+          <button class="promo-primary-btn" id="promoSubmitBtn" type="button" disabled>등록하기</button>
+          <button class="promo-secondary-btn" id="promoCloseBtn" type="button">닫기</button>
         </div>
       </div>
     </div>
@@ -5660,6 +5866,19 @@
     </div>
   </section>
 
+  <section class="sheet sheet--scroll" id="liveChatSheet">
+    <div class="sheet-head">
+      <button class="sheet-close" data-close="liveChatSheet">×</button>
+    </div>
+    <div class="sheet-body">
+      <div class="sheet-title">실시간 채팅</div>
+      <div class="live-chat-frame-wrap">
+        <iframe class="live-chat-frame" id="liveChatFrame" title="YouTube Live Chat" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <div class="live-chat-note" id="liveChatNote">라이브 채팅은 GitHub Pages 또는 앱 WebView 환경에서 테스트해주세요.</div>
+    </div>
+  </section>
+
   <section class="sheet sheet--action" id="adSheet">
     <div class="sheet-head" style="background:#0b0f19;">
       <button class="sheet-close" data-close="adSheet" style="background:#1f2937;color:#fff;">×</button>
@@ -6007,21 +6226,29 @@
     const ytFrame = document.getElementById("ytFrame");
     const watchTitle = document.getElementById("watchTitle");
     const watchSub = document.getElementById("watchSub");
+    const openCommentBtn = document.getElementById("openCommentBtn");
     const watchTimerOverlay = document.getElementById("watchTimerOverlay");
     const rewardFill = document.getElementById("rewardFill");
     const rewardRightText = document.getElementById("rewardRightText");
     const rewardInline = document.getElementById("rewardInline");
     const openWalletBtn = document.getElementById("openWalletBtn");
     const openDonationBtn = document.getElementById("openDonationBtn");
+    const openPromoSheetBtn = document.getElementById("openPromoSheetBtn");
+    const promoYoutubeLinkInput = document.getElementById("promoYoutubeLinkInput");
+    const promoSubmitBtn = document.getElementById("promoSubmitBtn");
+    const promoCloseBtn = document.getElementById("promoCloseBtn");
     const refreshLatestVideosBtnTop = document.getElementById("refreshLatestVideosBtnTop");
     const refreshLatestVideosBtnFloat = document.getElementById("refreshLatestVideosBtnFloat");
     const openWalletTestHit = document.getElementById("openWalletTestHit");
     const benefitBanner = document.getElementById("benefitBanner");
     const closeBenefitBtn = document.getElementById("closeBenefitBtn");
     const inlineGetBtnWide = document.getElementById("inlineGetBtnWide");
+    const commentButtonLabel = document.getElementById("commentButtonLabel");
     const commentCountText = document.getElementById("commentCountText");
     const sheetCommentCount = document.getElementById("sheetCommentCount");
     const commentList = document.getElementById("commentList");
+    const liveChatFrame = document.getElementById("liveChatFrame");
+    const liveChatNote = document.getElementById("liveChatNote");
     const overlay = document.getElementById("overlay");
     const toast = document.getElementById("toast");
     const boxCount = document.getElementById("boxCount");
@@ -8579,10 +8806,13 @@ function updateFixedLayout(){
       resetWatchTimer();
       stopWatchTimerPolling();
       state.currentVideo = video;
+      video.title = getPromoDisplayTitle(video);
       watchTitle.textContent = video.title;
       watchTitle.title = video.title;
       watchTitle.classList.remove("expanded");
       watchSub.textContent = `${video.channel} · ${video.views}`;
+      updateWatchActionButton(video);
+      renderLiveChatSheet(video);
       ytFrame.src = buildYouTubeEmbedUrl(video.videoId);
       resetDonationSelection();
       renderDonationSheet();
@@ -8768,8 +8998,8 @@ window.addEventListener("resize", clampMiniPosition);
       syncMiniSizeButton();
     }
 
-    const managedSheetIds = ["walletSheet", "walletSheetLive", "donationSheet", "openSheet", "adSheet", "commentSheet"];
-    const exclusiveSheetIds = ["walletSheet", "walletSheetLive", "donationSheet", "openSheet", "adSheet"];
+    const managedSheetIds = ["walletSheet", "walletSheetLive", "donationSheet", "openSheet", "adSheet", "commentSheet", "liveChatSheet", "promoSheet"];
+    const exclusiveSheetIds = ["walletSheet", "walletSheetLive", "donationSheet", "openSheet", "adSheet", "liveChatSheet", "promoSheet"];
     const openSheetFxClasses = ["fx-random-normal", "fx-random-fail", "fx-random-gold", "fx-gold-open"];
     const RANDOM_X_VIDEO_SRC = "./assets/X_view.mp4";
     const RANDOM_G_VIDEO_SRC = "./assets/G_view.mp4";
@@ -9314,6 +9544,291 @@ window.addEventListener("resize", clampMiniPosition);
       syncSheetIdleTimers();
     }
 
+    function extractYouTubeVideoId(value){
+      const input = String(value || "").trim();
+      if(!input) return "";
+
+      try{
+        const url = new URL(input);
+        const host = url.hostname.replace(/^www\./, "");
+
+        if(host === "youtu.be"){
+          return url.pathname.split("/").filter(Boolean)[0] || "";
+        }
+
+        if(host === "youtube.com" || host === "m.youtube.com"){
+          if(url.pathname === "/watch"){
+            return url.searchParams.get("v") || "";
+          }
+
+          const pathParts = url.pathname.split("/").filter(Boolean);
+          if(["live", "shorts", "embed"].includes(pathParts[0])){
+            return pathParts[1] || "";
+          }
+        }
+      }catch(error){
+        return "";
+      }
+
+      return "";
+    }
+
+    function getYouTubeLinkType(value){
+      const input = String(value || "").trim();
+      if(!input) return "";
+
+      try{
+        const url = new URL(input);
+        const host = url.hostname.replace(/^www\./, "");
+        if(!(host === "youtube.com" || host === "m.youtube.com" || host === "youtu.be")) return "";
+
+        if(host === "youtu.be") return "video";
+        const pathParts = url.pathname.split("/").filter(Boolean);
+        if(pathParts[0] === "live") return "live";
+        if(pathParts[0] === "shorts") return "shorts";
+        return "video";
+      }catch(error){
+        return "";
+      }
+    }
+
+    function renderPromoPreviewDefault(){
+      promoPreviewPlaceholder.className = "promo-preview-placeholder";
+      promoPreviewPlaceholder.innerHTML = '링크 확인 후 이 영역에<br />영상 미리보기가 표시될 예정입니다.';
+    }
+
+    function renderPromoPreviewInvalid(){
+      promoPreviewPlaceholder.className = "promo-preview-placeholder is-error";
+      promoPreviewPlaceholder.textContent = "올바른 YouTube 링크를 입력해 주세요.";
+    }
+
+    function renderPromoPreviewCard(videoId, linkType = "video"){
+      const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+      const statusText = linkType === "live" ? "LIVE 미리보기" : "등록 전 미리보기";
+      const titleText = linkType === "live"
+        ? `등록한 YouTube LIVE 영상 (${videoId})`
+        : `등록한 YouTube 영상 (${videoId})`;
+      promoPreviewPlaceholder.className = "promo-preview-placeholder is-card";
+      promoPreviewPlaceholder.innerHTML = `
+        <img class="promo-preview-card-thumb" src="${thumbnailUrl}" alt="YouTube 썸네일 미리보기" />
+        <div class="promo-preview-card-body">
+          <div class="promo-preview-card-title">${escapeHtml(titleText)}</div>
+          <div class="promo-preview-card-channel">YouTube 채널</div>
+          <div class="promo-preview-card-status">${statusText}</div>
+        </div>
+      `;
+    }
+
+    function resetPromoSheetState(){
+      promoYoutubeLinkInput.value = "";
+      renderPromoPreviewDefault();
+      updatePromoSheetState();
+    }
+
+    function buildPromoVideoEntry(rawUrl){
+      const sourceUrl = String(rawUrl || "").trim();
+      const videoId = extractYouTubeVideoId(sourceUrl);
+      if(!videoId) return null;
+
+      const linkType = getYouTubeLinkType(sourceUrl);
+      const isLive = linkType === "live";
+      const title = isLive
+        ? `등록한 YouTube LIVE 영상 (${videoId})`
+        : `등록한 YouTube 영상 (${videoId})`;
+      const channelTitle = "YouTube 채널";
+
+      return {
+        id: `promo-${videoId}`,
+        videoId,
+        title,
+        channel: channelTitle,
+        channelTitle,
+        thumb: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+        thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+        avatar: "https://via.placeholder.com/48x48?text=%20",
+        views: formatViews(isLive ? 128000 : 7777),
+        viewCount: isLive ? 128000 : 7777,
+        commentCount: 0,
+        comments: [],
+        url: sourceUrl,
+        isLive
+      };
+    }
+
+    function getPromoDisplayTitle(video){
+      const videoId = String(video?.videoId || "").trim();
+      if(!videoId){
+        return String(video?.title || "").trim() || "등록한 YouTube 영상";
+      }
+      return video?.isLive === true
+        ? `등록한 YouTube LIVE 영상 (${videoId})`
+        : `등록한 YouTube 영상 (${videoId})`;
+    }
+
+    function syncPromoVideoEntry(targetVideo, nextVideo){
+      if(!targetVideo || !nextVideo) return targetVideo;
+      targetVideo.videoId = nextVideo.videoId;
+      targetVideo.title = getPromoDisplayTitle(nextVideo);
+      targetVideo.channel = nextVideo.channel;
+      targetVideo.channelTitle = nextVideo.channelTitle;
+      targetVideo.thumb = nextVideo.thumb;
+      targetVideo.thumbnail = nextVideo.thumbnail;
+      targetVideo.avatar = nextVideo.avatar;
+      targetVideo.views = nextVideo.views;
+      targetVideo.viewCount = nextVideo.viewCount;
+      targetVideo.url = nextVideo.url;
+      targetVideo.isLive = nextVideo.isLive === true;
+      if(!Array.isArray(targetVideo.comments)){
+        targetVideo.comments = [];
+      }
+      if(!Number.isFinite(Number(targetVideo.commentCount))){
+        targetVideo.commentCount = 0;
+      }
+      return targetVideo;
+    }
+
+    function getLiveChatEmbedDomain(){
+      const currentHost = String(window.location.hostname || "").trim();
+      if(currentHost && currentHost !== "localhost"){
+        return currentHost;
+      }
+      return "jyjy7678-hash.github.io";
+    }
+
+    function buildYouTubeLiveChatUrl(videoId){
+      const id = String(videoId || "").trim();
+      if(!id) return "";
+      return `https://www.youtube.com/live_chat?v=${encodeURIComponent(id)}&embed_domain=${encodeURIComponent(getLiveChatEmbedDomain())}`;
+    }
+
+    function updateWatchActionButton(video){
+      if(!openCommentBtn || !commentButtonLabel || !commentCountText) return;
+      const isLive = Boolean(video?.isLive);
+      if(isLive){
+        commentButtonLabel.textContent = "💬 채팅";
+        commentCountText.hidden = true;
+        openCommentBtn.setAttribute("aria-label", "실시간 채팅 열기");
+        return;
+      }
+      commentButtonLabel.textContent = "💬 댓글";
+      commentCountText.hidden = false;
+      commentCountText.textContent = Number(video?.commentCount || 0).toLocaleString();
+      openCommentBtn.setAttribute("aria-label", "댓글 열기");
+    }
+
+    function renderLiveChatSheet(video){
+      if(!liveChatFrame || !liveChatNote) return;
+      const isLive = Boolean(video?.isLive);
+      const videoId = String(video?.videoId || "").trim();
+      if(!isLive || !videoId){
+        liveChatFrame.src = "";
+        liveChatNote.textContent = "라이브 채팅은 GitHub Pages 또는 앱 WebView 환경에서 테스트해주세요.";
+        return;
+      }
+      liveChatFrame.src = buildYouTubeLiveChatUrl(videoId);
+      liveChatNote.textContent = window.location.protocol === "file:"
+        ? "라이브 채팅은 GitHub Pages 또는 앱 WebView 환경에서 테스트해주세요."
+        : "YouTube 라이브 채팅 임베드 테스트용 화면입니다.";
+    }
+
+    function openWatchCommentOrChat(){
+      const currentVideo = state.currentVideo;
+      if(currentVideo?.isLive){
+        renderLiveChatSheet(currentVideo);
+        openSheet("liveChatSheet");
+        return;
+      }
+      openSheet("commentSheet");
+    }
+
+    async function submitPromoVideo(){
+      const promoVideo = buildPromoVideoEntry(promoYoutubeLinkInput.value);
+      if(!promoVideo){
+        promoSubmitBtn.disabled = true;
+        renderPromoPreviewInvalid();
+        return;
+      }
+
+      let targetVideo = state.videos.find(video => String(video.videoId || "") === promoVideo.videoId);
+      const isDuplicate = !!targetVideo;
+
+      if(targetVideo){
+        syncPromoVideoEntry(targetVideo, promoVideo);
+        state.videos = [targetVideo, ...state.videos.filter(video => video !== targetVideo)];
+      } else {
+        state.videos.unshift(promoVideo);
+        targetVideo = promoVideo;
+      }
+
+      renderHome();
+      resetPromoSheetState();
+      closeAllSheets();
+
+      showToast(isDuplicate ? "이미 등록된 영상입니다. 최신 정보로 열었습니다." : "영상이 등록되었습니다.", {
+        title: isDuplicate ? "중복 영상 업데이트" : "홍보하기 완료",
+        icon: isDuplicate ? "🔁" : "✅",
+        duration: 2600
+      });
+
+      await openWatch(targetVideo.id);
+    }
+
+    function updatePromoSheetState(){
+      const rawValue = String(promoYoutubeLinkInput.value || "").trim();
+      if(!rawValue){
+        promoSubmitBtn.disabled = true;
+        renderPromoPreviewDefault();
+        return;
+      }
+
+      const videoId = extractYouTubeVideoId(rawValue);
+      if(!videoId){
+        promoSubmitBtn.disabled = true;
+        renderPromoPreviewInvalid();
+        return;
+      }
+
+      promoSubmitBtn.disabled = false;
+      renderPromoPreviewCard(videoId, getYouTubeLinkType(rawValue));
+    }
+
+    async function readPromoYoutubeLinkFromClipboard(){
+      if(!window.isSecureContext) return "";
+      if(!navigator.clipboard || typeof navigator.clipboard.readText !== "function") return "";
+
+      try{
+        const clipboardText = String(await navigator.clipboard.readText() || "").trim();
+        return extractYouTubeVideoId(clipboardText) ? clipboardText : "";
+      }catch(error){
+        // file:// 환경이나 권한 제한에서는 수동 입력으로 계속 진행합니다.
+        return "";
+      }
+    }
+
+    function applyPromoYoutubeLink(value, options = {}){
+      const inputValue = String(value || "").trim();
+      if(!inputValue) return false;
+      if(!extractYouTubeVideoId(inputValue)) return false;
+
+      promoYoutubeLinkInput.value = inputValue;
+      updatePromoSheetState();
+      if(options.showToast){
+        showToast("복사한 YouTube 링크를 불러왔습니다.", {
+          title: "자동 붙여넣기",
+          icon: "📋",
+          duration: 2200
+        });
+      }
+      return true;
+    }
+
+    async function tryAutofillPromoYoutubeLink(options = {}){
+      const clipboardText = options.clipboardText || await readPromoYoutubeLinkFromClipboard();
+      return applyPromoYoutubeLink(clipboardText, {
+        showToast: options.showToast !== false
+      });
+    }
+
     function resetOpenSheetFx(){
       openSheetEl.classList.remove(...openSheetFxClasses);
     }
@@ -9630,6 +10145,22 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       }
       openSheet("walletSheetLive");
     });
+    openPromoSheetBtn.addEventListener("click", async () => {
+      const clipboardText = await readPromoYoutubeLinkFromClipboard();
+
+      resetPromoSheetState();
+      openSheet("promoSheet");
+
+      if(!applyPromoYoutubeLink(clipboardText, { showToast: true })){
+        promoYoutubeLinkInput.focus();
+      }
+    });
+    promoYoutubeLinkInput.addEventListener("input", updatePromoSheetState);
+    promoSubmitBtn.addEventListener("click", submitPromoVideo);
+    promoCloseBtn.addEventListener("click", () => {
+      resetPromoSheetState();
+      closeAllSheets();
+    });
     openDonationBtn.addEventListener("click", () => {
       resetDonationSelection();
       clearDonationCompletion();
@@ -9787,7 +10318,7 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       openSheet("walletSheet");
     });
     closeBenefitBtn.addEventListener("click", () => setBenefitEnabled(false));
-    document.getElementById("openCommentBtn").addEventListener("click", () => openSheet("commentSheet"));
+    openCommentBtn.addEventListener("click", openWatchCommentOrChat);
     donationAmountButtons.forEach(button => {
       button.addEventListener("click", () => {
         if(button.disabled) return;
@@ -9952,6 +10483,7 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     bindSheetIdleInteractions("walletSheetLive");
     bindSheetIdleInteractions("donationSheet");
     bindSheetIdleInteractions("commentSheet");
+    bindSheetIdleInteractions("liveChatSheet");
     registerGlobalSendThanksHandler();
     registerGlobalThankYouCardEditHandler();
 
@@ -9966,6 +10498,7 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
   </script>
 </body>
 </html>
+
 
 
 
