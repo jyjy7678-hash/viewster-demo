@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.64 -->
+<!-- Version: DEV v0.3.66 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1034,6 +1034,14 @@
       font-weight:800;
       color:#475569;
     }
+    .promo-preview-card-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px 10px;
+      font-size:12px;
+      font-weight:800;
+      color:#64748b;
+    }
     .promo-preview-card-status{
       font-size:12px;
       font-weight:800;
@@ -1124,6 +1132,34 @@
       font-size:12px;
       color:var(--sub);
       line-height:1.5;
+    }
+    .live-chat-debug{
+      margin-top:8px;
+      font-size:11px;
+      color:#94a3b8;
+      line-height:1.5;
+      word-break:break-all;
+    }
+    .live-chat-actions{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:14px;
+    }
+    .live-chat-link-btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      padding:0 16px;
+      border-radius:14px;
+      border:1px solid #dbe3ee;
+      background:#fff;
+      color:#0f172a;
+      text-decoration:none;
+      font-size:14px;
+      font-weight:900;
+      box-shadow:0 6px 14px rgba(15, 23, 42, 0.06);
     }
 
     #walletSheet,
@@ -5282,7 +5318,7 @@
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.64</span>
+          <span class="dev-version-label">DEV v0.3.66</span>
         </div>
       </header>
 
@@ -5323,7 +5359,7 @@
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.64</span>
+            <span class="dev-version-label">DEV v0.3.66</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -5896,6 +5932,10 @@
         <iframe class="live-chat-frame" id="liveChatFrame" title="YouTube Live Chat" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
       <div class="live-chat-note" id="liveChatNote">라이브 채팅은 GitHub Pages 또는 앱 WebView 환경에서 테스트해주세요.</div>
+      <div class="live-chat-debug" id="liveChatDebug"></div>
+      <div class="live-chat-actions">
+        <a class="live-chat-link-btn" id="liveChatOpenYoutubeBtn" href="#" target="_blank" rel="noopener noreferrer">YouTube에서 채팅 열기</a>
+      </div>
     </div>
   </section>
 
@@ -6129,6 +6169,8 @@
       donationHistory: [],
       donationChannelTotals: {},
       donationRankings: {},
+      promoPreviewVideo: null,
+      promoPreviewRequestId: 0,
     };
 
     let autoWatchTimer = null;
@@ -6269,6 +6311,8 @@
     const commentList = document.getElementById("commentList");
     const liveChatFrame = document.getElementById("liveChatFrame");
     const liveChatNote = document.getElementById("liveChatNote");
+    const liveChatDebug = document.getElementById("liveChatDebug");
+    const liveChatOpenYoutubeBtn = document.getElementById("liveChatOpenYoutubeBtn");
     const overlay = document.getElementById("overlay");
     const toast = document.getElementById("toast");
     const boxCount = document.getElementById("boxCount");
@@ -8826,9 +8870,9 @@ function updateFixedLayout(){
       resetWatchTimer();
       stopWatchTimerPolling();
       state.currentVideo = video;
-      video.title = getPromoDisplayTitle(video);
-      watchTitle.textContent = video.title;
-      watchTitle.title = video.title;
+      const watchTitleText = getPromoDisplayTitle(video);
+      watchTitle.textContent = watchTitleText;
+      watchTitle.title = watchTitleText;
       watchTitle.classList.remove("expanded");
       watchSub.textContent = `${video.channel} · ${video.views}`;
       updateWatchActionButton(video);
@@ -9622,30 +9666,12 @@ window.addEventListener("resize", clampMiniPosition);
       promoPreviewPlaceholder.textContent = "올바른 YouTube 링크를 입력해 주세요.";
     }
 
-    function renderPromoPreviewCard(videoId, linkType = "video"){
-      const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-      const statusText = linkType === "live" ? "LIVE 미리보기" : "등록 전 미리보기";
-      const titleText = linkType === "live"
-        ? `등록한 YouTube LIVE 영상 (${videoId})`
-        : `등록한 YouTube 영상 (${videoId})`;
-      promoPreviewPlaceholder.className = "promo-preview-placeholder is-card";
-      promoPreviewPlaceholder.innerHTML = `
-        <img class="promo-preview-card-thumb" src="${thumbnailUrl}" alt="YouTube 썸네일 미리보기" />
-        <div class="promo-preview-card-body">
-          <div class="promo-preview-card-title">${escapeHtml(titleText)}</div>
-          <div class="promo-preview-card-channel">YouTube 채널</div>
-          <div class="promo-preview-card-status">${statusText}</div>
-        </div>
-      `;
+    function renderPromoPreviewLoading(){
+      promoPreviewPlaceholder.className = "promo-preview-placeholder";
+      promoPreviewPlaceholder.innerHTML = 'YouTube 영상 정보를 불러오는 중입니다.<br />잠시만 기다려 주세요.';
     }
 
-    function resetPromoSheetState(){
-      promoYoutubeLinkInput.value = "";
-      renderPromoPreviewDefault();
-      updatePromoSheetState();
-    }
-
-    function buildPromoVideoEntry(rawUrl){
+    function buildPromoFallbackVideo(rawUrl){
       const sourceUrl = String(rawUrl || "").trim();
       const videoId = extractYouTubeVideoId(sourceUrl);
       if(!videoId) return null;
@@ -9655,19 +9681,21 @@ window.addEventListener("resize", clampMiniPosition);
       const title = isLive
         ? `등록한 YouTube LIVE 영상 (${videoId})`
         : `등록한 YouTube 영상 (${videoId})`;
-      const channelTitle = "YouTube 채널";
+      const thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
       return {
         id: `promo-${videoId}`,
         videoId,
         title,
-        channel: channelTitle,
-        channelTitle,
-        thumb: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
-        thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+        channel: "YouTube 채널",
+        channelTitle: "YouTube 채널",
+        channelId: "",
+        channelHandle: "",
+        thumb: thumbnail,
+        thumbnail,
         avatar: "https://via.placeholder.com/48x48?text=%20",
-        views: formatViews(isLive ? 128000 : 7777),
-        viewCount: isLive ? 128000 : 7777,
+        views: "조회수 준비중",
+        viewCount: 0,
         commentCount: 0,
         comments: [],
         url: sourceUrl,
@@ -9675,10 +9703,113 @@ window.addEventListener("resize", clampMiniPosition);
       };
     }
 
+    function isLivePromoVideo(video, sourceUrl = ""){
+      if(video?.isLive === true) return true;
+      const liveBroadcastContent = String(video?.liveBroadcastContent || "").toLowerCase();
+      if(liveBroadcastContent === "live" || liveBroadcastContent === "upcoming") return true;
+      if(video?.liveStreamingDetails) return true;
+      return getYouTubeLinkType(sourceUrl) === "live";
+    }
+
+    async function fetchPromoVideoEntry(rawUrl){
+      const fallbackVideo = buildPromoFallbackVideo(rawUrl);
+      if(!fallbackVideo) return null;
+      if(!YT_API_KEY) return fallbackVideo;
+
+      try{
+        const videoUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,liveStreamingDetails&id=${encodeURIComponent(fallbackVideo.videoId)}&key=${YT_API_KEY}&maxResults=1`;
+        const response = await fetch(videoUrl);
+        const json = await response.json();
+
+        if(json.error){
+          throw new Error(json.error.message || "YouTube API 오류");
+        }
+
+        const item = Array.isArray(json.items) ? json.items[0] : null;
+        if(!item) return fallbackVideo;
+
+        const isLive = isLivePromoVideo(item, rawUrl);
+        const nextVideo = {
+          ...fallbackVideo,
+          title: String(item.snippet?.title || "").trim() || fallbackVideo.title,
+          channel: String(item.snippet?.channelTitle || "").trim() || fallbackVideo.channel,
+          channelTitle: String(item.snippet?.channelTitle || "").trim() || fallbackVideo.channelTitle,
+          channelId: String(item.snippet?.channelId || "").trim(),
+          thumb: item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url || fallbackVideo.thumb,
+          thumbnail: item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url || fallbackVideo.thumbnail,
+          views: formatViews(item.statistics?.viewCount || 0),
+          viewCount: Number(item.statistics?.viewCount || 0),
+          commentCount: Number(item.statistics?.commentCount || 0),
+          isLive,
+          liveBroadcastContent: item.snippet?.liveBroadcastContent || "",
+          liveStreamingDetails: item.liveStreamingDetails || null
+        };
+
+        if(nextVideo.channelId){
+          try{
+            const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${encodeURIComponent(nextVideo.channelId)}&key=${YT_API_KEY}&maxResults=1`;
+            const channelResponse = await fetch(channelUrl);
+            const channelJson = await channelResponse.json();
+            const channelItem = Array.isArray(channelJson.items) ? channelJson.items[0] : null;
+            if(channelItem){
+              nextVideo.avatar =
+                channelItem.snippet?.thumbnails?.high?.url ||
+                channelItem.snippet?.thumbnails?.medium?.url ||
+                channelItem.snippet?.thumbnails?.default?.url ||
+                nextVideo.avatar;
+              nextVideo.channelHandle = channelItem.snippet?.customUrl || "";
+            }
+          }catch(error){
+            // 채널 보조정보 조회 실패 시에도 영상 정보는 유지합니다.
+          }
+        }
+
+        return nextVideo;
+      }catch(error){
+        return fallbackVideo;
+      }
+    }
+
+    function renderPromoPreviewCard(video){
+      const previewVideo = video || state.promoPreviewVideo;
+      if(!previewVideo){
+        renderPromoPreviewDefault();
+        return;
+      }
+      const statusText = previewVideo.isLive ? "LIVE 미리보기" : "등록 전 미리보기";
+      promoPreviewPlaceholder.className = "promo-preview-placeholder is-card";
+      promoPreviewPlaceholder.innerHTML = `
+        <img class="promo-preview-card-thumb" src="${escapeHtml(previewVideo.thumbnail || previewVideo.thumb || `https://img.youtube.com/vi/${previewVideo.videoId}/hqdefault.jpg`)}" alt="YouTube 썸네일 미리보기" />
+        <div class="promo-preview-card-body">
+          <div class="promo-preview-card-title">${escapeHtml(previewVideo.title || getPromoDisplayTitle(previewVideo))}</div>
+          <div class="promo-preview-card-channel">${escapeHtml(previewVideo.channelTitle || previewVideo.channel || "YouTube 채널")}</div>
+          <div class="promo-preview-card-meta">
+            <span>${escapeHtml(previewVideo.views || "조회수 준비중")}</span>
+            <span>${previewVideo.isLive ? "LIVE" : "일반 영상"}</span>
+          </div>
+          <div class="promo-preview-card-status">${statusText}</div>
+        </div>
+      `;
+    }
+
+    function resetPromoSheetState(){
+      state.promoPreviewVideo = null;
+      state.promoPreviewRequestId += 1;
+      promoYoutubeLinkInput.value = "";
+      renderPromoPreviewDefault();
+      promoSubmitBtn.disabled = true;
+    }
+
+    async function buildPromoVideoEntry(rawUrl){
+      return await fetchPromoVideoEntry(rawUrl);
+    }
+
     function getPromoDisplayTitle(video){
+      const savedTitle = String(video?.title || "").trim();
+      if(savedTitle) return savedTitle;
       const videoId = String(video?.videoId || "").trim();
       if(!videoId){
-        return String(video?.title || "").trim() || "등록한 YouTube 영상";
+        return "등록한 YouTube 영상";
       }
       return video?.isLive === true
         ? `등록한 YouTube LIVE 영상 (${videoId})`
@@ -9688,9 +9819,11 @@ window.addEventListener("resize", clampMiniPosition);
     function syncPromoVideoEntry(targetVideo, nextVideo){
       if(!targetVideo || !nextVideo) return targetVideo;
       targetVideo.videoId = nextVideo.videoId;
-      targetVideo.title = getPromoDisplayTitle(nextVideo);
+      targetVideo.title = String(nextVideo.title || "").trim() || getPromoDisplayTitle(nextVideo);
       targetVideo.channel = nextVideo.channel;
       targetVideo.channelTitle = nextVideo.channelTitle;
+      targetVideo.channelId = nextVideo.channelId || "";
+      targetVideo.channelHandle = nextVideo.channelHandle || "";
       targetVideo.thumb = nextVideo.thumb;
       targetVideo.thumbnail = nextVideo.thumbnail;
       targetVideo.avatar = nextVideo.avatar;
@@ -9698,6 +9831,8 @@ window.addEventListener("resize", clampMiniPosition);
       targetVideo.viewCount = nextVideo.viewCount;
       targetVideo.url = nextVideo.url;
       targetVideo.isLive = nextVideo.isLive === true;
+      targetVideo.liveBroadcastContent = nextVideo.liveBroadcastContent || "";
+      targetVideo.liveStreamingDetails = nextVideo.liveStreamingDetails || null;
       if(!Array.isArray(targetVideo.comments)){
         targetVideo.comments = [];
       }
@@ -9709,7 +9844,7 @@ window.addEventListener("resize", clampMiniPosition);
 
     function getLiveChatEmbedDomain(){
       const currentHost = String(window.location.hostname || "").trim();
-      if(currentHost && currentHost !== "localhost"){
+      if(currentHost && currentHost !== "localhost" && currentHost !== "127.0.0.1" && currentHost !== "::1"){
         return currentHost;
       }
       return "jyjy7678-hash.github.io";
@@ -9719,6 +9854,12 @@ window.addEventListener("resize", clampMiniPosition);
       const id = String(videoId || "").trim();
       if(!id) return "";
       return `https://www.youtube.com/live_chat?v=${encodeURIComponent(id)}&embed_domain=${encodeURIComponent(getLiveChatEmbedDomain())}`;
+    }
+
+    function buildYouTubeWatchUrl(videoId){
+      const id = String(videoId || "").trim();
+      if(!id) return "";
+      return `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
     }
 
     function updateWatchActionButton(video){
@@ -9737,18 +9878,28 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     function renderLiveChatSheet(video){
-      if(!liveChatFrame || !liveChatNote) return;
+      if(!liveChatFrame || !liveChatNote || !liveChatOpenYoutubeBtn || !liveChatDebug) return;
       const isLive = Boolean(video?.isLive);
       const videoId = String(video?.videoId || "").trim();
+      const embedDomain = getLiveChatEmbedDomain();
+      const liveChatUrl = buildYouTubeLiveChatUrl(videoId);
+      const watchUrl = buildYouTubeWatchUrl(videoId);
+      const isLocalEnvironment = window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === "::1";
       if(!isLive || !videoId){
         liveChatFrame.src = "";
         liveChatNote.textContent = "라이브 채팅은 GitHub Pages 또는 앱 WebView 환경에서 테스트해주세요.";
+        liveChatDebug.textContent = "";
+        liveChatOpenYoutubeBtn.href = watchUrl || "#";
+        liveChatOpenYoutubeBtn.textContent = "YouTube에서 채팅 열기";
         return;
       }
-      liveChatFrame.src = buildYouTubeLiveChatUrl(videoId);
-      liveChatNote.textContent = window.location.protocol === "file:"
+      liveChatFrame.src = liveChatUrl;
+      liveChatOpenYoutubeBtn.href = liveChatUrl || watchUrl || "#";
+      liveChatOpenYoutubeBtn.textContent = "YouTube에서 채팅 열기";
+      liveChatNote.textContent = isLocalEnvironment
         ? "라이브 채팅은 GitHub Pages 또는 앱 WebView 환경에서 테스트해주세요."
-        : "YouTube 라이브 채팅 임베드 테스트용 화면입니다.";
+        : "현재 방송이 실시간 라이브 중이 아니거나 채팅이 비활성화되어 있을 수 있습니다.";
+      liveChatDebug.textContent = `채팅 테스트 도메인: ${embedDomain} · videoId: ${videoId}`;
     }
 
     function openWatchCommentOrChat(){
@@ -9762,7 +9913,7 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     async function submitPromoVideo(){
-      const promoVideo = buildPromoVideoEntry(promoYoutubeLinkInput.value);
+      const promoVideo = state.promoPreviewVideo || await buildPromoVideoEntry(promoYoutubeLinkInput.value);
       if(!promoVideo){
         promoSubmitBtn.disabled = true;
         renderPromoPreviewInvalid();
@@ -9781,7 +9932,7 @@ window.addEventListener("resize", clampMiniPosition);
       }
 
       targetVideo.isLive = promoVideo.isLive === true;
-      targetVideo.title = getPromoDisplayTitle(targetVideo);
+      targetVideo.title = String(promoVideo.title || "").trim() || getPromoDisplayTitle(targetVideo);
       renderHome();
       resetPromoSheetState();
       closeAllSheets();
@@ -9795,8 +9946,10 @@ window.addEventListener("resize", clampMiniPosition);
       await openWatch(targetVideo.id);
     }
 
-    function updatePromoSheetState(){
+    async function updatePromoSheetState(){
       const rawValue = String(promoYoutubeLinkInput.value || "").trim();
+      const requestId = ++state.promoPreviewRequestId;
+      state.promoPreviewVideo = null;
       if(!rawValue){
         promoSubmitBtn.disabled = true;
         renderPromoPreviewDefault();
@@ -9810,8 +9963,18 @@ window.addEventListener("resize", clampMiniPosition);
         return;
       }
 
+      promoSubmitBtn.disabled = true;
+      renderPromoPreviewLoading();
+      const promoVideo = await buildPromoVideoEntry(rawValue);
+      if(requestId !== state.promoPreviewRequestId) return;
+      if(!promoVideo){
+        promoSubmitBtn.disabled = true;
+        renderPromoPreviewInvalid();
+        return;
+      }
+      state.promoPreviewVideo = promoVideo;
       promoSubmitBtn.disabled = false;
-      renderPromoPreviewCard(videoId, getYouTubeLinkType(rawValue));
+      renderPromoPreviewCard(promoVideo);
     }
 
     async function readPromoYoutubeLinkFromClipboard(){
@@ -9833,7 +9996,7 @@ window.addEventListener("resize", clampMiniPosition);
       if(!extractYouTubeVideoId(inputValue)) return false;
 
       promoYoutubeLinkInput.value = inputValue;
-      updatePromoSheetState();
+      void updatePromoSheetState();
       if(options.showToast){
         showToast("복사한 YouTube 링크를 불러왔습니다.", {
           title: "자동 붙여넣기",
