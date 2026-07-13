@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.66 -->
+<!-- Version: DEV v0.3.67 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1117,49 +1117,36 @@
       border-radius:16px;
       border:1px solid #e5e7eb;
       background:#fff;
-      min-height:320px;
+      min-height:520px;
       margin-top:12px;
     }
     .live-chat-frame{
       width:100%;
-      height:420px;
+      height:calc(100dvh - 180px);
+      min-height:520px;
       border:0;
       display:block;
       background:#fff;
     }
-    .live-chat-note{
-      margin-top:12px;
-      font-size:12px;
-      color:var(--sub);
-      line-height:1.5;
-    }
-    .live-chat-debug{
-      margin-top:8px;
-      font-size:11px;
-      color:#94a3b8;
-      line-height:1.5;
-      word-break:break-all;
-    }
     .live-chat-actions{
       display:flex;
-      flex-direction:column;
-      gap:10px;
-      margin-top:14px;
+      justify-content:flex-end;
+      margin:8px 0 0;
     }
     .live-chat-link-btn{
       display:flex;
       align-items:center;
       justify-content:center;
-      min-height:46px;
-      padding:0 16px;
-      border-radius:14px;
+      min-height:36px;
+      padding:0 14px;
+      border-radius:999px;
       border:1px solid #dbe3ee;
       background:#fff;
       color:#0f172a;
       text-decoration:none;
-      font-size:14px;
+      font-size:12px;
       font-weight:900;
-      box-shadow:0 6px 14px rgba(15, 23, 42, 0.06);
+      box-shadow:0 4px 10px rgba(15, 23, 42, 0.05);
     }
 
     #walletSheet,
@@ -5318,7 +5305,7 @@
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.66</span>
+          <span class="dev-version-label">DEV v0.3.67</span>
         </div>
       </header>
 
@@ -5359,7 +5346,7 @@
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.66</span>
+            <span class="dev-version-label">DEV v0.3.67</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -5928,13 +5915,11 @@
     </div>
     <div class="sheet-body">
       <div class="sheet-title">실시간 채팅</div>
+      <div class="live-chat-actions">
+        <a class="live-chat-link-btn" id="liveChatOpenYoutubeBtn" href="#" target="_blank" rel="noopener noreferrer">YouTube에서 채팅하기</a>
+      </div>
       <div class="live-chat-frame-wrap">
         <iframe class="live-chat-frame" id="liveChatFrame" title="YouTube Live Chat" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-      </div>
-      <div class="live-chat-note" id="liveChatNote">라이브 채팅은 GitHub Pages 또는 앱 WebView 환경에서 테스트해주세요.</div>
-      <div class="live-chat-debug" id="liveChatDebug"></div>
-      <div class="live-chat-actions">
-        <a class="live-chat-link-btn" id="liveChatOpenYoutubeBtn" href="#" target="_blank" rel="noopener noreferrer">YouTube에서 채팅 열기</a>
       </div>
     </div>
   </section>
@@ -6310,8 +6295,6 @@
     const sheetCommentCount = document.getElementById("sheetCommentCount");
     const commentList = document.getElementById("commentList");
     const liveChatFrame = document.getElementById("liveChatFrame");
-    const liveChatNote = document.getElementById("liveChatNote");
-    const liveChatDebug = document.getElementById("liveChatDebug");
     const liveChatOpenYoutubeBtn = document.getElementById("liveChatOpenYoutubeBtn");
     const overlay = document.getElementById("overlay");
     const toast = document.getElementById("toast");
@@ -9878,28 +9861,20 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     function renderLiveChatSheet(video){
-      if(!liveChatFrame || !liveChatNote || !liveChatOpenYoutubeBtn || !liveChatDebug) return;
+      if(!liveChatFrame || !liveChatOpenYoutubeBtn) return;
       const isLive = Boolean(video?.isLive);
       const videoId = String(video?.videoId || "").trim();
-      const embedDomain = getLiveChatEmbedDomain();
       const liveChatUrl = buildYouTubeLiveChatUrl(videoId);
       const watchUrl = buildYouTubeWatchUrl(videoId);
-      const isLocalEnvironment = window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === "::1";
       if(!isLive || !videoId){
         liveChatFrame.src = "";
-        liveChatNote.textContent = "라이브 채팅은 GitHub Pages 또는 앱 WebView 환경에서 테스트해주세요.";
-        liveChatDebug.textContent = "";
         liveChatOpenYoutubeBtn.href = watchUrl || "#";
-        liveChatOpenYoutubeBtn.textContent = "YouTube에서 채팅 열기";
+        liveChatOpenYoutubeBtn.textContent = "YouTube에서 채팅하기";
         return;
       }
       liveChatFrame.src = liveChatUrl;
       liveChatOpenYoutubeBtn.href = liveChatUrl || watchUrl || "#";
-      liveChatOpenYoutubeBtn.textContent = "YouTube에서 채팅 열기";
-      liveChatNote.textContent = isLocalEnvironment
-        ? "라이브 채팅은 GitHub Pages 또는 앱 WebView 환경에서 테스트해주세요."
-        : "현재 방송이 실시간 라이브 중이 아니거나 채팅이 비활성화되어 있을 수 있습니다.";
-      liveChatDebug.textContent = `채팅 테스트 도메인: ${embedDomain} · videoId: ${videoId}`;
+      liveChatOpenYoutubeBtn.textContent = "YouTube에서 채팅하기";
     }
 
     function openWatchCommentOrChat(){
