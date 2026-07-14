@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.82 -->
+<!-- Version: DEV v0.3.84 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -220,6 +220,11 @@
     .avatar-wrap{position:relative;width:24px;height:24px;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(145deg,#dbeafe,#ede9fe);}
     .avatar-wrap .avatar{position:absolute;inset:0;width:100%;height:100%;z-index:2;}
     .avatar-fallback{position:absolute;inset:0;display:grid;place-items:center;color:#4f46e5;font-size:11px;font-weight:900;text-transform:uppercase;}
+    .channel-meta-inline{display:flex;align-items:center;gap:6px;min-width:0;}
+    .channel-meta-inline .avatar-wrap{width:22px;height:22px;}
+    .comment-avatar-wrap{width:32px;height:32px;}
+    .shorts-channel-line{display:flex !important;align-items:center;gap:7px;}
+    .shorts-channel-line .avatar-wrap{width:28px;height:28px;text-shadow:none;}
 
     /* WATCH */
     .watch-root{
@@ -599,6 +604,9 @@
       font-size:12px;
       color:var(--sub);
       margin-bottom:4px;
+      display:flex;
+      align-items:center;
+      gap:6px;
     }
 
     /* 제목/채널 아래만 접히는 영역 */
@@ -5662,7 +5670,7 @@
     .home-section-head{display:flex;align-items:center;justify-content:space-between;margin:0 14px 10px;}
     .home-section-head h2{margin:0;font-size:18px;line-height:1.2;color:#111827;}
     .home-section-head button{border:0;background:transparent;color:#6b7280;font-size:12px;font-weight:800;cursor:pointer;}
-    .home-live-row,.home-shorts-row{display:flex;gap:10px;width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:0 14px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;scroll-snap-type:x proximity;}
+    .home-live-row,.home-shorts-row{display:flex;gap:10px;width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:0 14px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:auto;scroll-snap-type:x proximity;}
     .home-live-row::-webkit-scrollbar,.home-shorts-row::-webkit-scrollbar{display:none;}
     .home-live-card{width:220px;flex:0 0 220px;border:0;background:transparent;padding:0;text-align:left;cursor:pointer;scroll-snap-align:start;}
     .home-live-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:14px;background:#e5e7eb;}
@@ -5670,6 +5678,8 @@
     .live-badge{position:absolute;left:8px;top:8px;padding:4px 7px;border-radius:6px;background:#ef4444;color:#fff;font-size:10px;font-weight:900;}
     .home-live-card strong,.home-shorts-card strong{display:block;margin-top:8px;color:#111827;font-size:13px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
     .home-live-card small,.home-shorts-card small{display:block;margin-top:3px;color:#6b7280;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .home-live-card small.channel-meta-inline,.home-shorts-card small.channel-meta-inline,.shorts-grid-card small.channel-meta-inline{display:flex;align-items:center;gap:5px;}
+    .channel-meta-inline > span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;}
     .home-shorts-card{width:116px;flex:0 0 116px;border:0;background:transparent;padding:0;text-align:left;cursor:pointer;scroll-snap-align:start;}
     .home-shorts-thumb{position:relative;height:166px;overflow:hidden;border-radius:14px;background:#e5e7eb;}
     .home-shorts-thumb img{width:100%;height:100%;object-fit:cover;}
@@ -5787,7 +5797,7 @@
           <button class="tool-btn" data-add="60">+1분</button>
           <button class="tool-btn" data-reward-set="595">+보상</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.82</span>
+          <span class="dev-version-label">DEV v0.3.84</span>
         </div>
       </header>
 
@@ -5825,7 +5835,7 @@
             <button class="tool-btn" data-add="60">+1분</button>
             <button class="tool-btn" data-reward-set="595">+보상</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.82</span>
+            <span class="dev-version-label">DEV v0.3.84</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -6159,7 +6169,7 @@
       <div class="donation-sheet-content">
         <div class="donation-view active" id="donationStatusView">
           <div class="donation-channel-card">
-            <img class="donation-channel-avatar is-clickable" id="donationChannelAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
+            <img class="donation-channel-avatar is-clickable" id="donationChannelAvatar" alt="채널 프로필" />
             <div class="donation-channel-info">
               <div class="donation-channel-topline">
                 <div class="donation-channel-name" id="donationChannelName">채널명</div>
@@ -6181,7 +6191,7 @@
 
         <div class="donation-view" id="donationAmountView">
           <div class="donation-channel-card">
-            <img class="donation-channel-avatar is-clickable" id="donationAmountAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" aria-label="채널 후원관리로 이동" />
+            <img class="donation-channel-avatar is-clickable" id="donationAmountAvatar" alt="채널 프로필" aria-label="채널 후원관리로 이동" />
             <div class="donation-channel-info is-clickable" id="donationAmountChannelInfo" role="button" tabindex="0" aria-label="채널 후원관리로 이동">
               <div class="donation-channel-topline">
                 <div class="donation-channel-name" id="donationAmountChannelName">채널명</div>
@@ -6235,7 +6245,7 @@
 
         <div class="donation-view" id="donationCompletionView">
           <div class="completion-compact-channel">
-            <img class="donation-channel-avatar" id="donationCompleteAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
+            <img class="donation-channel-avatar" id="donationCompleteAvatar" alt="채널 프로필" />
             <div class="donation-channel-info">
               <div class="donation-channel-topline">
                 <div class="donation-channel-name" id="donationCompleteChannelName">채널명</div>
@@ -6322,7 +6332,7 @@
       </div>
       <div class="donation-owner-hint">데모페이지입니다. 경로는 마이페이지 &gt; 채널관리 &gt; 채널 후원관리 입니다.</div>
       <div class="donation-owner-card">
-        <img class="donation-owner-avatar" id="donationOwnerAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
+        <img class="donation-owner-avatar" id="donationOwnerAvatar" alt="채널 프로필" />
         <div class="donation-owner-card-info">
           <div class="donation-owner-card-name" id="donationOwnerChannelName">채널명</div>
           <div class="donation-owner-card-sub" id="donationOwnerChannelSub">@channel</div>
@@ -6512,7 +6522,7 @@
         <div class="donation-owner-fullrank-desc">후원자에게 실제로 보여질 화면입니다.</div>
         <div class="thank-preview-completion-layout">
         <div class="completion-compact-channel">
-          <img class="donation-channel-avatar" id="donationOwnerPreviewAvatar" src="https://via.placeholder.com/80x80?text=%20" alt="채널 프로필" />
+          <img class="donation-channel-avatar" id="donationOwnerPreviewAvatar" alt="채널 프로필" />
           <div class="donation-channel-info">
             <div class="donation-channel-topline">
               <div class="donation-channel-name" id="donationOwnerPreviewChannelName">채널명</div>
@@ -7766,8 +7776,88 @@
       return state.currentVideo || state.videos[0] || null;
     }
 
+    const channelProfileCache = new Map();
+
+    function getChannelInitial(video){
+      const channelName = String(video?.channel || video?.channelTitle || video?.name || "V").trim();
+      return channelName.charAt(0) || "V";
+    }
+
+    function createChannelFallbackAvatar(video){
+      const initial = getChannelInitial(video);
+      const safeInitial = initial.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dbeafe"/><stop offset="1" stop-color="#ede9fe"/></linearGradient></defs><rect width="96" height="96" rx="48" fill="url(#g)"/><text x="48" y="58" text-anchor="middle" font-family="Arial,sans-serif" font-size="38" font-weight="800" fill="#4f46e5">${safeInitial}</text></svg>`;
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    function getChannelAvatarSource(video){
+      const candidates = [video?.channelAvatar, video?.channelThumb, video?.avatar];
+      return String(candidates.find(value => {
+        const source = String(value || "").trim();
+        return source && !source.includes("via.placeholder.com");
+      }) || "").trim();
+    }
+
+    function getChannelAvatarUrl(video){
+      return getChannelAvatarSource(video) || createChannelFallbackAvatar(video);
+    }
+
+    function ensureChannelAvatar(video){
+      if(!video) return video;
+      const avatarUrl = getChannelAvatarUrl(video);
+      video.channelAvatar = avatarUrl;
+      video.avatar = avatarUrl;
+      return video;
+    }
+
+    function setChannelAvatarImage(image, video){
+      if(!image) return;
+      const fallbackUrl = createChannelFallbackAvatar(video);
+      image.onerror = () => {
+        image.onerror = null;
+        image.src = fallbackUrl;
+      };
+      image.src = getChannelAvatarSource(video) || fallbackUrl;
+    }
+
+    async function hydrateChannelAvatars(videos){
+      const items = Array.isArray(videos) ? videos : [];
+      const channelIds = [...new Set(items.map(video => String(video?.channelId || "").trim()).filter(Boolean))];
+      if(YT_API_KEY && channelIds.length){
+        const missingIds = channelIds.filter(channelId => !channelProfileCache.has(channelId));
+        for(let index = 0; index < missingIds.length; index += 50){
+          const chunk = missingIds.slice(index, index + 50);
+          try{
+            const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${chunk.map(encodeURIComponent).join(",")}&key=${YT_API_KEY}&maxResults=50`;
+            const response = await fetch(url);
+            const json = await response.json();
+            if(json.error) throw new Error(json.error.message || "YouTube 채널 API 오류");
+            (json.items || []).forEach(channel => {
+              channelProfileCache.set(channel.id, {
+                avatar: channel.snippet?.thumbnails?.high?.url || channel.snippet?.thumbnails?.medium?.url || channel.snippet?.thumbnails?.default?.url || "",
+                handle: channel.snippet?.customUrl || ""
+              });
+            });
+            chunk.forEach(channelId => {
+              if(!channelProfileCache.has(channelId)) channelProfileCache.set(channelId, { avatar: "", handle: "" });
+            });
+          }catch(error){
+            console.warn("채널 프로필 이미지를 불러오지 못해 기본 프로필을 사용합니다.", error);
+          }
+        }
+      }
+      items.forEach(video => {
+        const profile = channelProfileCache.get(String(video?.channelId || "").trim());
+        const avatar = profile?.avatar || getChannelAvatarSource(video);
+        video.channelAvatar = avatar || createChannelFallbackAvatar(video);
+        video.avatar = video.channelAvatar;
+        if(profile?.handle && !video.channelHandle) video.channelHandle = profile.handle;
+      });
+      return items;
+    }
+
     function getSafeDonationAvatar(video){
-      return video?.avatar || "https://via.placeholder.com/80x80?text=%20";
+      return getChannelAvatarUrl(video);
     }
 
     function getDonationChannelSecondaryText(video){
@@ -7787,7 +7877,7 @@
 
     function renderDonationOwnerScreen(){
       const video = getCurrentDonationVideo();
-      donationOwnerAvatar.src = getSafeDonationAvatar(video);
+      setChannelAvatarImage(donationOwnerAvatar, video);
       donationOwnerChannelName.textContent = video?.channel || "채널명 없음";
       donationOwnerChannelSub.textContent = getDonationChannelSecondaryText(video);
       renderDonationOwnerLiveList();
@@ -8513,7 +8603,7 @@
       if(!donationOwnerThankYouDraft) return;
       syncDonationOwnerThankYouDraftFromForm();
       const video = getCurrentDonationVideo();
-      donationOwnerPreviewAvatar.src = getSafeDonationAvatar(video);
+      setChannelAvatarImage(donationOwnerPreviewAvatar, video);
       donationOwnerPreviewChannelName.textContent = video?.channel || "채널명 없음";
       donationOwnerPreviewChannelGuide.textContent = getDonationChannelSecondaryText(video);
       donationOwnerPreviewAmountLabel.textContent = `${Number(donationOwnerThankYouDraft.amount).toLocaleString()}P 후원이 완료되었습니다.`;
@@ -9010,10 +9100,10 @@
       donationViewCashText.textContent = `${viewCashBalance.toLocaleString()}캐시`;
       donationRewardText.textContent = `${rewardBalance.toLocaleString()}P`;
       donationChannelName.textContent = video?.channel || "채널명 없음";
-      donationChannelAvatar.src = getSafeDonationAvatar(video);
-      donationAmountAvatar.src = getSafeDonationAvatar(video);
+      setChannelAvatarImage(donationChannelAvatar, video);
+      setChannelAvatarImage(donationAmountAvatar, video);
       donationAmountChannelName.textContent = video?.channel || "채널명 없음";
-      donationCompleteAvatar.src = getSafeDonationAvatar(video);
+      setChannelAvatarImage(donationCompleteAvatar, video);
       donationCompleteChannelName.textContent = video?.channel || "채널명 없음";
       donationChannelGuide.textContent = getDonationChannelSecondaryText(video);
       donationAmountChannelGuide.textContent = getDonationChannelSecondaryText(video);
@@ -9366,7 +9456,7 @@ function wakePlayerControls(){
         return false;
       }
 
-      state.videos = fallbackVideos;
+      state.videos = fallbackVideos.map(ensureChannelAvatar);
       renderHome();
 
       return true;
@@ -9416,30 +9506,7 @@ function wakePlayerControls(){
           }
         }
 
-        const channelAvatarById = {};
-        const channelHandleById = {};
-        const channelIds = [...new Set(results.map(video => video.channelId).filter(Boolean))];
-
-        for(let i = 0; i < channelIds.length; i += chunkSize){
-          const chunk = channelIds.slice(i, i + chunkSize);
-          const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${chunk.join(",")}&key=${YT_API_KEY}&maxResults=50`;
-          const res = await fetch(url);
-          const json = await res.json();
-
-          for(const channel of (json.items || [])){
-            channelAvatarById[channel.id] =
-              channel.snippet?.thumbnails?.high?.url ||
-              channel.snippet?.thumbnails?.medium?.url ||
-              channel.snippet?.thumbnails?.default?.url ||
-              "";
-            channelHandleById[channel.id] = channel.snippet?.customUrl || "";
-          }
-        }
-
-        results.forEach(video => {
-          video.avatar = channelAvatarById[video.channelId] || "";
-          video.channelHandle = channelHandleById[video.channelId] || "";
-        });
+        await hydrateChannelAvatars(results);
 
         state.videos = results;
         renderHome();
@@ -9517,7 +9584,7 @@ function wakePlayerControls(){
           viewsText: `조회수 ${((index + 3) * 1731).toLocaleString()}회`,
           uploadedText: `${(index % 24) + 1}시간 전`
         };
-      });
+      }).map(ensureChannelAvatar);
     }
 
     async function refreshLatestVideosFromYouTube(){
@@ -9549,6 +9616,7 @@ function wakePlayerControls(){
         if(!apiVideos.length){
           throw new Error("최신 영상 목록을 가져오지 못했습니다.");
         }
+        await hydrateChannelAvatars(apiVideos);
         state.videos = buildLatestMixedContent(apiVideos);
         state.videoUrlPool = state.videos.map(video => `https://www.youtube.com/${video.isShorts ? "shorts/" : video.isLive ? "live/" : "watch?v="}${video.videoId}`);
         saveVideoUrlPool(state.videoUrlPool);
@@ -9609,7 +9677,7 @@ function wakePlayerControls(){
       homeLiveList.innerHTML = liveVideos.length ? liveVideos.map(video => `
         <button class="home-live-card" type="button" data-id="${video.id}">
           <div class="home-live-thumb"><img src="${video.thumb}" alt="${escapeHtml(video.title)}" loading="lazy"><span class="live-badge">LIVE</span></div>
-          <strong>${escapeHtml(video.title)}</strong><small>${escapeHtml(video.channel)} · ${video.views}</small>
+          <strong>${escapeHtml(video.title)}</strong><small class="channel-meta-inline">${buildChannelAvatarHtml(video)}<span>${escapeHtml(video.channel)} · ${video.views}</span></small>
         </button>
       `).join("") : '<div class="loading">표시할 LIVE 영상이 없습니다.</div>';
       const allShorts = getHomeShortsVideos();
@@ -9617,7 +9685,7 @@ function wakePlayerControls(){
       homeShortsList.innerHTML = shortsSamples.map((video, index) => `
         <button class="home-shorts-card" type="button" data-shorts-id="${video.id}">
           <div class="home-shorts-thumb"><img src="${video.thumb}" alt="${escapeHtml(video.title)}" loading="lazy"><span class="short-duration">${escapeHtml(video.durationText || `0:${String(18 + index * 5).padStart(2, "0")}`)}</span></div>
-          <strong>${escapeHtml(video.title)}</strong><small>${escapeHtml(video.channel)}</small>
+          <strong>${escapeHtml(video.title)}</strong><small class="channel-meta-inline">${buildChannelAvatarHtml(video)}<span>${escapeHtml(video.channel)}</span></small>
         </button>
       `).join("");
       homeLiveList.querySelectorAll("[data-id]").forEach(card => card.addEventListener("click", () => openWatch(card.dataset.id)));
@@ -9629,16 +9697,18 @@ function wakePlayerControls(){
       shortsGrid.innerHTML = shortsSamples.map((video, index) => `
         <button class="shorts-grid-card" type="button" data-shorts-id="${video.id}">
           <div class="shorts-grid-thumb"><img src="${video.thumb}" alt="${escapeHtml(video.title)}" loading="lazy"><span class="short-duration">${escapeHtml(video.durationText || `0:${String(22 + index * 6).padStart(2, "0")}`)}</span></div>
-          <strong>${escapeHtml(video.title)}</strong><small>${escapeHtml(video.channel)} · ${escapeHtml(video.viewsText || video.views || `${index + 1}시간 전`)}</small>
+          <strong>${escapeHtml(video.title)}</strong><small class="channel-meta-inline">${buildChannelAvatarHtml(video)}<span>${escapeHtml(video.channel)} · ${escapeHtml(video.viewsText || video.views || `${index + 1}시간 전`)}</span></small>
         </button>
       `).join("");
       shortsGrid.querySelectorAll("[data-shorts-id]").forEach(card => card.addEventListener("click", () => openShortsWatch(card.dataset.shortsId)));
     }
 
-    function buildChannelAvatarHtml(video){
-      const avatarUrl = String(video?.channelAvatar || video?.channelThumb || video?.avatar || "").trim();
-      const initial = String(video?.channel || "V").trim().charAt(0) || "V";
-      return `<span class="avatar-wrap"><span class="avatar-fallback">${escapeHtml(initial)}</span>${avatarUrl ? `<img class="avatar" src="${escapeHtml(avatarUrl)}" alt="" loading="lazy" onerror="this.remove()">` : ""}</span>`;
+    function buildChannelAvatarHtml(video, extraClass = ""){
+      const avatarUrl = getChannelAvatarSource(video);
+      const initial = getChannelInitial(video);
+      const fallbackUrl = createChannelFallbackAvatar(video);
+      const className = `avatar-wrap ${extraClass}`.trim();
+      return `<span class="${escapeHtml(className)}"><span class="avatar-fallback">${escapeHtml(initial)}</span>${avatarUrl ? `<img class="avatar" src="${escapeHtml(avatarUrl)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${escapeHtml(fallbackUrl)}'">` : ""}</span>`;
     }
 
     function renderHome(){
@@ -9649,6 +9719,8 @@ function wakePlayerControls(){
         shortsGrid.innerHTML = "";
         return;
       }
+
+      state.videos.forEach(ensureChannelAvatar);
 
       renderHomeTabSections();
       renderShortsPage();
@@ -9705,7 +9777,7 @@ function wakePlayerControls(){
           </div>
           <div class="recommend-info">
             <div class="recommend-title">${escapeHtml(video.title)}</div>
-            <div class="recommend-sub">${escapeHtml(video.channel)} · ${video.views}</div>
+            <div class="recommend-sub channel-meta-inline">${buildChannelAvatarHtml(video)}<span>${escapeHtml(video.channel)} · ${video.views}</span></div>
           </div>
         </div>
       `).join("");
@@ -9731,7 +9803,7 @@ function wakePlayerControls(){
 
       commentList.innerHTML = video.comments.map(comment => `
         <div class="comment-item">
-          <img class="comment-avatar" src="${comment.avatar || 'https://via.placeholder.com/48x48?text=%20'}" alt="">
+          ${buildChannelAvatarHtml({ channel: comment.name, avatar: comment.avatar }, "comment-avatar-wrap")}
           <div>
             <div class="comment-name">${escapeHtml(comment.name)}</div>
             <div class="comment-text">${escapeHtml(comment.text)}</div>
@@ -9963,7 +10035,7 @@ function updateFixedLayout(){
             </div>
             <div class="shorts-watch-info">
               <strong>${escapeHtml(video.title || "Shorts")}</strong>
-              <span>${escapeHtml(video.channel || "YouTube 채널")} · ${escapeHtml(video.views || "조회수 준비중")}</span>
+              <span class="shorts-channel-line">${buildChannelAvatarHtml(video)}<span>${escapeHtml(video.channel || "YouTube 채널")} · ${escapeHtml(video.views || "조회수 준비중")}</span></span>
             </div>
           </section>`;
       }).join("");
@@ -10007,7 +10079,7 @@ function updateFixedLayout(){
       watchTitle.textContent = watchTitleText;
       watchTitle.title = watchTitleText;
       watchTitle.classList.remove("expanded");
-      watchSub.textContent = `${video.channel} · ${video.views}`;
+      watchSub.innerHTML = `${buildChannelAvatarHtml(video)}<span>${escapeHtml(video.channel)} · ${escapeHtml(video.views)}</span>`;
       updateWatchActionButton(video);
       renderLiveChatSheet(video);
       ytFrame.src = buildYouTubeEmbedUrl(video.videoId);
@@ -10829,7 +10901,7 @@ window.addEventListener("resize", clampMiniPosition);
         channelHandle: "",
         thumb: thumbnail,
         thumbnail,
-        avatar: "https://via.placeholder.com/48x48?text=%20",
+        avatar: "",
         views: "조회수 준비중",
         viewCount: 0,
         commentCount: 0,
@@ -10850,7 +10922,7 @@ window.addEventListener("resize", clampMiniPosition);
     async function fetchPromoVideoEntry(rawUrl){
       const fallbackVideo = buildPromoFallbackVideo(rawUrl);
       if(!fallbackVideo) return null;
-      if(!YT_API_KEY) return fallbackVideo;
+      if(!YT_API_KEY) return ensureChannelAvatar(fallbackVideo);
 
       try{
         const videoUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,liveStreamingDetails&id=${encodeURIComponent(fallbackVideo.videoId)}&key=${YT_API_KEY}&maxResults=1`;
@@ -10862,7 +10934,7 @@ window.addEventListener("resize", clampMiniPosition);
         }
 
         const item = Array.isArray(json.items) ? json.items[0] : null;
-        if(!item) return fallbackVideo;
+        if(!item) return ensureChannelAvatar(fallbackVideo);
 
         const isLive = isLivePromoVideo(item, rawUrl);
         const nextVideo = {
@@ -10881,28 +10953,11 @@ window.addEventListener("resize", clampMiniPosition);
           liveStreamingDetails: item.liveStreamingDetails || null
         };
 
-        if(nextVideo.channelId){
-          try{
-            const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${encodeURIComponent(nextVideo.channelId)}&key=${YT_API_KEY}&maxResults=1`;
-            const channelResponse = await fetch(channelUrl);
-            const channelJson = await channelResponse.json();
-            const channelItem = Array.isArray(channelJson.items) ? channelJson.items[0] : null;
-            if(channelItem){
-              nextVideo.avatar =
-                channelItem.snippet?.thumbnails?.high?.url ||
-                channelItem.snippet?.thumbnails?.medium?.url ||
-                channelItem.snippet?.thumbnails?.default?.url ||
-                nextVideo.avatar;
-              nextVideo.channelHandle = channelItem.snippet?.customUrl || "";
-            }
-          }catch(error){
-            // 채널 보조정보 조회 실패 시에도 영상 정보는 유지합니다.
-          }
-        }
+        await hydrateChannelAvatars([nextVideo]);
 
         return nextVideo;
       }catch(error){
-        return fallbackVideo;
+        return ensureChannelAvatar(fallbackVideo);
       }
     }
 
@@ -10963,6 +11018,7 @@ window.addEventListener("resize", clampMiniPosition);
       targetVideo.thumb = nextVideo.thumb;
       targetVideo.thumbnail = nextVideo.thumbnail;
       targetVideo.avatar = nextVideo.avatar;
+      targetVideo.channelAvatar = nextVideo.channelAvatar || nextVideo.avatar || "";
       targetVideo.views = nextVideo.views;
       targetVideo.viewCount = nextVideo.viewCount;
       targetVideo.url = nextVideo.url;
