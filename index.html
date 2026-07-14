@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.68 -->
+<!-- Version: DEV v0.3.69 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -242,6 +242,7 @@
       z-index:2;
     }
     .timer-overlay{
+      display:none;
       position:absolute;
       bottom:12px;
       left:50%;
@@ -5467,11 +5468,8 @@
         <div class="header-right header-test-tools">
           <button class="tool-btn" data-add="60">+1분</button>
           <button class="tool-btn" data-reward-set="595">+보상</button>
-          <button class="tool-btn" data-open-speed="0.8">x0.8</button>
-          <button class="tool-btn" data-open-speed="0.9">x0.9</button>
-          <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.68</span>
+          <span class="dev-version-label">DEV v0.3.69</span>
         </div>
       </header>
 
@@ -5508,11 +5506,8 @@
           <div class="player-test-tools">
             <button class="tool-btn" data-add="60">+1분</button>
             <button class="tool-btn" data-reward-set="595">+보상</button>
-            <button class="tool-btn" data-open-speed="0.8">x0.8</button>
-            <button class="tool-btn" data-open-speed="0.9">x0.9</button>
-            <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.68</span>
+            <span class="dev-version-label">DEV v0.3.69</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -10693,4 +10688,387 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
         promoYoutubeLinkInput.focus();
       }
     });
-    promoYoutubeLinkInput.addEventListener("input", updat
+    promoYoutubeLinkInput.addEventListener("input", updatePromoSheetState);
+    promoSubmitBtn.addEventListener("click", submitPromoVideo);
+    promoCloseBtn.addEventListener("click", () => {
+      resetPromoSheetState();
+      closeAllSheets();
+    });
+    openDonationBtn.addEventListener("click", () => {
+      resetDonationSelection();
+      clearDonationCompletion();
+      setDonationView("status");
+      renderDonationSheet();
+      openSheet("donationSheet");
+    });
+    openDonationAmountViewBtn.addEventListener("click", () => {
+      clearDonationCompletion();
+      setDonationView("amount");
+      resetDonationSelection();
+      renderDonationSheet();
+    });
+    donationRandomizeBtn.addEventListener("click", () => {
+      const video = getCurrentDonationVideo();
+      if(!video) return;
+      randomizeDonationRanking(video);
+      updateWallet();
+      renderDonationSheet();
+      showToast("랜덤 후원 랭킹을 새로 설정했습니다.", {
+        title: "랜덤설정 완료",
+        icon: "🎲",
+        duration: 4200
+      });
+    });
+    [donationChannelLinkBtn, donationAmountChannelLinkBtn, donationCompleteChannelLinkBtn].forEach(button => {
+      if(!button) return;
+      button.addEventListener("click", openDonationChannelPage);
+    });
+    [donationOwnerPreviewChannelLinkBtn].forEach(button => {
+      if(!button) return;
+      button.addEventListener("click", openDonationChannelPage);
+    });
+    donationChannelAvatar.addEventListener("click", openDonationOwnerScreen);
+    [donationAmountAvatar, donationAmountChannelInfo].forEach(target => {
+      if(!target) return;
+      target.addEventListener("click", openDonationOwnerScreen);
+    });
+    if(donationAmountChannelInfo){
+      donationAmountChannelInfo.addEventListener("keydown", (event) => {
+        if(event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        openDonationOwnerScreen();
+      });
+    }
+    closeDonationOwnerScreenBtn.addEventListener("click", closeDonationOwnerScreen);
+    donationOwnerViewHistoryBtn.addEventListener("click", openDonationOwnerHistoryScreen);
+    donationOwnerThankYouConfigBtn.addEventListener("click", openDonationOwnerThankYouScreen);
+    donationOwnerViewAllBtn.addEventListener("click", openDonationOwnerFullRankScreen);
+    closeDonationOwnerFullRankBtn.addEventListener("click", closeDonationOwnerFullRankScreen);
+    closeDonationOwnerHistoryBtn.addEventListener("click", closeDonationOwnerHistoryScreen);
+    closeDonationOwnerThankYouBtn.addEventListener("click", closeDonationOwnerThankYouScreen);
+    donationOwnerAddCustomThankYouBtn.addEventListener("click", openDonationOwnerCustomThankYouCreateScreen);
+    closeDonationOwnerThankYouEditBtn.addEventListener("click", closeDonationOwnerThankYouEditScreen);
+    closeDonationOwnerThankYouPreviewBtn.addEventListener("click", closeDonationOwnerThankYouPreviewScreen);
+    openDonationOwnerThankYouPreviewBtn.addEventListener("click", openDonationOwnerThankYouPreviewScreen);
+    donationOwnerPreviewDownloadBtn.addEventListener("click", event => {
+      event.preventDefault();
+      showToast("미리보기 화면입니다.", {
+        title: "감사카드 미리보기",
+        icon: "💾",
+        duration: 2600
+      });
+    });
+    [donationOwnerPreviewRankingBtn, donationOwnerPreviewAddMoreBtn].forEach(button => {
+      if(!button) return;
+      button.addEventListener("click", () => {
+        showToast("미리보기 화면입니다.", {
+          title: "감사카드 미리보기",
+          icon: "🎁",
+          duration: 2600
+        });
+      });
+    });
+    saveDonationOwnerThankYouBtn.addEventListener("click", saveDonationOwnerThankYouEdit);
+    cancelDonationOwnerThankYouBtn.addEventListener("click", closeDonationOwnerThankYouEditScreen);
+    donationOwnerEditTitle.addEventListener("input", () => {
+      syncDonationOwnerThankYouDraftFromForm();
+      renderDonationOwnerThankYouEditForm();
+    });
+    donationOwnerEditMessage.addEventListener("input", () => {
+      syncDonationOwnerThankYouDraftFromForm();
+      renderDonationOwnerThankYouEditForm();
+    });
+    donationOwnerEditAmountInput.addEventListener("input", () => {
+      const numericText = String(donationOwnerEditAmountInput.value || "").replace(/[^\d]/g, "");
+      donationOwnerEditAmountInput.value = numericText ? Number(numericText).toLocaleString() : "";
+      syncDonationOwnerThankYouDraftFromForm();
+      renderDonationOwnerThankYouEditForm();
+    });
+    donationOwnerEditEnabled.addEventListener("change", () => {
+      syncDonationOwnerThankYouDraftFromForm();
+      renderDonationOwnerThankYouEditForm();
+    });
+    donationOwnerEditAllowDownload.addEventListener("change", () => {
+      syncDonationOwnerThankYouDraftFromForm();
+      renderDonationOwnerThankYouEditForm();
+    });
+    donationOwnerEditMediaFile.addEventListener("change", () => {
+      if(!donationOwnerThankYouDraft || !donationOwnerEditMediaFile.files?.[0]) return;
+      const file = donationOwnerEditMediaFile.files[0];
+      donationOwnerThankYouDraft.mediaSource = "upload";
+      donationOwnerThankYouDraft.mediaPresetId = "";
+      donationOwnerThankYouDraft.mediaName = file.name;
+      donationOwnerThankYouDraft.mediaType = file.type;
+      donationOwnerThankYouDraft.mediaUrl = URL.createObjectURL(file);
+      renderDonationOwnerThankYouEditForm();
+      donationOwnerEditMediaFile.value = "";
+    });
+    donationOwnerRankMoreBtn.addEventListener("click", () => {
+      const totalCount = donationOwnerRankingMock.length;
+      const maxVisible = totalCount >= 31 ? 30 : totalCount;
+      donationOwnerRankVisibleCount = donationOwnerRankVisibleCount >= maxVisible
+        ? 10
+        : Math.min(donationOwnerRankVisibleCount + 10, maxVisible);
+      renderDonationOwnerRankList();
+    });
+    donationOwnerLiveToggleBtn.addEventListener("click", () => {
+      donationOwnerLiveExpanded = !donationOwnerLiveExpanded;
+      renderDonationOwnerLiveList();
+    });
+    donationOwnerRankToggleBtn.addEventListener("click", () => {
+      donationOwnerRankExpanded = !donationOwnerRankExpanded;
+      renderDonationOwnerRankList();
+    });
+    donationOwnerAddOneBtn.addEventListener("click", () => {
+      addDonationOwnerTestEntries(1);
+    });
+    donationOwnerAddTenBtn.addEventListener("click", () => {
+      addDonationOwnerTestEntries(10);
+    });
+    donationOwnerRankResetBtn.addEventListener("click", () => {
+      resetDonationOwnerRankingMock();
+    });
+    backToDonationStatusBtn.addEventListener("click", () => {
+      clearDonationCompletion();
+      setDonationView("status");
+      renderDonationSheet();
+    });
+    donationViewRankingBtn.addEventListener("click", () => {
+      setDonationView("status");
+      renderDonationSheet();
+    });
+    donationAddMoreBtn.addEventListener("click", () => {
+      clearDonationCompletion();
+      setDonationView("amount");
+      resetDonationSelection();
+      renderDonationSheet();
+    });
+    openWalletTestHit.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if(!state.benefitEnabled){
+        setBenefitEnabled(true);
+      }
+      openSheet("walletSheet");
+    });
+    closeBenefitBtn.addEventListener("click", () => setBenefitEnabled(false));
+    openCommentBtn.addEventListener("click", openWatchCommentOrChat);
+    donationAmountButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        if(button.disabled) return;
+        state.donationCustomMode = false;
+        state.donationCustomAmountRaw = "";
+        donationCustomAmountInput.value = "";
+        state.donationSelectedAmount = Number(button.dataset.donationAmount || 0);
+        setDonationFeedback("", "");
+        renderDonationSheet();
+      });
+    });
+    donationCustomToggleBtn.addEventListener("click", () => {
+      state.donationCustomMode = true;
+      state.donationSelectedAmount = 0;
+      renderDonationSheet();
+      donationCustomAmountInput.focus();
+    });
+    donationCustomAmountInput.addEventListener("input", () => {
+      state.donationCustomMode = true;
+      state.donationCustomAmountRaw = sanitizeDonationDigits(donationCustomAmountInput.value);
+      renderDonationSheet();
+    });
+    submitDonationBtn.addEventListener("click", submitDonation);
+    viewCashChargeGrid.querySelectorAll("[data-charge-amount]").forEach(button => {
+      button.addEventListener("click", () => {
+        state.donationChargeAmount = Math.max(0, Number(button.dataset.chargeAmount) || 0);
+        updateChargeSheetUI(getDonationFundingPlan(state.donationSelectedAmount).shortage);
+      });
+    });
+    viewCashChargeMethods.querySelectorAll("[data-charge-method]").forEach(button => {
+      button.addEventListener("click", () => {
+        state.donationChargeMethod = button.dataset.chargeMethod || "card";
+        updateChargeSheetUI(getDonationFundingPlan(state.donationSelectedAmount).shortage);
+      });
+    });
+    confirmViewCashChargeBtn.addEventListener("click", () => {
+      const shortage = getDonationFundingPlan(state.donationSelectedAmount).shortage;
+      const chargeAmount = Math.max(0, Number(state.donationChargeAmount) || 0);
+      const finalChargeAmount = chargeAmount || shortage;
+      if(finalChargeAmount <= 0){
+        viewCashChargeFeedback.textContent = "충전 금액을 다시 확인해주세요.";
+        viewCashChargeFeedback.classList.add("is-error");
+        return;
+      }
+      state.totalViewCash = Math.max(0, Number(state.totalViewCash) || 0) + finalChargeAmount;
+      updateWallet();
+      showToast("뷰캐시 충전이 완료되었습니다.", {
+        title: "충전 완료",
+        icon: "💳",
+        duration: 3200
+      });
+      returnToDonationAmountView();
+    });
+    closeViewCashChargeBtn.addEventListener("click", () => {
+      returnToDonationAmountView();
+    });
+    document.getElementById("walletOpenRandom").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "normal" }));
+    document.getElementById("walletOpenRandomFail").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "chance_fail" }));
+    document.getElementById("walletOpenRandomGold").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "chance_gold" }));
+    document.getElementById("walletOpenGold").addEventListener("click", () => startOpenFlow("gold", { fromWallet: true }));
+    document.getElementById("walletLiveOpenRandom").addEventListener("click", () => {
+      const randomTypes = ["normal", "chance_fail", "chance_gold"];
+      const pickedType = randomTypes[Math.floor(Math.random() * randomTypes.length)];
+      startOpenFlow("random", { fromWallet: true, forcedResultType: pickedType });
+    });
+    document.getElementById("walletLiveOpenGold").addEventListener("click", () => startOpenFlow("gold", { fromWallet: true }));
+    document.querySelectorAll(".wallet-ui-switch-btn").forEach(btn => {
+      btn.addEventListener("click", () => applyWalletUI(btn.dataset.walletUi));
+    });
+    applyWalletUI(currentWalletUI);
+    document.querySelectorAll("[data-gold-reward-test]").forEach(btn => {
+      btn.addEventListener("click", () => startOpenFlow("gold", { fromWallet: true, forcedGoldReward: Number(btn.dataset.goldRewardTest) }));
+    });
+    inlineGetBtnWide.addEventListener("click", startRewardAdFlow);
+
+    rewardAdBtn.addEventListener("click", () => {
+      if(rewardAdBtn.disabled) return;
+      finishRewardGrant("manual");
+    });
+
+    openBoxBtn.addEventListener("click", () => {
+      if(state.openBoxBtnMode === "busy") return;
+      if(state.openBoxBtnMode === "close"){
+        closeOpenSheetOnly();
+        return;
+      }
+      startOpenFlow(state.openType === "gold" ? "gold" : "random");
+    });
+    overlay.addEventListener("click", () => {
+      if(state.openFromWallet && document.getElementById("openSheet").classList.contains("show")){
+        closeOpenSheetOnly();
+        return;
+      }
+      closeAllSheets();
+    });
+
+    document.querySelectorAll(".tool-btn[data-add]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        state.integratedWatchSeconds += Number(btn.dataset.add);
+        updateRewardUI();
+      });
+    });
+
+    document.querySelectorAll(".tool-btn[data-reward-set]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        state.integratedWatchSeconds = Number(btn.dataset.rewardSet);
+        updateRewardUI();
+      });
+    });
+
+    document.querySelectorAll(".tool-btn[data-open-speed]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const nextSpeed = Number(btn.dataset.openSpeed);
+        if(!Number.isFinite(nextSpeed) || nextSpeed <= 0){
+          return;
+        }
+        state.openStageMidPlaybackRate = nextSpeed;
+        applyOpenStagePlaybackRate();
+        document.querySelectorAll(".tool-btn[data-open-speed]").forEach(speedBtn => {
+          speedBtn.classList.toggle("active-speed", speedBtn.dataset.openSpeed === btn.dataset.openSpeed);
+        });
+      });
+    });
+
+    [refreshLatestVideosBtnTop, refreshLatestVideosBtnFloat].forEach(button => {
+      if(!button) return;
+      button.addEventListener("click", refreshLatestVideosFromYouTube);
+    });
+
+    syncGoldReelTuneInputs(state.goldReelStageConfig);
+
+    goldReelTuneToggleBtn.addEventListener("click", () => {
+      goldReelTunePanel.classList.toggle("collapsed");
+      goldReelTuneToggleBtn.classList.toggle("collapsed");
+    });
+
+    applyReelTuneBtn.addEventListener("click", () => {
+      const nextConfig = readGoldReelTuneInputs();
+      if(!validateGoldReelTune(nextConfig)){
+        showToast("입력값 오류: 속도/유지시간을 확인하세요.");
+        return;
+      }
+      state.goldReelStageConfig = nextConfig;
+      showToast("릴 감속 설정이 적용되었습니다.");
+    });
+
+    resetReelTuneBtn.addEventListener("click", () => {
+      const defaults = cloneGoldReelDefaults();
+      state.goldReelStageConfig = defaults;
+      syncGoldReelTuneInputs(defaults);
+      showToast("기본값으로 복원되었습니다.");
+    });
+
+    watchTitle.addEventListener("click", () => {
+      watchTitle.classList.toggle("expanded");
+      setTimeout(updateFixedLayout, 20);
+    });
+
+    document.querySelectorAll(".sheet-close").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if(btn.dataset.close === "openSheet"){
+          closeOpenSheetOnly();
+          return;
+        }
+        if(btn.dataset.close === "viewCashChargeSheet"){
+          returnToDonationAmountView();
+          return;
+        }
+        closeAllSheets();
+      });
+    });
+
+    if(walletSheetLiveHead){
+      walletSheetLiveHead.addEventListener("pointerdown", (event) => {
+        if(event.button !== undefined && event.button !== 0) return;
+        startWalletSheetLiveDrag(event.clientY);
+      });
+      walletSheetLiveHead.addEventListener("pointermove", (event) => {
+        if(!walletLiveDragging) return;
+        moveWalletSheetLiveDrag(event.clientY);
+      });
+      walletSheetLiveHead.addEventListener("pointerup", endWalletSheetLiveDrag);
+      walletSheetLiveHead.addEventListener("pointercancel", endWalletSheetLiveDrag);
+      walletSheetLiveHead.addEventListener("touchstart", (event) => {
+        if(!event.touches[0]) return;
+        startWalletSheetLiveDrag(event.touches[0].clientY);
+      }, { passive: true });
+      walletSheetLiveHead.addEventListener("touchmove", (event) => {
+        if(!walletLiveDragging || !event.touches[0]) return;
+        moveWalletSheetLiveDrag(event.touches[0].clientY);
+      }, { passive: true });
+      walletSheetLiveHead.addEventListener("touchend", endWalletSheetLiveDrag);
+      walletSheetLiveHead.addEventListener("touchcancel", endWalletSheetLiveDrag);
+    }
+
+    window.addEventListener("resize", updateFixedLayout);
+
+    bindSheetIdleInteractions("walletSheet");
+    bindSheetIdleInteractions("walletSheetLive");
+    bindSheetIdleInteractions("donationSheet");
+    bindSheetIdleInteractions("commentSheet");
+    bindSheetIdleInteractions("liveChatSheet");
+    registerGlobalSendThanksHandler();
+    registerGlobalThankYouCardEditHandler();
+
+    setupWatchScrollBehavior();
+    state.videoUrlPool = loadStoredVideoUrlPool();
+    loadThankYouCardSettings();
+    loadDonationState();
+    updateWallet();
+    setBenefitEnabled(false);
+    updateRewardUI();
+    loadVideosFromYouTube();
+  </script>
+</body>
+</html>
+
+
+
+
