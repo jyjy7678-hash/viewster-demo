@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.69 -->
+<!-- Version: DEV v0.3.78 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -74,6 +74,15 @@
       min-width:0;white-space:nowrap;
     }
     .brand img{width:24px;height:24px;object-fit:contain;flex-shrink:0;}
+    #homeScreen .brand{font-size:18px;letter-spacing:-.02em;}
+    #homeScreen .brand img{width:28px;height:28px;}
+    .viewster-v-logo{
+      width:29px;height:29px;border-radius:10px;
+      display:grid;place-items:center;flex-shrink:0;
+      background:linear-gradient(145deg,#2563eb,#7c3aed);
+      color:#fff;font-size:18px;font-weight:1000;font-style:italic;
+      line-height:1;box-shadow:0 6px 14px rgba(79,70,229,.24);
+    }
 
     .header-test-tools{
       display:flex;
@@ -1049,15 +1058,16 @@
       color:#f97316;
     }
     .promo-sheet-actions{
-      display:flex;
-      flex-direction:column;
+      display:grid;
+      grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);
       gap:10px;
-      margin-top:4px;
+      margin-top:14px;
     }
     #promoSheet .sheet-body{
       overflow-y:auto;
       max-height:calc(100dvh - var(--sheet-top) - 48px);
-      padding-bottom:calc(104px + env(safe-area-inset-bottom, 0px));
+      padding-bottom:0;
+      scroll-padding-bottom:calc(84px + env(safe-area-inset-bottom, 0px));
       -webkit-overflow-scrolling:touch;
     }
     #promoSheet .promo-preview-placeholder{
@@ -1068,26 +1078,31 @@
     }
     #promoSheet .promo-sheet-actions{
       position:sticky;
-      bottom:calc(env(safe-area-inset-bottom, 0px) * -1);
+      left:0;
+      right:0;
+      bottom:0;
       margin-top:auto;
-      padding-top:12px;
-      padding-bottom:calc(12px + env(safe-area-inset-bottom, 0px));
-      background:linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.92) 18px, #fff 100%);
+      margin-left:-16px;
+      margin-right:-16px;
+      padding:10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+      background:linear-gradient(180deg,rgba(255,255,255,.88),#fff 20%);
+      border-top:1px solid #eef0f3;
+      box-shadow:0 -8px 20px rgba(15,23,42,.06);
     }
     .promo-primary-btn,
     .promo-secondary-btn{
       width:100%;
-      min-height:52px;
-      border-radius:16px;
+      min-height:48px;
+      border-radius:14px;
       font-size:15px;
       font-weight:900;
       cursor:pointer;
     }
     .promo-primary-btn{
       border:none;
-      background:linear-gradient(135deg,#ff8a00,#ff575d);
+      background:#2457d6;
       color:#fff;
-      box-shadow:0 10px 20px rgba(255,87,93,.18);
+      box-shadow:0 9px 18px rgba(37,87,214,.2);
     }
     .promo-primary-btn:disabled{
       background:#e5e7eb;
@@ -1096,9 +1111,18 @@
       cursor:not-allowed;
     }
     .promo-secondary-btn{
-      border:1px solid #dbe3ee;
-      background:#fff;
+      border:1px solid #e5e7eb;
+      background:#f3f4f6;
       color:#334155;
+    }
+    #promoSheet .promo-field{gap:0;}
+    #promoSheet .promo-field + .promo-field{margin-top:2px;}
+    #promoSheet .promo-preview-placeholder{margin-bottom:2px;}
+    @media (max-height:680px){
+      #promoSheet .promo-form{gap:10px;}
+      #promoSheet .promo-preview-placeholder{min-height:118px;}
+      #promoSheet .promo-preview-card-thumb{max-height:190px;}
+      #promoSheet .promo-sheet-actions{padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom, 0px));}
     }
 
     #commentSheet .sheet-body,
@@ -2749,6 +2773,55 @@
       color:#0f766e;
       box-shadow:0 10px 20px rgba(15,118,110,.14);
     }
+    /* 뷰캐시 충전: 작은 화면에서도 내용과 액션을 안전하게 표시 */
+    #viewCashChargeSheet .sheet-body{
+      overflow-x:hidden;
+      overflow-y:auto;
+      padding-bottom:0;
+      scroll-padding-bottom:calc(92px + env(safe-area-inset-bottom, 0px));
+      overscroll-behavior-y:contain;
+      -webkit-overflow-scrolling:touch;
+    }
+    .viewcash-charge-actions{
+      position:sticky;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:3;
+      display:grid;
+      margin:4px -16px 0;
+      padding:10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+      background:linear-gradient(180deg,rgba(255,255,255,.88),#fff 20%);
+      border-top:1px solid #eef0f3;
+      box-shadow:0 -8px 20px rgba(15,23,42,.06);
+    }
+    .viewcash-charge-actions .donation-submit-btn{
+      flex-shrink:0;
+      margin:0;
+    }
+    @media (max-height:680px){
+      #viewCashChargeSheet .sheet-body{gap:8px;}
+      #viewCashChargeSheet .donation-charge-shortage-card{padding:10px 14px;}
+      #viewCashChargeSheet .donation-charge-amount{font-size:21px;}
+      #viewCashChargeSheet .donation-charge-option{min-height:52px;}
+      .viewcash-charge-actions{padding-top:9px;padding-bottom:calc(9px + env(safe-area-inset-bottom, 0px));}
+    }
+    /* 데모 리워드 출금 */
+    #walletWithdrawSheet .sheet-body,
+    #walletHistorySheet .sheet-body{overflow-y:auto;padding-bottom:calc(20px + env(safe-area-inset-bottom, 0px));}
+    .withdraw-balance-card{padding:16px;border-radius:18px;background:#eef3ff;color:#2457d6;}
+    .withdraw-balance-card span,.withdraw-balance-card small{display:block;font-size:12px;}.withdraw-balance-card strong{display:block;margin:7px 0;font-size:25px;}
+    .withdraw-input-wrap{display:flex;align-items:center;border:1px solid #d1d5db;border-radius:16px;background:#fff;padding:0 14px;}
+    .withdraw-input-wrap input{width:100%;height:54px;border:0;outline:0;background:transparent;text-align:right;font-size:21px;font-weight:900;color:#111827;}
+    .withdraw-input-wrap span{margin-left:6px;font-weight:900;color:#475569;}
+    .withdraw-quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;}
+    .withdraw-quick-grid button{min-height:40px;padding:6px;border:1px solid #dbe2f2;border-radius:12px;background:#fff;color:#2457d6;font-size:12px;font-weight:900;cursor:pointer;}
+    .withdraw-guide{font-size:12px;line-height:1.55;color:#64748b;}.withdraw-feedback{min-height:20px;font-size:12px;font-weight:800;color:#dc2626;}
+    .withdraw-sheet-actions{position:sticky;bottom:0;margin:auto -16px 0;padding:10px 16px calc(10px + env(safe-area-inset-bottom, 0px));background:linear-gradient(180deg,rgba(255,255,255,.88),#fff 20%);border-top:1px solid #eef0f3;}
+    .withdraw-sheet-actions button{width:100%;min-height:50px;border:0;border-radius:15px;background:#2457d6;color:#fff;font-weight:900;cursor:pointer;}.withdraw-sheet-actions button:disabled{background:#d1d5db;cursor:not-allowed;}
+    .wallet-history-list{display:flex;flex-direction:column;gap:10px;}.wallet-history-empty{padding:30px 12px;text-align:center;color:#9ca3af;font-size:13px;}
+    .wallet-history-item{display:flex;align-items:center;justify-content:space-between;padding:15px;border:1px solid #e5e7eb;border-radius:16px;background:#fff;}
+    .wallet-history-item strong,.wallet-history-item small{display:block;}.wallet-history-item strong{font-size:14px;color:#111827;}.wallet-history-item small{margin-top:4px;font-size:11px;color:#6b7280;}.wallet-history-amount{text-align:right;color:#dc2626;font-weight:900;}.wallet-history-amount small{color:#16a34a;}
     .donation-section-label{
       font-size:13px;
       font-weight:900;
@@ -5411,6 +5484,240 @@
 #watchScreen.mini-mode .player-float-controls{
   pointer-events:none;
 }
+
+    /* MAIN BOTTOM NAVIGATION */
+    .main-tab-screen .main-scroll{
+      padding:18px 16px calc(92px + env(safe-area-inset-bottom, 0px));
+    }
+    #homeScreen .main-scroll{
+      padding-bottom:calc(92px + env(safe-area-inset-bottom, 0px));
+    }
+    .main-tab-title{
+      margin:0 0 6px;
+      font-size:24px;
+      font-weight:900;
+      color:#111827;
+    }
+    .main-tab-copy{
+      margin:0 0 18px;
+      color:#6b7280;
+      font-size:14px;
+      line-height:1.5;
+    }
+    .shorts-demo-list{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:10px;
+    }
+    .shorts-demo-card{
+      min-height:190px;
+      padding:14px 10px;
+      border-radius:18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      color:#fff;
+      font-size:13px;
+      font-weight:800;
+      line-height:1.35;
+      box-shadow:0 8px 20px rgba(15,23,42,.12);
+    }
+    .shorts-demo-card:nth-child(1){background:linear-gradient(155deg,#60a5fa,#1d4ed8);}
+    .shorts-demo-card:nth-child(2){background:linear-gradient(155deg,#a78bfa,#6d28d9);}
+    .shorts-demo-card:nth-child(3){background:linear-gradient(155deg,#34d399,#047857);}
+    .mypage-profile{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:18px;
+      padding:18px;
+      border-radius:20px;
+      background:linear-gradient(135deg,#eff6ff,#eef2ff);
+      box-shadow:0 8px 22px rgba(37,87,214,.08);
+    }
+    .mypage-avatar{
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:#2457d6;
+      color:#fff;
+      font-size:26px;
+    }
+    .mypage-profile strong{display:block;font-size:17px;color:#111827;}
+    .mypage-profile span{display:block;margin-top:4px;font-size:12px;color:#6b7280;}
+    .mypage-menu{
+      overflow:hidden;
+      border:1px solid #e5e7eb;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 8px 22px rgba(15,23,42,.05);
+    }
+    .mypage-menu button{
+      width:100%;
+      min-height:54px;
+      padding:0 16px;
+      border:0;
+      border-bottom:1px solid #eef0f3;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      color:#111827;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .mypage-menu button:last-child{border-bottom:0;}
+    .mypage-menu button::after{content:"›";color:#9ca3af;font-size:22px;}
+    .bottom-nav{
+      position:fixed;
+      left:50%;
+      bottom:0;
+      z-index:45;
+      width:100%;
+      max-width:430px;
+      height:calc(66px + env(safe-area-inset-bottom, 0px));
+      padding:7px 10px env(safe-area-inset-bottom, 0px);
+      transform:translateX(-50%);
+      display:grid;
+      grid-template-columns:repeat(5, 1fr);
+      align-items:end;
+      background:rgba(255,255,255,.97);
+      border-top:1px solid #e5e7eb;
+      box-shadow:0 -8px 24px rgba(15,23,42,.08);
+      backdrop-filter:blur(12px);
+    }
+    .bottom-nav-item{
+      height:52px;
+      border:0;
+      background:transparent;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:2px;
+      color:#9ca3af;
+      font-size:10px;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .bottom-nav-item .bottom-nav-icon{font-size:20px;line-height:1;filter:grayscale(1);}
+    .bottom-nav-item.active{color:#2457d6;}
+    .bottom-nav-item.active .bottom-nav-icon{filter:none;transform:translateY(-1px);}
+    .bottom-nav-center{position:relative;height:52px;}
+    .bottom-nav .promo-fab{
+      position:absolute;
+      left:50%;
+      top:-20px;
+      bottom:auto;
+      width:58px;
+      height:58px;
+      transform:translateX(-50%);
+      box-shadow:0 9px 22px rgba(37,87,214,.32),0 0 0 5px #fff;
+    }
+    .bottom-nav .promo-fab:active{transform:translateX(-50%) scale(.96);}
+    .bottom-nav-center span{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:3px;
+      text-align:center;
+      color:#6b7280;
+      font-size:10px;
+      font-weight:800;
+    }
+    .app:has(#watchScreen.active:not(.mini-mode)) .bottom-nav,
+    .app:has(#shortsWatchScreen.active) .bottom-nav{display:none;}
+    .shorts-watch-screen{background:#050505;color:#fff;z-index:90;}
+    .shorts-watch-header{height:calc(52px + var(--safe-top));padding:var(--safe-top) 12px 0;display:flex;align-items:center;gap:10px;background:#050505;}
+    .shorts-watch-header button{width:38px;height:38px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:22px;cursor:pointer;}
+    .shorts-watch-header strong{font-size:16px;}
+    .shorts-watch-stage{position:relative;flex:1;min-height:0;display:flex;justify-content:center;overflow:hidden;background:#000;}
+    .shorts-watch-frame{height:100%;max-height:calc(100dvh - 52px - var(--safe-top));aspect-ratio:9/16;border:0;background:#000;}
+    .shorts-watch-actions{position:absolute;right:14px;bottom:112px;display:flex;flex-direction:column;gap:12px;}
+    .shorts-watch-actions button{width:48px;min-height:48px;border:0;border-radius:50%;background:rgba(20,20,20,.66);color:#fff;font-size:19px;cursor:pointer;}
+    .shorts-watch-info{position:absolute;left:16px;right:76px;bottom:22px;text-shadow:0 2px 8px rgba(0,0,0,.8);}
+    .shorts-watch-info strong,.shorts-watch-info span{display:block;}.shorts-watch-info strong{font-size:15px;line-height:1.45;}.shorts-watch-info span{margin-top:5px;font-size:12px;color:#e5e7eb;}
+
+    /* VIEWSTER TAB PAGES */
+    #homeScreen .tabs-wrap{border-bottom:0;background:#fff;}
+    #homeScreen .tabs{padding:8px 12px 6px;gap:8px;}
+    #homeScreen .tab{height:32px;padding:0 14px;border-radius:999px;background:#f3f4f6;color:#6b7280;}
+    #homeScreen .tab.active{background:#111827;color:#fff;}
+    #homeScreen .tabs{align-items:center;overflow-x:auto;}
+    .home-latest-btn{
+      margin-left:auto;flex-shrink:0;height:32px;padding:0 11px;
+      border:0;border-radius:999px;background:#eef3ff;color:#2457d6;
+      font-size:11px;font-weight:900;white-space:nowrap;cursor:pointer;
+    }
+    #homeScreen .promo-banner{margin-bottom:20px;}
+    .home-content-section{margin-bottom:22px;}
+    .home-content-section[hidden],.home-video-head[hidden],#homeList[hidden]{display:none !important;}
+    .home-section-head{display:flex;align-items:center;justify-content:space-between;margin:0 14px 10px;}
+    .home-section-head h2{margin:0;font-size:18px;line-height:1.2;color:#111827;}
+    .home-section-head button{border:0;background:transparent;color:#6b7280;font-size:12px;font-weight:800;cursor:pointer;}
+    .home-live-row,.home-shorts-row{display:flex;gap:10px;overflow-x:auto;padding:0 14px 4px;scrollbar-width:none;}
+    .home-live-row::-webkit-scrollbar,.home-shorts-row::-webkit-scrollbar{display:none;}
+    .home-live-card{width:220px;flex:0 0 220px;border:0;background:transparent;padding:0;text-align:left;cursor:pointer;}
+    .home-live-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:14px;background:#e5e7eb;}
+    .home-live-thumb img{width:100%;height:100%;object-fit:cover;}
+    .live-badge{position:absolute;left:8px;top:8px;padding:4px 7px;border-radius:6px;background:#ef4444;color:#fff;font-size:10px;font-weight:900;}
+    .home-live-card strong,.home-shorts-card strong{display:block;margin-top:8px;color:#111827;font-size:13px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .home-live-card small,.home-shorts-card small{display:block;margin-top:3px;color:#6b7280;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .home-shorts-card{width:116px;flex:0 0 116px;border:0;background:transparent;padding:0;text-align:left;cursor:pointer;}
+    .home-shorts-thumb{position:relative;height:166px;overflow:hidden;border-radius:14px;background:#e5e7eb;}
+    .home-shorts-thumb img{width:100%;height:100%;object-fit:cover;}
+    .short-duration{position:absolute;right:6px;bottom:6px;padding:3px 5px;border-radius:5px;background:rgba(0,0,0,.72);color:#fff;font-size:10px;font-weight:800;}
+    .home-video-head{margin-top:2px;}
+    #homeScreen .list{padding-top:0;}
+    .shorts-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px;}
+    .shorts-grid-card{border:0;background:transparent;padding:0;text-align:left;cursor:pointer;min-width:0;}
+    .shorts-grid-thumb{position:relative;aspect-ratio:9/14;overflow:hidden;border-radius:16px;background:#e5e7eb;box-shadow:0 8px 20px rgba(15,23,42,.08);}
+    .shorts-grid-thumb img{width:100%;height:100%;object-fit:cover;}
+    .shorts-grid-card strong{display:-webkit-box;margin-top:9px;color:#111827;font-size:14px;line-height:1.4;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+    .shorts-grid-card small{display:block;margin-top:4px;color:#6b7280;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .header-spacer{width:32px;}
+    .wallet-page-scroll{background:#f6f7fb;}
+    .wallet-page-hero{padding:22px;border-radius:22px;background:linear-gradient(135deg,#2457d6,#4f46e5);color:#fff;box-shadow:0 14px 28px rgba(37,87,214,.24);}
+    .wallet-page-hero span,.wallet-page-hero small{display:block;opacity:.82;font-size:12px;}
+    .wallet-page-hero strong{display:block;margin:8px 0;font-size:32px;letter-spacing:-.03em;}
+    .wallet-page-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px;}
+    .wallet-page-grid article{min-height:108px;padding:16px;border:1px solid #e8eaf0;border-radius:18px;background:#fff;box-shadow:0 7px 18px rgba(15,23,42,.04);}
+    .wallet-page-grid span,.wallet-page-grid small{display:block;color:#6b7280;font-size:11px;line-height:1.35;}
+    .wallet-page-grid strong{display:block;margin:9px 0 6px;color:#111827;font-size:20px;}
+    .wallet-page-section{margin-top:22px;}
+    .wallet-page-section .home-section-head{margin-left:0;margin-right:0;}
+    .wallet-box-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+    .wallet-box-row button{min-height:92px;padding:15px;border:1px solid #e8eaf0;border-radius:18px;background:#fff;text-align:left;cursor:pointer;}
+    .wallet-box-row span,.wallet-box-row strong{display:block;}
+    .wallet-box-row span{color:#475569;font-size:12px;font-weight:800;}
+    .wallet-box-row strong{margin-top:12px;color:#111827;font-size:22px;}
+    .wallet-policy-note{display:flex;flex-direction:column;gap:5px;margin-top:14px;padding:14px 16px;border-radius:15px;background:#eef3ff;color:#2457d6;}
+    .wallet-policy-note strong{font-size:12px;}.wallet-policy-note span{font-size:11px;line-height:1.45;}
+    .wallet-page-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
+    .wallet-page-actions button{min-height:48px;border:0;border-radius:15px;background:#2457d6;color:#fff;font-weight:900;cursor:pointer;}
+    .wallet-page-actions button.secondary{background:#e8edfb;color:#2457d6;}
+    .wallet-page-actions button.charge{grid-column:1/-1;background:#111827;}
+    .wallet-page-actions button:disabled{background:#d1d5db;color:#f9fafb;cursor:not-allowed;}
+    .mypage-profile-copy{min-width:0;flex:1;}
+    .mypage-profile-copy strong{display:flex;align-items:center;gap:6px;}
+    .mypage-profile-copy strong button{border:0;background:transparent;color:#2457d6;padding:2px;font-weight:900;cursor:pointer;}
+    .mypage-reward-card{width:100%;margin-bottom:14px;padding:18px;border:0;border-radius:20px;background:#111827;color:#fff;text-align:left;cursor:pointer;box-shadow:0 10px 24px rgba(15,23,42,.18);}
+    .mypage-reward-card span,.mypage-reward-card small{display:block;color:#cbd5e1;font-size:12px;}.mypage-reward-card strong{display:block;margin:7px 0;font-size:26px;}
+    .mypage-card-list,.mypage-settings-card{overflow:hidden;margin-bottom:14px;border:1px solid #e5e7eb;border-radius:18px;background:#fff;box-shadow:0 7px 20px rgba(15,23,42,.04);}
+    .mypage-card-list button{width:100%;min-height:64px;padding:12px 15px;border:0;border-bottom:1px solid #eef0f3;background:#fff;display:flex;align-items:center;justify-content:space-between;text-align:left;cursor:pointer;}
+    .mypage-card-list button:last-child{border-bottom:0;}.mypage-card-list button::after{content:"›";color:#9ca3af;font-size:21px;}
+    .mypage-card-list button span{min-width:0;flex:1;padding-right:8px;}.mypage-card-list strong,.mypage-card-list small{display:block;}
+    .mypage-card-list strong{color:#111827;font-size:14px;}.mypage-card-list small{margin-top:4px;color:#6b7280;font-size:11px;line-height:1.4;}
+    .mypage-card-list em{margin-right:8px;color:#16a34a;font-size:11px;font-style:normal;font-weight:900;}
+    .mypage-settings-card label{min-height:54px;padding:0 15px;display:flex;align-items:center;border-bottom:1px solid #eef0f3;font-size:13px;font-weight:800;}
+    .mypage-settings-card label:last-child{border-bottom:0;}.mypage-settings-card label span{flex:1;}.mypage-settings-card input{position:absolute;opacity:0;}
+    .mypage-settings-card i{position:relative;width:42px;height:24px;border-radius:999px;background:#d1d5db;transition:.2s;}
+    .mypage-settings-card i::after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.18);transition:.2s;}
+    .mypage-settings-card input:checked+i{background:#2457d6;}.mypage-settings-card input:checked+i::after{transform:translateX(18px);}
+    .mypage-menu-secondary{margin-bottom:8px;}.mypage-menu-secondary .danger{color:#dc2626;}
+    body.sheet-open .bottom-nav{display:none;}
   </style>
 </head>
 <body>
@@ -5418,12 +5725,9 @@
     <section class="screen active" id="homeScreen">
       <header class="header">
         <div class="header-left">
-          <button class="icon-btn" aria-label="메뉴">
-            <svg fill="none" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke-width="2" stroke-linecap="round"/></svg>
-          </button>
           <div class="brand">
-            <img src="assets/icon-reward.svg" alt="VIEWSTER" onerror="this.style.display='none'">
-            <span>VIEWSTER</span>
+            <span class="viewster-v-logo" aria-hidden="true">V</span>
+            <span>Viewster</span>
           </div>
         </div>
         <div class="header-right">
@@ -5435,10 +5739,11 @@
 
       <div class="tabs-wrap">
         <div class="tabs">
-          <button class="tab active">전체</button>
-          <button class="tab">Live</button>
-          <button class="tab">동영상</button>
-          <button class="tab">숏폼</button>
+          <button class="tab active" type="button" data-home-filter="all">전체</button>
+          <button class="tab" type="button" data-home-filter="live">Live</button>
+          <button class="tab" type="button" data-home-filter="video">동영상</button>
+          <button class="tab" type="button" data-home-filter="shorts">숏폼</button>
+          <button class="home-latest-btn" type="button" id="refreshLatestVideosBtnHome">↻ 최신영상</button>
         </div>
       </div>
 
@@ -5446,7 +5751,15 @@
         <div class="promo-banner">
           <img src="assets/hero_banner_01.png" alt="배너" onerror="this.src='assets/hero_banner_02.png'">
         </div>
-
+        <section class="home-content-section" id="homeLiveSection">
+          <div class="home-section-head"><h2>라이브</h2><button type="button" data-home-more="live">전체보기</button></div>
+          <div class="home-live-row" id="homeLiveList"></div>
+        </section>
+        <section class="home-content-section" id="homeShortsSection">
+          <div class="home-section-head"><h2>숏츠</h2><button type="button" id="homeShortsMoreBtn">전체보기</button></div>
+          <div class="home-shorts-row" id="homeShortsList"></div>
+        </section>
+        <div class="home-section-head home-video-head" id="homeVideoSectionTitle"><h2>추천 영상</h2></div>
         <div class="list" id="homeList">
           <div class="loading">유튜브 영상을 불러오는 중입니다...</div>
         </div>
@@ -5469,7 +5782,7 @@
           <button class="tool-btn" data-add="60">+1분</button>
           <button class="tool-btn" data-reward-set="595">+보상</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.69</span>
+          <span class="dev-version-label">DEV v0.3.78</span>
         </div>
       </header>
 
@@ -5507,7 +5820,7 @@
             <button class="tool-btn" data-add="60">+1분</button>
             <button class="tool-btn" data-reward-set="595">+보상</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.69</span>
+            <span class="dev-version-label">DEV v0.3.78</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -5554,7 +5867,102 @@
       </div>
     </section>
 
-    <button class="promo-fab" id="openPromoSheetBtn" type="button" aria-label="홍보하기 열기">+</button>
+    <section class="screen main-tab-screen" id="shortsScreen">
+      <header class="header">
+        <div class="brand"><img src="assets/icon-reward.svg" alt="VIEWSTER" onerror="this.style.display='none'"><span>VIEWSTER</span></div>
+        <button class="icon-btn" type="button" aria-label="검색"><svg fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" stroke-width="2"/><path d="M16 16l4 4" stroke-width="2" stroke-linecap="round"/></svg></button>
+      </header>
+      <div class="main-scroll">
+        <h1 class="main-tab-title">Shorts</h1>
+        <div class="shorts-grid" id="shortsGrid" aria-label="샘플 숏츠"></div>
+      </div>
+    </section>
+
+    <section class="screen shorts-watch-screen" id="shortsWatchScreen">
+      <div class="shorts-watch-header"><button type="button" id="closeShortsWatchBtn" aria-label="숏츠 닫기">←</button><strong>Shorts</strong></div>
+      <div class="shorts-watch-stage">
+        <iframe class="shorts-watch-frame" id="shortsWatchFrame" src="" title="YouTube Shorts player" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        <div class="shorts-watch-actions"><button type="button" id="shortsCommentBtn" aria-label="댓글">💬</button><button type="button" id="shortsShareBtn" aria-label="공유">↗</button></div>
+        <div class="shorts-watch-info"><strong id="shortsWatchTitle"></strong><span id="shortsWatchChannel"></span></div>
+      </div>
+    </section>
+
+    <section class="screen main-tab-screen" id="walletPageScreen">
+      <header class="header wallet-page-header">
+        <button class="icon-btn" type="button" id="walletPageBackBtn" aria-label="홈으로 돌아가기">←</button>
+        <div class="brand"><span>내 지갑</span></div><div class="header-spacer"></div>
+      </header>
+      <div class="main-scroll wallet-page-scroll">
+        <section class="wallet-page-hero">
+          <span>내 리워드</span><strong id="walletPageReward">0P</strong>
+          <small>출금과 후원에 사용할 수 있습니다.</small>
+        </section>
+        <div class="wallet-page-grid">
+          <article><span>출금 가능 리워드</span><strong id="walletPageWithdrawable">0P</strong></article>
+          <article><span>진행 중 출금</span><strong>0P</strong></article>
+          <article><span>뷰캐시</span><strong id="walletPageViewCash">0캐시</strong><small>후원 가능 · 출금 불가</small></article>
+          <article><span>누적 통계</span><strong id="walletPageTotal">0P</strong><small>현재 보유 리워드 기준</small></article>
+        </div>
+        <section class="wallet-page-section">
+          <div class="home-section-head"><h2>박스 현황</h2></div>
+          <div class="wallet-box-row">
+            <button type="button" id="walletPageRandomBox"><span>🎁 랜덤박스</span><strong id="walletPageRandomCount">0개</strong></button>
+            <button type="button" id="walletPageGoldBox"><span>✨ 황금박스</span><strong id="walletPageGoldCount">0개</strong></button>
+          </div>
+        </section>
+        <div class="wallet-policy-note"><strong>재화 이용 안내</strong><span>리워드는 출금·후원 가능, 뷰캐시는 후원만 가능합니다.</span></div>
+        <div class="wallet-page-actions">
+          <button type="button" id="walletWithdrawBtn">출금 신청</button>
+          <button type="button" class="secondary" id="walletHistoryBtn">내역 보기</button>
+          <button type="button" class="charge" id="walletChargeBtn">뷰캐시 충전</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen main-tab-screen" id="mypageScreen">
+      <header class="header">
+        <div class="brand"><img src="assets/icon-reward.svg" alt="VIEWSTER" onerror="this.style.display='none'"><span>VIEWSTER</span></div>
+      </header>
+      <div class="main-scroll">
+        <div class="mypage-profile">
+          <div class="mypage-avatar" aria-hidden="true">👤</div>
+          <div class="mypage-profile-copy"><strong>뷰스터G_본인 <button type="button" data-mypage-demo="닉네임 수정" aria-label="닉네임 수정">✎</button></strong><span>jyjy7678@gmail.com</span></div>
+        </div>
+        <button class="mypage-reward-card" type="button" id="mypageWalletBtn"><span>보유 리워드</span><strong id="mypageRewardText">0P</strong><small>내 지갑 보기 ›</small></button>
+        <div class="mypage-card-list">
+          <button type="button" data-mypage-demo="본인 인증"><span><strong>본인 인증</strong><small>본인 인증이 완료되었습니다.</small></span><em>완료</em></button>
+          <button type="button" data-mypage-demo="계좌 등록"><span><strong>계좌 연동</strong><small>리워드 출금을 위해 계좌 등록이 필요합니다.</small></span></button>
+          <button type="button" data-mypage-demo="광고 관리"><span><strong>광고 관리</strong><small>등록한 광고를 확인하고 관리하세요.</small></span></button>
+        </div>
+        <div class="mypage-settings-card">
+          <label><span>마케팅 정보 수신 동의</span><input type="checkbox"><i></i></label>
+          <label><span>서비스 알림 수신 동의</span><input type="checkbox" checked><i></i></label>
+        </div>
+        <div class="mypage-card-list">
+          <button type="button" id="mypageYoutubeBtn"><span><strong>YouTube 계정 연동</strong><small>YouTube 계정을 연동하면 댓글·라이브 채팅을 이용할 수 있습니다.</small></span></button>
+          <button type="button" id="mypageChannelBtn"><span><strong>채널 관리</strong><small>채널과 후원 설정을 관리합니다.</small></span></button>
+          <button type="button" id="mypageDonationManageBtn"><span><strong>후원 관리</strong><small>후원 내역과 감사카드를 확인합니다.</small></span></button>
+        </div>
+        <div class="mypage-menu mypage-menu-secondary">
+          <button type="button" data-mypage-demo="공지사항">공지사항</button>
+          <button type="button" data-mypage-demo="문의하기">문의하기</button>
+          <button type="button" data-mypage-demo="차단한 채널">차단한 채널</button>
+          <button type="button" data-mypage-demo="로그아웃">로그아웃</button>
+          <button type="button" class="danger" data-mypage-demo="회원 탈퇴">회원 탈퇴</button>
+        </div>
+      </div>
+    </section>
+
+    <nav class="bottom-nav" id="bottomNav" aria-label="주요 메뉴">
+      <button class="bottom-nav-item active" type="button" data-main-tab="home" aria-current="page"><span class="bottom-nav-icon">🏠</span><span>홈</span></button>
+      <button class="bottom-nav-item" type="button" data-main-tab="shorts"><span class="bottom-nav-icon">⚡</span><span>숏츠</span></button>
+      <div class="bottom-nav-center">
+        <button class="promo-fab" id="openPromoSheetBtn" type="button" aria-label="영상 등록 및 홍보하기 열기">+</button>
+        <span>등록</span>
+      </div>
+      <button class="bottom-nav-item" type="button" data-main-tab="wallet"><span class="bottom-nav-icon">💵</span><span>지갑</span></button>
+      <button class="bottom-nav-item" type="button" data-main-tab="mypage"><span class="bottom-nav-icon">👤</span><span>마이페이지</span></button>
+    </nav>
     <div class="toast" id="toast"></div>
   </div>
 
@@ -5653,6 +6061,26 @@
     </div>
   </section>
 
+  <section class="sheet sheet--action" id="walletWithdrawSheet">
+    <div class="sheet-head"><div class="sheet-title">리워드 출금 신청</div><button class="sheet-close" data-close="walletWithdrawSheet">×</button></div>
+    <div class="sheet-body">
+      <div class="withdraw-balance-card"><span>보유 출금 가능 리워드</span><strong id="withdrawAvailableText">0P</strong><small>진행 중 출금 0P</small></div>
+      <div class="donation-section-label">출금 금액</div>
+      <label class="withdraw-input-wrap"><input id="withdrawAmountInput" type="text" inputmode="numeric" autocomplete="off" placeholder="5,000 이상 입력"><span>P</span></label>
+      <div class="withdraw-quick-grid">
+        <button type="button" data-withdraw-amount="5000">5,000P</button><button type="button" data-withdraw-amount="10000">10,000P</button><button type="button" data-withdraw-amount="50000">50,000P</button><button type="button" data-withdraw-amount="all">전액</button>
+      </div>
+      <div class="withdraw-guide">출금은 5,000P 이상부터 신청할 수 있습니다.<br>데모에서는 신청 즉시 출금 완료 처리됩니다.</div>
+      <div class="withdraw-feedback" id="withdrawFeedback"></div>
+      <div class="withdraw-sheet-actions"><button type="button" id="confirmWithdrawBtn" disabled>출금 신청하기</button></div>
+    </div>
+  </section>
+
+  <section class="sheet sheet--action" id="walletHistorySheet">
+    <div class="sheet-head"><div class="sheet-title">지갑 내역</div><button class="sheet-close" data-close="walletHistorySheet">×</button></div>
+    <div class="sheet-body"><div class="wallet-history-list" id="walletHistoryList"></div></div>
+  </section>
+
   <section class="sheet sheet--action" id="promoSheet">
     <div class="sheet-head">
       <div class="sheet-title">홍보하기</div>
@@ -5662,18 +6090,16 @@
       <p class="promo-sheet-copy">Viewster에 등록할 YouTube 영상 링크를 입력해 주세요.</p>
       <div class="promo-form">
         <div class="promo-field">
-          <label class="promo-label" for="promoYoutubeLinkInput">YouTube 링크</label>
           <input class="promo-link-input" id="promoYoutubeLinkInput" type="url" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off" />
         </div>
         <div class="promo-field">
-          <div class="promo-label">영상 미리보기</div>
           <div class="promo-preview-placeholder" id="promoPreviewPlaceholder">
             링크 확인 후 이 영역에<br />영상 미리보기가 표시될 예정입니다.
           </div>
         </div>
         <div class="promo-sheet-actions">
-          <button class="promo-primary-btn" id="promoSubmitBtn" type="button" disabled>등록하기</button>
           <button class="promo-secondary-btn" id="promoCloseBtn" type="button">닫기</button>
+          <button class="promo-primary-btn" id="promoSubmitBtn" type="button" disabled>등록하기</button>
         </div>
       </div>
     </div>
@@ -5881,8 +6307,9 @@
         <button class="donation-charge-method-btn" type="button" data-charge-method="phone">휴대폰 결제</button>
       </div>
       <div class="donation-feedback" id="viewCashChargeFeedback"></div>
-      <button class="donation-submit-btn" id="confirmViewCashChargeBtn" type="button">결제하기</button>
-      <button class="donation-sub-btn" id="closeViewCashChargeBtn" type="button">닫기</button>
+      <div class="viewcash-charge-actions">
+        <button class="donation-submit-btn" id="confirmViewCashChargeBtn" type="button">결제하기</button>
+      </div>
     </div>
   </section>
 
@@ -6348,6 +6775,7 @@
       videos: [],
       videoUrlPool: [],
       currentVideo: null,
+      homeFilter: "all",
       integratedWatchSeconds: 0,
       rewardGoalSeconds: 600,
       rewardAvailable: false,
@@ -6377,6 +6805,8 @@
       donationRankings: {},
       donationChargeAmount: 0,
       donationChargeMethod: "card",
+      viewCashChargeReturnTarget: "donation",
+      walletHistory: [],
       promoPreviewVideo: null,
       promoPreviewRequestId: 0,
     };
@@ -6491,7 +6921,36 @@
 
     const homeScreen = document.getElementById("homeScreen");
     const watchScreen = document.getElementById("watchScreen");
+    const shortsScreen = document.getElementById("shortsScreen");
+    const shortsWatchScreen = document.getElementById("shortsWatchScreen");
+    const shortsWatchFrame = document.getElementById("shortsWatchFrame");
+    const shortsWatchTitle = document.getElementById("shortsWatchTitle");
+    const shortsWatchChannel = document.getElementById("shortsWatchChannel");
+    const walletPageScreen = document.getElementById("walletPageScreen");
+    const mypageScreen = document.getElementById("mypageScreen");
+    const mainTabScreens = { home: homeScreen, shorts: shortsScreen, wallet: walletPageScreen, mypage: mypageScreen };
+    const bottomNavItems = [...document.querySelectorAll(".bottom-nav-item[data-main-tab]")];
     const homeList = document.getElementById("homeList");
+    const homeLiveList = document.getElementById("homeLiveList");
+    const homeShortsList = document.getElementById("homeShortsList");
+    const homeLiveSection = document.getElementById("homeLiveSection");
+    const homeShortsSection = document.getElementById("homeShortsSection");
+    const homeVideoSectionTitle = document.getElementById("homeVideoSectionTitle");
+    const homeFilterButtons = [...document.querySelectorAll("[data-home-filter]")];
+    const shortsGrid = document.getElementById("shortsGrid");
+    const walletPageReward = document.getElementById("walletPageReward");
+    const walletPageWithdrawable = document.getElementById("walletPageWithdrawable");
+    const walletPageViewCash = document.getElementById("walletPageViewCash");
+    const walletPageTotal = document.getElementById("walletPageTotal");
+    const walletPageRandomCount = document.getElementById("walletPageRandomCount");
+    const walletPageGoldCount = document.getElementById("walletPageGoldCount");
+    const walletWithdrawBtn = document.getElementById("walletWithdrawBtn");
+    const withdrawAvailableText = document.getElementById("withdrawAvailableText");
+    const withdrawAmountInput = document.getElementById("withdrawAmountInput");
+    const withdrawFeedback = document.getElementById("withdrawFeedback");
+    const confirmWithdrawBtn = document.getElementById("confirmWithdrawBtn");
+    const walletHistoryList = document.getElementById("walletHistoryList");
+    const mypageRewardText = document.getElementById("mypageRewardText");
     const recommendList = document.getElementById("recommendList");
     const ytFrame = document.getElementById("ytFrame");
     const watchTitle = document.getElementById("watchTitle");
@@ -6509,6 +6968,7 @@
     const promoCloseBtn = document.getElementById("promoCloseBtn");
     const refreshLatestVideosBtnTop = document.getElementById("refreshLatestVideosBtnTop");
     const refreshLatestVideosBtnFloat = document.getElementById("refreshLatestVideosBtnFloat");
+    const refreshLatestVideosBtnHome = document.getElementById("refreshLatestVideosBtnHome");
     const openWalletTestHit = document.getElementById("openWalletTestHit");
     const benefitBanner = document.getElementById("benefitBanner");
     const closeBenefitBtn = document.getElementById("closeBenefitBtn");
@@ -6648,7 +7108,6 @@
     const viewCashChargeMethods = document.getElementById("viewCashChargeMethods");
     const viewCashChargeFeedback = document.getElementById("viewCashChargeFeedback");
     const confirmViewCashChargeBtn = document.getElementById("confirmViewCashChargeBtn");
-    const closeViewCashChargeBtn = document.getElementById("closeViewCashChargeBtn");
     const rewardAdVideo = document.getElementById("rewardAdVideo");
     const rewardAdProgress = document.getElementById("rewardAdProgress");
     const rewardAdBtn = document.getElementById("rewardAdBtn");
@@ -8319,7 +8778,9 @@
 
     function updateChargeSheetUI(shortage = 0){
       const safeShortage = Math.max(0, Number(shortage) || 0);
-      state.donationChargeAmount = safeShortage || state.donationChargeAmount || 0;
+      if(!(Number(state.donationChargeAmount) > 0)){
+        state.donationChargeAmount = safeShortage;
+      }
       state.donationChargeMethod = state.donationChargeMethod || "card";
       if(viewCashChargeShortageText){
         viewCashChargeShortageText.textContent = `${safeShortage.toLocaleString()}캐시`;
@@ -8342,18 +8803,31 @@
           button.classList.toggle("active", button.dataset.chargeMethod === state.donationChargeMethod);
         });
       }
+      if(confirmViewCashChargeBtn){
+        const selectedAmount = Math.max(0, Number(state.donationChargeAmount) || 0);
+        confirmViewCashChargeBtn.textContent = selectedAmount > 0
+          ? `${selectedAmount.toLocaleString()}캐시 결제하기`
+          : "결제하기";
+      }
       if(viewCashChargeFeedback){
         viewCashChargeFeedback.textContent = "";
         viewCashChargeFeedback.classList.remove("is-error");
       }
     }
 
-    function openViewCashChargeSheet(shortage = 0){
+    function openViewCashChargeSheet(shortage = 0, returnTarget = "donation"){
+      state.viewCashChargeReturnTarget = returnTarget;
       updateChargeSheetUI(shortage);
       openSheet("viewCashChargeSheet");
     }
 
     function returnToDonationAmountView(){
+      if(state.viewCashChargeReturnTarget === "wallet"){
+        state.viewCashChargeReturnTarget = "donation";
+        closeAllSheets();
+        showMainTab("wallet");
+        return;
+      }
       setDonationView("amount");
       renderDonationSheet();
       openSheet("donationSheet");
@@ -8893,9 +9367,6 @@ function wakePlayerControls(){
       state.videos = fallbackVideos;
       renderHome();
 
-      if(state.videos.length > 0){
-        openWatch(state.videos[0].id);
-      }
       return true;
     }
 
@@ -8971,9 +9442,6 @@ function wakePlayerControls(){
         state.videos = results;
         renderHome();
 
-        if(state.videos.length > 0){
-          openWatch(state.videos[0].id);
-        }
       }catch(err){
         console.error(err);
         const message = String(err?.message || "");
@@ -8994,14 +9462,54 @@ function wakePlayerControls(){
       }
     }
 
-    async function refreshLatestVideosFromYouTube(){
-      if(!YT_API_KEY){
-        showToast("YT API key가 없어 최신영상을 불러올 수 없습니다.");
-        return;
-      }
+    function parseYouTubeDurationSeconds(value){
+      const match = String(value || "").match(/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/);
+      if(!match) return 0;
+      return (Number(match[1]) || 0) * 3600 + (Number(match[2]) || 0) * 60 + (Number(match[3]) || 0);
+    }
 
+    function formatDurationText(seconds){
+      const safe = Math.max(0, Number(seconds) || 0);
+      const minutes = Math.floor(safe / 60);
+      const secs = Math.floor(safe % 60);
+      return `${minutes}:${String(secs).padStart(2, "0")}`;
+    }
+
+    function buildLatestMixedContent(sourceVideos = []){
+      const fallbackIds = ["dQw4w9WgXcQ","9bZkp7q19f0","kJQP7kiw5Fk","JGwWNGJdvx8","RgKAFK5djSk","OPf0YbXqDm0","fJ9rUzIMcZQ","CevxZvSJLk8","YQHsXMglC9A","hT_nvWreIhg","60ItHLz5WEA","uelHwf8o7_U","pRpeEdMmmQ0","09R8_2nJtjg"];
+      const usable = sourceVideos.length ? sourceVideos : fallbackIds.map((videoId, index) => ({
+        id: videoId,
+        videoId,
+        title: `Viewster 최신 콘텐츠 ${index + 1}`,
+        channel: `Viewster 채널 ${index + 1}`,
+        views: `조회수 ${(index + 1) * 12}만회`,
+        thumb: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+        durationSeconds: 35 + index * 17,
+        avatar: "",
+        comments: []
+      }));
+      const plan = ["live","live","live","video","video","video","video","video","shorts","shorts","shorts","shorts","shorts","shorts"];
+      return plan.map((type, index) => {
+        const source = usable[index % usable.length];
+        const durationSeconds = type === "shorts" ? Math.min(Number(source.durationSeconds) || 45, 60) : Number(source.durationSeconds) || 180;
+        return {
+          ...source,
+          id: `${source.videoId || source.id}-${type}-${index}`,
+          videoId: source.videoId || source.id,
+          type,
+          isLive: type === "live",
+          isShorts: type === "shorts",
+          durationSeconds,
+          durationText: type === "live" ? "LIVE" : formatDurationText(durationSeconds),
+          viewsText: source.views || "조회수 준비중"
+        };
+      });
+    }
+
+    async function refreshLatestVideosFromYouTube(){
       try{
-        const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=KR&maxResults=50&key=${YT_API_KEY}`;
+        if(!YT_API_KEY) throw new Error("YT API key 없음");
+        const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&chart=mostPopular&regionCode=KR&maxResults=50&key=${YT_API_KEY}`;
         const res = await fetch(url);
         const json = await res.json();
 
@@ -9009,22 +9517,36 @@ function wakePlayerControls(){
           throw new Error(json.error.message || "YouTube API 오류");
         }
 
-        const urls = (json.items || [])
-          .map(item => item?.id)
-          .filter(Boolean)
-          .map(videoId => `https://www.youtube.com/watch?v=${videoId}`);
-
-        if(!urls.length){
+        const apiVideos = (json.items || []).map(item => {
+          const durationSeconds = parseYouTubeDurationSeconds(item.contentDetails?.duration);
+          return {
+            id: item.id,
+            videoId: item.id,
+            title: item.snippet?.title || "제목 없음",
+            channel: item.snippet?.channelTitle || "채널명 없음",
+            channelId: item.snippet?.channelId || "",
+            views: formatViews(item.statistics?.viewCount || 0),
+            thumb: item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url || `https://i.ytimg.com/vi/${item.id}/hqdefault.jpg`,
+            durationSeconds,
+            avatar: "",
+            comments: []
+          };
+        }).filter(video => video.videoId);
+        if(!apiVideos.length){
           throw new Error("최신 영상 목록을 가져오지 못했습니다.");
         }
-
-        state.videoUrlPool = urls;
-        saveVideoUrlPool(urls);
-        await loadVideosFromYouTube();
-        showToast("↻ 최신영상 50개를 불러왔습니다.");
+        state.videos = buildLatestMixedContent(apiVideos);
+        state.videoUrlPool = state.videos.map(video => `https://www.youtube.com/${video.isShorts ? "shorts/" : video.isLive ? "live/" : "watch?v="}${video.videoId}`);
+        saveVideoUrlPool(state.videoUrlPool);
+        state.homeFilter = "all";
+        renderHome();
+        showToast("Live 3개 · 동영상 5개 · 숏츠 6개를 불러왔습니다.");
       }catch(error){
         console.error(error);
-        showToast("최신영상 갱신에 실패해 기존 목록을 유지합니다.");
+        state.videos = buildLatestMixedContent(state.videos);
+        state.homeFilter = "all";
+        renderHome();
+        showToast("API 연결이 어려워 최신 mock 콘텐츠를 불러왔습니다.");
       }
     }
 
@@ -9048,13 +9570,89 @@ function wakePlayerControls(){
       }
     }
 
+    function getTabSampleVideos(count = 6){
+      const source = state.videos.length ? state.videos : [];
+      if(!source.length) return [];
+      return Array.from({ length: count }, (_, index) => source[index % source.length]);
+    }
+
+    function isExplicitShortsVideo(video){
+      return video?.isShorts === true
+        || String(video?.type || "").toLowerCase() === "shorts"
+        || getYouTubeLinkType(video?.url || "") === "shorts";
+    }
+
+    function getHomeShortsVideos(){
+      const explicitShorts = state.videos.filter(isExplicitShortsVideo);
+      if(explicitShorts.length) return explicitShorts;
+      const regularCandidates = state.videos.filter(video => !video.isLive);
+      const demoShortsCount = Math.min(6, Math.max(1, Math.ceil(regularCandidates.length * 0.25)));
+      return regularCandidates.slice(0, demoShortsCount);
+    }
+
+    function renderHomeTabSections(){
+      const liveVideos = state.videos.filter(video => video.isLive).slice(0, 4);
+      homeLiveList.innerHTML = liveVideos.length ? liveVideos.map(video => `
+        <button class="home-live-card" type="button" data-id="${video.id}">
+          <div class="home-live-thumb"><img src="${video.thumb}" alt="${escapeHtml(video.title)}"><span class="live-badge">LIVE</span></div>
+          <strong>${escapeHtml(video.title)}</strong><small>${escapeHtml(video.channel)} · ${video.views}</small>
+        </button>
+      `).join("") : '<div class="loading">표시할 LIVE 영상이 없습니다.</div>';
+      const shortsSamples = getHomeShortsVideos().slice(0, 6);
+      homeShortsList.innerHTML = shortsSamples.map((video, index) => `
+        <button class="home-shorts-card" type="button" data-shorts-id="${video.id}">
+          <div class="home-shorts-thumb"><img src="${video.thumb}" alt="${escapeHtml(video.title)}"><span class="short-duration">${escapeHtml(video.durationText || `0:${String(18 + index * 5).padStart(2, "0")}`)}</span></div>
+          <strong>${escapeHtml(video.title)}</strong><small>${escapeHtml(video.channel)}</small>
+        </button>
+      `).join("");
+      homeLiveList.querySelectorAll("[data-id]").forEach(card => card.addEventListener("click", () => openWatch(card.dataset.id)));
+      homeShortsList.querySelectorAll("[data-shorts-id]").forEach(card => card.addEventListener("click", () => openShortsWatch(card.dataset.shortsId)));
+    }
+
+    function renderShortsPage(){
+      const shortsSamples = getHomeShortsVideos().slice(0, 6);
+      shortsGrid.innerHTML = shortsSamples.map((video, index) => `
+        <button class="shorts-grid-card" type="button" data-shorts-id="${video.id}">
+          <div class="shorts-grid-thumb"><img src="${video.thumb}" alt="${escapeHtml(video.title)}"><span class="short-duration">${escapeHtml(video.durationText || `0:${String(22 + index * 6).padStart(2, "0")}`)}</span></div>
+          <strong>${escapeHtml(video.title)}</strong><small>${escapeHtml(video.channel)} · ${escapeHtml(video.viewsText || video.views || `${index + 1}시간 전`)}</small>
+        </button>
+      `).join("");
+      shortsGrid.querySelectorAll("[data-shorts-id]").forEach(card => card.addEventListener("click", () => openShortsWatch(card.dataset.shortsId)));
+    }
+
     function renderHome(){
       if(!state.videos.length){
         homeList.innerHTML = '<div class="loading">영상 데이터가 없습니다.</div>';
+        homeLiveList.innerHTML = "";
+        homeShortsList.innerHTML = "";
+        shortsGrid.innerHTML = "";
         return;
       }
 
-      homeList.innerHTML = state.videos.map(video => `
+      renderHomeTabSections();
+      renderShortsPage();
+
+      const shortsIds = new Set(getHomeShortsVideos().map(video => String(video.id)));
+      let filteredVideos = state.videos;
+      if(state.homeFilter === "live"){
+        filteredVideos = state.videos.filter(video => video.isLive === true);
+      }else if(state.homeFilter === "video"){
+        filteredVideos = state.videos.filter(video => !video.isLive && !shortsIds.has(String(video.id)));
+      }else if(state.homeFilter === "shorts"){
+        filteredVideos = [];
+      }
+
+      const showAllSections = state.homeFilter === "all";
+      homeLiveSection.hidden = !showAllSections;
+      homeShortsSection.hidden = !(showAllSections || state.homeFilter === "shorts");
+      homeVideoSectionTitle.hidden = state.homeFilter === "shorts";
+      homeList.hidden = state.homeFilter === "shorts";
+      homeVideoSectionTitle.querySelector("h2").textContent = state.homeFilter === "live"
+        ? "LIVE 영상"
+        : state.homeFilter === "video" ? "동영상" : "추천 영상";
+      homeFilterButtons.forEach(button => button.classList.toggle("active", button.dataset.homeFilter === state.homeFilter));
+
+      homeList.innerHTML = filteredVideos.length ? filteredVideos.map(video => `
         <article class="video-card" data-id="${video.id}">
           <div class="thumb-wrap">
             <img src="${video.thumb}" alt="${escapeHtml(video.title)}">
@@ -9070,9 +9668,9 @@ function wakePlayerControls(){
             </div>
           </div>
         </article>
-      `).join("");
+      `).join("") : '<div class="loading">표시할 영상이 없습니다.</div>';
 
-      document.querySelectorAll(".video-card").forEach(card => {
+      homeList.querySelectorAll(".video-card").forEach(card => {
         card.addEventListener("click", () => openWatch(card.dataset.id));
       });
     }
@@ -9121,6 +9719,80 @@ function wakePlayerControls(){
       `).join("");
     }
 
+    function getWithdrawAmount(){
+      return Math.max(0, Number(sanitizeDonationDigits(withdrawAmountInput.value)) || 0);
+    }
+
+    function updateWithdrawUI(){
+      const available = Math.max(0, Number(state.totalRewardPoint) || 0);
+      const amount = getWithdrawAmount();
+      withdrawAvailableText.textContent = `${available.toLocaleString()}P`;
+      if(amount > available){
+        withdrawFeedback.textContent = "출금 가능 리워드를 초과할 수 없습니다.";
+      }else if(amount > 0 && amount < 5000){
+        withdrawFeedback.textContent = "5,000P 이상 입력해 주세요.";
+      }else{
+        withdrawFeedback.textContent = "";
+      }
+      confirmWithdrawBtn.disabled = amount < 5000 || amount > available;
+      confirmWithdrawBtn.textContent = amount >= 5000 && amount <= available
+        ? `${amount.toLocaleString()}P 출금 신청하기`
+        : "출금 신청하기";
+    }
+
+    function openWithdrawSheet(){
+      withdrawAmountInput.value = "";
+      updateWithdrawUI();
+      openSheet("walletWithdrawSheet");
+      setTimeout(() => withdrawAmountInput.focus(), 80);
+    }
+
+    function renderWalletHistory(){
+      if(!state.walletHistory.length){
+        walletHistoryList.innerHTML = '<div class="wallet-history-empty">아직 지갑 내역이 없습니다.</div>';
+        return;
+      }
+      walletHistoryList.innerHTML = state.walletHistory.map(item => `
+        <article class="wallet-history-item">
+          <div><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.description)} · ${escapeHtml(item.createdAt)}</small></div>
+          <div class="wallet-history-amount">-${Number(item.amount).toLocaleString()}P<small>${item.status === "completed" ? "완료" : escapeHtml(item.status)}</small></div>
+        </article>
+      `).join("");
+    }
+
+    function completeDemoWithdrawal(){
+      const amount = getWithdrawAmount();
+      const available = Math.max(0, Number(state.totalRewardPoint) || 0);
+      if(amount < 5000 || amount > available) return;
+      state.totalRewardPoint = available - amount;
+      state.walletHistory.unshift({
+        type: "withdrawal",
+        title: "리워드 출금 완료",
+        description: "리워드 출금 완료",
+        amount,
+        status: "completed",
+        createdAt: "방금 전"
+      });
+      updateWallet();
+      closeAllSheets();
+      showMainTab("wallet");
+      showToast("출금이 완료되었습니다.", { title: "출금 완료", icon: "✅", duration: 3200 });
+    }
+
+    function renderTabbedWallet(){
+      const reward = Math.max(0, Number(state.totalRewardPoint) || 0);
+      const viewCash = Math.max(0, Number(state.totalViewCash) || 0);
+      walletPageReward.textContent = `${reward.toLocaleString()}P`;
+      walletPageWithdrawable.textContent = `${reward.toLocaleString()}P`;
+      walletPageViewCash.textContent = `${viewCash.toLocaleString()}캐시`;
+      walletPageTotal.textContent = `${reward.toLocaleString()}P`;
+      walletPageRandomCount.textContent = `${Math.max(0, Number(state.randomBoxCount) || 0).toLocaleString()}개`;
+      walletPageGoldCount.textContent = `${Math.max(0, Number(state.goldBoxCount) || 0).toLocaleString()}개`;
+      walletWithdrawBtn.disabled = reward < 5000;
+      walletWithdrawBtn.title = reward < 5000 ? "출금은 5,000P 이상부터 신청할 수 있습니다." : "데모 출금 신청";
+      mypageRewardText.textContent = `${reward.toLocaleString()}P`;
+    }
+
     function updateWallet(){
       boxCount.textContent = `${state.randomBoxCount}개`;
       goldBoxCount.textContent = `${state.goldBoxCount}개`;
@@ -9130,6 +9802,7 @@ function wakePlayerControls(){
       const rewardText = state.totalRewardPoint.toLocaleString();
       const viewCashText = state.totalViewCash.toLocaleString();
       rewardPointLive.innerHTML = `<span class="point-main">${rewardText}P</span><span class="point-krw-line"><span class="point-eq">뷰캐시</span><span class="point-krw">${viewCashText}캐시</span></span>`;
+      renderTabbedWallet();
       renderDonationSheet();
       saveDonationState();
     }
@@ -9219,6 +9892,44 @@ function updateFixedLayout(){
       });
     }
 
+    function setBottomNavActive(tabName){
+      bottomNavItems.forEach(item => {
+        const isActive = item.dataset.mainTab === tabName;
+        item.classList.toggle("active", isActive);
+        if(isActive) item.setAttribute("aria-current", "page");
+        else item.removeAttribute("aria-current");
+      });
+    }
+
+    function showMainTab(tabName){
+      const nextScreen = mainTabScreens[tabName] || homeScreen;
+      if(watchScreen.classList.contains("active")){
+        stopAutoWatchTimer();
+        stopWatchTimerPolling();
+        resetWatchTimer();
+        ytFrame.src = "";
+      }
+      Object.values(mainTabScreens).forEach(screen => screen.classList.toggle("active", screen === nextScreen));
+      watchScreen.classList.remove("active", "mini-mode", "mini-size-1", "mini-size-2", "mini-size-3");
+      shortsWatchScreen.classList.remove("active");
+      shortsWatchFrame.src = "";
+      setBottomNavActive(tabName in mainTabScreens ? tabName : "home");
+      if(tabName === "shorts") renderShortsPage();
+      if(tabName === "wallet" || tabName === "mypage") renderTabbedWallet();
+      closeAllSheets();
+    }
+
+    function openShortsWatch(id){
+      const video = state.videos.find(item => String(item.id) === String(id));
+      if(!video?.videoId) return;
+      Object.values(mainTabScreens).forEach(screen => screen.classList.remove("active"));
+      watchScreen.classList.remove("active");
+      shortsWatchTitle.textContent = video.title || "Shorts";
+      shortsWatchChannel.textContent = `${video.channel || "YouTube 채널"} · ${video.views || "조회수 준비중"}`;
+      shortsWatchFrame.src = `https://www.youtube.com/embed/${encodeURIComponent(video.videoId)}?autoplay=1&playsinline=1&rel=0`;
+      shortsWatchScreen.classList.add("active");
+    }
+
     async function openWatch(id){
       const video = state.videos.find(v => v.id === id);
       if(!video) return;
@@ -9242,7 +9953,7 @@ function updateFixedLayout(){
       updateRewardUI();
       wakePlayerControls();
 
-      homeScreen.classList.remove("active");
+      Object.values(mainTabScreens).forEach(screen => screen.classList.remove("active"));
       watchScreen.classList.add("active");
       watchScreen.classList.remove("mini-mode", "mini-size-1", "mini-size-2", "mini-size-3");
 
@@ -9356,7 +10067,10 @@ function endMiniDrag(){
       clearTimeout(scrollIdleTimer);
 
       watchScreen.classList.add("mini-mode");
+      shortsScreen.classList.remove("active");
+      mypageScreen.classList.remove("active");
       homeScreen.classList.add("active");
+      setBottomNavActive("home");
       watchScreen.classList.add("active");
 
       miniSizeLevel = 1;
@@ -9410,16 +10124,15 @@ window.addEventListener("resize", clampMiniPosition);
       clearTimeout(scrollIdleTimer);
       watchScreen.classList.remove("mini-mode", "mini-size-1", "mini-size-2", "mini-size-3");
       watchScreen.classList.remove("active");
-      homeScreen.classList.add("active");
+      showMainTab("home");
       ytFrame.src = "";
-      closeAllSheets();
 
       miniSizeLevel = 1;
       syncMiniSizeButton();
     }
 
-    const managedSheetIds = ["walletSheet", "walletSheetLive", "donationSheet", "openSheet", "adSheet", "commentSheet", "liveChatSheet", "promoSheet"];
-    const exclusiveSheetIds = ["walletSheet", "walletSheetLive", "donationSheet", "openSheet", "adSheet", "liveChatSheet", "promoSheet"];
+    const managedSheetIds = ["walletSheet", "walletSheetLive", "walletWithdrawSheet", "walletHistorySheet", "donationSheet", "viewCashChargeSheet", "openSheet", "adSheet", "commentSheet", "liveChatSheet", "promoSheet"];
+    const exclusiveSheetIds = ["walletSheet", "walletSheetLive", "walletWithdrawSheet", "walletHistorySheet", "donationSheet", "viewCashChargeSheet", "openSheet", "adSheet", "liveChatSheet", "promoSheet"];
     const openSheetFxClasses = ["fx-random-normal", "fx-random-fail", "fx-random-gold", "fx-gold-open"];
     const RANDOM_X_VIDEO_SRC = "./assets/X_view.mp4";
     const RANDOM_G_VIDEO_SRC = "./assets/G_view.mp4";
@@ -9440,6 +10153,7 @@ window.addEventListener("resize", clampMiniPosition);
 
     function syncSheetScrollLock(){
       const hasOpenSheet = !!document.querySelector(".sheet.show");
+      document.body.classList.toggle("sheet-open", hasOpenSheet);
       document.body.style.overflowY = hasOpenSheet ? "hidden" : "";
       document.documentElement.style.overflowY = hasOpenSheet ? "hidden" : "";
     }
@@ -10658,6 +11372,54 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     document.getElementById("backToHome").addEventListener("click", backToHome);
+    document.getElementById("closeShortsWatchBtn").addEventListener("click", () => showMainTab("shorts"));
+    document.getElementById("shortsCommentBtn").addEventListener("click", () => showToast("숏츠 댓글 기능은 준비 중입니다."));
+    document.getElementById("shortsShareBtn").addEventListener("click", () => showToast("숏츠 공유 기능은 준비 중입니다."));
+    bottomNavItems.forEach(item => {
+      item.addEventListener("click", () => {
+        const tabName = item.dataset.mainTab;
+        showMainTab(tabName);
+      });
+    });
+    document.getElementById("mypageWalletBtn").addEventListener("click", () => showMainTab("wallet"));
+    document.getElementById("mypageChannelBtn").addEventListener("click", openDonationOwnerScreen);
+    document.getElementById("mypageDonationManageBtn").addEventListener("click", openDonationOwnerScreen);
+    document.getElementById("mypageYoutubeBtn").addEventListener("click", () => showToast("YouTube 계정 연동은 추후 지원 예정입니다."));
+    document.getElementById("homeShortsMoreBtn").addEventListener("click", () => showMainTab("shorts"));
+    homeFilterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        state.homeFilter = button.dataset.homeFilter || "all";
+        renderHome();
+        document.querySelector("#homeScreen .main-scroll")?.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+    document.querySelectorAll("[data-home-more]").forEach(button => button.addEventListener("click", () => showToast("라이브 전체보기는 준비 중입니다.")));
+    document.getElementById("walletPageBackBtn").addEventListener("click", () => showMainTab("home"));
+    document.getElementById("walletPageRandomBox").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "normal" }));
+    document.getElementById("walletPageGoldBox").addEventListener("click", () => startOpenFlow("gold", { fromWallet: true }));
+    walletWithdrawBtn.addEventListener("click", openWithdrawSheet);
+    withdrawAmountInput.addEventListener("input", () => {
+      const digits = sanitizeDonationDigits(withdrawAmountInput.value);
+      withdrawAmountInput.value = digits ? Number(digits).toLocaleString() : "";
+      updateWithdrawUI();
+    });
+    document.querySelectorAll("[data-withdraw-amount]").forEach(button => {
+      button.addEventListener("click", () => {
+        const available = Math.max(0, Number(state.totalRewardPoint) || 0);
+        const amount = button.dataset.withdrawAmount === "all" ? available : Number(button.dataset.withdrawAmount);
+        withdrawAmountInput.value = Math.max(0, amount || 0).toLocaleString();
+        updateWithdrawUI();
+      });
+    });
+    confirmWithdrawBtn.addEventListener("click", completeDemoWithdrawal);
+    document.getElementById("walletHistoryBtn").addEventListener("click", () => {
+      renderWalletHistory();
+      openSheet("walletHistorySheet");
+    });
+    document.getElementById("walletChargeBtn").addEventListener("click", () => openViewCashChargeSheet(0, "wallet"));
+    document.querySelectorAll("[data-mypage-demo]").forEach(button => {
+      button.addEventListener("click", () => showToast(`${button.dataset.mypageDemo} 기능은 준비 중입니다.`));
+    });
     enterMiniBtn.addEventListener("click", enterMiniMode);
     miniCloseBtn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -10905,9 +11667,6 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       });
       returnToDonationAmountView();
     });
-    closeViewCashChargeBtn.addEventListener("click", () => {
-      returnToDonationAmountView();
-    });
     document.getElementById("walletOpenRandom").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "normal" }));
     document.getElementById("walletOpenRandomFail").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "chance_fail" }));
     document.getElementById("walletOpenRandomGold").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "chance_gold" }));
@@ -10976,7 +11735,7 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       });
     });
 
-    [refreshLatestVideosBtnTop, refreshLatestVideosBtnFloat].forEach(button => {
+    [refreshLatestVideosBtnTop, refreshLatestVideosBtnFloat, refreshLatestVideosBtnHome].forEach(button => {
       if(!button) return;
       button.addEventListener("click", refreshLatestVideosFromYouTube);
     });
@@ -11064,6 +11823,7 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     updateWallet();
     setBenefitEnabled(false);
     updateRewardUI();
+    showMainTab("home");
     loadVideosFromYouTube();
   </script>
 </body>
