@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.80 -->
+<!-- Version: DEV v0.3.82 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -5630,18 +5630,20 @@
       font-size:10px;
       font-weight:800;
     }
-    .app:has(#watchScreen.active:not(.mini-mode)) .bottom-nav,
-    .app:has(#shortsWatchScreen.active) .bottom-nav{display:none;}
-    .shorts-watch-screen{background:#050505;color:#fff;z-index:90;}
-    .shorts-watch-header{height:calc(52px + var(--safe-top));padding:var(--safe-top) 12px 0;display:flex;align-items:center;gap:10px;background:#050505;}
+    .app:has(#watchScreen.active:not(.mini-mode)) .bottom-nav{display:none;}
+    .shorts-watch-screen{background:#050505;color:#fff;z-index:35;padding-bottom:calc(66px + env(safe-area-inset-bottom, 0px));}
+    .shorts-watch-header{height:calc(52px + var(--safe-top));padding:var(--safe-top) 12px 0;display:flex;align-items:center;gap:10px;background:#050505;flex-shrink:0;}
     .shorts-watch-header button{width:38px;height:38px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:22px;cursor:pointer;}
     .shorts-watch-header strong{font-size:16px;}
-    .shorts-watch-stage{position:relative;flex:1;min-height:0;display:flex;justify-content:center;overflow:hidden;background:#000;}
-    .shorts-watch-frame{height:100%;max-height:calc(100dvh - 52px - var(--safe-top));aspect-ratio:9/16;border:0;background:#000;}
-    .shorts-watch-actions{position:absolute;right:14px;bottom:112px;display:flex;flex-direction:column;gap:12px;}
+    .shorts-viewer{flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;background:#000;scrollbar-width:none;}
+    .shorts-viewer::-webkit-scrollbar{display:none;}
+    .shorts-slide{position:relative;width:100%;height:100%;min-height:100%;display:flex;justify-content:center;overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always;background:#000;}
+    .shorts-watch-frame{height:100%;max-width:100%;aspect-ratio:9/16;border:0;background:#000;}
+    .shorts-watch-actions{position:absolute;right:0;bottom:96px;width:76px;padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:12px;touch-action:none;user-select:none;}
     .shorts-watch-actions button{width:48px;min-height:48px;border:0;border-radius:50%;background:rgba(20,20,20,.66);color:#fff;font-size:19px;cursor:pointer;}
     .shorts-watch-info{position:absolute;left:16px;right:76px;bottom:22px;text-shadow:0 2px 8px rgba(0,0,0,.8);}
     .shorts-watch-info strong,.shorts-watch-info span{display:block;}.shorts-watch-info strong{font-size:15px;line-height:1.45;}.shorts-watch-info span{margin-top:5px;font-size:12px;color:#e5e7eb;}
+    .shorts-step-btn{font-size:15px !important;font-weight:900;}
 
     /* VIEWSTER TAB PAGES */
     #homeScreen .tabs-wrap{border-bottom:0;background:#fff;}
@@ -5785,7 +5787,7 @@
           <button class="tool-btn" data-add="60">+1분</button>
           <button class="tool-btn" data-reward-set="595">+보상</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.80</span>
+          <span class="dev-version-label">DEV v0.3.82</span>
         </div>
       </header>
 
@@ -5823,7 +5825,7 @@
             <button class="tool-btn" data-add="60">+1분</button>
             <button class="tool-btn" data-reward-set="595">+보상</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.80</span>
+            <span class="dev-version-label">DEV v0.3.82</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -5883,11 +5885,7 @@
 
     <section class="screen shorts-watch-screen" id="shortsWatchScreen">
       <div class="shorts-watch-header"><button type="button" id="closeShortsWatchBtn" aria-label="숏츠 닫기">←</button><strong>Shorts</strong></div>
-      <div class="shorts-watch-stage">
-        <iframe class="shorts-watch-frame" id="shortsWatchFrame" src="" title="YouTube Shorts player" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-        <div class="shorts-watch-actions"><button type="button" id="shortsCommentBtn" aria-label="댓글">💬</button><button type="button" id="shortsShareBtn" aria-label="공유">↗</button></div>
-        <div class="shorts-watch-info"><strong id="shortsWatchTitle"></strong><span id="shortsWatchChannel"></span></div>
-      </div>
+      <div class="shorts-viewer" id="shortsViewer"></div>
     </section>
 
     <section class="screen main-tab-screen" id="walletPageScreen">
@@ -6779,6 +6777,9 @@
       videoUrlPool: [],
       currentVideo: null,
       homeFilter: "all",
+      shortsItems: [],
+      currentShortIndex: 0,
+      shortsReturnTab: "shorts",
       integratedWatchSeconds: 0,
       rewardGoalSeconds: 600,
       rewardAvailable: false,
@@ -6926,9 +6927,7 @@
     const watchScreen = document.getElementById("watchScreen");
     const shortsScreen = document.getElementById("shortsScreen");
     const shortsWatchScreen = document.getElementById("shortsWatchScreen");
-    const shortsWatchFrame = document.getElementById("shortsWatchFrame");
-    const shortsWatchTitle = document.getElementById("shortsWatchTitle");
-    const shortsWatchChannel = document.getElementById("shortsWatchChannel");
+    const shortsViewer = document.getElementById("shortsViewer");
     const walletPageScreen = document.getElementById("walletPageScreen");
     const mypageScreen = document.getElementById("mypageScreen");
     const mainTabScreens = { home: homeScreen, shorts: shortsScreen, wallet: walletPageScreen, mypage: mypageScreen };
@@ -9934,7 +9933,9 @@ function updateFixedLayout(){
       Object.values(mainTabScreens).forEach(screen => screen.classList.toggle("active", screen === nextScreen));
       watchScreen.classList.remove("active", "mini-mode", "mini-size-1", "mini-size-2", "mini-size-3");
       shortsWatchScreen.classList.remove("active");
-      shortsWatchFrame.src = "";
+      shortsViewer.querySelectorAll("iframe").forEach(frame => frame.removeAttribute("src"));
+      shortsViewer.replaceChildren();
+      state.shortsItems = [];
       setBottomNavActive(tabName in mainTabScreens ? tabName : "home");
       if(tabName === "shorts") renderShortsPage();
       if(tabName === "wallet" || tabName === "mypage") renderTabbedWallet();
@@ -9942,14 +9943,57 @@ function updateFixedLayout(){
     }
 
     function openShortsWatch(id){
-      const video = state.videos.find(item => String(item.id) === String(id));
-      if(!video?.videoId) return;
+      const shortsItems = getHomeShortsVideos().filter(video => video?.videoId);
+      if(!shortsItems.length) return;
+      const clickedIndex = shortsItems.findIndex(item => String(item.id) === String(id));
+      state.shortsReturnTab = homeScreen.classList.contains("active") ? "home" : "shorts";
+      state.shortsItems = shortsItems;
+      state.currentShortIndex = clickedIndex >= 0 ? clickedIndex : 0;
+
+      shortsViewer.innerHTML = shortsItems.map((video, index) => {
+        const embedUrl = `https://www.youtube.com/embed/${encodeURIComponent(video.videoId)}?autoplay=1&playsinline=1&rel=0`;
+        return `
+          <section class="shorts-slide" data-short-index="${index}">
+            <iframe class="shorts-watch-frame" data-src="${embedUrl}" title="${escapeHtml(video.title || "Shorts")}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+            <div class="shorts-watch-actions" aria-label="숏츠 동작">
+              <button class="shorts-step-btn" type="button" data-short-step="-1" aria-label="이전 숏츠">↑</button>
+              <button type="button" data-short-action="comment"><span>💬</span><small>댓글</small></button>
+              <button type="button" data-short-action="share"><span>↗</span><small>공유</small></button>
+              <button class="shorts-step-btn" type="button" data-short-step="1" aria-label="다음 숏츠">↓</button>
+            </div>
+            <div class="shorts-watch-info">
+              <strong>${escapeHtml(video.title || "Shorts")}</strong>
+              <span>${escapeHtml(video.channel || "YouTube 채널")} · ${escapeHtml(video.views || "조회수 준비중")}</span>
+            </div>
+          </section>`;
+      }).join("");
       Object.values(mainTabScreens).forEach(screen => screen.classList.remove("active"));
       watchScreen.classList.remove("active");
-      shortsWatchTitle.textContent = video.title || "Shorts";
-      shortsWatchChannel.textContent = `${video.channel || "YouTube 채널"} · ${video.views || "조회수 준비중"}`;
-      shortsWatchFrame.src = `https://www.youtube.com/embed/${encodeURIComponent(video.videoId)}?autoplay=1&playsinline=1&rel=0`;
       shortsWatchScreen.classList.add("active");
+      setBottomNavActive("shorts");
+      requestAnimationFrame(() => {
+        shortsViewer.scrollTop = state.currentShortIndex * shortsViewer.clientHeight;
+        syncShortsViewer(state.currentShortIndex);
+      });
+    }
+
+    function syncShortsViewer(index){
+      const safeIndex = Math.max(0, Math.min(index, state.shortsItems.length - 1));
+      state.currentShortIndex = safeIndex;
+      shortsViewer.querySelectorAll(".shorts-slide").forEach((slide, slideIndex) => {
+        const frame = slide.querySelector("iframe[data-src]");
+        if(!frame) return;
+        if(slideIndex === safeIndex && !frame.getAttribute("src")){
+          frame.setAttribute("src", frame.dataset.src);
+        }else if(slideIndex !== safeIndex && frame.getAttribute("src")){
+          frame.removeAttribute("src");
+        }
+      });
+    }
+
+    function moveShortsViewer(step){
+      const nextIndex = Math.max(0, Math.min(state.currentShortIndex + step, state.shortsItems.length - 1));
+      shortsViewer.scrollTo({ top: nextIndex * shortsViewer.clientHeight, behavior: "smooth" });
     }
 
     async function openWatch(id){
@@ -11394,9 +11438,55 @@ window.addEventListener("resize", clampMiniPosition);
     }
 
     document.getElementById("backToHome").addEventListener("click", backToHome);
-    document.getElementById("closeShortsWatchBtn").addEventListener("click", () => showMainTab("shorts"));
-    document.getElementById("shortsCommentBtn").addEventListener("click", () => showToast("숏츠 댓글 기능은 준비 중입니다."));
-    document.getElementById("shortsShareBtn").addEventListener("click", () => showToast("숏츠 공유 기능은 준비 중입니다."));
+    document.getElementById("closeShortsWatchBtn").addEventListener("click", () => showMainTab(state.shortsReturnTab || "shorts"));
+    let shortsScrollFrame = 0;
+    shortsViewer.addEventListener("scroll", () => {
+      cancelAnimationFrame(shortsScrollFrame);
+      shortsScrollFrame = requestAnimationFrame(() => {
+        if(!shortsViewer.clientHeight || !state.shortsItems.length) return;
+        const nextIndex = Math.round(shortsViewer.scrollTop / shortsViewer.clientHeight);
+        if(nextIndex !== state.currentShortIndex) syncShortsViewer(nextIndex);
+      });
+    }, { passive: true });
+    let shortsActionTouchStartY = null;
+    let shortsActionSwipeHandled = false;
+    shortsViewer.addEventListener("touchstart", event => {
+      if(!event.target.closest(".shorts-watch-actions")) return;
+      shortsActionTouchStartY = event.touches[0]?.clientY ?? null;
+      shortsActionSwipeHandled = false;
+    }, { passive: true });
+    shortsViewer.addEventListener("touchmove", event => {
+      if(shortsActionTouchStartY === null) return;
+      event.preventDefault();
+    }, { passive: false });
+    shortsViewer.addEventListener("touchend", event => {
+      if(shortsActionTouchStartY === null) return;
+      const endY = event.changedTouches[0]?.clientY ?? shortsActionTouchStartY;
+      const distance = endY - shortsActionTouchStartY;
+      shortsActionTouchStartY = null;
+      if(Math.abs(distance) < 45) return;
+      shortsActionSwipeHandled = true;
+      moveShortsViewer(distance < 0 ? 1 : -1);
+      setTimeout(() => { shortsActionSwipeHandled = false; }, 0);
+    }, { passive: true });
+    shortsViewer.addEventListener("touchcancel", () => {
+      shortsActionTouchStartY = null;
+      shortsActionSwipeHandled = false;
+    }, { passive: true });
+    shortsViewer.addEventListener("click", event => {
+      if(shortsActionSwipeHandled){
+        event.preventDefault();
+        return;
+      }
+      const stepButton = event.target.closest("[data-short-step]");
+      if(stepButton){
+        moveShortsViewer(Number(stepButton.dataset.shortStep) || 0);
+        return;
+      }
+      const actionButton = event.target.closest("[data-short-action]");
+      if(actionButton?.dataset.shortAction === "comment") showToast("댓글 기능은 데모입니다.");
+      if(actionButton?.dataset.shortAction === "share") showToast("공유 기능은 데모입니다.");
+    });
     bottomNavItems.forEach(item => {
       item.addEventListener("click", () => {
         const tabName = item.dataset.mainTab;
