@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.67 -->
+<!-- Version: DEV v0.3.68 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2556,13 +2556,43 @@
     }
     .donation-balance-card{
       display:flex;
-      align-items:flex-end;
+      align-items:flex-start;
       justify-content:space-between;
       gap:12px;
       padding:14px 16px;
       border-radius:20px;
       background:#111827;
       color:#fff;
+    }
+    .donation-balance-main{
+      flex:1;
+      min-width:0;
+    }
+    .donation-balance-assets{
+      width:min(156px, 42%);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .donation-asset-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:14px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.08);
+      font-size:11px;
+      color:#cbd5e1;
+      font-weight:700;
+    }
+    .donation-asset-row strong{
+      color:#fff;
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:-0.02em;
+      white-space:nowrap;
     }
     .donation-balance-label{
       font-size:12px;
@@ -2581,6 +2611,142 @@
       color:#94a3b8;
       text-align:right;
       line-height:1.4;
+    }
+    .donation-funding-card{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding:14px 16px;
+      border-radius:18px;
+      border:1px solid #e5e7eb;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(15,23,42,.05);
+    }
+    .donation-funding-title{
+      font-size:13px;
+      font-weight:900;
+      color:#111827;
+    }
+    .donation-funding-lines{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .donation-funding-line{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-size:13px;
+      color:#475569;
+      font-weight:800;
+    }
+    .donation-funding-line strong{
+      color:#111827;
+      font-size:14px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .donation-funding-empty{
+      font-size:12px;
+      color:#64748b;
+      font-weight:700;
+    }
+    .donation-funding-shortage{
+      min-height:18px;
+      font-size:12px;
+      color:#dc2626;
+      font-weight:800;
+      line-height:1.5;
+    }
+    .donation-complete-meta{
+      margin-top:8px;
+      font-size:12px;
+      color:#475569;
+      font-weight:800;
+      text-align:center;
+      line-height:1.5;
+    }
+    .donation-charge-copy{
+      font-size:13px;
+      color:#475569;
+      line-height:1.6;
+      font-weight:700;
+    }
+    .donation-charge-shortage-card{
+      padding:14px 16px;
+      border-radius:18px;
+      background:linear-gradient(135deg,#fff7ed,#fef2f2);
+      border:1px solid #fed7aa;
+    }
+    .donation-charge-label{
+      font-size:12px;
+      color:#b45309;
+      font-weight:800;
+      margin-bottom:6px;
+    }
+    .donation-charge-amount{
+      font-size:24px;
+      color:#7c2d12;
+      font-weight:900;
+      letter-spacing:-0.03em;
+    }
+    .donation-charge-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+    .donation-charge-option{
+      min-height:60px;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid #e5e7eb;
+      background:#fff;
+      color:#111827;
+      text-align:left;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:4px;
+      cursor:pointer;
+      transition:border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+    }
+    .donation-charge-option span{
+      font-size:11px;
+      color:#64748b;
+      font-weight:700;
+    }
+    .donation-charge-option strong{
+      font-size:15px;
+      font-weight:900;
+      color:#111827;
+    }
+    .donation-charge-option.active{
+      border-color:#f59e0b;
+      box-shadow:0 10px 20px rgba(245,158,11,.16);
+      transform:translateY(-1px);
+      background:#fff7ed;
+    }
+    .donation-charge-methods{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px;
+    }
+    .donation-charge-method-btn{
+      min-height:44px;
+      border-radius:14px;
+      border:1px solid #d1d5db;
+      background:#fff;
+      color:#475569;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+      transition:border-color .18s ease, box-shadow .18s ease, color .18s ease;
+    }
+    .donation-charge-method-btn.active{
+      border-color:#0f766e;
+      color:#0f766e;
+      box-shadow:0 10px 20px rgba(15,118,110,.14);
     }
     .donation-section-label{
       font-size:13px;
@@ -5305,7 +5471,7 @@
           <button class="tool-btn" data-open-speed="0.9">x0.9</button>
           <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.67</span>
+          <span class="dev-version-label">DEV v0.3.68</span>
         </div>
       </header>
 
@@ -5346,7 +5512,7 @@
             <button class="tool-btn" data-open-speed="0.9">x0.9</button>
             <button class="tool-btn active-speed" data-open-speed="1">x1.0</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.67</span>
+            <span class="dev-version-label">DEV v0.3.68</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -5604,11 +5770,14 @@
           </div>
 
           <div class="donation-balance-card">
-            <div>
-              <div class="donation-balance-label">내 보유 포인트</div>
+            <div class="donation-balance-main">
+              <div class="donation-balance-label">보유 재화</div>
               <div class="donation-balance-value" id="donationBalanceText">0P</div>
             </div>
-            <div class="donation-balance-note">선택한 금액만큼<br>즉시 차감됩니다</div>
+            <div class="donation-balance-assets">
+              <div class="donation-asset-row"><span>뷰캐시</span><strong id="donationViewCashText">0캐시</strong></div>
+              <div class="donation-asset-row"><span>리워드</span><strong id="donationRewardText">0P</strong></div>
+            </div>
           </div>
 
           <div class="donation-section-label">후원 금액 선택</div>
@@ -5626,6 +5795,14 @@
               <input class="donation-custom-input" id="donationCustomAmountInput" type="text" inputmode="numeric" placeholder="예: 7,777" aria-label="직접 후원 금액 입력" />
               <span class="donation-custom-input-unit">P</span>
             </div>
+          </div>
+
+          <div class="donation-funding-card" id="donationFundingCard">
+            <div class="donation-funding-title">사용 예정</div>
+            <div class="donation-funding-lines" id="donationFundingLines">
+              <div class="donation-funding-empty">금액을 선택하면 사용 예정 재화가 표시됩니다.</div>
+            </div>
+            <div class="donation-funding-shortage" id="donationFundingShortage"></div>
           </div>
 
           <div class="donation-selected-text" id="donationSelectedText">후원 금액을 선택해주세요.</div>
@@ -5654,6 +5831,7 @@
             <div class="donation-complete-title" id="donationCompleteTitle" hidden>후원 완료</div>
             <div class="donation-complete-text" id="donationCompleteText">10,000P 후원이 완료되었습니다.</div>
             <div class="donation-complete-sub" id="donationCompleteSub">내 후원 순위가 갱신되었습니다.</div>
+            <div class="donation-complete-meta" id="donationCompleteMeta"></div>
             <div class="donation-complete-download-wrap">
               <a class="donation-complete-download-btn" id="donationCompleteDownloadBtn" href="#" download hidden>감사카드 저장</a>
             </div>
@@ -5664,6 +5842,52 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="sheet sheet--action" id="viewCashChargeSheet">
+    <div class="sheet-head">
+      <div class="sheet-title">뷰캐시 충전</div>
+      <button class="sheet-close" data-close="viewCashChargeSheet">×</button>
+    </div>
+    <div class="sheet-body">
+      <div class="donation-charge-copy">부족한 금액만큼 뷰캐시를 충전할 수 있습니다.</div>
+      <div class="donation-charge-shortage-card">
+        <div class="donation-charge-label">현재 부족 금액</div>
+        <div class="donation-charge-amount" id="viewCashChargeShortageText">0캐시</div>
+      </div>
+      <div class="donation-section-label">충전 금액 선택</div>
+      <div class="donation-charge-grid" id="viewCashChargeGrid">
+        <button class="donation-charge-option active" id="viewCashChargeShortageBtn" type="button" data-charge-amount="0">
+          <span>부족 금액만 충전</span>
+          <strong>0캐시</strong>
+        </button>
+        <button class="donation-charge-option" type="button" data-charge-amount="5000">
+          <span>추가 충전</span>
+          <strong>5,000캐시</strong>
+        </button>
+        <button class="donation-charge-option" type="button" data-charge-amount="10000">
+          <span>추가 충전</span>
+          <strong>10,000캐시</strong>
+        </button>
+        <button class="donation-charge-option" type="button" data-charge-amount="30000">
+          <span>추가 충전</span>
+          <strong>30,000캐시</strong>
+        </button>
+        <button class="donation-charge-option" type="button" data-charge-amount="50000">
+          <span>추가 충전</span>
+          <strong>50,000캐시</strong>
+        </button>
+      </div>
+      <div class="donation-section-label">결제 수단</div>
+      <div class="donation-charge-methods" id="viewCashChargeMethods">
+        <button class="donation-charge-method-btn active" type="button" data-charge-method="card">신용/체크카드</button>
+        <button class="donation-charge-method-btn" type="button" data-charge-method="easy">간편결제</button>
+        <button class="donation-charge-method-btn" type="button" data-charge-method="phone">휴대폰 결제</button>
+      </div>
+      <div class="donation-feedback" id="viewCashChargeFeedback"></div>
+      <button class="donation-submit-btn" id="confirmViewCashChargeBtn" type="button">결제하기</button>
+      <button class="donation-sub-btn" id="closeViewCashChargeBtn" type="button">닫기</button>
     </div>
   </section>
 
@@ -6102,8 +6326,9 @@
       "https://www.youtube.com/watch?v=ScOYniOhy7s"
     ];
     const VIDEO_POOL_STORAGE_KEY = "viewster_video_url_pool";
-    const WALLET_VERSION = "v0.3.12_wallet_1000000";
-    const DEFAULT_WALLET_BALANCE = 1000000;
+    const WALLET_VERSION = "v0.3.13_wallet_viewcash_reward";
+    const DEFAULT_REWARD_BALANCE = 1000000;
+    const DEFAULT_VIEW_CASH_BALANCE = 3000;
     const DEFAULT_RANDOM_BOX_COUNT = 100;
     const DEFAULT_GOLD_BOX_COUNT = 100;
     const CURRENT_DONATION_USER = {
@@ -6146,6 +6371,7 @@
       openBoxBtnMode: "start",
       openStageTimers: [],
       openStageMidPlaybackRate: 1,
+      totalViewCash: DEFAULT_VIEW_CASH_BALANCE,
       donationSelectedAmount: 0,
       donationCustomMode: false,
       donationCustomAmountRaw: "",
@@ -6154,6 +6380,8 @@
       donationHistory: [],
       donationChannelTotals: {},
       donationRankings: {},
+      donationChargeAmount: 0,
+      donationChargeMethod: "card",
       promoPreviewVideo: null,
       promoPreviewRequestId: 0,
     };
@@ -6386,6 +6614,10 @@
     const donationOwnerPreviewAddMoreBtn = document.getElementById("donationOwnerPreviewAddMoreBtn");
     const donationAmountChannelId = document.getElementById("donationAmountChannelId");
     const donationBalanceText = document.getElementById("donationBalanceText");
+    const donationViewCashText = document.getElementById("donationViewCashText");
+    const donationRewardText = document.getElementById("donationRewardText");
+    const donationFundingLines = document.getElementById("donationFundingLines");
+    const donationFundingShortage = document.getElementById("donationFundingShortage");
     const donationSelectedText = document.getElementById("donationSelectedText");
     const donationFeedback = document.getElementById("donationFeedback");
     const submitDonationBtn = document.getElementById("submitDonationBtn");
@@ -6408,11 +6640,20 @@
     const donationCompleteTitle = document.getElementById("donationCompleteTitle");
     const donationCompleteText = document.getElementById("donationCompleteText");
     const donationCompleteSub = document.getElementById("donationCompleteSub");
+    const donationCompleteMeta = document.getElementById("donationCompleteMeta");
     const donationCompleteCard = document.getElementById("donationCompleteCard");
     const donationCompleteHero = document.getElementById("donationCompleteHero");
     const donationCompleteCardTitle = document.getElementById("donationCompleteCardTitle");
     const donationCompleteCardMessage = document.getElementById("donationCompleteCardMessage");
     const donationCompleteDownloadBtn = document.getElementById("donationCompleteDownloadBtn");
+    const viewCashChargeSheet = document.getElementById("viewCashChargeSheet");
+    const viewCashChargeShortageText = document.getElementById("viewCashChargeShortageText");
+    const viewCashChargeShortageBtn = document.getElementById("viewCashChargeShortageBtn");
+    const viewCashChargeGrid = document.getElementById("viewCashChargeGrid");
+    const viewCashChargeMethods = document.getElementById("viewCashChargeMethods");
+    const viewCashChargeFeedback = document.getElementById("viewCashChargeFeedback");
+    const confirmViewCashChargeBtn = document.getElementById("confirmViewCashChargeBtn");
+    const closeViewCashChargeBtn = document.getElementById("closeViewCashChargeBtn");
     const rewardAdVideo = document.getElementById("rewardAdVideo");
     const rewardAdProgress = document.getElementById("rewardAdProgress");
     const rewardAdBtn = document.getElementById("rewardAdBtn");
@@ -7911,6 +8152,8 @@
       return {
         walletVersion: WALLET_VERSION,
         balance: Number(state.totalRewardPoint) || 0,
+        rewardBalance: Number(state.totalRewardPoint) || 0,
+        viewCashBalance: Number(state.totalViewCash) || 0,
         randomBoxCount: Number(state.randomBoxCount) || DEFAULT_RANDOM_BOX_COUNT,
         goldBoxCount: Number(state.goldBoxCount) || DEFAULT_GOLD_BOX_COUNT,
         donations: Array.isArray(state.donationHistory) ? state.donationHistory : [],
@@ -7936,16 +8179,25 @@
       }
 
       if(parsed?.walletVersion === WALLET_VERSION){
-        const savedBalance = Number(parsed?.balance);
-        state.totalRewardPoint = Number.isFinite(savedBalance) ? Math.max(0, savedBalance) : DEFAULT_WALLET_BALANCE;
+        const savedRewardBalance = Number(parsed?.rewardBalance ?? parsed?.balance);
+        const savedViewCashBalance = Number(parsed?.viewCashBalance);
+        state.totalRewardPoint = Number.isFinite(savedRewardBalance) ? Math.max(0, savedRewardBalance) : DEFAULT_REWARD_BALANCE;
+        state.totalViewCash = Number.isFinite(savedViewCashBalance) ? Math.max(0, savedViewCashBalance) : DEFAULT_VIEW_CASH_BALANCE;
         state.randomBoxCount = Number.isFinite(Number(parsed?.randomBoxCount)) ? Math.max(0, Number(parsed.randomBoxCount)) : DEFAULT_RANDOM_BOX_COUNT;
         state.goldBoxCount = Number.isFinite(Number(parsed?.goldBoxCount)) ? Math.max(0, Number(parsed.goldBoxCount)) : DEFAULT_GOLD_BOX_COUNT;
       } else {
-        state.totalRewardPoint = DEFAULT_WALLET_BALANCE;
+        state.totalRewardPoint = DEFAULT_REWARD_BALANCE;
+        state.totalViewCash = DEFAULT_VIEW_CASH_BALANCE;
         state.randomBoxCount = DEFAULT_RANDOM_BOX_COUNT;
         state.goldBoxCount = DEFAULT_GOLD_BOX_COUNT;
       }
-      state.donationHistory = Array.isArray(parsed?.donations) ? parsed.donations : [];
+      state.donationHistory = Array.isArray(parsed?.donations)
+        ? parsed.donations.map(donation => ({
+            ...donation,
+            usedViewCash: Math.max(0, Number(donation?.usedViewCash) || 0),
+            usedReward: Math.max(0, Number(donation?.usedReward ?? donation?.amount) || 0)
+          }))
+        : [];
       state.donationChannelTotals = parsed?.channelTotals && typeof parsed.channelTotals === "object"
         ? parsed.channelTotals
         : {};
@@ -7988,6 +8240,7 @@
       donationSelectedText.textContent = message;
       donationFeedback.textContent = "";
       donationFeedback.classList.remove("is-error");
+      state.donationChargeAmount = 0;
     }
 
     function sanitizeDonationDigits(value){
@@ -8010,6 +8263,105 @@
 
     function setDonationView(view){
       state.donationView = view;
+    }
+
+    function getDonationFundingPlan(amount){
+      const safeAmount = Math.max(0, Number(amount) || 0);
+      const viewCashBalance = Math.max(0, Number(state.totalViewCash) || 0);
+      const rewardBalance = Math.max(0, Number(state.totalRewardPoint) || 0);
+      const usedViewCash = Math.min(viewCashBalance, safeAmount);
+      const remainingAfterViewCash = Math.max(safeAmount - usedViewCash, 0);
+      const usedReward = Math.min(rewardBalance, remainingAfterViewCash);
+      const shortage = Math.max(safeAmount - usedViewCash - usedReward, 0);
+      return {
+        amount: safeAmount,
+        viewCashBalance,
+        rewardBalance,
+        totalBalance: viewCashBalance + rewardBalance,
+        usedViewCash,
+        usedReward,
+        shortage,
+        canDonate: safeAmount > 0 && shortage <= 0
+      };
+    }
+
+    function formatDonationFundingSummary(plan){
+      if(!plan || plan.amount <= 0){
+        return "";
+      }
+      const pieces = [];
+      if(plan.usedViewCash > 0){
+        pieces.push(`뷰캐시 ${plan.usedViewCash.toLocaleString()}캐시`);
+      }
+      if(plan.usedReward > 0){
+        pieces.push(`리워드 ${plan.usedReward.toLocaleString()}P`);
+      }
+      return pieces.join(" + ");
+    }
+
+    function renderDonationFundingPlan(plan){
+      if(!donationFundingLines || !donationFundingShortage) return;
+      if(!plan || plan.amount <= 0){
+        donationFundingLines.innerHTML = `<div class="donation-funding-empty">금액을 선택하면 사용 예정 재화가 표시됩니다.</div>`;
+        donationFundingShortage.textContent = "";
+        return;
+      }
+      const lines = [];
+      if(plan.usedViewCash > 0){
+        lines.push(`<div class="donation-funding-line"><span>뷰캐시</span><strong>${plan.usedViewCash.toLocaleString()}캐시</strong></div>`);
+      }
+      if(plan.usedReward > 0){
+        lines.push(`<div class="donation-funding-line"><span>리워드</span><strong>${plan.usedReward.toLocaleString()}P</strong></div>`);
+      }
+      if(!lines.length){
+        lines.push(`<div class="donation-funding-empty">사용할 재화가 아직 없습니다.</div>`);
+      }
+      donationFundingLines.innerHTML = lines.join("");
+      donationFundingShortage.textContent = plan.shortage > 0
+        ? `보유 재화가 부족합니다. ${plan.shortage.toLocaleString()}캐시 충전이 필요합니다.`
+        : "";
+    }
+
+    function updateChargeSheetUI(shortage = 0){
+      const safeShortage = Math.max(0, Number(shortage) || 0);
+      state.donationChargeAmount = safeShortage || state.donationChargeAmount || 0;
+      state.donationChargeMethod = state.donationChargeMethod || "card";
+      if(viewCashChargeShortageText){
+        viewCashChargeShortageText.textContent = `${safeShortage.toLocaleString()}캐시`;
+      }
+      if(viewCashChargeShortageBtn){
+        viewCashChargeShortageBtn.dataset.chargeAmount = String(safeShortage);
+        const valueStrong = viewCashChargeShortageBtn.querySelector("strong");
+        if(valueStrong){
+          valueStrong.textContent = `${safeShortage.toLocaleString()}캐시`;
+        }
+      }
+      if(viewCashChargeGrid){
+        viewCashChargeGrid.querySelectorAll("[data-charge-amount]").forEach(button => {
+          const amount = Math.max(0, Number(button.dataset.chargeAmount) || 0);
+          button.classList.toggle("active", amount === Number(state.donationChargeAmount || 0));
+        });
+      }
+      if(viewCashChargeMethods){
+        viewCashChargeMethods.querySelectorAll("[data-charge-method]").forEach(button => {
+          button.classList.toggle("active", button.dataset.chargeMethod === state.donationChargeMethod);
+        });
+      }
+      if(viewCashChargeFeedback){
+        viewCashChargeFeedback.textContent = "";
+        viewCashChargeFeedback.classList.remove("is-error");
+      }
+    }
+
+    function openViewCashChargeSheet(shortage = 0){
+      updateChargeSheetUI(shortage);
+      openSheet("viewCashChargeSheet");
+    }
+
+    function returnToDonationAmountView(){
+      setDonationView("amount");
+      renderDonationSheet();
+      openSheet("donationSheet");
     }
 
     function getDonationChannelKey(video){
@@ -8163,11 +8515,16 @@
       donationCompleteTitle.textContent = "후원 완료";
       donationCompleteText.textContent = `${completion.amount.toLocaleString()}P 후원이 완료되었습니다.`;
       donationCompleteSub.textContent = completion.rankMessage || "내 후원 순위가 갱신되었습니다.";
+      donationCompleteMeta.textContent = completion.usedViewCash || completion.usedReward
+        ? `사용 재화: ${formatDonationFundingSummary(completion)}`
+        : "";
     }
 
     function renderDonationSheet(){
       const video = getCurrentDonationVideo();
-      const balance = Math.max(0, Number(state.totalRewardPoint) || 0);
+      const rewardBalance = Math.max(0, Number(state.totalRewardPoint) || 0);
+      const viewCashBalance = Math.max(0, Number(state.totalViewCash) || 0);
+      const totalBalance = viewCashBalance + rewardBalance;
       ensureDonationRanking(video);
 
       donationSheetTitle.textContent =
@@ -8178,7 +8535,9 @@
             : "이 채널 후원 현황";
       donationSheetTitle.hidden = state.donationView === "completion";
 
-      donationBalanceText.textContent = `${balance.toLocaleString()}P`;
+      donationBalanceText.textContent = `${totalBalance.toLocaleString()}P`;
+      donationViewCashText.textContent = `${viewCashBalance.toLocaleString()}캐시`;
+      donationRewardText.textContent = `${rewardBalance.toLocaleString()}P`;
       donationChannelName.textContent = video?.channel || "채널명 없음";
       donationChannelAvatar.src = getSafeDonationAvatar(video);
       donationAmountAvatar.src = getSafeDonationAvatar(video);
@@ -8191,19 +8550,16 @@
 
       donationAmountButtons.forEach(button => {
         const amount = Number(button.dataset.donationAmount);
-        const disabled = amount > balance;
-        if(!state.donationCustomMode && disabled && state.donationSelectedAmount === amount){
-          state.donationSelectedAmount = 0;
-        }
-        button.disabled = disabled;
-        button.classList.toggle("active", !state.donationCustomMode && !disabled && state.donationSelectedAmount === amount);
+        button.disabled = false;
+        button.classList.toggle("active", !state.donationCustomMode && state.donationSelectedAmount === amount);
       });
 
       donationCustomToggleBtn.classList.toggle("active", state.donationCustomMode);
       donationCustomInputWrap.classList.toggle("hidden", !state.donationCustomMode);
 
       let effectiveAmount = state.donationCustomMode ? getCustomDonationAmount() : Number(state.donationSelectedAmount || 0);
-      let isDonationValid = effectiveAmount > 0 && effectiveAmount <= balance;
+      let isDonationValid = effectiveAmount > 0;
+      let fundingPlan = getDonationFundingPlan(effectiveAmount);
 
       if(state.donationCustomMode){
         const customAmountRaw = sanitizeDonationDigits(state.donationCustomAmountRaw);
@@ -8219,28 +8575,42 @@
           isDonationValid = false;
           donationSelectedText.textContent = `${effectiveAmount.toLocaleString()}P를 입력했습니다.`;
           setDonationFeedback("최소 후원 금액은 1,000P입니다.", "error");
-        } else if(effectiveAmount > balance){
-          isDonationValid = false;
-          donationSelectedText.textContent = `${effectiveAmount.toLocaleString()}P를 입력했습니다.`;
-          setDonationFeedback("보유 포인트가 부족합니다.", "error");
         } else {
           donationSelectedText.textContent = `직접 입력한 ${effectiveAmount.toLocaleString()}P를 후원합니다.`;
-          setDonationFeedback("", "");
+          fundingPlan = getDonationFundingPlan(effectiveAmount);
+          if(fundingPlan.shortage > 0){
+            setDonationFeedback("보유 재화가 부족합니다.", "error");
+          } else {
+            setDonationFeedback("", "");
+          }
         }
       } else if(state.donationSelectedAmount > 0){
         donationSelectedText.textContent = `${state.donationSelectedAmount.toLocaleString()}P를 후원합니다.`;
-        setDonationFeedback("", "");
-      } else if(balance <= 0){
-        donationSelectedText.textContent = "보유 포인트가 부족합니다.";
+        fundingPlan = getDonationFundingPlan(state.donationSelectedAmount);
+        if(fundingPlan.shortage > 0){
+          setDonationFeedback("보유 재화가 부족합니다.", "error");
+        } else {
+          setDonationFeedback("", "");
+        }
+      } else if(totalBalance <= 0){
+        donationSelectedText.textContent = "보유 재화가 부족합니다.";
         setDonationFeedback("", "");
       } else {
         donationSelectedText.textContent = "후원 금액을 선택해주세요.";
         setDonationFeedback("", "");
       }
 
+      fundingPlan = getDonationFundingPlan(effectiveAmount);
       state.donationSelectedAmount = isDonationValid ? effectiveAmount : 0;
+      renderDonationFundingPlan(state.donationSelectedAmount > 0 ? fundingPlan : null);
 
-      submitDonationBtn.disabled = !(state.donationSelectedAmount > 0 && state.donationSelectedAmount <= balance);
+      if(state.donationSelectedAmount > 0 && fundingPlan.shortage > 0){
+        submitDonationBtn.disabled = false;
+        submitDonationBtn.textContent = `부족 금액 ${fundingPlan.shortage.toLocaleString()}캐시 충전하기`;
+      } else {
+        submitDonationBtn.disabled = !(state.donationSelectedAmount > 0);
+        submitDonationBtn.textContent = "후원하기";
+      }
       donationStatusView.classList.toggle("active", state.donationView === "status");
       donationAmountView.classList.toggle("active", state.donationView === "amount");
       donationCompletionView.classList.toggle("active", state.donationView === "completion");
@@ -8248,7 +8618,7 @@
       renderDonationCompletion();
     }
 
-    function recordDonation(video, amount){
+    function recordDonation(video, amount, usage = {}){
       const donation = {
         id: `donation_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
         channelId: video?.channelId || "",
@@ -8256,6 +8626,8 @@
         channelProfile: getSafeDonationAvatar(video),
         videoTitle: video?.title || "",
         amount,
+        usedViewCash: Math.max(0, Number(usage.usedViewCash) || 0),
+        usedReward: Math.max(0, Number(usage.usedReward) || 0),
         createdAt: new Date().toISOString()
       };
 
@@ -8292,7 +8664,7 @@
     function submitDonation(){
       const video = getCurrentDonationVideo();
       const amount = Number(state.donationSelectedAmount || 0);
-      const balance = Number(state.totalRewardPoint || 0);
+      const fundingPlan = getDonationFundingPlan(amount);
       const beforeRankInfo = findMyDonationRank(video);
 
       if(!video){
@@ -8303,15 +8675,18 @@
         showToast("후원 금액을 먼저 선택해주세요.");
         return;
       }
-      if(amount > balance){
-        showToast("보유 포인트가 부족합니다.");
-        state.donationSelectedAmount = 0;
-        renderDonationSheet();
+      if(amount < 1000){
+        showToast("최소 후원 금액은 1,000P입니다.");
+        return;
+      }
+      if(fundingPlan.shortage > 0){
+        openViewCashChargeSheet(fundingPlan.shortage);
         return;
       }
 
-      state.totalRewardPoint = balance - amount;
-      recordDonation(video, amount);
+      state.totalViewCash = Math.max(0, fundingPlan.viewCashBalance - fundingPlan.usedViewCash);
+      state.totalRewardPoint = Math.max(0, fundingPlan.rewardBalance - fundingPlan.usedReward);
+      recordDonation(video, amount, fundingPlan);
       updateWallet();
       saveDonationState();
 
@@ -8325,6 +8700,8 @@
       }
       state.donationCompletion = {
         amount,
+        usedViewCash: fundingPlan.usedViewCash,
+        usedReward: fundingPlan.usedReward,
         beforeRank: beforeRankInfo.position,
         afterRank: afterRankInfo.position,
         rankMessage
@@ -8755,8 +9132,9 @@ function wakePlayerControls(){
       rewardPoint.textContent = `${state.totalRewardPoint.toLocaleString()} P`;
       boxCountLive.innerHTML = `<span class="count-num">${state.randomBoxCount.toLocaleString()}</span><span class="count-unit">개</span>`;
       goldBoxCountLive.innerHTML = `<span class="count-num">${state.goldBoxCount.toLocaleString()}</span><span class="count-unit">개</span>`;
-      const livePointText = state.totalRewardPoint.toLocaleString();
-      rewardPointLive.innerHTML = `<span class="point-main">${livePointText}</span><span class="point-krw-line"><span class="point-eq">=</span><span class="point-krw">₩ ${livePointText}</span></span>`;
+      const rewardText = state.totalRewardPoint.toLocaleString();
+      const viewCashText = state.totalViewCash.toLocaleString();
+      rewardPointLive.innerHTML = `<span class="point-main">${rewardText}P</span><span class="point-krw-line"><span class="point-eq">뷰캐시</span><span class="point-krw">${viewCashText}캐시</span></span>`;
       renderDonationSheet();
       saveDonationState();
     }
@@ -10315,350 +10693,4 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
         promoYoutubeLinkInput.focus();
       }
     });
-    promoYoutubeLinkInput.addEventListener("input", updatePromoSheetState);
-    promoSubmitBtn.addEventListener("click", submitPromoVideo);
-    promoCloseBtn.addEventListener("click", () => {
-      resetPromoSheetState();
-      closeAllSheets();
-    });
-    openDonationBtn.addEventListener("click", () => {
-      resetDonationSelection();
-      clearDonationCompletion();
-      setDonationView("status");
-      renderDonationSheet();
-      openSheet("donationSheet");
-    });
-    openDonationAmountViewBtn.addEventListener("click", () => {
-      clearDonationCompletion();
-      setDonationView("amount");
-      resetDonationSelection();
-      renderDonationSheet();
-    });
-    donationRandomizeBtn.addEventListener("click", () => {
-      const video = getCurrentDonationVideo();
-      if(!video) return;
-      randomizeDonationRanking(video);
-      updateWallet();
-      renderDonationSheet();
-      showToast("랜덤 후원 랭킹을 새로 설정했습니다.", {
-        title: "랜덤설정 완료",
-        icon: "🎲",
-        duration: 4200
-      });
-    });
-    [donationChannelLinkBtn, donationAmountChannelLinkBtn, donationCompleteChannelLinkBtn].forEach(button => {
-      if(!button) return;
-      button.addEventListener("click", openDonationChannelPage);
-    });
-    [donationOwnerPreviewChannelLinkBtn].forEach(button => {
-      if(!button) return;
-      button.addEventListener("click", openDonationChannelPage);
-    });
-    donationChannelAvatar.addEventListener("click", openDonationOwnerScreen);
-    [donationAmountAvatar, donationAmountChannelInfo].forEach(target => {
-      if(!target) return;
-      target.addEventListener("click", openDonationOwnerScreen);
-    });
-    if(donationAmountChannelInfo){
-      donationAmountChannelInfo.addEventListener("keydown", (event) => {
-        if(event.key !== "Enter" && event.key !== " ") return;
-        event.preventDefault();
-        openDonationOwnerScreen();
-      });
-    }
-    closeDonationOwnerScreenBtn.addEventListener("click", closeDonationOwnerScreen);
-    donationOwnerViewHistoryBtn.addEventListener("click", openDonationOwnerHistoryScreen);
-    donationOwnerThankYouConfigBtn.addEventListener("click", openDonationOwnerThankYouScreen);
-    donationOwnerViewAllBtn.addEventListener("click", openDonationOwnerFullRankScreen);
-    closeDonationOwnerFullRankBtn.addEventListener("click", closeDonationOwnerFullRankScreen);
-    closeDonationOwnerHistoryBtn.addEventListener("click", closeDonationOwnerHistoryScreen);
-    closeDonationOwnerThankYouBtn.addEventListener("click", closeDonationOwnerThankYouScreen);
-    donationOwnerAddCustomThankYouBtn.addEventListener("click", openDonationOwnerCustomThankYouCreateScreen);
-    closeDonationOwnerThankYouEditBtn.addEventListener("click", closeDonationOwnerThankYouEditScreen);
-    closeDonationOwnerThankYouPreviewBtn.addEventListener("click", closeDonationOwnerThankYouPreviewScreen);
-    openDonationOwnerThankYouPreviewBtn.addEventListener("click", openDonationOwnerThankYouPreviewScreen);
-    donationOwnerPreviewDownloadBtn.addEventListener("click", event => {
-      event.preventDefault();
-      showToast("미리보기 화면입니다.", {
-        title: "감사카드 미리보기",
-        icon: "💾",
-        duration: 2600
-      });
-    });
-    [donationOwnerPreviewRankingBtn, donationOwnerPreviewAddMoreBtn].forEach(button => {
-      if(!button) return;
-      button.addEventListener("click", () => {
-        showToast("미리보기 화면입니다.", {
-          title: "감사카드 미리보기",
-          icon: "🎁",
-          duration: 2600
-        });
-      });
-    });
-    saveDonationOwnerThankYouBtn.addEventListener("click", saveDonationOwnerThankYouEdit);
-    cancelDonationOwnerThankYouBtn.addEventListener("click", closeDonationOwnerThankYouEditScreen);
-    donationOwnerEditTitle.addEventListener("input", () => {
-      syncDonationOwnerThankYouDraftFromForm();
-      renderDonationOwnerThankYouEditForm();
-    });
-    donationOwnerEditMessage.addEventListener("input", () => {
-      syncDonationOwnerThankYouDraftFromForm();
-      renderDonationOwnerThankYouEditForm();
-    });
-    donationOwnerEditAmountInput.addEventListener("input", () => {
-      const numericText = String(donationOwnerEditAmountInput.value || "").replace(/[^\d]/g, "");
-      donationOwnerEditAmountInput.value = numericText ? Number(numericText).toLocaleString() : "";
-      syncDonationOwnerThankYouDraftFromForm();
-      renderDonationOwnerThankYouEditForm();
-    });
-    donationOwnerEditEnabled.addEventListener("change", () => {
-      syncDonationOwnerThankYouDraftFromForm();
-      renderDonationOwnerThankYouEditForm();
-    });
-    donationOwnerEditAllowDownload.addEventListener("change", () => {
-      syncDonationOwnerThankYouDraftFromForm();
-      renderDonationOwnerThankYouEditForm();
-    });
-    donationOwnerEditMediaFile.addEventListener("change", () => {
-      if(!donationOwnerThankYouDraft || !donationOwnerEditMediaFile.files?.[0]) return;
-      const file = donationOwnerEditMediaFile.files[0];
-      donationOwnerThankYouDraft.mediaSource = "upload";
-      donationOwnerThankYouDraft.mediaPresetId = "";
-      donationOwnerThankYouDraft.mediaName = file.name;
-      donationOwnerThankYouDraft.mediaType = file.type;
-      donationOwnerThankYouDraft.mediaUrl = URL.createObjectURL(file);
-      renderDonationOwnerThankYouEditForm();
-      donationOwnerEditMediaFile.value = "";
-    });
-    donationOwnerRankMoreBtn.addEventListener("click", () => {
-      const totalCount = donationOwnerRankingMock.length;
-      const maxVisible = totalCount >= 31 ? 30 : totalCount;
-      donationOwnerRankVisibleCount = donationOwnerRankVisibleCount >= maxVisible
-        ? 10
-        : Math.min(donationOwnerRankVisibleCount + 10, maxVisible);
-      renderDonationOwnerRankList();
-    });
-    donationOwnerLiveToggleBtn.addEventListener("click", () => {
-      donationOwnerLiveExpanded = !donationOwnerLiveExpanded;
-      renderDonationOwnerLiveList();
-    });
-    donationOwnerRankToggleBtn.addEventListener("click", () => {
-      donationOwnerRankExpanded = !donationOwnerRankExpanded;
-      renderDonationOwnerRankList();
-    });
-    donationOwnerAddOneBtn.addEventListener("click", () => {
-      addDonationOwnerTestEntries(1);
-    });
-    donationOwnerAddTenBtn.addEventListener("click", () => {
-      addDonationOwnerTestEntries(10);
-    });
-    donationOwnerRankResetBtn.addEventListener("click", () => {
-      resetDonationOwnerRankingMock();
-    });
-    backToDonationStatusBtn.addEventListener("click", () => {
-      clearDonationCompletion();
-      setDonationView("status");
-      renderDonationSheet();
-    });
-    donationViewRankingBtn.addEventListener("click", () => {
-      setDonationView("status");
-      renderDonationSheet();
-    });
-    donationAddMoreBtn.addEventListener("click", () => {
-      clearDonationCompletion();
-      setDonationView("amount");
-      resetDonationSelection();
-      renderDonationSheet();
-    });
-    openWalletTestHit.addEventListener("click", (event) => {
-      event.stopPropagation();
-      if(!state.benefitEnabled){
-        setBenefitEnabled(true);
-      }
-      openSheet("walletSheet");
-    });
-    closeBenefitBtn.addEventListener("click", () => setBenefitEnabled(false));
-    openCommentBtn.addEventListener("click", openWatchCommentOrChat);
-    donationAmountButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        if(button.disabled) return;
-        state.donationCustomMode = false;
-        state.donationCustomAmountRaw = "";
-        donationCustomAmountInput.value = "";
-        state.donationSelectedAmount = Number(button.dataset.donationAmount || 0);
-        setDonationFeedback("", "");
-        renderDonationSheet();
-      });
-    });
-    donationCustomToggleBtn.addEventListener("click", () => {
-      state.donationCustomMode = true;
-      state.donationSelectedAmount = 0;
-      renderDonationSheet();
-      donationCustomAmountInput.focus();
-    });
-    donationCustomAmountInput.addEventListener("input", () => {
-      state.donationCustomMode = true;
-      state.donationCustomAmountRaw = sanitizeDonationDigits(donationCustomAmountInput.value);
-      renderDonationSheet();
-    });
-    submitDonationBtn.addEventListener("click", submitDonation);
-    document.getElementById("walletOpenRandom").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "normal" }));
-    document.getElementById("walletOpenRandomFail").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "chance_fail" }));
-    document.getElementById("walletOpenRandomGold").addEventListener("click", () => startOpenFlow("random", { fromWallet: true, forcedResultType: "chance_gold" }));
-    document.getElementById("walletOpenGold").addEventListener("click", () => startOpenFlow("gold", { fromWallet: true }));
-    document.getElementById("walletLiveOpenRandom").addEventListener("click", () => {
-      const randomTypes = ["normal", "chance_fail", "chance_gold"];
-      const pickedType = randomTypes[Math.floor(Math.random() * randomTypes.length)];
-      startOpenFlow("random", { fromWallet: true, forcedResultType: pickedType });
-    });
-    document.getElementById("walletLiveOpenGold").addEventListener("click", () => startOpenFlow("gold", { fromWallet: true }));
-    document.querySelectorAll(".wallet-ui-switch-btn").forEach(btn => {
-      btn.addEventListener("click", () => applyWalletUI(btn.dataset.walletUi));
-    });
-    applyWalletUI(currentWalletUI);
-    document.querySelectorAll("[data-gold-reward-test]").forEach(btn => {
-      btn.addEventListener("click", () => startOpenFlow("gold", { fromWallet: true, forcedGoldReward: Number(btn.dataset.goldRewardTest) }));
-    });
-    inlineGetBtnWide.addEventListener("click", startRewardAdFlow);
-
-    rewardAdBtn.addEventListener("click", () => {
-      if(rewardAdBtn.disabled) return;
-      finishRewardGrant("manual");
-    });
-
-    openBoxBtn.addEventListener("click", () => {
-      if(state.openBoxBtnMode === "busy") return;
-      if(state.openBoxBtnMode === "close"){
-        closeOpenSheetOnly();
-        return;
-      }
-      startOpenFlow(state.openType === "gold" ? "gold" : "random");
-    });
-    overlay.addEventListener("click", () => {
-      if(state.openFromWallet && document.getElementById("openSheet").classList.contains("show")){
-        closeOpenSheetOnly();
-        return;
-      }
-      closeAllSheets();
-    });
-
-    document.querySelectorAll(".tool-btn[data-add]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        state.integratedWatchSeconds += Number(btn.dataset.add);
-        updateRewardUI();
-      });
-    });
-
-    document.querySelectorAll(".tool-btn[data-reward-set]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        state.integratedWatchSeconds = Number(btn.dataset.rewardSet);
-        updateRewardUI();
-      });
-    });
-
-    document.querySelectorAll(".tool-btn[data-open-speed]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const nextSpeed = Number(btn.dataset.openSpeed);
-        if(!Number.isFinite(nextSpeed) || nextSpeed <= 0){
-          return;
-        }
-        state.openStageMidPlaybackRate = nextSpeed;
-        applyOpenStagePlaybackRate();
-        document.querySelectorAll(".tool-btn[data-open-speed]").forEach(speedBtn => {
-          speedBtn.classList.toggle("active-speed", speedBtn.dataset.openSpeed === btn.dataset.openSpeed);
-        });
-      });
-    });
-
-    [refreshLatestVideosBtnTop, refreshLatestVideosBtnFloat].forEach(button => {
-      if(!button) return;
-      button.addEventListener("click", refreshLatestVideosFromYouTube);
-    });
-
-    syncGoldReelTuneInputs(state.goldReelStageConfig);
-
-    goldReelTuneToggleBtn.addEventListener("click", () => {
-      goldReelTunePanel.classList.toggle("collapsed");
-      goldReelTuneToggleBtn.classList.toggle("collapsed");
-    });
-
-    applyReelTuneBtn.addEventListener("click", () => {
-      const nextConfig = readGoldReelTuneInputs();
-      if(!validateGoldReelTune(nextConfig)){
-        showToast("입력값 오류: 속도/유지시간을 확인하세요.");
-        return;
-      }
-      state.goldReelStageConfig = nextConfig;
-      showToast("릴 감속 설정이 적용되었습니다.");
-    });
-
-    resetReelTuneBtn.addEventListener("click", () => {
-      const defaults = cloneGoldReelDefaults();
-      state.goldReelStageConfig = defaults;
-      syncGoldReelTuneInputs(defaults);
-      showToast("기본값으로 복원되었습니다.");
-    });
-
-    watchTitle.addEventListener("click", () => {
-      watchTitle.classList.toggle("expanded");
-      setTimeout(updateFixedLayout, 20);
-    });
-
-    document.querySelectorAll(".sheet-close").forEach(btn => {
-      btn.addEventListener("click", () => {
-        if(btn.dataset.close === "openSheet"){
-          closeOpenSheetOnly();
-          return;
-        }
-        closeAllSheets();
-      });
-    });
-
-    if(walletSheetLiveHead){
-      walletSheetLiveHead.addEventListener("pointerdown", (event) => {
-        if(event.button !== undefined && event.button !== 0) return;
-        startWalletSheetLiveDrag(event.clientY);
-      });
-      walletSheetLiveHead.addEventListener("pointermove", (event) => {
-        if(!walletLiveDragging) return;
-        moveWalletSheetLiveDrag(event.clientY);
-      });
-      walletSheetLiveHead.addEventListener("pointerup", endWalletSheetLiveDrag);
-      walletSheetLiveHead.addEventListener("pointercancel", endWalletSheetLiveDrag);
-      walletSheetLiveHead.addEventListener("touchstart", (event) => {
-        if(!event.touches[0]) return;
-        startWalletSheetLiveDrag(event.touches[0].clientY);
-      }, { passive: true });
-      walletSheetLiveHead.addEventListener("touchmove", (event) => {
-        if(!walletLiveDragging || !event.touches[0]) return;
-        moveWalletSheetLiveDrag(event.touches[0].clientY);
-      }, { passive: true });
-      walletSheetLiveHead.addEventListener("touchend", endWalletSheetLiveDrag);
-      walletSheetLiveHead.addEventListener("touchcancel", endWalletSheetLiveDrag);
-    }
-
-    window.addEventListener("resize", updateFixedLayout);
-
-    bindSheetIdleInteractions("walletSheet");
-    bindSheetIdleInteractions("walletSheetLive");
-    bindSheetIdleInteractions("donationSheet");
-    bindSheetIdleInteractions("commentSheet");
-    bindSheetIdleInteractions("liveChatSheet");
-    registerGlobalSendThanksHandler();
-    registerGlobalThankYouCardEditHandler();
-
-    setupWatchScrollBehavior();
-    state.videoUrlPool = loadStoredVideoUrlPool();
-    loadThankYouCardSettings();
-    loadDonationState();
-    updateWallet();
-    setBenefitEnabled(false);
-    updateRewardUI();
-    loadVideosFromYouTube();
-  </script>
-</body>
-</html>
-
-
-
-
+    promoYoutubeLinkInput.addEventListener("input", updat
