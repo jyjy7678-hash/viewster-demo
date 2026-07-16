@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.85 -->
+<!-- Version: DEV v0.3.88 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1148,22 +1148,21 @@
     #donationSheet{z-index:54;}
     #adSheet{z-index:55;}
     #openSheet{z-index:56;}
-    .live-chat-summary{display:flex;align-items:center;gap:11px;padding:10px 14px;background:#fff;border-bottom:1px solid #eef0f4;flex-shrink:0;}
-    .live-chat-summary img{width:84px;height:48px;border-radius:8px;object-fit:cover;background:#e5e7eb;flex-shrink:0;}
-    .live-chat-summary-copy{min-width:0;flex:1;}
-    .live-chat-summary-copy strong{display:block;font-size:13px;line-height:1.35;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .live-chat-summary-copy span{display:block;margin-top:5px;color:#64748b;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
     .live-chat-tabs{display:grid;grid-template-columns:1fr 1fr;height:48px;border-bottom:1px solid #e5e7eb;background:#fff;flex-shrink:0;}
     .live-chat-tab{position:relative;border:0;background:#fff;color:#94a3b8;font-size:14px;font-weight:900;cursor:pointer;}
     .live-chat-tab.active{color:#2457d6;}
     .live-chat-tab.active::after{content:"";position:absolute;left:22%;right:22%;bottom:-1px;height:3px;border-radius:3px 3px 0 0;background:#2457d6;}
     .live-chat-panel{flex:1;min-height:0;display:flex;flex-direction:column;background:#fff;}
-    .live-chat-frame-wrap{overflow:hidden;background:#fff;flex:1;min-height:360px;margin:0;border:0;border-radius:0;}
+    .live-chat-panel[hidden],.live-donation-panel[hidden]{display:none;}
+    .live-donation-panel{flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;padding:0 16px calc(24px + env(safe-area-inset-bottom, 0px));background:#fff;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;}
+    .live-donation-panel .donation-ui-root{min-height:100%;}
+    .donation-ui-root > .sheet-title{margin-top:8px;}
+    .live-chat-frame-wrap{overflow:hidden;background:#fff;flex:1;min-height:0;margin:0;border:0;border-radius:0;}
     .live-chat-frame-wrap[hidden]{display:none;}
     .live-chat-frame{
       width:100%;
       height:100%;
-      min-height:360px;
+      min-height:0;
       border:0;
       display:block;
       background:#fff;
@@ -2592,6 +2591,25 @@
     .donation-action-row.is-stacked{
       grid-template-columns:minmax(0,1fr);
     }
+    #donationStandaloneHost:has(#donationStatusView.active){overflow-y:hidden;}
+    .donation-ui-root:has(#donationStatusView.active){height:100%;min-height:0;overflow:hidden;}
+    .donation-sheet-content:has(#donationStatusView.active){height:100%;min-height:0;gap:0;}
+    #donationStatusView.active{height:100%;min-height:0;gap:0;overflow:hidden;}
+    .donation-status-scroll{flex:1;min-height:0;overflow-y:auto;padding:4px 0 12px;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;}
+    .donation-status-scroll > * + *{margin-top:10px;}
+    #donationStatusView .donation-channel-card--compact-status{min-height:66px;padding:10px 11px;border-radius:16px;gap:9px;box-shadow:0 4px 12px rgba(15,23,42,.05);}
+    #donationStatusView .donation-channel-card--compact-status .donation-channel-avatar{width:44px;height:44px;}
+    #donationStatusView .donation-channel-card--compact-status .donation-channel-name{font-size:15px;}
+    #donationStatusView .donation-channel-card--compact-status .donation-channel-guide{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    #donationStatusView .donation-channel-card--compact-status .donation-channel-link{min-height:28px;padding:0 9px;font-size:10px;}
+    #donationStatusView .donation-ranking-panel{padding:11px;border-radius:16px;box-shadow:0 4px 12px rgba(15,23,42,.05);}
+    .donation-ranking-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
+    .donation-ranking-head .donation-ranking-title{margin:0;}
+    .donation-ranking-toggle{border:0;background:transparent;color:#2457d6;font-size:11px;font-weight:900;padding:4px;cursor:pointer;white-space:nowrap;}
+    .donation-status-footer{flex-shrink:0;margin:0 -16px;padding:10px 16px calc(10px + env(safe-area-inset-bottom, 0px));border-top:1px solid #e5e7eb;background:#fff;box-shadow:0 -8px 18px rgba(15,23,42,.06);}
+    .live-donation-panel{overflow:hidden;}
+    .live-donation-panel .donation-ui-root{height:100%;min-height:0;overflow-y:auto;}
+    .live-donation-panel .donation-ui-root:has(#donationStatusView.active){overflow:hidden;}
     .donation-balance-card{
       display:flex;
       align-items:flex-start;
@@ -5799,7 +5817,7 @@
           <button class="tool-btn" data-add="60">+1분</button>
           <button class="tool-btn" data-reward-set="595">+보상</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.85</span>
+          <span class="dev-version-label">DEV v0.3.88</span>
         </div>
       </header>
 
@@ -5837,7 +5855,7 @@
             <button class="tool-btn" data-add="60">+1분</button>
             <button class="tool-btn" data-reward-set="595">+보상</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.85</span>
+            <span class="dev-version-label">DEV v0.3.88</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -6166,28 +6184,36 @@
     <div class="sheet-head">
       <button class="sheet-close" data-close="donationSheet">×</button>
     </div>
-    <div class="sheet-body">
-      <div class="sheet-title" id="donationSheetTitle">이 채널 후원 현황</div>
-      <div class="donation-sheet-content">
+    <div class="sheet-body" id="donationStandaloneHost">
+      <div class="donation-ui-root" id="donationContentRoot">
+        <div class="sheet-title" id="donationSheetTitle">이 채널 후원 현황</div>
+        <div class="donation-sheet-content">
         <div class="donation-view active" id="donationStatusView">
-          <div class="donation-channel-card">
-            <img class="donation-channel-avatar is-clickable" id="donationChannelAvatar" alt="채널 프로필" />
-            <div class="donation-channel-info">
-              <div class="donation-channel-topline">
-                <div class="donation-channel-name" id="donationChannelName">채널명</div>
-                <button class="donation-channel-link" id="donationChannelLinkBtn" type="button">▶ YouTube 채널</button>
+          <div class="donation-status-scroll">
+            <div class="donation-channel-card donation-channel-card--compact-status">
+              <img class="donation-channel-avatar is-clickable" id="donationChannelAvatar" alt="채널 프로필" />
+              <div class="donation-channel-info">
+                <div class="donation-channel-topline">
+                  <div class="donation-channel-name" id="donationChannelName">채널명</div>
+                  <button class="donation-channel-link" id="donationChannelLinkBtn" type="button">▶ YouTube</button>
+                </div>
+                <div class="donation-channel-guide" id="donationChannelGuide">뷰스터에서 후원하고 랭킹에 참여해보세요.</div>
               </div>
-              <div class="donation-channel-guide" id="donationChannelGuide">뷰스터에서 후원하고 랭킹에 참여해보세요.</div>
+            </div>
+            <div class="donation-ranking-panel">
+              <div class="donation-ranking-head">
+                <div class="donation-ranking-title" id="donationRankingTitle">후원 랭킹 TOP 3</div>
+                <button class="donation-ranking-toggle" id="donationRankingToggleBtn" type="button" aria-expanded="false" aria-controls="donationRankingList">전체 순위 보기</button>
+              </div>
+              <div class="donation-ranking-list" id="donationRankingList"></div>
+              <div class="donation-empty-note" id="donationRankingEmptyNote"></div>
             </div>
           </div>
-          <div class="donation-ranking-panel">
-            <div class="donation-ranking-title">뷰스터 후원 랭킹 TOP 10</div>
-            <div class="donation-ranking-list" id="donationRankingList"></div>
-            <div class="donation-empty-note" id="donationRankingEmptyNote"></div>
-          </div>
-          <div class="donation-action-row">
-            <button class="donation-submit-btn" id="openDonationAmountViewBtn" type="button">후원하기</button>
-            <button class="donation-sub-btn donation-random-btn" id="donationRandomizeBtn" type="button">랜덤설정</button>
+          <div class="donation-status-footer">
+            <div class="donation-action-row">
+              <button class="donation-submit-btn" id="openDonationAmountViewBtn" type="button">후원하기</button>
+              <button class="donation-sub-btn donation-random-btn" id="donationRandomizeBtn" type="button">랜덤설정</button>
+            </div>
           </div>
         </div>
 
@@ -6274,6 +6300,7 @@
             <button class="donation-submit-btn" id="donationViewRankingBtn" type="button">랭킹 확인하기</button>
             <button class="donation-sub-btn" id="donationAddMoreBtn" type="button">추가 후원하기</button>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -6573,16 +6600,9 @@
       <button class="sheet-close" data-close="liveChatSheet">×</button>
     </div>
     <div class="sheet-body">
-      <div class="live-chat-summary">
-        <img id="liveChatSummaryThumb" alt="현재 영상 썸네일" />
-        <div class="live-chat-summary-copy">
-          <strong id="liveChatSummaryTitle">현재 LIVE 영상</strong>
-          <span id="liveChatSummaryChannel">▶ YouTube 채널</span>
-        </div>
-      </div>
       <div class="live-chat-tabs" role="tablist" aria-label="LIVE 참여 메뉴">
-        <button class="live-chat-tab" id="liveChatDonationTab" type="button" role="tab" aria-selected="false">후원하기</button>
-        <button class="live-chat-tab active" id="liveChatChatTab" type="button" role="tab" aria-selected="true">채팅하기</button>
+        <button class="live-chat-tab active" id="liveChatChatTab" type="button" role="tab" aria-selected="true" aria-controls="liveChatPanel">채팅</button>
+        <button class="live-chat-tab" id="liveChatDonationTab" type="button" role="tab" aria-selected="false" aria-controls="liveDonationPanel">후원</button>
       </div>
       <div class="live-chat-panel" id="liveChatPanel" role="tabpanel" aria-labelledby="liveChatChatTab">
         <div class="live-chat-frame-wrap" id="liveChatFrameWrap">
@@ -6593,6 +6613,7 @@
           <a class="live-chat-link-btn" id="liveChatOpenYoutubeBtn" href="#" target="_blank" rel="noopener noreferrer">YouTube에서 채팅 열기</a>
         </div>
       </div>
+      <div class="live-donation-panel" id="liveDonationPanel" role="tabpanel" aria-labelledby="liveChatDonationTab" hidden></div>
     </div>
   </section>
 
@@ -6835,6 +6856,9 @@
       donationChargeAmount: 0,
       donationChargeMethod: "card",
       viewCashChargeReturnTarget: "donation",
+      donationReturnContext: "standalone",
+      donationRankingExpanded: false,
+      donationRankingChannelKey: "",
       walletHistory: [],
       promoPreviewVideo: null,
       promoPreviewRequestId: 0,
@@ -7004,16 +7028,18 @@
     const commentCountText = document.getElementById("commentCountText");
     const sheetCommentCount = document.getElementById("sheetCommentCount");
     const commentList = document.getElementById("commentList");
+    const liveChatSheet = document.getElementById("liveChatSheet");
     const liveChatFrame = document.getElementById("liveChatFrame");
     const liveChatOpenYoutubeBtn = document.getElementById("liveChatOpenYoutubeBtn");
-    const liveChatSummaryThumb = document.getElementById("liveChatSummaryThumb");
-    const liveChatSummaryTitle = document.getElementById("liveChatSummaryTitle");
-    const liveChatSummaryChannel = document.getElementById("liveChatSummaryChannel");
     const liveChatDonationTab = document.getElementById("liveChatDonationTab");
     const liveChatChatTab = document.getElementById("liveChatChatTab");
     const liveChatFrameWrap = document.getElementById("liveChatFrameWrap");
     const liveChatFallback = document.getElementById("liveChatFallback");
     const liveChatFallbackText = document.getElementById("liveChatFallbackText");
+    const liveChatPanel = document.getElementById("liveChatPanel");
+    const liveDonationPanel = document.getElementById("liveDonationPanel");
+    const donationStandaloneHost = document.getElementById("donationStandaloneHost");
+    const donationContentRoot = document.getElementById("donationContentRoot");
     const overlay = document.getElementById("overlay");
     const toast = document.getElementById("toast");
     const boxCount = document.getElementById("boxCount");
@@ -7119,6 +7145,8 @@
     const donationCompletionView = document.getElementById("donationCompletionView");
     const donationRankingList = document.getElementById("donationRankingList");
     const donationRankingEmptyNote = document.getElementById("donationRankingEmptyNote");
+    const donationRankingTitle = document.getElementById("donationRankingTitle");
+    const donationRankingToggleBtn = document.getElementById("donationRankingToggleBtn");
     const openDonationAmountViewBtn = document.getElementById("openDonationAmountViewBtn");
     const donationRandomizeBtn = document.getElementById("donationRandomizeBtn");
     const donationChannelLinkBtn = document.getElementById("donationChannelLinkBtn");
@@ -8932,6 +8960,9 @@
 
     function openViewCashChargeSheet(shortage = 0, returnTarget = "donation"){
       state.viewCashChargeReturnTarget = returnTarget;
+      state.donationReturnContext = returnTarget === "donation" && liveChatSheet.classList.contains("show") && !liveDonationPanel.hidden
+        ? "liveInteraction"
+        : "standalone";
       updateChargeSheetUI(shortage);
       openSheet("viewCashChargeSheet");
     }
@@ -8945,6 +8976,12 @@
       }
       setDonationView("amount");
       renderDonationSheet();
+      if(state.donationReturnContext === "liveInteraction" && state.currentVideo?.isLive){
+        openLiveInteractionSheet("donation");
+        return;
+      }
+      state.donationReturnContext = "standalone";
+      restoreDonationContentToStandaloneSheet();
       openSheet("donationSheet");
     }
 
@@ -9058,8 +9095,18 @@
       const { ranking, position, entry } = findMyDonationRank(video);
       const topTen = ranking.slice(0, 10);
       const isMeInTopTen = position != null && position <= 10;
+      const channelKey = getDonationChannelKey(video);
+      if(state.donationRankingChannelKey !== channelKey){
+        state.donationRankingChannelKey = channelKey;
+        state.donationRankingExpanded = false;
+      }
+      const visibleRanking = state.donationRankingExpanded ? topTen : topTen.slice(0, 3);
+      donationRankingTitle.textContent = state.donationRankingExpanded ? "후원 랭킹 TOP 10" : "후원 랭킹 TOP 3";
+      donationRankingToggleBtn.hidden = topTen.length <= 3;
+      donationRankingToggleBtn.textContent = state.donationRankingExpanded ? "접기" : "전체 순위 보기";
+      donationRankingToggleBtn.setAttribute("aria-expanded", String(state.donationRankingExpanded));
 
-      donationRankingList.innerHTML = topTen.map((item, index) => {
+      donationRankingList.innerHTML = visibleRanking.map((item, index) => {
         const rank = index + 1;
         const isMe = item.userId === CURRENT_DONATION_USER.userId;
         const badge = getRankBadge(rank);
@@ -9080,7 +9127,7 @@
         donationRankingEmptyNote.textContent = "";
       }
 
-      if(position != null && !isMeInTopTen && entry){
+      if(state.donationRankingExpanded && position != null && !isMeInTopTen && entry){
         donationRankingList.insertAdjacentHTML("beforeend", `
           <div class="donation-rank-divider"></div>
           <div class="donation-rank-item is-me">
@@ -9117,7 +9164,7 @@
           : state.donationView === "completion"
             ? "후원 완료"
             : "이 채널 후원 현황";
-      donationSheetTitle.hidden = state.donationView === "completion";
+      donationSheetTitle.hidden = state.donationView !== "amount";
 
       donationBalanceText.textContent = `${totalBalance.toLocaleString()}P`;
       donationViewCashText.textContent = `${viewCashBalance.toLocaleString()}캐시`;
@@ -10795,11 +10842,16 @@ window.addEventListener("resize", clampMiniPosition);
     function closeAllSheets(options = {}){
       const keepWallet = !!options.keepWallet;
       const preserveOpenFlowState = !!options.preserveOpenFlowState;
+      const wasDonationOpen = document.getElementById("donationSheet").classList.contains("show") || liveChatSheet.classList.contains("show");
+      restoreDonationContentToStandaloneSheet();
 
       managedSheetIds.forEach(id => {
         if(keepWallet && isWalletSheetId(id)) return;
         document.getElementById(id).classList.remove("show");
       });
+      if(wasDonationOpen){
+        state.donationRankingExpanded = false;
+      }
 
       resetRewardAdState();
       resetOpenSheetState({ preserveFlowState: preserveOpenFlowState });
@@ -11097,36 +11149,62 @@ window.addEventListener("resize", clampMiniPosition);
       openCommentBtn.setAttribute("aria-label", "댓글 열기");
     }
 
+    function mountDonationContent(targetHost){
+      if(!targetHost || !donationContentRoot || donationContentRoot.parentElement === targetHost) return;
+      targetHost.appendChild(donationContentRoot);
+    }
+
+    function restoreDonationContentToStandaloneSheet(){
+      mountDonationContent(donationStandaloneHost);
+    }
+
+    function setLiveInteractionTab(tabName){
+      const isDonation = tabName === "donation";
+      liveChatChatTab.classList.toggle("active", !isDonation);
+      liveChatChatTab.setAttribute("aria-selected", String(!isDonation));
+      liveChatDonationTab.classList.toggle("active", isDonation);
+      liveChatDonationTab.setAttribute("aria-selected", String(isDonation));
+      liveChatPanel.hidden = isDonation;
+      liveDonationPanel.hidden = !isDonation;
+      if(isDonation){
+        mountDonationContent(liveDonationPanel);
+        renderDonationSheet();
+      }
+    }
+
+    function openLiveInteractionSheet(initialTab = "chat"){
+      const video = state.currentVideo;
+      if(!video?.isLive) return;
+      renderLiveChatSheet(video);
+      openSheet("liveChatSheet");
+      setLiveInteractionTab(initialTab === "donation" ? "donation" : "chat");
+    }
+
     function renderLiveChatSheet(video){
       if(!liveChatFrame || !liveChatOpenYoutubeBtn) return;
       const isLive = Boolean(video?.isLive);
       const videoId = String(video?.videoId || "").trim();
       const liveChatUrl = buildYouTubeLiveChatUrl(videoId);
       const watchUrl = buildYouTubeWatchUrl(videoId);
-      liveChatSummaryTitle.textContent = video?.title || "현재 LIVE 영상";
-      liveChatSummaryChannel.textContent = `▶ ${video?.channel || "YouTube 채널"}`;
-      liveChatSummaryThumb.onerror = () => {
-        liveChatSummaryThumb.onerror = null;
-        liveChatSummaryThumb.src = "assets/side_banner.png";
-      };
-      liveChatSummaryThumb.src = video?.thumb || video?.thumbnail || "assets/side_banner.png";
-      liveChatDonationTab.classList.remove("active");
-      liveChatDonationTab.setAttribute("aria-selected", "false");
-      liveChatChatTab.classList.add("active");
-      liveChatChatTab.setAttribute("aria-selected", "true");
       liveChatOpenYoutubeBtn.href = watchUrl || "https://www.youtube.com/";
       liveChatOpenYoutubeBtn.textContent = "YouTube에서 채팅 열기";
       liveChatFallback.hidden = true;
       liveChatFrameWrap.hidden = false;
 
       if(!isLive || !liveChatUrl){
-        liveChatFrame.src = "";
+        if(liveChatFrame.dataset.videoId){
+          liveChatFrame.src = "";
+          delete liveChatFrame.dataset.videoId;
+        }
         liveChatFrameWrap.hidden = true;
         liveChatFallbackText.textContent = "이 영상에서는 YouTube 실시간 채팅을 사용할 수 없습니다.";
         liveChatFallback.hidden = false;
         return;
       }
-      liveChatFrame.src = liveChatUrl;
+      if(liveChatFrame.dataset.videoId !== videoId){
+        liveChatFrame.src = liveChatUrl;
+        liveChatFrame.dataset.videoId = videoId;
+      }
       if(isLiveChatFallbackEnvironment()){
         liveChatFallbackText.textContent = "로컬 미리보기에서는 YouTube 채팅이 제한될 수 있습니다.";
         liveChatFallback.hidden = false;
@@ -11136,8 +11214,7 @@ window.addEventListener("resize", clampMiniPosition);
     function openWatchCommentOrChat(){
       const currentVideo = state.currentVideo;
       if(currentVideo?.isLive){
-        renderLiveChatSheet(currentVideo);
-        openSheet("liveChatSheet");
+        openLiveInteractionSheet("chat");
         return;
       }
       openSheet("commentSheet");
@@ -11680,6 +11757,13 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       clearDonationCompletion();
       setDonationView("status");
       renderDonationSheet();
+      if(state.currentVideo?.isLive){
+        state.donationReturnContext = "liveInteraction";
+        openLiveInteractionSheet("donation");
+        return;
+      }
+      state.donationReturnContext = "standalone";
+      restoreDonationContentToStandaloneSheet();
       openSheet("donationSheet");
     });
     openDonationAmountViewBtn.addEventListener("click", () => {
@@ -11687,6 +11771,10 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
       setDonationView("amount");
       resetDonationSelection();
       renderDonationSheet();
+    });
+    donationRankingToggleBtn.addEventListener("click", () => {
+      state.donationRankingExpanded = !state.donationRankingExpanded;
+      renderDonationRanking(getCurrentDonationVideo());
     });
     donationRandomizeBtn.addEventListener("click", () => {
       const video = getCurrentDonationVideo();
@@ -11834,13 +11922,10 @@ playerFloatControls.addEventListener("touchstart", wakePlayerControls, { passive
     closeBenefitBtn.addEventListener("click", () => setBenefitEnabled(false));
     openCommentBtn.addEventListener("click", openWatchCommentOrChat);
     liveChatDonationTab.addEventListener("click", () => {
-      liveChatDonationTab.classList.add("active");
-      liveChatDonationTab.setAttribute("aria-selected", "true");
-      liveChatChatTab.classList.remove("active");
-      liveChatChatTab.setAttribute("aria-selected", "false");
-      openDonationBtn.click();
+      state.donationReturnContext = "liveInteraction";
+      setLiveInteractionTab("donation");
     });
-    liveChatChatTab.addEventListener("click", () => renderLiveChatSheet(state.currentVideo));
+    liveChatChatTab.addEventListener("click", () => setLiveInteractionTab("chat"));
     liveChatFrame.addEventListener("load", () => {
       if(liveChatFrame.getAttribute("src") && !isLiveChatFallbackEnvironment()) liveChatFallback.hidden = true;
     });
