@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Version: DEV v0.3.88 -->
+<!-- Version: DEV v0.3.89 -->
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -2591,7 +2591,7 @@
     .donation-action-row.is-stacked{
       grid-template-columns:minmax(0,1fr);
     }
-    #donationStandaloneHost:has(#donationStatusView.active){overflow-y:hidden;}
+    #donationStandaloneHost:has(#donationStatusView.active){overflow-y:hidden;padding-bottom:0;}
     .donation-ui-root:has(#donationStatusView.active){height:100%;min-height:0;overflow:hidden;}
     .donation-sheet-content:has(#donationStatusView.active){height:100%;min-height:0;gap:0;}
     #donationStatusView.active{height:100%;min-height:0;gap:0;overflow:hidden;}
@@ -2606,10 +2606,16 @@
     .donation-ranking-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
     .donation-ranking-head .donation-ranking-title{margin:0;}
     .donation-ranking-toggle{border:0;background:transparent;color:#2457d6;font-size:11px;font-weight:900;padding:4px;cursor:pointer;white-space:nowrap;}
-    .donation-status-footer{flex-shrink:0;margin:0 -16px;padding:10px 16px calc(10px + env(safe-area-inset-bottom, 0px));border-top:1px solid #e5e7eb;background:#fff;box-shadow:0 -8px 18px rgba(15,23,42,.06);}
+    .donation-status-footer{flex-shrink:0;margin:0 -16px;padding:10px 16px env(safe-area-inset-bottom, 0px);border-top:1px solid #e5e7eb;background:#fff;box-shadow:0 -5px 12px rgba(15,23,42,.05);}
+    .donation-status-footer .donation-action-row{grid-template-columns:minmax(0,7fr) minmax(0,3fr);}
+    .donation-status-footer .donation-submit-btn,.donation-status-footer .donation-sub-btn{min-height:54px;}
     .live-donation-panel{overflow:hidden;}
     .live-donation-panel .donation-ui-root{height:100%;min-height:0;overflow-y:auto;}
     .live-donation-panel .donation-ui-root:has(#donationStatusView.active){overflow:hidden;}
+    .live-donation-panel:has(#donationStatusView.active){padding-bottom:0;}
+    .donation-rank-item.is-pinned-me{box-shadow:none;}
+    .donation-rank-item.is-pinned-me .donation-rank-num{display:flex;flex-direction:column;gap:2px;}
+    .donation-rank-item.is-pinned-me .donation-rank-num small{font-size:9px;color:#2563eb;line-height:1;}
     .donation-balance-card{
       display:flex;
       align-items:flex-start;
@@ -5817,7 +5823,7 @@
           <button class="tool-btn" data-add="60">+1분</button>
           <button class="tool-btn" data-reward-set="595">+보상</button>
           <button class="tool-btn" id="refreshLatestVideosBtnTop">↻ 최신영상</button>
-          <span class="dev-version-label">DEV v0.3.88</span>
+          <span class="dev-version-label">DEV v0.3.89</span>
         </div>
       </header>
 
@@ -5855,7 +5861,7 @@
             <button class="tool-btn" data-add="60">+1분</button>
             <button class="tool-btn" data-reward-set="595">+보상</button>
             <button class="tool-btn" id="refreshLatestVideosBtnFloat">↻ 최신영상</button>
-            <span class="dev-version-label">DEV v0.3.88</span>
+            <span class="dev-version-label">DEV v0.3.89</span>
           </div>
 
           <div class="watch-info-fixed" id="watchInfoFixed">
@@ -7634,7 +7640,7 @@
 
       const params = new URLSearchParams({
         autoplay: "1",
-        mute: "0",
+        mute: "1",
         playsinline: "1",
         rel: "0",
         enablejsapi: "1"
@@ -9094,7 +9100,6 @@
     function renderDonationRanking(video){
       const { ranking, position, entry } = findMyDonationRank(video);
       const topTen = ranking.slice(0, 10);
-      const isMeInTopTen = position != null && position <= 10;
       const channelKey = getDonationChannelKey(video);
       if(state.donationRankingChannelKey !== channelKey){
         state.donationRankingChannelKey = channelKey;
@@ -9127,11 +9132,12 @@
         donationRankingEmptyNote.textContent = "";
       }
 
-      if(state.donationRankingExpanded && position != null && !isMeInTopTen && entry){
+      const visibleRankLimit = state.donationRankingExpanded ? 10 : 3;
+      if(position != null && position > visibleRankLimit && entry){
         donationRankingList.insertAdjacentHTML("beforeend", `
           <div class="donation-rank-divider"></div>
-          <div class="donation-rank-item is-me">
-            <div class="donation-rank-num">${position}위</div>
+          <div class="donation-rank-item is-me is-pinned-me">
+            <div class="donation-rank-num"><small>내 순위</small>${position}위</div>
             <div class="donation-rank-name">${escapeHtml(formatDonationRankName(entry))} <span>(나)</span></div>
           </div>
         `);
